@@ -1,5 +1,5 @@
 env:
-  RUBY_VERSION: 2.7.x
+  RUBY_VERSION: 2.7.2
 
 name: Run Tests & Linters
 on:
@@ -81,7 +81,10 @@ jobs:
           fi
 
       - name: Setup DB
-        run: bin/rails db:drop db:create db:structure:load --trace
+        run: |
+          cp config/database.ci.yml config/database.yml
+          bundler exec rake db:create RAILS_ENV=test
+          bundler exec rake db:schema:load RAILS_ENV=test
 
       - name: Run tests
         run: bundler exec rspec
@@ -89,11 +92,6 @@ jobs:
       - name: Zeitwerk Check
         run: bundle exec rails zeitwerk:check
 
-      - name: StandardRB Check
-        run: bundle exec standardrb --format progress
-
-      - name: Prettier-Standard Check
-        run: yarn run --ignore-engines prettier-standard --check 'app/**/*.js'
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
         if: always()
