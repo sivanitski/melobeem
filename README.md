@@ -1,24 +1,30 @@
-# README
+# Melobeem: Contest application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+* Ruby version: 2.7.1
+* Rails version: 6.1.1
 
-Things you may want to cover:
+## Initial setup:
+**Add environment file .env into root folder with next:**
 
-* Ruby version
+    .env
+    DB_USER_PASSWORD=postgres
+    DB_HOST=db
+   
+**Install gems**
 
-* System dependencies
+    bundle install
+    
+**Build docker container**
 
-* Configuration
+    docker build -t melobeem .
+    
+**Run migrations for container**
 
-* Database creation
+    docker-compose run web rails db:setup
+    
+**Run application**
 
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+    docker-compose up
+    
+   
+check http://localhost:3000/
