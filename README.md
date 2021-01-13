@@ -1,6 +1,6 @@
 # Melobeem: Contest application
 
-* Ruby version: 2.7.1
+* Ruby version: 2.7.2
 * Rails version: 6.1.1
 
 ## Initial setup:
@@ -9,22 +9,18 @@
     .env
     DB_USER_PASSWORD=postgres
     DB_HOST=db
-   
-**Install gems**
-
-    bundle install
     
-**Build docker container**
+**First setup**
 
-    docker build -t melobeem .
-    
-**Run migrations for container**
+    1. docker-compose run runner
+    2. bundle install
+    3. yarn
+    4. rails db:setup
+    5. exit
 
-    docker-compose run web rails db:setup
-    
 **Run application**
 
-    docker-compose up
-    
+    docker-compose up -d rails
+    docker-compose run runner # for commands from console
    
 check http://localhost:3000/
