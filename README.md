@@ -9,6 +9,8 @@
     .env
     DB_USER_PASSWORD=postgres
     DB_HOST=db
+    FACEBOOK_APP_ID=935762250563722
+    FACEBOOK_APP_SECRET=c7f85b4a056c755c062ee7de4bcba2d1
     
 **First setup**
 

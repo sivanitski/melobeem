@@ -1,6 +1,7 @@
 class Entry < ApplicationRecord
   has_many :votes, dependent: :destroy
   belongs_to :competition
+  belongs_to :user
 
   validates :gender, presence: true
 

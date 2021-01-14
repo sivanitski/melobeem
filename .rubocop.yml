@@ -29,3 +29,7 @@ Metrics/BlockLength:
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: true
   EnforcedStyle: space
+
+Layout/LineLength:
+  Enabled: true
+  Max: 160
