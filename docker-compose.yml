@@ -11,7 +11,7 @@ services:
         NODE_MAJOR: '14'
         YARN_VERSION: '1.22.5'
         BUNDLER_VERSION: '2.1.4'
-    image: example-dev:1.0.0
+    image: example-dev:1.0.1
     tmpfs:
       - /tmp
 
