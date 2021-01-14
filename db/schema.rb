@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_13_134521) do
+ActiveRecord::Schema.define(version: 2021_01_14_100614) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,34 @@ ActiveRecord::Schema.define(version: 2021_01_13_134521) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "competitions", force: :cascade do |t|
+    t.string "title", null: false
+    t.integer "prize_cents"
+    t.string "status"
+    t.datetime "starts_at"
+    t.datetime "ends_at"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "entries", force: :cascade do |t|
+    t.integer "gender", null: false
+    t.bigint "competition_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["competition_id"], name: "index_entries_on_competition_id"
+  end
+
+  create_table "votes", force: :cascade do |t|
+    t.integer "value", default: 0, null: false
+    t.bigint "entry_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["entry_id"], name: "index_votes_on_entry_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "entries", "competitions"
+  add_foreign_key "votes", "entries"
 end
