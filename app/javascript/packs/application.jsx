@@ -9,11 +9,10 @@ ActiveStorage.start();
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {Competitors} from '../mocks/competitors';
 
 document.addEventListener('DOMContentLoaded', () => {
   ReactDOM.render(
-    <App competitors={Competitors}/>,
+    <App/>,
     document.body.appendChild(document.createElement('div')),
   )
 })
