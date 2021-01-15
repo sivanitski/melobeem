@@ -26,7 +26,7 @@ const HeaderNotLogin = () => {
           <img src={logoText} alt="Melobeem"/>
         </div>
         <div className="header-not-login__text">
-          Vote, share with your frinds complete the tasks, there is many ways to win 
+          Vote, share with your friends complete the tasks, there is many ways to win 
         </div>
       </div>
       <div className="header-not-login__buttons">
