@@ -53,6 +53,11 @@ jobs:
           bundler exec rake db:create RAILS_ENV=test
           bundler exec rake db:schema:load RAILS_ENV=test
 
+      - name: Start Redis
+        uses: supercharge/redis-github-action@1.2.0
+        with:
+          redis-version: ${{ matrix.redis-version }}
+
       - name: Run tests
         run: bundler exec rspec
 
