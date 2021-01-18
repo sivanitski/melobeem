@@ -1,6 +1,5 @@
 import React, {useState, useEffect} from 'react';
 import {useRequest} from 'ahooks';
-// import axios from 'axios';
 import {HeaderNotLogin} from '../header-not-login';
 import {NewIn} from '../new-in';
 import {createAPI} from '../../api';
