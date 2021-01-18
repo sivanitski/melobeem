@@ -11,7 +11,8 @@ const Leaderboard = () => {
     return api.get(`/competitors`);
   }
 
-  const {data, error, loading} = useRequest(getCompetitors);
+  const {data, error, loading} = useRequest(getCompetitors, 
+    {formatResult: (res) => res.data});
 
   if (error) {
     return <div>failed to load</div>;
@@ -23,7 +24,7 @@ const Leaderboard = () => {
   return (
     <>
       <HeaderNotLogin/>
-      <NewIn competitors={data.data}/>
+      <NewIn competitors={data}/>
     </>
   );
   
