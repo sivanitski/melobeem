@@ -18,14 +18,14 @@ const NewIn = ({competitors}) => {
         slidesPerView={`auto`}
       >
 
-        {competitors.map((it) => {
+        {competitors.map((competitor) => {
           return (
-            <SwiperSlide className="swiper__item" key={it.id}>
+            <SwiperSlide className="swiper__item" key={competitor.id}>
               <div className="swiper__item__img">
-                <img src={it.avatar}/>
+                <img src={competitor.avatar}/>
               </div>
               <div className="swiper__item__name text-grey">
-                {it.name}
+                {competitor.name}
               </div>
             </SwiperSlide>
           );

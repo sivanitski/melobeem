@@ -1,28 +1,30 @@
 import React, {useState, useEffect} from 'react';
-import axios from 'axios';
+import {useRequest} from 'ahooks';
+// import axios from 'axios';
 import {HeaderNotLogin} from '../header-not-login';
 import {NewIn} from '../new-in';
+import {createAPI} from '../../api';
 
 const Leaderboard = () => {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [competitors, setCompetitors] = useState([]);
+  const api = createAPI();
 
-  useEffect(() => {
-    axios.get(`https://6001809808587400174dac79.mockapi.io/melobeem/competitors`)
-    .then(res => {
-      setCompetitors(res.data);
-      setIsLoaded(true);
-    })
-  }, [])
+  const getCompetitors = () => {
+    return api.get(`/competitors`);
+  }
 
-  if (!isLoaded) {
+  const {data, error, loading} = useRequest(getCompetitors);
+
+  if (error) {
+    return <div>failed to load</div>;
+  }
+  if (loading) {
     return <div>Loading...</div>
   }
 
   return (
     <>
       <HeaderNotLogin/>
-      <NewIn competitors={competitors}/>
+      <NewIn competitors={data.data}/>
     </>
   );
   
