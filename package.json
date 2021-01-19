@@ -17,6 +17,7 @@
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
+    "date-fns": "^2.16.1",
     "less": "^4.1.0",
     "less-loader": "^7.2.1",
     "node-sass": "^5.0.0",

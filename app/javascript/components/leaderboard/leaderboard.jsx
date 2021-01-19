@@ -12,11 +12,11 @@ const Leaderboard = () => {
   const api = createAPI();
 
   const getCurrentCompetition = () => {
-    return api.get(`/currentCompetition`);
+    return api.get(`/currentCompetition/1`);
   }
 
   const {data, error, loading} = useRequest(getCurrentCompetition, 
-    {formatResult: (res) => res.data[0]});
+    {formatResult: (res) => res.data});
 
   if (error) {
     return <div>failed to load</div>;

@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import './style.less';
-import {calcDaysLeft} from '../../helpers/utils';
+import {calcDaysLeft} from '../../helpers/date';
 
 const CompetitionInfo = ({timeLeft, prize}) => {
   return (
@@ -12,7 +12,7 @@ const CompetitionInfo = ({timeLeft, prize}) => {
       </div>
       <div className="competition-info__item">
         <div className="competition-info__item__title text-grey">Prize</div>
-        <div className="competition-info__item__title headline--medium text-pink">£ {Math.trunc(prize)}</div>
+        <div className="competition-info__item__title headline--medium text-pink">£{Math.trunc(prize)}</div>
       </div>
     </div>
   );
