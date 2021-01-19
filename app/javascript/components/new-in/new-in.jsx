@@ -1,7 +1,7 @@
 import React from 'react';
 import propTypes from 'prop-types';
 import {Swiper, SwiperSlide} from 'swiper/react';
-import 'swiper/swiper.scss';
+import 'swiper/swiper.less';
 import './style.less';
 
 const NewIn = ({competitors}) => {
