@@ -1,21 +1,48 @@
 {
   "name": "melobeem",
   "private": true,
+  "scripts": {
+    "eslint.autofix": "eslint --ext .jsx --ext .js --fix app/javascript",
+    "eslint": "eslint --ext .jsx --ext .js app/javascript",
+    "test": "yarn run eslint && yarn run test.jest",
+    "start": "webpack-dev-server",
+    "test.jest": "jest app/javascript"
+  },
   "dependencies": {
     "@babel/preset-react": "^7.12.10",
     "@rails/actioncable": "^6.0.0",
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
+    "axios": "^0.21.1",
+    "axios-mock-adapter": "^1.19.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "less": "^4.1.0",
     "less-loader": "^7.2.1",
+    "node-sass": "^5.0.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react-dom": "^17.0.1",
+    "sass-loader": "^10.1.1",
+    "swiper": "^6.4.5"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/app/javascript/__mocks__/fileMock.js",
+      "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+    }
   },
   "version": "0.1.0",
   "devDependencies": {
+    "ahooks": "^2.9.4",
+    "babel-jest": "^26.6.3",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.5",
+    "eslint": "^7.17.0",
+    "eslint-plugin-react": "^7.22.0",
+    "identity-obj-proxy": "^3.0.0",
+    "jest": "^26.6.3",
+    "react-test-renderer": "^17.0.1",
     "webpack-dev-server": "^3.11.1"
   }
 }
