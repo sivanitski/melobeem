@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class User < ApplicationRecord
-  has_many :votes, dependent: :destroy
-  has_many :entries, dependent: :destroy
+  has_many :votes, dependent: :nullify
+  has_many :entries, dependent: :nullify
 
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable, :trackable

@@ -39,4 +39,15 @@ describe Votes::Create do
       expect(result).to be_a Failure
     end
   end
+
+  context 'when tries to create votes one by one' do
+    subject do
+      described_class.new.call(params: { value: vote.value, entry_id: entry.id, user_id: user.id,
+                                         fingerprint: { 'ip' => '127.0.0.1', 'cookie' => '6e6aac3337a4c69bae3cc685dd791e212c76e346ae67e8559859fdf3b6fcaf5d' } })
+    end
+
+    it 'creates only one vote' do
+      expect { 3.times { subject } }.to change(Vote, :count).by(1)
+    end
+  end
 end
