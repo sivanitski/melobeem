@@ -28,11 +28,6 @@ describe 'Votes API', type: :request do
         end.not_to change(Vote, :count)
       end
 
-      it 'returns error message' do
-        post api_path, { params: { vote: { value: nil, entry_id: entry.id, user_id: user.id } } }
-        expect(JSON.parse(response.body)['errors']).to be_truthy
-      end
-
       it 'return status :unprocessable_entity' do
         post api_path, { params: { vote: { value: nil, entry_id: entry.id, user_id: user.id } } }
         expect(response.status).to eq 422

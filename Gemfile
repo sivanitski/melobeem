@@ -32,8 +32,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # environment variables
 gem 'dotenv-rails'
-# interactor
-gem 'interactor', '~> 3.0'
 # enforcing Rails best practices and coding conventions
 gem 'rubocop-performance', require: false
 gem 'rubocop-rails', require: false

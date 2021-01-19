@@ -8,5 +8,6 @@ RSpec.configure do |config|
     DatabaseCleaner.start
     example.run
     DatabaseCleaner.clean
+    Redis.current.flushdb
   end
 end
