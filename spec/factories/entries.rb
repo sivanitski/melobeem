@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :entry do
-    gender { FFaker::Number.rand(0..1) }
+    gender { FFaker::Gender.binary }
   end
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_14_122815) do
+ActiveRecord::Schema.define(version: 2021_01_18_084526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,7 +58,9 @@ ActiveRecord::Schema.define(version: 2021_01_14_122815) do
     t.bigint "competition_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
     t.index ["competition_id"], name: "index_entries_on_competition_id"
+    t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -85,15 +87,20 @@ ActiveRecord::Schema.define(version: 2021_01_14_122815) do
   end
 
   create_table "votes", force: :cascade do |t|
-    t.integer "value", default: 0, null: false
+    t.integer "value", default: 1, null: false
     t.bigint "entry_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "user_id"
+    t.jsonb "fingerprint", default: {}, null: false
     t.index ["entry_id"], name: "index_votes_on_entry_id"
+    t.index ["user_id"], name: "index_votes_on_user_id"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "entries", "competitions"
+  add_foreign_key "entries", "users"
   add_foreign_key "votes", "entries"
+  add_foreign_key "votes", "users"
 end

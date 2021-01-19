@@ -16,10 +16,14 @@ gem 'webpacker', '~> 5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
+gem 'redis-rails'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# serializer
+gem 'active_model_serializers', '~> 0.10.0'
+#
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 # gem 'aws-sdk-s3', require: false
@@ -28,7 +32,6 @@ gem 'bootsnap', '>= 1.4.4', require: false
 
 # environment variables
 gem 'dotenv-rails'
-
 # enforcing Rails best practices and coding conventions
 gem 'rubocop-performance', require: false
 gem 'rubocop-rails', require: false

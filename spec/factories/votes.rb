@@ -1,5 +1,5 @@
 FactoryBot.define do
   factory :vote do
-    value { FFaker::Number.rand }
+    value { FFaker::Random.rand }
   end
 end

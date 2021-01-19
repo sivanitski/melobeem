@@ -29,6 +29,7 @@ services:
     environment:
       - NODE_ENV=development
       - RAILS_ENV=${RAILS_ENV:-development}
+      - REDIS_URL=redis://redis:6379/
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432
       - POSTGRESQL_HOST=postgres
       - POSTGRESQL_PORT=5432
@@ -39,6 +40,7 @@ services:
       - EDITOR=vi
     depends_on:
       - postgres
+      - redis
 
   runner:
     <<: *backend
@@ -62,6 +64,13 @@ services:
     environment:
       - PSQL_HISTFILE=/root/log/.psql_history
 
+  redis:
+    image: redis:3.2-alpine
+    volumes:
+      - redis:/data
+    ports:
+      - '6379:6379'
+
   webpacker:
     <<: *app
     command: ./bin/webpack-dev-server
@@ -79,6 +88,7 @@ services:
 
 volumes:
   postgres:
+  redis:
   node_modules:
   rails_cache:
   packs:

@@ -1,5 +1,5 @@
 require_relative 'boot'
-
+require_relative '../lib/middleware/fingerprint_middleware'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -28,5 +28,7 @@ module Melobeem
                  methods: %i[get post options delete put]
       end
     end
+
+    config.middleware.use FingerprintMiddleware
   end
 end

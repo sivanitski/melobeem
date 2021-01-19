@@ -33,3 +33,6 @@ Layout/SpaceInsideArrayLiteralBrackets:
 Layout/LineLength:
   Enabled: true
   Max: 160
+
+RSpec/NamedSubject:
+  Enabled: false
