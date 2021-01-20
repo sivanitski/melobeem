@@ -6,7 +6,9 @@ import {createAPI} from '../../api';
 import {HeaderNotLogin} from '../header-not-login';
 import {NewIn} from '../new-in';
 import {CompetitionInfo} from '../competition-info';
+import {CompetitorsList} from '../competitors-list';
 import {Footer} from '../footer';
+
 
 
 const Leaderboard = () => {
@@ -31,6 +33,7 @@ const Leaderboard = () => {
       <HeaderNotLogin />
       <NewIn competitors={data.competitors}/>
       <CompetitionInfo timeLeft={data.timeLeft} prize={data.prize}/>
+      <CompetitorsList competitors={data.competitors}/>
       <Footer />
     </>
   );
