@@ -23,7 +23,10 @@ gem 'redis-rails'
 
 # serializer
 gem 'active_model_serializers', '~> 0.10.0'
-#
+
+# pagination
+gem 'kaminari-activerecord'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 # gem 'aws-sdk-s3', require: false
@@ -77,6 +80,8 @@ group :test do
   # gem 'factory_girl_rails'
   gem 'factory_bot_rails'
   gem 'ffaker'
+
+  gem 'json-schema'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

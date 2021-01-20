@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "required": ["entry"],
+  "properties": {
+    "entry": {
+      "type": "object",
+      "required": ["id", "gender"],
+      "properties": {
+        "id": {"type": "integer"},
+        "gender": {"type": "string"}
+      }
+    }
+  }
+}

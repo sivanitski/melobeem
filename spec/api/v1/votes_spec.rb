@@ -8,6 +8,8 @@ describe 'Votes API', type: :request do
   let!(:vote) { create(:vote, entry: entry, user: user) }
 
   describe 'POST /api/v1/votes' do
+    sign_in(:user)
+
     context 'with valid attributes' do
       it 'saves a new vote in database' do
         expect do
