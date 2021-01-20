@@ -6,7 +6,8 @@
     "eslint": "eslint --ext .jsx --ext .js app/javascript",
     "test": "yarn run eslint && yarn run test.jest",
     "start": "webpack-dev-server",
-    "test.jest": "jest app/javascript"
+    "test.jest": "jest app/javascript",
+    "stylelint": "stylelint app/javascript/components/**/*.less"
   },
   "dependencies": {
     "@babel/preset-react": "^7.12.10",
@@ -42,6 +43,8 @@
     "identity-obj-proxy": "^3.0.0",
     "jest": "^26.6.3",
     "react-test-renderer": "^17.0.1",
+    "stylelint": "^13.9.0",
+    "stylelint-config-standard": "^20.0.0",
     "webpack-dev-server": "^3.11.1"
   }
 }
