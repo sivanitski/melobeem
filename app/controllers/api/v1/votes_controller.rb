@@ -1,4 +1,4 @@
-module Api
+module API
   module V1
     class VotesController < ApplicationController
       before_action :make_fingerprint
