@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "required": ["entries", "meta"],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "gender"],
+        "properties": {
+          "id": {"type": "integer"},
+          "gender": {"type": "string"}
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": ["total_count", "per", "page"],
+      "properties": {
+        "total_count": {"type": "integer"},
+        "per": {"type": "integer"},
+        "page": {"type": "integer"}
+      }
+    }
+  }
+}
