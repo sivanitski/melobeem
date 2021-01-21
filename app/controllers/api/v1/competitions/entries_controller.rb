@@ -27,7 +27,7 @@ module API
         private
 
         def entries_params
-          params.require(:entry).permit(:gender)
+          params.require(:entry).permit(:gender, :image)
         end
       end
     end
