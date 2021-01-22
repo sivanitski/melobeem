@@ -1,8 +1,9 @@
 const { environment } = require('@rails/webpacker')
 
-const {less} = require('./loaders');
+const {less, svg} = require('./loaders');
 
 environment.loaders.append('less', less);
+environment.loaders.append('svg', svg);
 
 module.exports = environment;
 
