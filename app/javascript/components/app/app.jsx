@@ -1,11 +1,9 @@
 import React from "react";
-import {Leaderboard} from '../leaderboard';
 
+import { Leaderboard } from "../leaderboard";
 
 const App = () => {
-  return (
-    <Leaderboard />
-  );
+  return <Leaderboard />;
 };
 
 export default App;

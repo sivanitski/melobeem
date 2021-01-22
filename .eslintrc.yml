@@ -3,7 +3,14 @@ env:
   browser: true
   commonjs: true
 
-extends: ['plugin:react/recommended']
+extends:
+  [
+    "plugin:react/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
+    "prettier",
+    "plugin:prettier/recommended",
+  ]
 
 parserOptions:
   ecmaFeatures:
@@ -11,8 +18,16 @@ parserOptions:
   ecmaVersion: 6
   sourceType: module
 
-plugins: ['react']
+plugins: ["react", "simple-import-sort", "prettier"]
 
 settings:
   react:
-    version: '17'
+    version: "17"
+
+rules:
+  {
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "prettier/prettier": "error",
+    "no-unused-vars": "error",
+  }

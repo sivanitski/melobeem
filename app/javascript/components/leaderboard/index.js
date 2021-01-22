@@ -1,1 +1,1 @@
-export {default as Leaderboard} from './leaderboard.jsx';
+export { default as Leaderboard } from "./leaderboard.jsx";

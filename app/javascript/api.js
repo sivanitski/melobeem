@@ -12,7 +12,7 @@ export const createAPI = () => {
   };
 
   const onFail = (err) => {
-    const {response} = err;
+    // const { response } = err;
 
     throw err;
   };
