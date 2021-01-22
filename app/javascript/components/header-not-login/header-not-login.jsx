@@ -20,11 +20,9 @@ const HeaderNotLogin = () => {
       </div>
       <div className="header-not-login__wrapper">
         <div className="header-not-login__logo-icon">
-          {/* <img src={logoIcon} alt="M"/> */}
           <LogoIcon/>
         </div>
         <div className="header-not-login__logo-text">
-          {/* <img src={logoText} alt="Melobeem"/> */}
           <LogoText/>
         </div>
         <div className="header-not-login__text">
