@@ -1,7 +1,7 @@
 import React from 'react';
 import './style.less';
-import logoIcon from '../../images/logo-icon.svg';
-import logoText from '../../images/logo-text.svg';
+import LogoIcon from '../../images/logo-icon.svg';
+import LogoText from '../../images/logo-text.svg';
 import headerLeft from '../../images/header-left.png';
 import headerLeft2x from '../../images/header-left@2x.png';
 import headerRight from '../../images/header-right.png';
@@ -20,10 +20,12 @@ const HeaderNotLogin = () => {
       </div>
       <div className="header-not-login__wrapper">
         <div className="header-not-login__logo-icon">
-          <img src={logoIcon} alt="M"/>
+          {/* <img src={logoIcon} alt="M"/> */}
+          <LogoIcon/>
         </div>
         <div className="header-not-login__logo-text">
-          <img src={logoText} alt="Melobeem"/>
+          {/* <img src={logoText} alt="Melobeem"/> */}
+          <LogoText/>
         </div>
         <div className="header-not-login__text">
           Vote, share with your friends complete the tasks, there is many ways to win 
