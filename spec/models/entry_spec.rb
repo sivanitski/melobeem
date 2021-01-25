@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe Entry, type: :model do
   let(:competition) { create(:competition) }
-  let(:user)        { create(:user) }
-  let(:entry)       { create(:entry, user: user, competition: competition) }
+  let(:user) { create(:user) }
+  let(:entry) { create(:entry, user: user, competition: competition) }
 
   it { is_expected.to have_many(:votes).dependent(:destroy) }
+  it { is_expected.to have_many(:purchase_transactions).dependent(:destroy) }
   it { is_expected.to belong_to :competition }
   it { is_expected.to belong_to :user }
 

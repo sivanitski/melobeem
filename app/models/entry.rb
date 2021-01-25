@@ -1,5 +1,6 @@
 class Entry < ApplicationRecord
   has_many :votes, dependent: :destroy
+  has_many :purchase_transactions, dependent: :destroy
   belongs_to :competition
   belongs_to :user
 
