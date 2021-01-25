@@ -25,6 +25,7 @@ plugins: ["react", "simple-import-sort", "prettier"]
 settings:
   react:
     version: "17"
+  import/resolver: { "node": { "extensions": [".js", ".jsx", ".native.js"] } }
 
 rules:
   {
@@ -33,7 +34,4 @@ rules:
     "prettier/prettier": "error",
     "no-unused-vars": "error",
     "import/extensions": ["error", "never"],
-    "import/no-unresolved": [
-      2, 
-      { "caseSensitive": false }
   }
