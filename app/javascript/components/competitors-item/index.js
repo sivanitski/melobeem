@@ -1,1 +1,1 @@
-export { default as CompetitorsItem } from "./competitors-item.jsx";
+export { default as CompetitorsItem } from "./competitors-item";

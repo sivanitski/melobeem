@@ -1,1 +1,1 @@
-export { default as CompetitorsSwiperMenu } from "./competitors-swiper-menu.jsx";
+export { default as CompetitorsSwiperMenu } from "./competitors-swiper-menu";

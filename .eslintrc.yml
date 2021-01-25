@@ -10,6 +10,8 @@ extends:
     "plugin:import/warnings",
     "prettier",
     "plugin:prettier/recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings",
   ]
 
 parserOptions:
@@ -30,4 +32,8 @@ rules:
     "simple-import-sort/exports": "error",
     "prettier/prettier": "error",
     "no-unused-vars": "error",
+    "import/extensions": ["error", "never"],
+    "import/no-unresolved": [
+      2, 
+      { "caseSensitive": false }
   }
