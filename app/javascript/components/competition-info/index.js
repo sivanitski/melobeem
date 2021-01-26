@@ -1,1 +1,1 @@
-export {default as CompetitionInfo} from './competition-info.jsx';
+export { default as CompetitionInfo } from "./competition-info";

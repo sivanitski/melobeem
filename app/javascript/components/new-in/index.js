@@ -1,1 +1,1 @@
-export {default as NewIn} from './new-in.jsx';
+export { default as NewIn } from "./new-in";
