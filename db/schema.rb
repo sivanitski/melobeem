@@ -67,7 +67,7 @@ ActiveRecord::Schema.define(version: 2021_01_22_183711) do
   create_table "purchase_transactions", force: :cascade do |t|
     t.string "intent_id"
     t.integer "amount"
-    t.integer "amount_captured"
+    t.integer "amount_received"
     t.integer "vote_value"
     t.integer "status", default: 0
     t.jsonb "full_info", default: {}, null: false

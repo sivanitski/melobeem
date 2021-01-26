@@ -38,3 +38,5 @@ yarn-debug.log*
 .idea/*
 coverage/*
 .env
+
+/config/credentials/test.key

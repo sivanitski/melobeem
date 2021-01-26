@@ -33,7 +33,7 @@ module Votes
     # rubocop:enable Metrics/AbcSize
 
     def create_transaction(intent)
-      PurchaseTransaction.create!(intent_id: intent.id, amount: intent.amount, amount_captured: intent.amount_capturable,
+      PurchaseTransaction.create!(intent_id: intent.id, amount: intent.amount, amount_received: intent.amount_capturable,
                                   status: :process, full_info: intent.to_json, vote_value: intent.metadata[:vote_value].to_i,
                                   user_id: intent.metadata[:user_id].to_i, entry_id: intent.metadata[:entry_id].to_i)
     end
