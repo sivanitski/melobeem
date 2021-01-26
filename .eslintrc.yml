@@ -6,8 +6,6 @@ env:
 extends:
   [
     "plugin:react/recommended",
-    "plugin:import/errors",
-    "plugin:import/warnings",
     "prettier",
     "plugin:prettier/recommended",
     "plugin:import/errors",
