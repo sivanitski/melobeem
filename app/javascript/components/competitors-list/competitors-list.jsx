@@ -9,12 +9,12 @@ import { CompetitorsItem } from "../competitors-item";
 import { CompetitorsSwiperMenu } from "../competitors-swiper-menu";
 
 const CompetitorsList = ({ competitors }) => {
-  const [shownCompetitors, setshownCompetitors] = useState(
+  const [shownCompetitors, setShownCompetitors] = useState(
     filterChildrenByLevel(competitors, 1)
   );
 
   const onSliderClick = (index) => {
-    setshownCompetitors(filterChildrenByLevel(competitors, index));
+    setShownCompetitors(filterChildrenByLevel(competitors, index));
   };
 
   return (
