@@ -38,6 +38,3 @@ yarn-debug.log*
 .idea/*
 coverage/*
 .env
-
-# Ignore .vscode setting
-.vscode/*
