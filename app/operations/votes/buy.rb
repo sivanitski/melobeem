@@ -2,24 +2,17 @@ module Votes
   class Buy
     VOTES_TO_AMOUNT = { '10' => 1000, '20' => 2000, '50' => 5000 }.freeze
 
-    def initialize(params:, user:)
-      @email = user.email
-      @entry_id = params[:entry_id]
-      @user = user
-      @vote_value = params[:vote_value]
+    def initialize
+      @stripe_api_key = Stripe.api_key
     end
 
-    def call
-      Stripe.api_key
-      create_intent
+    def call(params:, user:)
+      create_intent(entry_id: params[:entry_id], vote_value: params[:vote_value], user: user)
     end
 
     private
 
-    attr_accessor :user, :email, :entry_id, :vote_value
-
-    # rubocop:disable Metrics/AbcSize
-    def create_intent
+    def create_intent(entry_id:, vote_value:, user:)
       intent = Stripe::PaymentIntent.create(amount: VOTES_TO_AMOUNT[vote_value],
                                             description: user.email, currency: 'gbp',
                                             metadata: { user_id: user.id, entry_id: entry_id, vote_value: vote_value })
@@ -29,8 +22,6 @@ module Votes
       create_transaction(intent)
       { client_secret: intent.client_secret }.to_json # key for front, POST "/api/v1/charges"
     end
-
-    # rubocop:enable Metrics/AbcSize
 
     def create_transaction(intent)
       PurchaseTransaction.create!(intent_id: intent.id, amount: intent.amount, amount_received: intent.amount_capturable,

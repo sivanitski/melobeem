@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'stripe_mock'
 
-describe API::V1::WebhooksController, type: :controller do
+describe 'Webhooks API', type: :request do
   let(:stripe_helper) { StripeMock.create_test_helper }
   let(:params) do
     {
@@ -25,18 +25,18 @@ describe API::V1::WebhooksController, type: :controller do
 
   describe '#check_payment_status' do
     before do
-      request.headers['Stripe-Signature'] = generate_stripe_signature(params.to_json)
+      stripe_signature = generate_stripe_signature(params.to_json)
+      headers = { 'Stripe-Signature' => stripe_signature }
+      post '/api/v1/check_payment_status', params: params.to_json, headers: headers
     end
 
     context 'when transaction was not found' do
-      before { post :check_payment_status, body: params.to_json }
-
-      it 'returns 400 status' do
-        expect(response).to have_http_status(:bad_request)
+      it 'returns 404 status' do
+        expect(response).to have_http_status(:not_found)
       end
 
       it 'returns message about missing transaction' do
-        expect(JSON.parse(response.body)['message']).to eq('Cannot find transaction')
+        expect(JSON.parse(response.body)['message']).to eq('Could not find PurchaseTransaction')
       end
     end
 
@@ -54,15 +54,13 @@ describe API::V1::WebhooksController, type: :controller do
 
         before do
           subject
-          post :check_payment_status, body: params.to_json
+          stripe_signature = generate_stripe_signature(params.to_json)
+          headers = { 'Stripe-Signature' => stripe_signature }
+          post '/api/v1/check_payment_status', params: params.to_json, headers: headers
         end
 
-        it 'returns 200 status' do
-          expect(response).to have_http_status(:ok)
-        end
-
-        it 'returns payment completion message' do
-          expect(JSON.parse(response.body)['message']).to eq('Votes were enrolled successfully')
+        it 'returns 201 status' do
+          expect(response).to have_http_status(:created)
         end
 
         it 'changes amount_received value in transaction from zero to amount value' do
@@ -70,7 +68,15 @@ describe API::V1::WebhooksController, type: :controller do
           expect(subject.amount).to eq(subject.amount_received)
         end
 
-        it 'enrolls votes from transaction vote_value' do
+        it 'create new vote' do
+          expect do
+            stripe_signature = generate_stripe_signature(params.to_json)
+            headers = { 'Stripe-Signature' => stripe_signature }
+            post '/api/v1/check_payment_status', params: params.to_json, headers: headers
+          end.to change(Vote, :count).by(1)
+        end
+
+        it 'enrolls vote with value from transaction vote_value' do
           expect(entry.votes.first.value).to eq(subject.vote_value)
         end
       end
