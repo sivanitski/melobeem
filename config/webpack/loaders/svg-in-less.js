@@ -1,7 +1,7 @@
 module.exports = {
   test: /\.svg$/,
   issuer: {
-    test: /\.jsx?$/,
+    test: /\.less?$/,
   },
-  use: ["@svgr/webpack"],
+  loader: "url-loader",
 };

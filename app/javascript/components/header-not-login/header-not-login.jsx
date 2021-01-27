@@ -31,9 +31,9 @@ const HeaderNotLogin = () => {
         <div className="header-not-login__logo-text">
           <LogoText />
         </div>
-        <div className="header-not-login__text">
-          Vote, share with your friends complete the tasks, there is many ways
-          to win
+        <div className="header-not-login__text text-grey">
+          Vote, share with your friends <br /> complete the tasks, <br /> there
+          is many ways to win
         </div>
       </div>
       <div className="header-not-login__buttons">
