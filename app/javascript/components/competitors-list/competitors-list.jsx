@@ -9,9 +9,9 @@ import { CompetitorsItem } from "../competitors-item";
 const CompetitorsList = ({ competitors }) => {
   return (
     <>
-      {competitors.map((competitor) => {
-        return <CompetitorsItem competitor={competitor} key={competitor.id} />;
-      })}
+      {competitors.map((competitor) => (
+        <CompetitorsItem competitor={competitor} key={competitor.id} />
+      ))}
     </>
   );
 };
