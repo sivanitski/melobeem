@@ -17,7 +17,7 @@ const CompetitionInfo = ({ timeLeft, prize }) => {
       <div className="competition-info__item">
         <div className="competition-info__item__title text-grey">Prize</div>
         <div className="competition-info__item__title headline--medium text-pink">
-          £{Math.trunc(prize)}
+          £{Math.round(prize * 100) / 100}
         </div>
       </div>
     </div>

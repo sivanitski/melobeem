@@ -3,7 +3,8 @@ import React from "react";
 
 import { createAPI } from "../../api";
 import { CompetitionInfo } from "../competition-info";
-import { CompetitorsList } from "../competitors-list";
+import { Competitors } from "../competitors";
+import CompetitorsSearch from "../competitors-search/competitors-search";
 import { Footer } from "../footer";
 import { HeaderNotLogin } from "../header-not-login";
 import { NewIn } from "../new-in";
@@ -29,9 +30,10 @@ const Leaderboard = () => {
   return (
     <>
       <HeaderNotLogin />
+      <CompetitorsSearch competitors={data.competitors} />
       <NewIn competitors={data.competitors} />
       <CompetitionInfo timeLeft={data.timeLeft} prize={data.prize} />
-      <CompetitorsList competitors={data.competitors} />
+      <Competitors competitors={data.competitors} />
       <Footer />
     </>
   );
