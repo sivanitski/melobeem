@@ -63,6 +63,7 @@ CompetitorsSearch.propTypes = {
       avatar: propTypes.string.isRequired,
       likes: propTypes.number.isRequired,
       parentName: propTypes.string.isRequired,
+      rank: propTypes.number.isRequired,
     })
   ).isRequired,
 };

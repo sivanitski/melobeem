@@ -10,16 +10,7 @@ const CompetitorsList = ({ competitors }) => {
   return (
     <>
       {competitors.map((competitor) => {
-        const index = competitors.findIndex(
-          (competitor) => competitor.id === competitor.id
-        );
-        return (
-          <CompetitorsItem
-            competitor={competitor}
-            index={index}
-            key={competitor.id}
-          />
-        );
+        return <CompetitorsItem competitor={competitor} key={competitor.id} />;
       })}
     </>
   );
@@ -33,6 +24,7 @@ CompetitorsList.propTypes = {
       avatar: propTypes.string.isRequired,
       likes: propTypes.number.isRequired,
       parentName: propTypes.string.isRequired,
+      rank: propTypes.number.isRequired,
     })
   ).isRequired,
 };

@@ -5,7 +5,7 @@ import React from "react";
 
 import IconHeart from "../../images/icon-heart.svg";
 
-const CompetitorsItem = ({ competitor, index }) => {
+const CompetitorsItem = ({ competitor }) => {
   return (
     <div className="competitors__item" key={competitor.id}>
       <div className="competitors__wrapper">
@@ -26,7 +26,7 @@ const CompetitorsItem = ({ competitor, index }) => {
             <div className="text-smaller text-pink">{competitor.likes}</div>
           </div>
           <div className="competitors__item__info__place text-small text-grey">
-            {index}
+            {competitor.rank}
           </div>
         </div>
       </div>
@@ -41,8 +41,8 @@ CompetitorsItem.propTypes = {
     avatar: propTypes.string.isRequired,
     likes: propTypes.number.isRequired,
     parentName: propTypes.string.isRequired,
+    rank: propTypes.number.isRequired,
   }).isRequired,
-  index: propTypes.number.isRequired,
 };
 
 export default CompetitorsItem;
