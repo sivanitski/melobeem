@@ -6,10 +6,11 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "gender"],
+        "required": ["id", "gender", "image_url"],
         "properties": {
           "id": {"type": "integer"},
-          "gender": {"type": "string"}
+          "gender": {"type": "string"},
+          "image_url": {"type": "string"}
         }
       }
     },
