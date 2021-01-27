@@ -1,6 +1,6 @@
-export const filterCompetitors = (string, children) => {
+export const filterCompetitors = (childName, children) => {
   return children.filter((child) =>
-    child.name.toLowerCase().includes(string.toLowerCase())
+    child.name.toLowerCase().includes(childName.toLowerCase())
   );
 };
 

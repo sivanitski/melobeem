@@ -8,7 +8,7 @@ import { filterCompetitors } from "../../helpers/utils";
 import { CompetitorsList } from "../competitors-list";
 
 const CompetitorsSearch = ({ competitors }) => {
-  const [searchString, setSearchString] = useState(``);
+  const [searchString, setSearchString] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 
   const onSearchFilledChange = (evt) => {
