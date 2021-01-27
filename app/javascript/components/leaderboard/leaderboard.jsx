@@ -4,7 +4,7 @@ import React from "react";
 import { createAPI } from "../../api";
 import { CompetitionInfo } from "../competition-info";
 import { Competitors } from "../competitors";
-import CompetitorsSearch from "../competitors-search/competitors-search";
+import { CompetitorsSearch } from "../competitors-search/";
 import { Footer } from "../footer";
 import { HeaderNotLogin } from "../header-not-login";
 import { NewIn } from "../new-in";

@@ -4,6 +4,7 @@ import propTypes from "prop-types";
 import React from "react";
 
 import { calcDaysLeft } from "../../helpers/date";
+import { roundToHundredths } from "../../helpers/utils";
 
 const CompetitionInfo = ({ timeLeft, prize }) => {
   return (
@@ -17,7 +18,7 @@ const CompetitionInfo = ({ timeLeft, prize }) => {
       <div className="competition-info__item">
         <div className="competition-info__item__title text-grey">Prize</div>
         <div className="competition-info__item__title headline--medium text-pink">
-          £{Math.round(prize * 100) / 100}
+          £{roundToHundredths(prize)}
         </div>
       </div>
     </div>

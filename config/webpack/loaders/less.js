@@ -1,13 +1,13 @@
-const getStyleRule = require('@rails/webpacker/package/utils/get_style_rule');
+const getStyleRule = require("@rails/webpacker/package/utils/get_style_rule");
 
 module.exports = getStyleRule(/\.less(\.erb)?$/i, false, [
   {
-    loader: 'less-loader',
+    loader: "less-loader",
     options: {
       lessOptions: {
-        strictMath: true
+        strictMath: true,
       },
-      sourceMap: true
-    }
-  }
+      sourceMap: true,
+    },
+  },
 ]);
