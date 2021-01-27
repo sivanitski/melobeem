@@ -4,7 +4,6 @@ export const createAPI = () => {
   const api = axios.create({
     baseURL: `https://6001809808587400174dac79.mockapi.io/melobeem`,
     timeout: 1000 * 5,
-    // withCredentials: true,
   });
 
   const onSuccess = (response) => {
@@ -12,8 +11,6 @@ export const createAPI = () => {
   };
 
   const onFail = (err) => {
-    const {response} = err;
-
     throw err;
   };
 

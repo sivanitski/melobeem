@@ -1,18 +1,19 @@
-import Rails from "@rails/ujs";
+import "../less/main.less";
+
 import * as ActiveStorage from "@rails/activestorage";
-import "channels";
-import {App} from "../components/app";
-import '../less/main.less';
+import Rails from "@rails/ujs";
+
+import { App } from "../components/app";
 
 Rails.start();
 ActiveStorage.start();
 
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <App/>,
-    document.body.appendChild(document.createElement('div'))
+    <App />,
+    document.body.appendChild(document.createElement("div"))
   );
-})
+});

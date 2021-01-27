@@ -27,7 +27,6 @@ default: &default
     - .gif
     - .tiff
     - .ico
-    - .svg
     - .eot
     - .otf
     - .ttf
@@ -60,7 +59,7 @@ development:
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
     https: false
-    host: webpacker
+    host: localhost
     port: 3035
     public: localhost:3035
     hmr: true
@@ -71,7 +70,6 @@ development:
     disable_host_check: true
     use_local_ip: false
     quiet: false
-    pretty: false
     headers:
       'Access-Control-Allow-Origin': '*'
     watch_options:
