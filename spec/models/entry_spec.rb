@@ -20,4 +20,27 @@ RSpec.describe Entry, type: :model do
         .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: User has already been taken')
     end
   end
+
+  describe 'callbacks' do
+    let(:redis) { Redis.current }
+    let!(:entry) { create(:entry, user: user, competition: competition) }
+
+    describe '#add_to_leaderboard' do
+      it 'add entry to leaderboard' do
+        expect(redis.zscore('leaderboard', "entry:#{entry.id}").to_i).to be(0)
+      end
+
+      it 'add entry details' do
+        expect(Leaderboard::Actions.get_entry_details(entry.id)['id']).to eq(entry.id.to_s)
+      end
+    end
+
+    describe '#remove_from_leaderboard' do
+      it 'remove entry from leaderboard' do
+        entry.destroy
+
+        expect(redis.zscore('leaderboard', "entry:#{entry.id}")).to be_nil
+      end
+    end
+  end
 end

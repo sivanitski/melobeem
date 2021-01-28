@@ -22,6 +22,8 @@ Rails.application.routes.draw do
           resources :entries, only: %i[edit update destroy], module: :users
         end
       end
+
+      resources :leaderboard, only: :index
     end
   end
 end
