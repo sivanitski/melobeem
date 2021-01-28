@@ -24,7 +24,7 @@ Style/Documentation:
 
 Metrics/BlockLength:
   Enabled: true
-  Max: 50
+  Max: 80
 
 Layout/SpaceInsideArrayLiteralBrackets:
   Enabled: true
@@ -35,4 +35,10 @@ Layout/LineLength:
   Max: 160
 
 RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/NestedGroups:
   Enabled: false

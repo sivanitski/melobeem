@@ -116,6 +116,7 @@ GEM
     childprocess (3.0.0)
     concurrent-ruby (1.1.7)
     crass (1.0.6)
+    dante (0.2.0)
     database_cleaner (1.8.5)
     database_cleaner-active_record (1.8.0)
       activerecord
@@ -344,6 +345,11 @@ GEM
       actionpack (>= 4.0)
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
+    stripe (5.29.0)
+    stripe-ruby-mock (3.0.1)
+      dante (>= 0.2.0)
+      multi_json (~> 1.0)
+      stripe (> 5, < 6)
     thor (1.0.1)
     tilt (2.0.10)
     tzinfo (2.0.4)
@@ -411,6 +417,8 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   spring
+  stripe
+  stripe-ruby-mock (~> 3.0.1)
   tzinfo-data
   web-console (>= 4.1.0)
   webdrivers

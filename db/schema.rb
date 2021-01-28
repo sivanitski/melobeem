@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_01_18_125204) do
+ActiveRecord::Schema.define(version: 2021_01_22_183711) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -64,6 +64,21 @@ ActiveRecord::Schema.define(version: 2021_01_18_125204) do
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
+  create_table "purchase_transactions", force: :cascade do |t|
+    t.string "intent_id"
+    t.integer "amount"
+    t.integer "amount_received"
+    t.integer "vote_value"
+    t.integer "status", default: 0
+    t.jsonb "full_info", default: {}, null: false
+    t.bigint "user_id"
+    t.bigint "entry_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["entry_id"], name: "index_purchase_transactions_on_entry_id"
+    t.index ["user_id"], name: "index_purchase_transactions_on_user_id"
+  end
+
   create_table "users", force: :cascade do |t|
     t.string "provider", default: "email", null: false
     t.string "uid", default: "", null: false
@@ -102,6 +117,8 @@ ActiveRecord::Schema.define(version: 2021_01_18_125204) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "entries", "competitions"
   add_foreign_key "entries", "users"
+  add_foreign_key "purchase_transactions", "entries"
+  add_foreign_key "purchase_transactions", "users"
   add_foreign_key "votes", "entries"
   add_foreign_key "votes", "users"
 end

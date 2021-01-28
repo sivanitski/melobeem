@@ -8,7 +8,10 @@ Rails.application.routes.draw do
         sessions: 'api/v1/auth/sessions'
       }
 
+      post '/check_payment_status', to: 'webhooks#check_payment_status'
+
       resources :votes, only: :create
+      resources :charges, only: :create
 
       resources :competitions, only: [] do
         resources :entries, only: %i[index create show], module: :competitions
