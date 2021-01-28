@@ -5,7 +5,6 @@ import { Leaderboard } from "../leaderboard";
 import TestPage from "../test-page/test-page";
 
 const App = () => {
-  // return <Leaderboard />;
   return (
     <Router>
       <Switch>
