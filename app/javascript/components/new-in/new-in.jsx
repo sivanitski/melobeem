@@ -3,6 +3,7 @@ import "./style.less";
 
 import propTypes from "prop-types";
 import React from "react";
+import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 const NewIn = ({ competitors }) => {
@@ -23,12 +24,14 @@ const NewIn = ({ competitors }) => {
         {competitors.map((competitor) => {
           return (
             <SwiperSlide className="swiper__item" key={competitor.id}>
-              <div className="swiper__item__img">
-                <img src={competitor.avatar} />
-              </div>
-              <div className="swiper__item__name text-grey">
-                {competitor.name}
-              </div>
+              <Link to={`entry/${competitor.id}`}>
+                <div className="swiper__item__img">
+                  <img src={competitor.avatar} />
+                </div>
+                <div className="swiper__item__name text-grey">
+                  {competitor.name}
+                </div>
+              </Link>
             </SwiperSlide>
           );
         })}

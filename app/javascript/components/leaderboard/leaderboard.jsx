@@ -12,28 +12,47 @@ import { NewIn } from "../new-in";
 const Leaderboard = () => {
   const api = createAPI();
 
-  const getCurrentCompetition = () => {
-    return api.get(`/currentCompetition/1`);
+  const getChildren = () => {
+    return api.get(`/competitions/1/children`);
   };
 
-  const { data, error, loading } = useRequest(getCurrentCompetition, {
+  const getCompetition = () => {
+    return api.get(`/competitions/1`);
+  };
+
+  const {
+    data: competitionData,
+    error: competitionError,
+    loading: competitionLoading,
+  } = useRequest(getCompetition, {
     formatResult: (res) => res.data,
   });
 
-  if (error) {
+  const {
+    data: childrenData,
+    error: childrenError,
+    loading: childrenLoading,
+  } = useRequest(getChildren, {
+    formatResult: (res) => res.data,
+  });
+
+  if (childrenError || competitionError) {
     return <div>failed to load</div>;
   }
-  if (loading) {
+  if (childrenLoading || competitionLoading) {
     return <div>Loading...</div>;
   }
 
   return (
     <>
       <HeaderNotLogin />
-      <CompetitorsSearch competitors={data.competitors} />
-      <NewIn competitors={data.competitors} />
-      <CompetitionInfo timeLeft={data.timeLeft} prize={data.prize} />
-      <Competitors competitors={data.competitors} />
+      <CompetitorsSearch competitors={childrenData} />
+      <NewIn competitors={childrenData} />
+      <CompetitionInfo
+        timeLeft={competitionData.timeLeft}
+        prize={competitionData.prize}
+      />
+      <Competitors competitors={childrenData} />
       <Footer />
     </>
   );
