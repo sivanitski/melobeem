@@ -46,7 +46,6 @@ CompetitorsItem.propTypes = {
     parentName: propTypes.string.isRequired,
     rank: propTypes.number.isRequired,
   }).isRequired,
-  history: propTypes.shape({ push: propTypes.func.isRequired }),
 };
 
 export default CompetitorsItem;
