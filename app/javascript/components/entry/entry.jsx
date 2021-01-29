@@ -7,8 +7,10 @@ import { withRouter } from "react-router";
 
 import { createAPI } from "../../api";
 import { EntryChild } from "../entry-child";
+import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderUser } from "../header-user";
+import { Loading } from "../loading";
 
 const Entry = ({
   match: {
@@ -26,10 +28,10 @@ const Entry = ({
   });
 
   if (error) {
-    return <div>failed to load</div>;
+    return <Error />;
   }
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
   return (
     <>

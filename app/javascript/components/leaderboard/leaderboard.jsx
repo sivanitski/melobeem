@@ -5,8 +5,10 @@ import { createAPI } from "../../api";
 import { CompetitionInfo } from "../competition-info";
 import { Competitors } from "../competitors";
 import { CompetitorsSearch } from "../competitors-search/";
+import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderNotLogin } from "../header-not-login";
+import { Loading } from "../loading/";
 import { NewIn } from "../new-in";
 
 const Leaderboard = () => {
@@ -37,10 +39,10 @@ const Leaderboard = () => {
   });
 
   if (childrenError || competitionError) {
-    return <div>failed to load</div>;
+    return <Error />;
   }
   if (childrenLoading || competitionLoading) {
-    return <div>Loading...</div>;
+    return <Loading />;
   }
 
   return (
