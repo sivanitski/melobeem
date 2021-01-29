@@ -3,7 +3,7 @@ import "./style.less";
 import propTypes from "prop-types";
 import React from "react";
 
-import Shere from "../../images/shere.svg";
+import Share from "../../images/share.svg";
 
 const EntryChild = ({ child }) => {
   return (
@@ -11,7 +11,7 @@ const EntryChild = ({ child }) => {
       <div className="entry__img">
         <img src={child.avatar} />
         <div className="entry__share">
-          <Shere />
+          <Share />
         </div>
       </div>
       <div className="entry__name headline--medium">{child.name}</div>
