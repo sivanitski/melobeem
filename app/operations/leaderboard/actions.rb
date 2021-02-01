@@ -8,10 +8,11 @@ module Leaderboard
     extend GetCollection
     extend SetEntryDetails
     extend DestroyEntry
+    extend GetNearEntries
 
     class << self
       def redis
-        @redis ||= Redis.current
+        Redis.current
       end
 
       def entry_key(entry_id)
