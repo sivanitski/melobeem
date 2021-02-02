@@ -13,14 +13,20 @@ competition = Competition.create!(title: 'Kiddy')
   )
 end
 
-# generate 20 entries
+# generate 20 entries with images
+images = Dir.glob('app/javascript/images/mockphotos/*.{jpg,gif,png,jpeg}')
+
 (1..20).each do |id|
-  Entry.create!(
+  entry = Entry.create!(
     id: id,
     gender: FFaker::Gender.binary,
     user_id: id,
     competition_id: competition.id
   )
+  url = images[id - 1]
+  filename = File.basename(URI.parse(url).path)
+  file = URI.open(url)
+  entry.image.attach(io: file, filename: filename)
 end
 
 #generate 2000 votes
