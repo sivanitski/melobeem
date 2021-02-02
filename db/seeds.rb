@@ -14,7 +14,7 @@ competition = Competition.create!(title: 'Kiddy')
 end
 
 # generate 20 entries with images
-images = Dir.glob('app/javascript/images/mockphotos/*.{jpg,gif,png,jpeg}')
+images = Dir.glob('db/fixtures/entry_images/*').map(&File.method(:realdirpath))
 
 (1..20).each do |id|
   entry = Entry.create!(
