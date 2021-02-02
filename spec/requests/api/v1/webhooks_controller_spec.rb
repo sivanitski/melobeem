@@ -5,14 +5,14 @@ describe 'Webhooks API', type: :request do
   let(:stripe_helper) { StripeMock.create_test_helper }
   let(:params) do
     {
-      "data": {
-        "object": {
-          "id": 'pi_00000000000000',
-          "amount": 5000,
-          "amount_received": 5000
+      data: {
+        object: {
+          id: 'pi_00000000000000',
+          amount: 5000,
+          amount_received: 5000
         }
       },
-      "type": 'payment_intent.succeeded'
+      type: 'payment_intent.succeeded'
     }
   end
   let(:entry) { create(:entry, competition: competition, user: user) }
