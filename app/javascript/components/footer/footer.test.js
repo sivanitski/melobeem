@@ -1,7 +1,7 @@
 import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import React from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import renderer from "react-test-renderer";
 
 import Footer from "./footer";
