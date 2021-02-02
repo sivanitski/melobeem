@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`competition-info component should render competition-info component 1`] = `
+<div
+  className="competition-info"
+>
+  <div
+    className="competition-info__item"
+  >
+    <div
+      className="competition-info__item__title text-grey"
+    >
+      Days left
+    </div>
+    <div
+      className="competition-info__item__title headline--medium text-pink"
+    >
+      -9178
+    </div>
+  </div>
+  <div
+    className="competition-info__item"
+  >
+    <div
+      className="competition-info__item__title text-grey"
+    >
+      Prize
+    </div>
+    <div
+      className="competition-info__item__title headline--medium text-pink"
+    >
+      £
+      105
+    </div>
+  </div>
+</div>
+`;

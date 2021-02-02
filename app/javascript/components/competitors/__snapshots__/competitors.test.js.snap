@@ -1,0 +1,78 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Competitors component should render Competitors component 1`] = `
+<div
+  className="competitors"
+>
+  <div
+    className="competitors__title headline--medium"
+  >
+    Leaderboard 
+  </div>
+  <div
+    className="swiper-container competitors__swiper swiper"
+  >
+    <div
+      className="swiper-wrapper"
+    >
+      <div
+        className="swiper-slide competitors__swiper__item headline active"
+        onClick={[Function]}
+      >
+        1
+      </div>
+      <div
+        className="swiper-slide competitors__swiper__item headline text-pink"
+        onClick={[Function]}
+      >
+        2
+      </div>
+      <div
+        className="swiper-slide competitors__swiper__item headline text-pink"
+        onClick={[Function]}
+      >
+        3
+      </div>
+      <div
+        className="swiper-slide competitors__swiper__item headline text-pink"
+        onClick={[Function]}
+      >
+        4
+      </div>
+      <div
+        className="swiper-slide competitors__swiper__item headline text-pink"
+        onClick={[Function]}
+      >
+        5
+      </div>
+      <div
+        className="swiper-slide competitors__swiper__item headline text-pink"
+        onClick={[Function]}
+      >
+        6
+      </div>
+    </div>
+  </div>
+  <div
+    className="competitors__level"
+  >
+    <div
+      className="competitors__level__amount"
+    >
+      Level 
+      1
+    </div>
+    <div
+      className="competitors__level__comment text-grey"
+    >
+      (From 
+      0
+       to
+       
+      5
+       Votes)
+       
+    </div>
+  </div>
+</div>
+`;

@@ -20,7 +20,10 @@ const Competitors = ({ competitors }) => {
   return (
     <div className="competitors">
       <div className="competitors__title headline--medium">Leaderboard </div>
-      <CompetitorsSwiperMenu onSliderClick={onSliderClick} />
+      <CompetitorsSwiperMenu
+        className="competitors__menu"
+        onSliderClick={onSliderClick}
+      />
       <CompetitorsList competitors={shownCompetitors} />
     </div>
   );

@@ -1,0 +1,57 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompetitorsItem component should render CompetitorsItem component 1`] = `
+<div
+  className="competitors__item"
+>
+  <a
+    href="/entry/111"
+    onClick={[Function]}
+  >
+    <div
+      className="competitors__wrapper"
+    >
+      <div
+        className="competitors__item__img"
+      >
+        <img
+          src="some/url/avatar.png"
+        />
+      </div>
+      <div
+        className="competitors__item__names"
+      >
+        <div
+          className="competitors__item__names__child text-black"
+        >
+          Julia Mur
+        </div>
+        <div
+          className="competitors__item__names__parent text-smaller text-grey"
+        >
+          John Depp
+        </div>
+      </div>
+      <div
+        className="competitors__item__info"
+      >
+        <div
+          className="competitors__item__info__likes"
+        >
+          <test-file-stub />
+          <div
+            className="text-smaller text-pink"
+          >
+            1000
+          </div>
+        </div>
+        <div
+          className="competitors__item__info__place text-small text-grey"
+        >
+          1
+        </div>
+      </div>
+    </div>
+  </a>
+</div>
+`;

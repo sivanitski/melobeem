@@ -1,8 +1,8 @@
-import Enzyme, { shallow } from "enzyme";
+import Enzyme, { mount, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import React from "react";
 
-import { Leaderboard } from "./index";
+import Leaderboard from "./leaderboard";
 
 Enzyme.configure({
   adapter: new Adapter(),
