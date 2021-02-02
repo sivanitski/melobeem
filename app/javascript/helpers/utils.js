@@ -1,4 +1,7 @@
 export const filterCompetitors = (childName, children) => {
+  if (!children) {
+    return [];
+  }
   return children.filter((child) =>
     child.name.toLowerCase().includes(childName.toLowerCase())
   );

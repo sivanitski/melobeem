@@ -3,15 +3,15 @@ import Adapter from "enzyme-adapter-react-16";
 import React from "react";
 import renderer from "react-test-renderer";
 
-import Leaderboard from "./leaderboard";
+import HeaderNotLogin from "./header-not-login";
 
 Enzyme.configure({
   adapter: new Adapter(),
 });
 
-describe("Leaderboard", () => {
-  it("should render Competitors component", () => {
-    const component = renderer.create(<Leaderboard />).toJSON();
+describe("NewIn component", () => {
+  it("should render NewIn component", () => {
+    const component = renderer.create(<HeaderNotLogin />).toJSON();
 
     expect(component).toMatchSnapshot();
   });

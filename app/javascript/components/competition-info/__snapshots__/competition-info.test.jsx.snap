@@ -15,7 +15,7 @@ exports[`competition-info component should render competition-info component 1`]
     <div
       className="competition-info__item__title headline--medium text-pink"
     >
-      -9178
+      -9179
     </div>
   </div>
   <div

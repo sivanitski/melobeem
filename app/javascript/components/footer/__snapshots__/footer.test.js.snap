@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer component should render Footer component 1`] = `
+<div
+  className="footer"
+>
+  <a
+    className="footer__item"
+    href="/"
+    onClick={[Function]}
+  >
+    <test-file-stub />
+    <div
+      className="footer__item__title"
+    >
+      Leaderboard
+    </div>
+  </a>
+  <a
+    className="footer__item"
+  >
+    <test-file-stub />
+    <div
+      className="footer__item__title"
+    >
+      Spinner
+    </div>
+  </a>
+  <a
+    className="footer__button"
+  >
+    <test-file-stub />
+  </a>
+  <a
+    className="footer__item"
+  >
+    <test-file-stub />
+    <div
+      className="footer__item__title"
+    >
+      Levels
+    </div>
+  </a>
+  <a
+    className="footer__item"
+  >
+    <test-file-stub />
+    <div
+      className="footer__item__title"
+    >
+      Profile
+    </div>
+  </a>
+</div>
+`;

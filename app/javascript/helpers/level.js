@@ -13,6 +13,9 @@ export const MAX_LEVEL = 6;
 
 // filter users by their likes
 export const filterChildrenByLevel = (children, level) => {
+  if (!children) {
+    return [];
+  }
   switch (level) {
     case MAX_LEVEL:
       return children.filter(
@@ -25,13 +28,4 @@ export const filterChildrenByLevel = (children, level) => {
           child.likes < LEVEL_INTERVALS[level + 1]
       );
   }
-};
-
-export const addPositionToCompetitors = (children) => {
-  children.sort(function (a, b) {
-    return b.likes - a.likes;
-  });
-  return children.forEach((child, index) => {
-    child.position = index + 1;
-  });
 };

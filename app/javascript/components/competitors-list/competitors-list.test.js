@@ -1,9 +1,14 @@
-import Enzyme, { mount } from "enzyme";
+import Enzyme from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import React from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import renderer from "react-test-renderer";
 
-import Competitors from "./competitors";
+import CompetitorsList from "./competitors-list";
+
+Enzyme.configure({
+  adapter: new Adapter(),
+});
 
 const mockProps = {
   competitors: [
@@ -34,32 +39,16 @@ const mockProps = {
   ],
 };
 
-Enzyme.configure({
-  adapter: new Adapter(),
-});
-
-describe("Competitors component", () => {
-  it("should render Competitors component", () => {
+describe("NewIn component", () => {
+  it("should render NewIn component", () => {
     const component = renderer
-      .create(<Competitors competitors={mockProps.competitors} />)
+      .create(
+        <Router>
+          <CompetitorsList competitors={mockProps.competitors} />
+        </Router>
+      )
       .toJSON();
 
     expect(component).toMatchSnapshot();
-  });
-});
-
-describe("Competitors handlers", () => {
-  const onSliderClick = jest.fn();
-  it("should make  slider click ", () => {
-    const component = mount(
-      <Competitors competitors={mockProps.competitors} />
-    );
-
-    const competitorsSwiperItems = component.find("competitors__menu");
-
-    competitorsSwiperItems.forEach((movie) => {
-      movie.simulate(`click`);
-      expect(onSliderClick).toHaveBeenCalledTimes(1);
-    });
   });
 });

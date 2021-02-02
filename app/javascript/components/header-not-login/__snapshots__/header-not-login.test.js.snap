@@ -1,0 +1,67 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewIn component should render NewIn component 1`] = `
+<div
+  className="header-not-login"
+>
+  <div
+    className="header-not-login__pictures"
+  >
+    <div
+      className="header-not-login__pictures-list__item"
+    >
+      <img
+        alt="Cute Baby"
+        src="test-file-stub"
+        srcSet="test-file-stub 2x"
+      />
+    </div>
+    <div
+      className="header-not-login__pictures-list__item"
+    >
+      <img
+        alt="Cute Baby"
+        src="test-file-stub"
+        srcSet="test-file-stub 2x"
+      />
+    </div>
+  </div>
+  <div
+    className="header-not-login__wrapper"
+  >
+    <div
+      className="header-not-login__logo-icon"
+    >
+      <test-file-stub />
+    </div>
+    <div
+      className="header-not-login__logo-text"
+    >
+      <test-file-stub />
+    </div>
+    <div
+      className="header-not-login__text text-grey"
+    >
+      Vote, share with your friends 
+      <br />
+       complete the tasks, 
+      <br />
+       there is many ways to win
+    </div>
+  </div>
+  <div
+    className="header-not-login__buttons"
+  >
+    <button
+      className="button header-not-login__button"
+    >
+      Enter competition
+    </button>
+    <button
+      className="button button--facebook header-not-login__button"
+    >
+      Login with Facebook
+    </button>
+  </div>
+</div>
+`;

@@ -1,0 +1,94 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NewIn component should render NewIn component 1`] = `
+<div
+  className="new-in"
+>
+  <div
+    className="new-in__header"
+  >
+    <h2
+      className="new-in__header__title headline--medium"
+    >
+      New in
+    </h2>
+    <a
+      className="new-in__header__text text-pink"
+      href=""
+    >
+      See All
+    </a>
+  </div>
+  <div
+    className="swiper-container new-in__swiper swiper"
+  >
+    <div
+      className="swiper-wrapper"
+    >
+      <div
+        className="swiper-slide swiper__item"
+      >
+        <a
+          href="/entry/111"
+          onClick={[Function]}
+        >
+          <div
+            className="swiper__item__img"
+          >
+            <img
+              src="some/url/avatar.png"
+            />
+          </div>
+          <div
+            className="swiper__item__name text-grey"
+          >
+            Julia Mur
+          </div>
+        </a>
+      </div>
+      <div
+        className="swiper-slide swiper__item"
+      >
+        <a
+          href="/entry/112"
+          onClick={[Function]}
+        >
+          <div
+            className="swiper__item__img"
+          >
+            <img
+              src="some/url/avatar.png"
+            />
+          </div>
+          <div
+            className="swiper__item__name text-grey"
+          >
+            Elena Black
+          </div>
+        </a>
+      </div>
+      <div
+        className="swiper-slide swiper__item"
+      >
+        <a
+          href="/entry/113"
+          onClick={[Function]}
+        >
+          <div
+            className="swiper__item__img"
+          >
+            <img
+              src="some/url/avatar.png"
+            />
+          </div>
+          <div
+            className="swiper__item__name text-grey"
+          >
+            Tom Raddle
+          </div>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+`;

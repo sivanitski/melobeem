@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CompetitorsSearch should render CompetitorsSearch component 1`] = `
+<div
+  className="search"
+>
+  <div
+    className="search__wrapper"
+  >
+    <input
+      className="search__input"
+      onChange={[Function]}
+      placeholder="Type Baby’s name"
+      value=""
+    />
+  </div>
+</div>
+`;
