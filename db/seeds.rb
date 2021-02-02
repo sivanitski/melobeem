@@ -14,7 +14,7 @@ competition = Competition.create!(title: 'Kiddy')
 end
 
 # generate 20 entries with images
-images = Dir.glob('db/fixtures/entry_images/*').map(&File.method(:realdirpath))
+images = Pathname.glob('db/fixtures/entry_images/*')
 
 (1..20).each do |id|
   entry = Entry.create!(
@@ -23,10 +23,8 @@ images = Dir.glob('db/fixtures/entry_images/*').map(&File.method(:realdirpath))
     user_id: id,
     competition_id: competition.id
   )
-  url = images[id - 1]
-  filename = File.basename(URI.parse(url).path)
-  file = URI.open(url)
-  entry.image.attach(io: file, filename: filename)
+  image = images[id - 1]
+  entry.image.attach(io: image.open, filename: image.basename)
 end
 
 #generate 2000 votes
