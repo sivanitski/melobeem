@@ -42,3 +42,7 @@ RSpec/MultipleMemoizedHelpers:
 
 RSpec/NestedGroups:
   Enabled: false
+
+# strange behavior on Github CI: doesn't see an empty line at the end of routes.rb
+Layout/TrailingEmptyLines:
+  Enabled: false
