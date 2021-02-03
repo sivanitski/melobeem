@@ -2,6 +2,7 @@ import "./style.less";
 
 import propTypes from "prop-types";
 import React from "react";
+import { Link } from "react-router-dom";
 
 import Share from "../../images/share.svg";
 
@@ -15,7 +16,10 @@ const EntryChild = ({ child }) => {
         </div>
       </div>
       <div className="entry__name headline--medium">{child.name}</div>
-      <button className="button entry__button">Vote</button>
+      <Link to={{ pathname: `/entry/${child.id}/vote`, propsSearch: child }}>
+        <button className="button entry__button">Vote</button>
+      </Link>
+
       <div className="entry__voters"></div>
     </div>
   );
