@@ -33,7 +33,6 @@ Competitors.propTypes = {
       name: propTypes.string.isRequired,
       avatar: propTypes.string.isRequired,
       likes: propTypes.number.isRequired,
-      parentName: propTypes.string.isRequired,
     })
   ).isRequired,
 };

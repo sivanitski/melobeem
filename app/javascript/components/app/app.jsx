@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
-import TestPage from "../test-page/test-page";
 
 const App = () => {
   return (
@@ -11,8 +11,8 @@ const App = () => {
         <Route exact path="/">
           <Leaderboard />
         </Route>
-        <Route exact path={"/test-page"}>
-          <TestPage />
+        <Route exact path={"/entry/:id"}>
+          <Entry />
         </Route>
       </Switch>
     </Router>

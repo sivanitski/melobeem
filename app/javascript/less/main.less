@@ -1,17 +1,26 @@
 body {
   margin: 0;
+  margin-bottom: 80px;
   padding: 0;
+}
+
+html {
+  min-height: 100%;
+  position: relative;
 }
 
 .root {
   min-height: 100%;
-  font-family: 'Roboto', Arial, sans-serif;
+  position: relative;
+  font-family: "Roboto", Arial, sans-serif;
   font-style: normal;
   font-weight: normal;
   font-size: 16px;
   line-height: 22px;
   letter-spacing: 0.15px;
   color: #000;
+  display: flex;
+  flex-direction: column;
 }
 
 button {
@@ -41,6 +50,7 @@ a {
   line-height: 28px;
   letter-spacing: 0.35px;
   color: #fff;
+  cursor: pointer;
 
   &--facebook {
     background: #3b5998;
@@ -83,10 +93,30 @@ a {
   letter-spacing: 0.25px;
 }
 
+.text-tiny {
+  font-size: 12px;
+  line-height: 18px;
+}
+
 .text-pink {
   color: #ff7098;
 }
 
 .text-grey {
   color: #747474;
+}
+
+.text-black {
+  color: #000;
+}
+
+.half-circle {
+  width: 190px;
+  height: 104px;
+  border-bottom-left-radius: 105px;
+  border-bottom-right-radius: 105px;
+  border: 1px;
+  border-top: 0;
+  box-shadow: 0 2px 4px rgba(239, 88, 160, 0.06),
+    0 4px 4px rgba(209, 209, 209, 0.12), 0 1px 8px rgba(163, 163, 163, 0.08);
 }

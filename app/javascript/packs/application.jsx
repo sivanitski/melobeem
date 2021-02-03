@@ -11,9 +11,9 @@ ActiveStorage.start();
 import React from "react";
 import ReactDOM from "react-dom";
 
+const root = document.createElement("div");
+root.classList.add("root");
+
 document.addEventListener("DOMContentLoaded", () => {
-  ReactDOM.render(
-    <App />,
-    document.body.appendChild(document.createElement("div"))
-  );
+  ReactDOM.render(<App />, document.body.appendChild(root));
 });

@@ -1,6 +1,7 @@
 import "./style.less";
 
 import React from "react";
+import { Link } from "react-router-dom";
 
 import IconButton from "../../images/button.svg";
 import IconLeaderboard from "../../images/icon-leaderboard.svg";
@@ -11,10 +12,10 @@ import IconSpinner from "../../images/icon-spinner.svg";
 const Footer = () => {
   return (
     <div className="footer">
-      <a className="footer__item">
+      <Link to="/" className="footer__item">
         <IconLeaderboard />
         <div className="footer__item__title">Leaderboard</div>
-      </a>
+      </Link>
       <a className="footer__item">
         <IconSpinner />
         <div className="footer__item__title">Spinner</div>
