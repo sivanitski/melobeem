@@ -16,8 +16,8 @@ const EntryChild = ({ child }) => {
         </div>
       </div>
       <div className="entry__name headline--medium">{child.name}</div>
-      <Link to={`/entry/${child.id}/vote`}>
-        <button className="button entry__button">Vote</button>
+      <Link to={`/entry/${child.id}/vote`} className="button entry__button">
+        Vote
       </Link>
 
       <div className="entry__voters"></div>
