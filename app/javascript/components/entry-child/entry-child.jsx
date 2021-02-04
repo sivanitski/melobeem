@@ -16,7 +16,7 @@ const EntryChild = ({ child }) => {
         </div>
       </div>
       <div className="entry__name headline--medium">{child.name}</div>
-      <Link to={{ pathname: `/entry/${child.id}/vote`, propsSearch: child }}>
+      <Link to={`/entry/${child.id}/vote`}>
         <button className="button entry__button">Vote</button>
       </Link>
 

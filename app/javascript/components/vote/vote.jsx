@@ -1,9 +1,7 @@
 import "./style.less";
 
-import propTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 import { withRouter } from "react-router";
-import { Redirect } from "react-router-dom";
 
 import {
   calcTimeDuration,
@@ -12,14 +10,10 @@ import {
 import HeartVote from "../../images/heart-vote.svg";
 import { HeaderUser } from "../header-user";
 
-const Vote = ({
-  location: { propsSearch: child },
-  match: {
-    params: { id },
-  },
-}) => {
-  // The date will be in Current User, when he exists
-  const date = new Date("February 04, 2021 00:07:00");
+// It will be removed here https://trello.com/c/vnnM0dlN . The date will be in Current User
+const date = Date.now() + 30000;
+
+const Vote = ({}) => {
   const [timeLeft, setTimeLeft] = useState(calcTimeDuration(date));
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -34,8 +28,6 @@ const Vote = ({
       clearTimeout(timer);
     };
   }, [timeLeft]);
-
-  if (!child) return <Redirect to={`/entry/${id}`} />;
 
   return (
     <>
@@ -79,24 +71,6 @@ const Vote = ({
       </div>
     </>
   );
-};
-
-Vote.propTypes = {
-  location: propTypes.shape({
-    propsSearch: propTypes.shape({
-      id: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-      avatar: propTypes.string.isRequired,
-      likes: propTypes.number.isRequired,
-      parentName: propTypes.string.isRequired,
-      rank: propTypes.number.isRequired,
-    }),
-  }),
-  match: propTypes.shape({
-    params: propTypes.shape({
-      id: propTypes.string.isRequired,
-    }),
-  }),
 };
 
 export default withRouter(Vote);
