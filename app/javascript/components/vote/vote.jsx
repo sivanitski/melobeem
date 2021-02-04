@@ -41,7 +41,7 @@ const Vote = ({}) => {
           <div className="vote-item__text">1 Vote</div>
           <div
             className={`vote-item__button ${
-              timeLeft > 0 ? `vote-item__button--orange` : ``
+              timeLeft > 0 ? "vote-item__button--orange" : ""
             }`}
           >
             {timeLeft > 0 ? formatTimeInMinutesAndSeconds(timeLeft) : "Free"}
