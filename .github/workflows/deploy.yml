@@ -2,14 +2,15 @@ env:
   PROJECT_NAMESPACE: melobeem
   ECR_PATH: ${{ secrets.AWS_REGISTRY_ID }}.dkr.ecr.us-east-1.amazonaws.com
 
-name: Auto deploy production
+name: Deploy production
 on:
-  pull_request:
-    types: [closed]
+  workflow_dispatch:
+  push:
+    branches:
+      - master
 
 jobs:
-  autodeploy:
-    if: github.event.pull_request.merged == true
+  deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Clone Repositroy
@@ -27,7 +28,7 @@ jobs:
           region: us-east-1
           image: ${{ env.PROJECT_NAMESPACE }}:${{ github.sha }}
 
-      - name: Pull code to EC2
+      - name: Pull code from ECR to EC2
         uses: garygrossgarten/github-action-ssh@release
         with:
           command: export IMAGE=${{ env.ECR_PATH }}/${{ env.PROJECT_NAMESPACE }}:${{ github.sha }} && cd deploy/melobeem && ./ecrdeploy.sh
