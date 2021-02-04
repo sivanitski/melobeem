@@ -8,7 +8,7 @@ import { CompetitorsSearch } from "../competitors-search/";
 import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderNotLogin } from "../header-not-login";
-import { Loading } from "../loading/";
+import { Loading } from "../loading";
 import { NewIn } from "../new-in";
 
 const Leaderboard = () => {

@@ -15,6 +15,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
+    "@umijs/hooks": "^1.9.3",
     "axios": "^0.21.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "classnames": "^2.2.6",
@@ -28,7 +29,9 @@
     "swiper": "^6.4.5"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>app/javascript/setupTests.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>app/javascript/setupTests.js"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/app/javascript/__mocks__/fileMock.js",
       "\\.(css|less|scss|sass)$": "identity-obj-proxy"

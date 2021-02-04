@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components Vote should render Vote component 1`] = `
+<div>
+  Loading...
+</div>
+`;
+
+exports[`Components Voters should render Vote component 1`] = `
+<div
+  className="loading"
+>
+  Loading...
+</div>
+`;
