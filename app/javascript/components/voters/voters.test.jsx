@@ -7,7 +7,7 @@ import renderer from "react-test-renderer";
 import Voters from "./voters";
 const mockProps = {
   match: {
-    params: `111`,
+    params: { id: `111` },
   },
 };
 
@@ -35,7 +35,6 @@ describe("Components", () => {
         </Router>
       );
 
-      // const loading = component.find(".loading").at(0);
       expect(component.exists(".loading")).toBeTruthy();
     });
   });
