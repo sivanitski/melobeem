@@ -1,0 +1,141 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Components Vote should render Vote component 1`] = `
+Array [
+  <div
+    className="header-user"
+  >
+    <div
+      className="header-user__item"
+    >
+      <div
+        className="header-user__item__text text-tiny text-grey"
+      >
+        Votes
+      </div>
+      <div
+        className="header-user__item__number headline--medium text-pink"
+      >
+        1
+      </div>
+    </div>
+    <div
+      className="half-circle header-user__level"
+    >
+      <div
+        className="header-user__level__text text-grey text-tiny"
+      >
+        Level 1 
+        <span
+          className="text-tiny"
+        >
+          (1/5)
+        </span>
+      </div>
+      <test-file-stub />
+    </div>
+    <div
+      className="header-user__item"
+    >
+      <div
+        className="header-user__item__text text-tiny text-grey"
+      >
+        Rank
+      </div>
+      <div
+        className="header-user__item__number headline--medium text-pink"
+      >
+        1,789
+      </div>
+    </div>
+  </div>,
+  <div
+    className="vote"
+  >
+    <div
+      className="vote-item"
+    >
+      <div
+        className="vote-item__img"
+      >
+        <test-file-stub
+          className="vote-item__img--free"
+        />
+      </div>
+      <div
+        className="vote-item__text"
+      >
+        1 Vote
+      </div>
+      <div
+        className="vote-item__button vote-item__button--orange"
+      >
+        00:29
+      </div>
+    </div>
+    <div
+      className="vote-item"
+    >
+      <div
+        className="vote-item__img"
+      >
+        <test-file-stub
+          className="vote-item__img--small"
+        />
+      </div>
+      <div
+        className="vote-item__text"
+      >
+        10 Votes
+      </div>
+      <div
+        className="vote-item__button"
+      >
+        £ 10
+      </div>
+    </div>
+    <div
+      className="vote-item"
+    >
+      <div
+        className="vote-item__img"
+      >
+        <test-file-stub
+          className="vote-item__img--medium"
+        />
+      </div>
+      <div
+        className="vote-item__text"
+      >
+        20 Votes
+      </div>
+      <div
+        className="vote-item__button"
+      >
+        £ 20
+      </div>
+    </div>
+    <div
+      className="vote-item"
+    >
+      <div
+        className="vote-item__img"
+      >
+        <test-file-stub
+          className="vote-item__img--big"
+        />
+      </div>
+      <div
+        className="vote-item__text"
+      >
+        50 Votes
+      </div>
+      <div
+        className="vote-item__button"
+      >
+        £ 50
+      </div>
+    </div>
+  </div>,
+]
+`;
