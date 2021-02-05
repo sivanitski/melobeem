@@ -23,13 +23,11 @@ const EntryChild = ({ child }) => {
 
       <Link to={`/entry/${child.id}/voters`} className="entry__voters">
         <div className="entry__voters__list">
-          {child.mainVoters.map((mainVoter) => {
-            return (
-              <div key={mainVoter.id} className="entry__voters__item">
-                <img src={mainVoter.avatar} />
-              </div>
-            );
-          })}
+          {child.mainVoters.map((mainVoter) => (
+            <div key={mainVoter.id} className="entry__voters__item">
+              <img src={mainVoter.avatar} />
+            </div>
+          ))}
         </div>
 
         <RightArrow className="entry__voters__right-arrow" />
