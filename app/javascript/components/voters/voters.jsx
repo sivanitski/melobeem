@@ -33,8 +33,6 @@ const Voters = ({
     return <Loading />;
   }
 
-  console.log(voters);
-
   return (
     <div className="voters">
       <h1 className="headline--small voters__title">Last 10 Voters</h1>
@@ -42,14 +40,12 @@ const Voters = ({
         <GoBack />
       </Link>
       <div className="voters__list">
-        {voters.map((voter) => {
-          return (
-            <div key={voter.id} className="voters__item">
-              <img src={voter.avatar} className="voters__item__img" />
-              <div className="voters__item__name">{voter.name}</div>
-            </div>
-          );
-        })}
+        {voters.map((voter) => (
+          <div key={voter.id} className="voters__item">
+            <img src={voter.avatar} className="voters__item__img" />
+            <div className="voters__item__name">{voter.name}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -1,17 +1,15 @@
-import { useRequest } from "@umijs/hooks";
+import { useRequest } from "ahooks";
 import { mount } from "enzyme";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import renderer from "react-test-renderer";
 
 import Voters from "./voters";
-const mockProps = {
-  match: {
-    params: { id: `111` },
+const mockMatch = {
+  params: {
+    id: "111",
   },
 };
-
-jest.mock("@umijs/hooks");
 
 describe("Components", () => {
   describe("Voters", () => {
@@ -19,7 +17,7 @@ describe("Components", () => {
       const component = renderer
         .create(
           <Router>
-            <Voters id={mockProps} />
+            <Voters match={mockMatch} />
           </Router>
         )
         .toJSON();
@@ -31,7 +29,7 @@ describe("Components", () => {
       beforeEach(() => useRequest.mockReturnValue({ loading: true }));
       const component = mount(
         <Router>
-          <Voters id={mockProps} />
+          <Voters match={mockMatch} />
         </Router>
       );
 
