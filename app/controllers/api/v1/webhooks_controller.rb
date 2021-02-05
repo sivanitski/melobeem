@@ -1,7 +1,7 @@
 module API
   module V1
     class WebhooksController < API::V1::ApplicationController
-      skip_before_action :authenticate_api_v1_user!
+      skip_before_action :authenticate_user!
       skip_before_action :verify_authenticity_token
 
       rescue_from JSON::ParserError, with: :invalid_payload
