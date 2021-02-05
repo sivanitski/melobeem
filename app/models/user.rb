@@ -1,14 +1,20 @@
-# frozen_string_literal: true
-
 class User < ApplicationRecord
+  devise :database_authenticatable, :registerable,
+         :recoverable, :rememberable, :validatable,
+         :omniauthable, omniauth_providers: %i[facebook]
+
   has_many :votes, dependent: :nullify
   has_many :entries, dependent: :nullify
   has_many :purchase_transactions, dependent: :destroy
   has_one_attached :avatar, dependent: :destroy
 
-  devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable, :trackable
-  include DeviseTokenAuth::Concerns::User
-
   validates :name, :provider, presence: true
+
+  def self.from_omniauth(auth)
+    where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+      user.email = auth.info.email
+      user.password = Devise.friendly_token[0, 20]
+      user.name = auth.info.name
+    end
+  end
 end

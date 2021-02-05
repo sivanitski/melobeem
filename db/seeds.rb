@@ -10,6 +10,8 @@ avatars = Pathname.glob('db/fixtures/user_avatars/*')
     id: id,
     name: FFaker::Name.name,
     email: FFaker::Internet.email,
+    provider: FFaker::Internet.domain_word,
+    uid: FFaker::Internet.slug,
     password: "password",
     password_confirmation: "password",
   )
@@ -31,7 +33,7 @@ images = Pathname.glob('db/fixtures/entry_images/*')
   entry.image.attach(io: image.open, filename: image.basename)
 end
 
-#generate 2000 votes
+# generate 2000 votes
 (1..2000).each do |id|
   Vote.create!(
     id: id,

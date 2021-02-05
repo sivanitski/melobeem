@@ -2,7 +2,7 @@ module API
   module V1
     module Competitions
       class EntriesController < API::V1::ApplicationController
-        skip_before_action :authenticate_api_v1_user!, except: %i[create]
+        skip_before_action :authenticate_user!, except: %i[create]
 
         def index
           respond_with_item_list(competition.entries, Entries::IndexSerializer)
