@@ -21,20 +21,18 @@ const NewIn = ({ competitors }) => {
         spaceBetween={8}
         slidesPerView={`auto`}
       >
-        {competitors.map((competitor) => {
-          return (
-            <SwiperSlide className="swiper__item" key={competitor.id}>
-              <Link to={`entry/${competitor.id}`}>
-                <div className="swiper__item__img">
-                  <img src={competitor.avatar} />
-                </div>
-                <div className="swiper__item__name text-grey">
-                  {competitor.name}
-                </div>
-              </Link>
-            </SwiperSlide>
-          );
-        })}
+        {competitors.map((competitor) => (
+          <SwiperSlide className="swiper__item" key={competitor.id}>
+            <Link to={`entry/${competitor.id}`}>
+              <div className="swiper__item__img">
+                <img src={competitor.avatar} />
+              </div>
+              <div className="swiper__item__name text-grey">
+                {competitor.name}
+              </div>
+            </Link>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </div>
   );
