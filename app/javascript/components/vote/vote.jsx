@@ -9,11 +9,13 @@ import {
 } from "../../helpers/date";
 import HeartVote from "../../images/heart-vote.svg";
 import { HeaderUser } from "../header-user";
+import { VotePopup } from "../vote-popup";
 
 // It will be removed here https://trello.com/c/vnnM0dlN . The date will be in Current User
 const date = Date.now() + 30000;
 
 const Vote = ({}) => {
+  const [isPopupShown, setIsPopupShown] = useState(false);
   const [timeLeft, setTimeLeft] = useState(calcTimeDuration(date));
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -29,6 +31,14 @@ const Vote = ({}) => {
     };
   }, [timeLeft]);
 
+  const handlePrizeClick = () => {
+    setIsPopupShown(true);
+  };
+
+  const handlePopupClose = () => {
+    setIsPopupShown(false);
+  };
+
   return (
     <>
       <HeaderUser />
@@ -39,13 +49,15 @@ const Vote = ({}) => {
           </div>
 
           <div className="vote-item__text">1 Vote</div>
-          <div
-            className={`vote-item__button ${
-              timeLeft > 0 ? "vote-item__button--orange" : ""
-            }`}
-          >
-            {timeLeft > 0 ? formatTimeInMinutesAndSeconds(timeLeft) : "Free"}
-          </div>
+          {timeLeft > 0 ? (
+            <div className="vote-item__button vote-item__button--orange">
+              {formatTimeInMinutesAndSeconds(timeLeft)}
+            </div>
+          ) : (
+            <div className="vote-item__button" onClick={handlePrizeClick}>
+              Free
+            </div>
+          )}
         </div>
         <div className="vote-item">
           <div className="vote-item__img">
@@ -69,6 +81,8 @@ const Vote = ({}) => {
           <div className="vote-item__button">£ 50</div>
         </div>
       </div>
+
+      {isPopupShown && <VotePopup handlePopupClose={handlePopupClose} />}
     </>
   );
 };
