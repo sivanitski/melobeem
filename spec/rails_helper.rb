@@ -71,8 +71,8 @@ RSpec.configure do |config|
 
   # Helpers
   config.include FactoryBot::Syntax::Methods
-  config.include Requests::AuthHelpers::Includables, type: :request
-  config.extend Requests::AuthHelpers::Extensions, type: :request
+  config.include Devise::Test::ControllerHelpers, type: :controller
+  config.include LoginHelper, type: :controller
 end
 
 Shoulda::Matchers.configure do |config|

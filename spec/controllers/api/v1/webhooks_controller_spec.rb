@@ -1,7 +1,9 @@
 require 'rails_helper'
 require 'stripe_mock'
 
-describe 'Webhooks API', type: :request do
+RSpec.describe API::V1::WebhooksController, type: :request do
+  include StripeHelper
+
   let(:stripe_helper) { StripeMock.create_test_helper }
   let(:params) do
     {
@@ -19,9 +21,9 @@ describe 'Webhooks API', type: :request do
   let(:user) { create(:user) }
   let(:competition) { create(:competition) }
 
-  after { StripeMock.stop }
-
   before { StripeMock.start }
+
+  after { StripeMock.stop }
 
   describe '#check_payment_status' do
     before do

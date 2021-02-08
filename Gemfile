@@ -44,7 +44,7 @@ gem 'rubocop-rspec', require: false
 
 # authentication
 gem 'devise'
-gem 'devise_token_auth', git: 'https://github.com/lynndylanhurley/devise_token_auth.git', branch: 'master'
+gem 'omniauth', '~> 1.9.1' # TODO: update to v2, resolve issue with devise
 gem 'omniauth-facebook'
 
 # accept authorisation headers
@@ -53,6 +53,7 @@ gem 'rack-cors', require: 'rack/cors'
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'pry', require: true
   gem 'rspec-rails', '~> 4.0.2'
 end
 

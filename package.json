@@ -15,6 +15,7 @@
     "@rails/activestorage": "^6.0.0",
     "@rails/ujs": "^6.0.0",
     "@rails/webpacker": "5.2.1",
+    "ahooks": "^2.9.6",
     "axios": "^0.21.1",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "classnames": "^2.2.6",
@@ -22,13 +23,15 @@
     "less": "^4.1.0",
     "less-loader": "^7.2.1",
     "prop-types": "^15.7.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
+    "react": "16.14.0",
+    "react-dom": "16.14.0",
     "react-router-dom": "^5.2.0",
     "swiper": "^6.4.5"
   },
   "jest": {
-    "setupFilesAfterEnv": ["<rootDir>app/javascript/setupTests.js"],
+    "setupFilesAfterEnv": [
+      "<rootDir>app/javascript/setupTests.js"
+    ],
     "moduleNameMapper": {
       "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/app/javascript/__mocks__/fileMock.js",
       "\\.(css|less|scss|sass)$": "identity-obj-proxy"
@@ -37,7 +40,6 @@
   "version": "0.1.0",
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",
-    "ahooks": "^2.9.4",
     "babel-jest": "^26.6.3",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.6",

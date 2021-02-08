@@ -55,10 +55,10 @@ ActiveRecord::Schema.define(version: 2021_01_22_183711) do
 
   create_table "entries", force: :cascade do |t|
     t.integer "gender", null: false
+    t.bigint "user_id"
     t.bigint "competition_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id"
     t.index ["competition_id"], name: "index_entries_on_competition_id"
     t.index ["user_id", "competition_id"], name: "index_entries_on_user_id_and_competition_id", unique: true
     t.index ["user_id"], name: "index_entries_on_user_id"
@@ -80,35 +80,33 @@ ActiveRecord::Schema.define(version: 2021_01_22_183711) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "provider", default: "email", null: false
-    t.string "uid", default: "", null: false
+    t.string "name"
+    t.string "provider", null: false
+    t.string "uid", null: false
+    t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
     t.string "reset_password_token"
     t.datetime "reset_password_sent_at"
-    t.boolean "allow_password_change", default: false
     t.datetime "remember_created_at"
     t.integer "sign_in_count", default: 0, null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
-    t.inet "current_sign_in_ip"
-    t.inet "last_sign_in_ip"
-    t.string "name"
-    t.string "email"
-    t.json "tokens"
+    t.string "current_sign_in_ip"
+    t.string "last_sign_in_ip"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
   create_table "votes", force: :cascade do |t|
     t.integer "value", default: 1, null: false
+    t.jsonb "fingerprint", default: {}, null: false
+    t.bigint "user_id"
     t.bigint "entry_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "user_id"
-    t.jsonb "fingerprint", default: {}, null: false
     t.index ["entry_id"], name: "index_votes_on_entry_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
