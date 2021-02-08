@@ -1,35 +1,35 @@
 import "./style.less";
 
-import React, { useEffect, useState } from "react";
+import { useRequest } from "ahooks";
+import propTypes from "prop-types";
+import React, { useState } from "react";
 import { withRouter } from "react-router";
 
-import {
-  calcTimeDuration,
-  formatTimeInMinutesAndSeconds,
-} from "../../helpers/date";
+import { createAPI } from "../../api";
 import HeartVote from "../../images/heart-vote.svg";
-import { HeaderUser } from "../header-user";
+import { Error } from "../error";
+import { HeaderUserWithChild } from "../header-user-with-child";
+import { Loading } from "../loading";
 import { VotePopup } from "../vote-popup";
+import { VoteTimer } from "../vote-timer";
 
 // It will be removed here https://trello.com/c/vnnM0dlN . The date will be in Current User
-const date = Date.now() + 30000;
+const date = Date.now() + 20000;
 
-const Vote = ({}) => {
+const Vote = ({
+  match: {
+    params: { id },
+  },
+}) => {
+  const api = createAPI();
+
+  const getCurrentCompetitor = () => {
+    return api.get(`/competitions/1/children/${id}`);
+  };
   const [isPopupShown, setIsPopupShown] = useState(false);
-  const [timeLeft, setTimeLeft] = useState(calcTimeDuration(date));
-  useEffect(() => {
-    if (timeLeft <= 0) {
-      return () => {};
-    }
-
-    const timer = setTimeout(() => {
-      setTimeLeft(calcTimeDuration(date));
-    }, 1000);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [timeLeft]);
+  const { data: child, error, loading } = useRequest(getCurrentCompetitor, {
+    formatResult: (res) => res.data,
+  });
 
   const handlePrizeClick = () => {
     setIsPopupShown(true);
@@ -39,9 +39,18 @@ const Vote = ({}) => {
     setIsPopupShown(false);
   };
 
+  if (error) {
+    return <Error />;
+  }
+  if (loading) {
+    return <Loading />;
+  }
+
+  console.log(child);
+
   return (
     <>
-      <HeaderUser />
+      <HeaderUserWithChild child={child} />
       <div className="vote">
         <div className="vote-item">
           <div className="vote-item__img">
@@ -49,15 +58,7 @@ const Vote = ({}) => {
           </div>
 
           <div className="vote-item__text">1 Vote</div>
-          {timeLeft > 0 ? (
-            <div className="vote-item__button vote-item__button--orange">
-              {formatTimeInMinutesAndSeconds(timeLeft)}
-            </div>
-          ) : (
-            <div className="vote-item__button" onClick={handlePrizeClick}>
-              Free
-            </div>
-          )}
+          <VoteTimer date={date} handlePrizeClick={handlePrizeClick} />
         </div>
         <div className="vote-item">
           <div className="vote-item__img">
@@ -85,6 +86,14 @@ const Vote = ({}) => {
       {isPopupShown && <VotePopup handlePopupClose={handlePopupClose} />}
     </>
   );
+};
+
+Vote.propTypes = {
+  match: propTypes.shape({
+    params: propTypes.shape({
+      id: propTypes.string.isRequired,
+    }),
+  }),
 };
 
 export default withRouter(Vote);

@@ -35,7 +35,7 @@ const Entry = ({
   }
   return (
     <>
-      <HeaderUser />
+      <HeaderUser child={data} />
       <EntryChild child={data} />
       <Footer />
     </>
