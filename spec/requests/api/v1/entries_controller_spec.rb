@@ -47,6 +47,45 @@ describe 'Entries API', type: :request do
 
       it { expect(JSON.parse(response.body)['entry']['id']).to eq entry.id }
     end
+
+    describe '#latest_voters' do
+      let(:api_path) { "/api/v1/competitions/#{competition.id}/entries/#{entry.id}/latest_voters" }
+
+      context 'when voters are present' do
+        before do
+          users = create_list :user, 3
+          create :vote, entry: entry, user: users.first
+          create :vote, entry: entry, user: users.second
+          create :vote, entry: entry, user: users.first
+          create :vote, entry: entry, user: users.last
+          get api_path
+        end
+
+        it 'returns unique voters ids' do
+          ids = JSON.parse(response.body)['users'].each_with_object([]) { |user, arr| arr << user['id'] }
+          expect(ids.uniq).to eq ids
+        end
+
+        it 'ID of users of the most recent votes are equal ID of users from the action response' do
+          ids = JSON.parse(response.body)['users'].each_with_object([]) { |user, arr| arr << user['id'] }
+          expect(ids).to eq Vote.order(created_at: :desc).pluck(:user_id).uniq
+        end
+
+        it { expect(response).to match_response_schema('entries/latest_voters') }
+      end
+
+      context 'when voters are absent' do
+        before { get api_path }
+
+        it 'returns 404 status' do
+          expect(response).to have_http_status(:not_found)
+        end
+
+        it 'returns No voted message' do
+          expect(JSON.parse(response.body)['message']).to eq 'No voted'
+        end
+      end
+    end
   end
 
   describe 'Users::EntriesController' do

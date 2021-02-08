@@ -2,10 +2,6 @@ module Votes
   class Buy
     VOTES_TO_AMOUNT = { '10' => 1000, '20' => 2000, '50' => 5000 }.freeze
 
-    def initialize
-      @stripe_api_key = Stripe.api_key
-    end
-
     def call(params:, user:)
       create_intent(entry_id: params[:entry_id], vote_value: params[:vote_value], user: user)
     end

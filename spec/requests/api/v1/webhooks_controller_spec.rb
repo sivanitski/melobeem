@@ -25,6 +25,7 @@ describe 'Webhooks API', type: :request do
 
   describe '#check_payment_status' do
     before do
+      allow(ENV).to receive(:fetch).with('STRIPE_ENDPOINT_SECRET', any_args).and_return('kek')
       stripe_signature = generate_stripe_signature(params.to_json)
       headers = { 'Stripe-Signature' => stripe_signature }
       post '/api/v1/check_payment_status', params: params.to_json, headers: headers
