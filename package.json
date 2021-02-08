@@ -20,11 +20,13 @@
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
     "classnames": "^2.2.6",
     "date-fns": "^2.16.1",
+    "dotenv": "^8.2.0",
     "less": "^4.1.0",
     "less-loader": "^7.2.1",
     "prop-types": "^15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
+    "react-facebook": "^8.1.4",
     "react-router-dom": "^5.2.0",
     "swiper": "^6.4.5"
   },
