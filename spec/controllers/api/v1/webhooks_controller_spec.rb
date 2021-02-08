@@ -27,7 +27,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
 
   describe '#check_payment_status' do
     before do
-      allow(ENV).to receive(:fetch).with('STRIPE_ENDPOINT_SECRET', any_args).and_return('kek')
+      allow(ENV).to receive(:fetch).with('STRIPE_ENDPOINT_SECRET', any_args).and_return('stripe_endpoint_secret')
       stripe_signature = generate_stripe_signature(params.to_json)
       headers = { 'Stripe-Signature' => stripe_signature }
       post '/api/v1/check_payment_status', params: params.to_json, headers: headers

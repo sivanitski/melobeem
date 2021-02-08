@@ -3,7 +3,7 @@ module API
     module Competitions
       class EntriesController < API::V1::ApplicationController
         skip_before_action :authenticate_user!, except: %i[create]
-        before_action :find_entry, only: %i[show latest_voters]
+        before_action :set_entry, only: %i[show latest_voters]
 
         def index
           respond_with_item_list(competition.entries, Entries::IndexSerializer)
@@ -24,11 +24,7 @@ module API
         end
 
         def latest_voters
-          users = User.select('*')
-                      .from(User.joins(:votes)
-                                .select('distinct on (users.id) users.*, votes.created_at as vote_created_at')
-                                .where(votes: { entry: @entry })
-                                .order('users.id, votes.created_at desc')).order('vote_created_at desc').limit(10)
+          users = Entries::LatestVotersQuery.new.call(@entry)
 
           if users.any?
             render json: users, each_serializer: Entries::LatestVotersSerializer
@@ -43,7 +39,7 @@ module API
           params.require(:entry).permit(:gender, :image)
         end
 
-        def find_entry
+        def set_entry
           @entry = competition.entries.find(params[:id])
         end
       end

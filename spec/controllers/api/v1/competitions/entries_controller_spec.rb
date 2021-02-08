@@ -48,24 +48,28 @@ RSpec.describe API::V1::Competitions::EntriesController do
   end
 
   describe 'GET /latest_voters' do
+    let(:ids) { JSON.parse(response.body)['users'].each_with_object([]) { |user, arr| arr << user['id'] } }
+
     context 'when voters are present' do
       before do
-        users = create_list :user, 3
+        users = create_list :user, 2
         create :vote, entry: entry, user: users.first
-        create :vote, entry: entry, user: users.second
+        create :vote, entry: entry, user: users.last
         create :vote, entry: entry, user: users.first
         create :vote, entry: entry, user: users.last
         get :latest_voters, params: { competition_id: competition.id, id: entry.id }, format: :json
       end
 
       it 'returns unique voters ids' do
-        ids = JSON.parse(response.body)['users'].each_with_object([]) { |user, arr| arr << user['id'] }
         expect(ids.uniq).to eq ids
       end
 
       it 'ID of users of the most recent votes are equal ID of users from the action response' do
-        ids = JSON.parse(response.body)['users'].each_with_object([]) { |user, arr| arr << user['id'] }
         expect(ids).to eq Vote.order(created_at: :desc).pluck(:user_id).uniq
+      end
+
+      it 'ID of user who did not vote for the given entry not in users list' do
+        expect(ids).not_to include(user.id)
       end
 
       it { expect(response).to match_response_schema('entries/latest_voters') }
