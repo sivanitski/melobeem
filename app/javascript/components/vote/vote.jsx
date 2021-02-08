@@ -46,8 +46,6 @@ const Vote = ({
     return <Loading />;
   }
 
-  console.log(child);
-
   return (
     <>
       <HeaderUserWithChild child={child} />

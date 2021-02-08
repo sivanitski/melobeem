@@ -21,7 +21,6 @@ const VoteTimer = ({ date, handlePrizeClick }) => {
       clearTimeout(timer);
     };
   }, [timeLeft]);
-  console.log(date, handlePrizeClick);
 
   if (timeLeft > 0) {
     return (
