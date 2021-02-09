@@ -1,32 +1,31 @@
 import "./style.less";
 
+import propTypes from "prop-types";
 import React from "react";
 
-import HeartRating from "../../images/heart-rating.svg";
+import { HeaderUserItem } from "../header-user-item";
+import { HeaderUserLevel } from "../header-user-level";
 
-const HeaderUser = () => {
+const HeaderUser = ({ child }) => {
   return (
     <div className="header-user">
-      <div className="header-user__item">
-        <div className="header-user__item__text text-tiny text-grey">Votes</div>
-        <div className="header-user__item__number headline--medium text-pink">
-          1
-        </div>
-      </div>
-      <div className="half-circle header-user__level">
-        <div className="header-user__level__text text-grey text-tiny">
-          Level 1 <span className="text-tiny">(1/5)</span>
-        </div>
-        <HeartRating />
-      </div>
-      <div className="header-user__item">
-        <div className="header-user__item__text text-tiny text-grey">Rank</div>
-        <div className="header-user__item__number headline--medium text-pink">
-          1,789
-        </div>
+      <div className="header-user__list">
+        <HeaderUserItem title="Votes" value={child.likes} />
+        <HeaderUserLevel />
+        <HeaderUserItem title="Rank" value={child.rank} />
       </div>
     </div>
   );
+};
+
+HeaderUser.propTypes = {
+  child: propTypes.shape({
+    id: propTypes.string.isRequired,
+    name: propTypes.string.isRequired,
+    avatar: propTypes.string.isRequired,
+    likes: propTypes.number.isRequired,
+    rank: propTypes.number.isRequired,
+  }),
 };
 
 export default HeaderUser;
