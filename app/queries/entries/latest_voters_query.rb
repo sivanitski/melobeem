@@ -1,7 +1,7 @@
 module Entries
   class LatestVotersQuery
     def call(entry)
-      User.select('*')
+      User.with_attached_avatar.select('*')
           .from(User.joins(:votes)
                     .select('distinct on (users.id) users.*, votes.created_at as vote_created_at')
                     .where(votes: { entry: entry })
