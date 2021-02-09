@@ -3,15 +3,14 @@ module API
     module Competitions
       class EntriesController < API::V1::ApplicationController
         skip_before_action :authenticate_user!, except: %i[create]
+        before_action :set_entry, only: %i[show latest_voters]
 
         def index
           respond_with_item_list(competition.entries, Entries::IndexSerializer)
         end
 
         def show
-          entry = competition.entries.find(params[:id])
-
-          respond_with entry, serializer: Entries::ShowSerializer
+          respond_with @entry, serializer: Entries::ShowSerializer
         end
 
         def create
@@ -24,10 +23,24 @@ module API
           end
         end
 
+        def latest_voters
+          users = Entries::LatestVotersQuery.new.call(@entry)
+
+          if users.any?
+            render json: users, each_serializer: Entries::LatestVotersSerializer
+          else
+            render json: { message: 'No voted' }, status: :not_found
+          end
+        end
+
         private
 
         def entries_params
           params.require(:entry).permit(:gender, :image)
+        end
+
+        def set_entry
+          @entry = competition.entries.find(params[:id])
         end
       end
     end

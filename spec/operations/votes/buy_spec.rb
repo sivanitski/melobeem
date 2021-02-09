@@ -19,9 +19,7 @@ describe Votes::Buy do
     end
 
     it 'creates a new transaction' do
-      expect do
-        result
-      end.to change(PurchaseTransaction, :count).by(1)
+      expect { result }.to change(PurchaseTransaction, :count).by(1)
     end
   end
 end
