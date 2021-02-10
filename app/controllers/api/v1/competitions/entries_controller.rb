@@ -4,6 +4,7 @@ module API
       class EntriesController < API::V1::ApplicationController
         skip_before_action :authenticate_user!, except: %i[create]
         before_action :set_entry, only: %i[show latest_voters]
+        before_action :set_active_storage_host
 
         def index
           respond_with_item_list(competition.entries, Entries::IndexSerializer)
@@ -41,6 +42,11 @@ module API
 
         def set_entry
           @entry = competition.entries.find(params[:id])
+        end
+
+        def set_active_storage_host
+          ActiveStorage::Current.host = 'http://localhost:3000' if ActiveStorage::Current.host.blank?
+          true
         end
       end
     end
