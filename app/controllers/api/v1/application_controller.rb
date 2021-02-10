@@ -5,6 +5,7 @@ module API
       include API::NotFoundRescue
       include API::Pagination
       include API::ResponseHelper
+      include ActiveStorage::SetCurrent
 
       before_action :authenticate_user!
 
