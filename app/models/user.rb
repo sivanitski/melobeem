@@ -9,12 +9,17 @@ class User < ApplicationRecord
   has_one_attached :avatar, dependent: :destroy
 
   validates :name, :provider, presence: true
+  validates :uid, presence: true, uniqueness: { scope: :provider }
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
-      user.email = auth.info.email
+      user.email = auth.info.email if auth.info.email.present?
       user.password = Devise.friendly_token[0, 20]
       user.name = auth.info.name
     end
+  end
+
+  def email_required?
+    false
   end
 end
