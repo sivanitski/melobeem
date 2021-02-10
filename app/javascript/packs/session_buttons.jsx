@@ -3,9 +3,8 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { FacebookProvider, LoginButton } from "react-facebook";
 
-// get facebook app id from .env file
-require("dotenv").config(); // this should probably go to application.jsx
-const appId = process.env.FACEBOOK_KEY;
+// Temp solution
+const appId = "2495138454127282";
 
 const handleResponse = (data, endpoint = "users/auth/facebook/callback") => {
   // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
