@@ -6,7 +6,7 @@ module API
         before_action :set_entry, only: %i[show latest_voters]
 
         def index
-          respond_with_item_list(competition.entries, Entries::IndexSerializer)
+          respond_with_item_list(competition.entries.with_attached_image, Entries::IndexSerializer)
         end
 
         def show
