@@ -10,7 +10,6 @@ const appId = process.env.FACEBOOK_KEY;
 const handleResponse = (data, endpoint = "users/auth/facebook/callback") => {
   // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
   document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
-  debugger;
 
   // adding csrf token to headers
   const headers = {
