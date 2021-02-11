@@ -25,6 +25,7 @@ images = Pathname.glob('db/fixtures/entry_images/*')
 (1..20).each do |id|
   entry = Entry.create!(
     id: id,
+    name: FFaker::Name.name,
     gender: FFaker::Gender.binary,
     user_id: id,
     competition_id: competition.id

@@ -5,7 +5,8 @@ class Entry < ApplicationRecord
   belongs_to :user
   has_one_attached :image, dependent: :destroy
 
-  validates :gender, :name, presence: true
+  validates :gender, presence: true
+  validates :name, presence: true
   validates :user_id, uniqueness: { scope: :competition_id }
 
   enum gender: { male: 0, female: 1 }
