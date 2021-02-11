@@ -4,10 +4,11 @@
   "properties": {
     "entry": {
       "type": "object",
-      "required": ["id", "gender", "image_url"],
+      "required": ["id", "gender", "name", "image_url"],
       "properties": {
         "id": {"type": "integer"},
         "gender": {"type": "string"},
+        "name": {"type": "string"},
         "image_url": {"type": "string"}
       }
     }
