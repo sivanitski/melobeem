@@ -9,10 +9,8 @@ Rails.application.routes.draw do
       resources :votes, only: :create
       resources :charges, only: :create
 
-      resources :competitions, only: [] do
-        resources :entries, only: %i[index create show], module: :competitions do
-          get 'latest_voters', on: :member
-        end
+      resources :entries, only: %i[index create show] do
+        get 'latest_voters', on: :member
       end
 
       resources :users, only: [] do
