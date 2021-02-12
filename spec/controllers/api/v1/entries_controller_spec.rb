@@ -6,7 +6,7 @@ RSpec.shared_examples 'success status and correct schema' do
   it { expect(response).to match_response_schema('entries/show') }
 end
 
-RSpec.describe API::V1::Competitions::EntriesController do
+RSpec.describe API::V1::EntriesController do
   let(:competition) { create(:competition) }
   let(:user) { create(:user) }
   let(:entry) { create(:entry, competition: competition, user: user, gender: 'male') }
