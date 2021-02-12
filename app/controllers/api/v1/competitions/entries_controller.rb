@@ -6,7 +6,7 @@ module API
         before_action :set_entry, only: %i[show latest_voters]
 
         def index
-          respond_with_item_list(competition.entries.with_attached_image, Entries::IndexSerializer)
+          respond_with_item_list(@competition.entries.with_attached_image, Entries::IndexSerializer)
         end
 
         def show
@@ -14,7 +14,7 @@ module API
         end
 
         def create
-          entry = competition.entries.new(entries_params.merge(user: current_user))
+          entry = @competition.entries.new(entries_params.merge(user: current_user))
 
           if entry.save
             render json: entry, serializer: Entries::ShowSerializer
@@ -40,7 +40,7 @@ module API
         end
 
         def set_entry
-          @entry = competition.entries.find(params[:id])
+          @entry = @competition.entries.find(params[:id])
         end
       end
     end
