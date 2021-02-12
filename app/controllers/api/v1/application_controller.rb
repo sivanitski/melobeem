@@ -8,11 +8,12 @@ module API
       include ActiveStorage::SetCurrent
 
       before_action :authenticate_user!
+      before_action :set_competition
 
       private
 
-      def competition
-        @competition ||= Competition.find(params[:competition_id])
+      def set_competition
+        @competition = Competition.order(created_at: :desc).take
       end
     end
   end
