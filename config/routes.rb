@@ -18,6 +18,10 @@ Rails.application.routes.draw do
           resources :entries, only: %i[edit update destroy], module: :users
         end
       end
+
+      resources :competitions, only: [] do
+        get 'current', on: :collection
+      end
     end
   end
 
