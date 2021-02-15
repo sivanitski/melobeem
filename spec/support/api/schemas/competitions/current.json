@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": ["competition"],
+  "properties": {
+    "competition": {
+      "type": "object",
+      "required": ["id", "ends_at", "prize_cents"],
+      "properties": {
+        "id": {"type": "integer"},
+        "ends_at": {"type": "timestamp"},
+        "prize_cents": {"type": "integer"}
+      }
+    }
+  }
+}
