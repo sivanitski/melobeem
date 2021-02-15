@@ -87,4 +87,21 @@ RSpec.describe API::V1::EntriesController do
       end
     end
   end
+
+  describe 'GET /current' do
+    let!(:entry) { create(:entry, competition: competition, user: user, gender: 'male') }
+
+    before do
+      sign_in user
+      get :current, format: :json
+    end
+
+    it { expect(response.status).to eq 200 }
+
+    it { expect(response).to match_response_schema('entries/current') }
+
+    it 'returns current entry ID within current competition' do
+      expect(JSON.parse(response.body)['entry']['id']).to eq entry.id
+    end
+  end
 end
