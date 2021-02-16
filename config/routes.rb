@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
       resources :entries, only: %i[index create show] do
         get 'latest_voters', on: :member
+        get 'current', on: :collection
       end
 
       resources :users, only: [] do

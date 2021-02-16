@@ -1,7 +1,7 @@
 module API
   module V1
     class EntriesController < API::V1::ApplicationController
-      skip_before_action :authenticate_user!, except: %i[create]
+      skip_before_action :authenticate_user!, except: %i[create current]
       before_action :set_entry, only: %i[show latest_voters]
 
       def index
@@ -30,6 +30,10 @@ module API
         else
           render json: { message: 'No voted' }, status: :not_found
         end
+      end
+
+      def current
+        render json: @competition.entries.find_by!(user: current_user), serializer: Entries::CurrentSerializer
       end
 
       private

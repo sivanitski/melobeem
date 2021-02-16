@@ -1,0 +1,14 @@
+{
+  "type": "object",
+  "required": ["entry"],
+  "properties": {
+    "entry": {
+      "type": "object",
+      "required": ["id", "image_url"],
+      "properties": {
+        "id": {"type": "integer"},
+        "image_url": {"type": "string"}
+      }
+    }
+  }
+}
