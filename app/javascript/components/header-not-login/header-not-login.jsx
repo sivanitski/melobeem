@@ -59,7 +59,7 @@ const HeaderNotLogin = () => {
         </div>
       </div>
       <div className="header-not-login__buttons">
-        <button className="button header-not-login__button">
+        <button type="button" className="button header-not-login__button">
           Enter competition
         </button>
 

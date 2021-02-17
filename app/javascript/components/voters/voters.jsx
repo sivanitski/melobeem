@@ -36,15 +36,19 @@ const Voters = ({
   return (
     <div className="voters">
       <h1 className="headline--small voters__title">Last 10 Voters</h1>
-      <Link to={`/entry/${id}`} className="voters__go-back">
+      <Link to={`/entry/${id}`} className="go-back">
         <GoBack />
       </Link>
       <div className="voters__list">
         {voters.map((voter) => (
-          <div key={voter.id} className="voters__item">
+          <Link
+            to={`/profile/${voter.id}`}
+            key={voter.id}
+            className="voters__item"
+          >
             <img src={voter.avatar} className="voters__item__img" />
             <div className="voters__item__name">{voter.name}</div>
-          </div>
+          </Link>
         ))}
       </div>
     </div>

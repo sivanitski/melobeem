@@ -11,7 +11,7 @@ import { HeaderUserLevel } from "../header-user-level";
 const HeaderUserWithChild = ({ child }) => {
   return (
     <div className="header-user header-user--with-info">
-      <Link to={`/entry/${child.id}`} className="voters__go-back">
+      <Link to={`/entry/${child.id}`} className="go-back">
         <GoBack />
       </Link>
       <div className="header-user__list header-user__list--shadow">
