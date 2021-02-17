@@ -1,7 +1,9 @@
 import "./style.less";
 
-import React from "react";
+import React, { useContext } from "react";
+import { FacebookContext, LoginButton } from "react-facebook";
 
+import { createFbAPI } from "../../api";
 import headerLeft from "../../images/header-left.png";
 import headerLeft2x from "../../images/header-left@2x.png";
 import headerRight from "../../images/header-right.png";
@@ -10,6 +12,26 @@ import LogoIcon from "../../images/logo-icon.svg";
 import LogoText from "../../images/logo-text.svg";
 
 const HeaderNotLogin = () => {
+  const {
+    api: {
+      options: { appId },
+    },
+  } = useContext(FacebookContext);
+  const api = createFbAPI();
+
+  const handleResponse = (data) => {
+    // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
+    document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
+
+    api.get(``).then((res) => {
+      console.log(res);
+    });
+  };
+
+  const handleError = (error) => {
+    console.log(error);
+  };
+
   return (
     <div className="header-not-login">
       <div className="header-not-login__pictures">
@@ -40,9 +62,12 @@ const HeaderNotLogin = () => {
         <button className="button header-not-login__button">
           Enter competition
         </button>
-        <button className="button button--facebook header-not-login__button">
-          Login with Facebook
-        </button>
+
+        <LoginButton onCompleted={handleResponse} onError={handleError}>
+          <span className="button button--facebook header-not-login__button">
+            Login with Facebook
+          </span>
+        </LoginButton>
       </div>
     </div>
   );

@@ -18,3 +18,25 @@ export const createAPI = () => {
 
   return api;
 };
+
+export const createFbAPI = () => {
+  const api = axios.create({
+    baseURL: `users/auth/facebook/callback`,
+    timeout: 1000 * 5,
+    headers: {
+      "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+    },
+  });
+
+  const onSuccess = (response) => {
+    return response;
+  };
+
+  const onFail = (err) => {
+    throw err;
+  };
+
+  api.interceptors.response.use(onSuccess, onFail);
+
+  return api;
+};
