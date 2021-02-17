@@ -5,11 +5,12 @@ module API
 
       def create
         result = Votes::Create.new.call(params: vote_params.merge(fingerprint: @fingerprint))
+
         case result
         when Success
           render json: result.value, status: :created
         else
-          render json: { errors: result.error }, status: :unprocessable_entity
+          render json: { message: result.error }, status: :unprocessable_entity
         end
       end
 

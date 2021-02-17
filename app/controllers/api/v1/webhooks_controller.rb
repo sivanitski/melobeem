@@ -6,13 +6,18 @@ module API
 
       rescue_from JSON::ParserError, with: :invalid_payload
       rescue_from Stripe::SignatureVerificationError, with: :invalid_signature
-      rescue_from ActiveRecord::RecordNotFound, with: :nonexistent_transaction
 
       def check_payment_status
         payload = request.body.read
         sig_header = request.env['HTTP_STRIPE_SIGNATURE']
         result = Votes::CreatePaid.new.call(payload: payload, sig_header: sig_header)
-        render json: result.value, status: :created if Success
+
+        case result
+        when Success
+          render json: result.value, status: :created
+        else
+          render json: { message: result.error }, status: :unprocessable_entity
+        end
       end
 
       private
@@ -23,10 +28,6 @@ module API
 
       def invalid_signature
         render json: { message: 'Invalid signature' }, status: :bad_request
-      end
-
-      def nonexistent_transaction
-        render json: { message: 'Could not find PurchaseTransaction' }, status: :not_found
       end
     end
   end

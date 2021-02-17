@@ -39,7 +39,7 @@ module API
       private
 
       def entries_params
-        params.require(:entry).permit(:gender, :name, :image)
+        params.require(:entry).permit(:gender, :name, :image, :total_votes)
       end
 
       def set_entry

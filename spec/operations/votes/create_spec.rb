@@ -13,13 +13,15 @@ describe Votes::Create do
     end
 
     it '.call should create a new vote' do
-      expect do
-        result.value
-      end.to change(Vote, :count).by(1)
+      expect { result.value }.to change(Vote, :count).by(1)
     end
 
     it 'succeed' do
       expect(result).to be_a Success
+    end
+
+    it 'changes entry total_votes by vote.value' do
+      expect { result }.to change(entry, :total_votes).by(vote.value)
     end
   end
 
@@ -37,6 +39,10 @@ describe Votes::Create do
 
     it 'failed' do
       expect(result).to be_a Failure
+    end
+
+    it 'not changes entry total_votes' do
+      expect { result }.not_to change(entry, :total_votes)
     end
   end
 

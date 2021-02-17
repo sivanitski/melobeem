@@ -2,23 +2,27 @@ module Votes
   class Create
     TIME_BETWEEN_VOTING = 600
 
-    def call(params:)
+    def call(params:) # rubocop:disable Metrics/MethodLength
       @params = params
       return Success.new({ ttl: current_ttl }) if key_exists?
 
       vote = Vote.new(params)
-      if vote.save
-        create_uniq_vote_key
-        Success.new({ ttl: TIME_BETWEEN_VOTING })
-      else
-        Failure.new(vote.errors)
+      ActiveRecord::Base.transaction do
+        vote.save!
+        vote.apply!
       end
+
+      create_uniq_vote_key
+
+      Success.new({ ttl: TIME_BETWEEN_VOTING })
+    rescue ActiveRecord::ActiveRecordError => e
+      Failure.new(e.message)
     end
 
     private
 
     def key_exists?
-      Redis.current.exists(uniq_key)
+      Redis.current.exists?(uniq_key)
     end
 
     def current_ttl

@@ -17,9 +17,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
       type: 'payment_intent.succeeded'
     }
   end
-  let(:entry) { create(:entry, competition: competition, user: user) }
-  let(:user) { create(:user) }
-  let(:competition) { create(:competition) }
+  let!(:entry) { create(:entry) }
 
   before { StripeMock.start }
 
@@ -34,24 +32,24 @@ RSpec.describe API::V1::WebhooksController, type: :request do
     end
 
     context 'when transaction was not found' do
-      it 'returns 404 status' do
-        expect(response).to have_http_status(:not_found)
+      it 'returns 422 status' do
+        expect(response).to have_http_status(:unprocessable_entity)
       end
 
       it 'returns message about missing transaction' do
-        expect(JSON.parse(response.body)['message']).to eq('Could not find PurchaseTransaction')
+        expect(JSON.parse(response.body)['message']).to eq("Couldn't find PurchaseTransaction")
       end
     end
 
     context 'when transaction was found' do
-      context 'when votes were enrolled' do
+      context 'when vote.value were enrolled' do
         subject do
           PurchaseTransaction.create!(intent_id: 'pi_00000000000000',
                                       amount: 5000,
                                       amount_received: 0,
                                       status: :process,
                                       vote_value: 50,
-                                      user_id: user.id,
+                                      user_id: entry.user.id,
                                       entry_id: entry.id)
         end
 
@@ -80,7 +78,11 @@ RSpec.describe API::V1::WebhooksController, type: :request do
         end
 
         it 'enrolls vote with value from transaction vote_value' do
-          expect(entry.votes.first.value).to eq(subject.vote_value)
+          expect(subject.vote_value).to eq(entry.votes.first.value)
+        end
+
+        it 'increases the entry total_votes by the value of the vote' do
+          expect(entry.reload.total_votes).to eq entry.votes.first.value
         end
       end
     end

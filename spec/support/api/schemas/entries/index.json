@@ -6,12 +6,13 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "gender", "name", "image_url"],
+        "required": ["id", "gender", "name", "image_url", "total_votes"],
         "properties": {
           "id": {"type": "integer"},
           "gender": {"type": "string"},
           "name": {"type": "string"},
-          "image_url": {"type": "string"}
+          "image_url": {"type": "string"},
+          "total_votes": {"type": "integer"}
         }
       }
     },
