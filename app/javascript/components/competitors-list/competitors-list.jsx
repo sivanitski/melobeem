@@ -4,6 +4,7 @@ import "./style.less";
 import propTypes from "prop-types";
 import React from "react";
 
+import defaultProptypes from "../../default-proptypes";
 import { CompetitorsItem } from "../competitors-item";
 
 const CompetitorsList = ({ competitors }) => {
@@ -17,16 +18,7 @@ const CompetitorsList = ({ competitors }) => {
 };
 
 CompetitorsList.propTypes = {
-  competitors: propTypes.arrayOf(
-    propTypes.shape({
-      id: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-      avatar: propTypes.string.isRequired,
-      likes: propTypes.number.isRequired,
-      parentName: propTypes.string.isRequired,
-      rank: propTypes.number.isRequired,
-    })
-  ).isRequired,
+  competitors: propTypes.arrayOf(defaultProptypes.CHILD).isRequired,
 };
 
 export default CompetitorsList;

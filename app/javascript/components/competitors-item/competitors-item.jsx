@@ -1,9 +1,9 @@
 import "swiper/swiper.less";
 
-import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import defaultProptypes from "../../default-proptypes";
 import IconHeart from "../../images/icon-heart.svg";
 
 const CompetitorsItem = ({ competitor }) => {
@@ -12,23 +12,25 @@ const CompetitorsItem = ({ competitor }) => {
       <Link to={`entry/${competitor.id}`}>
         <div className="competitors__wrapper">
           <div className="competitors__item__img">
-            <img src={competitor.avatar} />
+            <img src={competitor.imageUrl} />
           </div>
           <div className="competitors__item__names">
             <div className="competitors__item__names__child text-black">
               {competitor.name}
             </div>
             <div className="competitors__item__names__parent text-smaller text-grey">
-              {competitor.parentName}
+              {/* {competitor.parentName} */} John Doe
             </div>
           </div>
           <div className="competitors__item__info">
             <div className="competitors__item__info__likes">
               <IconHeart />
-              <div className="text-smaller text-pink">{competitor.likes}</div>
+              <div className="text-smaller text-pink">
+                {competitor.totalVotes}
+              </div>
             </div>
             <div className="competitors__item__info__place text-small text-grey">
-              {competitor.rank}
+              {/* {competitor.rank} */} 1
             </div>
           </div>
         </div>
@@ -38,14 +40,7 @@ const CompetitorsItem = ({ competitor }) => {
 };
 
 CompetitorsItem.propTypes = {
-  competitor: propTypes.shape({
-    id: propTypes.string.isRequired,
-    name: propTypes.string.isRequired,
-    avatar: propTypes.string.isRequired,
-    likes: propTypes.number.isRequired,
-    parentName: propTypes.string.isRequired,
-    rank: propTypes.number.isRequired,
-  }).isRequired,
+  competitor: defaultProptypes.CHILD,
 };
 
 export default CompetitorsItem;

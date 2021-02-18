@@ -16,20 +16,20 @@ export const filterChildrenByLevel = (children, level) => {
   switch (level) {
     case MAX_LEVEL:
       return children.filter(
-        (child) => child.likes > LEVEL_INTERVALS[MAX_LEVEL]
+        (child) => child.totalVotes > LEVEL_INTERVALS[MAX_LEVEL]
       );
     default:
       return children.filter(
         (child) =>
-          child.likes >= LEVEL_INTERVALS[level] &&
-          child.likes < LEVEL_INTERVALS[level + 1]
+          child.totalVotes >= LEVEL_INTERVALS[level] &&
+          child.totalVotes < LEVEL_INTERVALS[level + 1]
       );
   }
 };
 
 export const addPositionToCompetitors = (children) => {
   children.sort(function (a, b) {
-    return b.likes - a.likes;
+    return b.totalVotes - a.likes;
   });
   return children.forEach((child, index) => {
     child.position = index + 1;

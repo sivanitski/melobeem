@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import React from "react";
 import { withRouter } from "react-router";
 
-import { createAPI } from "../../api";
+import { createMockAPI } from "../../api";
 import { EntryChild } from "../entry-child";
 import { Error } from "../error";
 import { Footer } from "../footer";
@@ -17,7 +17,7 @@ const Entry = ({
     params: { id },
   },
 }) => {
-  const api = createAPI();
+  const api = createMockAPI();
 
   const getCurrentCompetitor = () => {
     return api.get(`/competitions/1/children/${id}`);

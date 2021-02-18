@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import React, { useState } from "react";
 import { withRouter } from "react-router";
 
-import { createAPI } from "../../api";
+import { createMockAPI } from "../../api";
 import HeartVote from "../../images/heart-vote.svg";
 import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
@@ -21,7 +21,7 @@ const Vote = ({
     params: { id },
   },
 }) => {
-  const api = createAPI();
+  const api = createMockAPI();
 
   const getCurrentCompetitor = () => {
     return api.get(`/competitions/1/children/${id}`);

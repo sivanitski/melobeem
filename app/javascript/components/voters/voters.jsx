@@ -6,7 +6,7 @@ import React from "react";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
-import { createAPI } from "../../api";
+import { createMockAPI } from "../../api";
 import GoBack from "../../images/go-back.svg";
 import { Error } from "../error";
 import { Loading } from "../loading";
@@ -16,7 +16,7 @@ const Voters = ({
     params: { id },
   },
 }) => {
-  const api = createAPI();
+  const api = createMockAPI();
   const getVoters = () => {
     return api.get(`/competitions/1/children/${id}/voters`);
   };

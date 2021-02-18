@@ -4,6 +4,7 @@ import "./style.less";
 import propTypes from "prop-types";
 import React, { useState } from "react";
 
+import defaultProptypes from "../../default-proptypes";
 import { filterChildrenByLevel } from "../../helpers/level";
 import { CompetitorsList } from "../competitors-list";
 import { CompetitorsSwiperMenu } from "../competitors-swiper-menu";
@@ -27,14 +28,7 @@ const Competitors = ({ competitors }) => {
 };
 
 Competitors.propTypes = {
-  competitors: propTypes.arrayOf(
-    propTypes.shape({
-      id: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-      avatar: propTypes.string.isRequired,
-      likes: propTypes.number.isRequired,
-    })
-  ).isRequired,
+  competitors: propTypes.arrayOf(defaultProptypes.CHILD).isRequired,
 };
 
 export default Competitors;

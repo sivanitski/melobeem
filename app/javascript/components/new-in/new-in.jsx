@@ -41,7 +41,7 @@ const NewIn = ({ competitors }) => {
 NewIn.propTypes = {
   competitors: propTypes.arrayOf(
     propTypes.shape({
-      id: propTypes.string.isRequired,
+      id: propTypes.number.isRequired,
       name: propTypes.string.isRequired,
       avatar: propTypes.string.isRequired,
     })

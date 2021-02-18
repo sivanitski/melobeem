@@ -4,6 +4,7 @@ import "./style.less";
 import propTypes from "prop-types";
 import React, { useState } from "react";
 
+import defaultProptypes from "../../default-proptypes";
 import { filterCompetitors } from "../../helpers/utils";
 import { CompetitorsList } from "../competitors-list";
 
@@ -56,16 +57,7 @@ const CompetitorsSearch = ({ competitors }) => {
 };
 
 CompetitorsSearch.propTypes = {
-  competitors: propTypes.arrayOf(
-    propTypes.shape({
-      id: propTypes.string.isRequired,
-      name: propTypes.string.isRequired,
-      avatar: propTypes.string.isRequired,
-      likes: propTypes.number.isRequired,
-      parentName: propTypes.string.isRequired,
-      rank: propTypes.number.isRequired,
-    })
-  ).isRequired,
+  competitors: propTypes.arrayOf(defaultProptypes.CHILD).isRequired,
 };
 
 export default CompetitorsSearch;

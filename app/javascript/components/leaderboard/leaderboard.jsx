@@ -1,7 +1,8 @@
 import { useRequest } from "ahooks";
 import React from "react";
 
-import { createAPI } from "../../api";
+import { createAPI, createMockAPI } from "../../api";
+import { makeArrayCamelCase } from "../../helpers/utils";
 import { CompetitionInfo } from "../competition-info";
 import { Competitors } from "../competitors";
 import { CompetitorsSearch } from "../competitors-search/";
@@ -9,18 +10,27 @@ import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderNotLogin } from "../header-not-login";
 import { Loading } from "../loading";
-import { NewIn } from "../new-in";
+// import { NewIn } from "../new-in";
 
 const Leaderboard = () => {
-  const api = createAPI();
-
-  const getChildren = () => {
-    return api.get(`/competitions/1/children`);
-  };
+  const mockApi = createMockAPI();
 
   const getCompetition = () => {
-    return api.get(`/competitions/1`);
+    return mockApi.get(`/competitions/1`);
   };
+
+  const api = createAPI();
+  const getEntries = () => {
+    return api.get("/entries");
+  };
+
+  const {
+    data: childrenData,
+    error: childrenError,
+    loading: childrenLoading,
+  } = useRequest(getEntries, {
+    formatResult: (res) => res.data.entries,
+  });
 
   const {
     data: competitionData,
@@ -30,31 +40,25 @@ const Leaderboard = () => {
     formatResult: (res) => res.data,
   });
 
-  const {
-    data: childrenData,
-    error: childrenError,
-    loading: childrenLoading,
-  } = useRequest(getChildren, {
-    formatResult: (res) => res.data,
-  });
-
-  if (childrenError || competitionError) {
+  if (competitionError || childrenError) {
     return <Error />;
   }
-  if (childrenLoading || competitionLoading) {
+  if (competitionLoading || childrenLoading) {
     return <Loading />;
   }
+
+  const data = makeArrayCamelCase(childrenData);
 
   return (
     <>
       <HeaderNotLogin />
-      <CompetitorsSearch competitors={childrenData} />
-      <NewIn competitors={childrenData} />
+      <CompetitorsSearch competitors={data} />
+      {/* <NewIn competitors={childrenData} /> */}
       <CompetitionInfo
         timeLeft={competitionData.timeLeft}
         prize={competitionData.prize}
       />
-      <Competitors competitors={childrenData} />
+      <Competitors competitors={data} />
       <Footer />
     </>
   );
