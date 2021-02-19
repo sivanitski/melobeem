@@ -1,6 +1,6 @@
 module Votes
   class Create
-    TIME_BETWEEN_VOTING = 600
+    TIME_BETWEEN_VOTING = 2400
 
     def call(params:) # rubocop:disable Metrics/MethodLength
       @params = params

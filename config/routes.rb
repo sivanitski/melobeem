@@ -12,6 +12,9 @@ Rails.application.routes.draw do
       resources :entries, only: %i[index create show] do
         get 'latest_voters', on: :member
         get 'current', on: :collection
+        resources :votes, module: :entries, only: [] do
+          get 'expiration_time_for_free', on: :collection
+        end
       end
 
       resources :users, only: [] do

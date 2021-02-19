@@ -5,14 +5,14 @@ module API
         def edit
           entry = current_user.entries.find(params[:id])
 
-          respond_with entry, serializer: Entries::ShowSerializer
+          respond_with entry, serializer: ::Entries::ShowSerializer
         end
 
         def update
           entry = current_user.entries.find(params[:id])
 
           if entry.update(entries_params)
-            render json: entry, serializer: Entries::ShowSerializer
+            render json: entry, serializer: ::Entries::ShowSerializer
           else
             render_fail_response(entry.errors)
           end
@@ -22,7 +22,7 @@ module API
           entry = current_user.entries.find(params[:id])
 
           if entry.delete
-            render json: entry, serializer: Entries::ShowSerializer
+            render json: entry, serializer: ::Entries::ShowSerializer
           else
             render_fail_response(entry.errors)
           end
