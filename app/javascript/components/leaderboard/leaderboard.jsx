@@ -10,7 +10,6 @@ import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderNotLogin } from "../header-not-login";
 import { Loading } from "../loading";
-// import { NewIn } from "../new-in";
 
 const Leaderboard = () => {
   const mockApi = createMockAPI();
@@ -52,8 +51,7 @@ const Leaderboard = () => {
   return (
     <>
       <HeaderNotLogin />
-      <CompetitorsSearch competitors={data} />
-      {/* <NewIn competitors={childrenData} /> */}
+      <CompetitorsSearch competitors={childrenData} />
       <CompetitionInfo
         timeLeft={competitionData.timeLeft}
         prize={competitionData.prize}
