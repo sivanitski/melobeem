@@ -1,6 +1,9 @@
 require 'ffaker'
 
-competition = Competition.create!(title: 'Kiddy')
+competition = Competition.create!(title: 'Kiddy',
+                                  prize_cents: 10_000,
+                                  starts_at: DateTime.now.beginning_of_month,
+                                  ends_at: DateTime.now.end_of_month)
 
 # generate 20 users with avatars
 avatars = Pathname.glob('db/fixtures/user_avatars/*')
