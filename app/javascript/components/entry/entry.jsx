@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import React from "react";
 import { withRouter } from "react-router";
 
-import { createMockAPI } from "../../api";
+import { createAPI } from "../../api";
 import { EntryChild } from "../entry-child";
 import { Error } from "../error";
 import { Footer } from "../footer";
@@ -17,26 +17,39 @@ const Entry = ({
     params: { id },
   },
 }) => {
-  const api = createMockAPI();
+  const api = createAPI();
 
   const getCurrentCompetitor = () => {
-    return api.get(`/competitions/1/children/${id}`);
+    return api.get(`/entries/${id}`);
   };
 
   const { data, error, loading } = useRequest(getCurrentCompetitor, {
-    formatResult: (res) => res.data,
+    formatResult: (res) => res.data.entry,
   });
 
-  if (error) {
+  const getMainVoters = () => {
+    return api.get(`/entries/${id}/latest_voters`);
+  };
+
+  const {
+    data: voters,
+    error: votersError,
+    loading: votersLoading,
+  } = useRequest(getMainVoters, {
+    formatResult: (res) => res.data.users,
+  });
+
+  if (error || votersError) {
     return <Error />;
   }
-  if (loading) {
+  if (loading || votersLoading) {
     return <Loading />;
   }
+
   return (
     <>
       <HeaderUser child={data} />
-      <EntryChild child={data} />
+      <EntryChild child={data} voters={voters} />
       <Footer />
     </>
   );

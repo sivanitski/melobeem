@@ -27,7 +27,7 @@ const CompetitionInfo = ({ timeLeft, prize }) => {
 
 CompetitionInfo.propTypes = {
   timeLeft: propTypes.string.isRequired,
-  prize: propTypes.string.isRequired,
+  prize: propTypes.number.isRequired,
 };
 
 export default CompetitionInfo;

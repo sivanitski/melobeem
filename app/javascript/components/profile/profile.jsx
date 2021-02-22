@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import React from "react";
 import { withRouter } from "react-router";
 
-import { createAPI } from "../../api";
+import { createMockAPI } from "../../api";
 import { BackButton } from "../back-button";
 import { Error } from "../error";
 import { Loading } from "../loading";
@@ -16,7 +16,7 @@ const Profile = ({
   },
   history,
 }) => {
-  const api = createAPI();
+  const api = createMockAPI();
 
   const getProfile = () => {
     return api.get(`/parents/${id}`);

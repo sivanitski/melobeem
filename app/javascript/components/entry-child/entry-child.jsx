@@ -4,14 +4,16 @@ import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import defaultProptypes from "../../default-proptypes";
 import RightArrow from "../../images/arrow-right.svg";
 import Share from "../../images/share.svg";
 
-const EntryChild = ({ child }) => {
+const EntryChild = ({ child, voters }) => {
+  const lastThreeVoters = voters.slice(0, 3);
   return (
     <div className="entry">
       <div className="entry__img">
-        <img src={child.avatar} />
+        <img src={child.imageUrl} />
         <div className="entry__share">
           <Share />
         </div>
@@ -23,9 +25,9 @@ const EntryChild = ({ child }) => {
 
       <Link to={`/entry/${child.id}/voters`} className="entry__voters">
         <div className="entry__voters__list">
-          {child.mainVoters.map((mainVoter) => (
-            <div key={mainVoter.id} className="entry__voters__item">
-              <img src={mainVoter.avatar} />
+          {lastThreeVoters.map((voter) => (
+            <div key={voter.id} className="entry__voters__item">
+              <img src={voter.avatarUrl} />
             </div>
           ))}
         </div>
@@ -37,21 +39,14 @@ const EntryChild = ({ child }) => {
 };
 
 EntryChild.propTypes = {
-  child: propTypes.shape({
-    id: propTypes.string.isRequired,
-    name: propTypes.string.isRequired,
-    avatar: propTypes.string.isRequired,
-    likes: propTypes.number.isRequired,
-    parentName: propTypes.string.isRequired,
-    rank: propTypes.number.isRequired,
-    mainVoters: propTypes.arrayOf(
-      propTypes.shape({
-        id: propTypes.string.isRequired,
-        name: propTypes.string.isRequired,
-        avatar: propTypes.string.isRequired,
-      }).isRequired
-    ),
-  }).isRequired,
+  child: defaultProptypes.CHILD,
+  voters: propTypes.arrayOf(
+    propTypes.shape({
+      id: propTypes.number.isRequired,
+      name: propTypes.string.isRequired,
+      avatarUrl: propTypes.string.isRequired,
+    }).isRequired
+  ).isRequired,
 };
 
 export default EntryChild;

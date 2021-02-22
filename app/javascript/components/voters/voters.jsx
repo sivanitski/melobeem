@@ -6,7 +6,7 @@ import React from "react";
 import { withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
-import { createMockAPI } from "../../api";
+import { createAPI } from "../../api";
 import GoBack from "../../images/go-back.svg";
 import { Error } from "../error";
 import { Loading } from "../loading";
@@ -16,13 +16,13 @@ const Voters = ({
     params: { id },
   },
 }) => {
-  const api = createMockAPI();
+  const api = createAPI();
   const getVoters = () => {
-    return api.get(`/competitions/1/children/${id}/voters`);
+    return api.get(`/entries/${id}/latest_voters`);
   };
 
   const { data: voters, error, loading } = useRequest(getVoters, {
-    formatResult: (res) => res.data,
+    formatResult: (res) => res.data.users,
   });
 
   if (error) {
@@ -46,7 +46,7 @@ const Voters = ({
             key={voter.id}
             className="voters__item"
           >
-            <img src={voter.avatar} className="voters__item__img" />
+            <img src={voter.avatarUrl} className="voters__item__img" />
             <div className="voters__item__name">{voter.name}</div>
           </Link>
         ))}

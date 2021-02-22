@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import React, { useState } from "react";
 import { withRouter } from "react-router";
 
-import { createMockAPI } from "../../api";
+import { createAPI } from "../../api";
 import HeartVote from "../../images/heart-vote.svg";
 import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
@@ -21,14 +21,14 @@ const Vote = ({
     params: { id },
   },
 }) => {
-  const api = createMockAPI();
+  const api = createAPI();
 
   const getCurrentCompetitor = () => {
-    return api.get(`/competitions/1/children/${id}`);
+    return api.get(`/entries/${id}`);
   };
   const [isPopupShown, setIsPopupShown] = useState(false);
   const { data: child, error, loading } = useRequest(getCurrentCompetitor, {
-    formatResult: (res) => res.data,
+    formatResult: (res) => res.data.entry,
   });
 
   const handlePrizeClick = () => {

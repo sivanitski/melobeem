@@ -1,4 +1,10 @@
 import axios from "axios";
+import applyCaseMiddleware from "axios-case-converter";
+
+let csrfToken = document.querySelector('meta[name="csrf-token"]');
+if (csrfToken) {
+  csrfToken = csrfToken.content;
+}
 
 export const createMockAPI = () => {
   const api = axios.create({
@@ -20,13 +26,15 @@ export const createMockAPI = () => {
 };
 
 export const createAPI = () => {
-  const api = axios.create({
-    baseURL: `/api/v1`,
-    timeout: 1000 * 5,
-    headers: {
-      "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
-    },
-  });
+  const api = applyCaseMiddleware(
+    axios.create({
+      baseURL: `/api/v1`,
+      timeout: 1000 * 5,
+      headers: {
+        "X-CSRF-Token": csrfToken,
+      },
+    })
+  );
 
   const onSuccess = (response) => {
     return response;
@@ -46,7 +54,7 @@ export const createFbAPI = () => {
     baseURL: `users/auth/facebook/callback`,
     timeout: 1000 * 5,
     headers: {
-      "X-CSRF-Token": document.querySelector('meta[name="csrf-token"]').content,
+      "X-CSRF-Token": csrfToken,
     },
   });
 

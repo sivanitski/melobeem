@@ -1,8 +1,7 @@
 import { useRequest } from "ahooks";
 import React from "react";
 
-import { createAPI, createMockAPI } from "../../api";
-import { makeArrayCamelCase } from "../../helpers/utils";
+import { createAPI } from "../../api";
 import { CompetitionInfo } from "../competition-info";
 import { Competitors } from "../competitors";
 import { CompetitorsSearch } from "../competitors-search/";
@@ -12,13 +11,12 @@ import { HeaderNotLogin } from "../header-not-login";
 import { Loading } from "../loading";
 
 const Leaderboard = () => {
-  const mockApi = createMockAPI();
+  const api = createAPI();
 
   const getCompetition = () => {
-    return mockApi.get(`/competitions/1`);
+    return api.get(`/competitions/current`);
   };
 
-  const api = createAPI();
   const getEntries = () => {
     return api.get("/entries");
   };
@@ -36,7 +34,7 @@ const Leaderboard = () => {
     error: competitionError,
     loading: competitionLoading,
   } = useRequest(getCompetition, {
-    formatResult: (res) => res.data,
+    formatResult: (res) => res.data.competition,
   });
 
   if (competitionError || childrenError) {
@@ -46,17 +44,15 @@ const Leaderboard = () => {
     return <Loading />;
   }
 
-  const data = makeArrayCamelCase(childrenData);
-
   return (
     <>
       <HeaderNotLogin />
       <CompetitorsSearch competitors={childrenData} />
       <CompetitionInfo
-        timeLeft={competitionData.timeLeft}
-        prize={competitionData.prize}
+        timeLeft={competitionData.endsAt}
+        prize={competitionData.prizeCents}
       />
-      <Competitors competitors={data} />
+      <Competitors competitors={childrenData} />
       <Footer />
     </>
   );
