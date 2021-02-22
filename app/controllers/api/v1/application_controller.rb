@@ -1,8 +1,7 @@
 module API
   module V1
     class ApplicationController < ActionController::Base
-      include API::AuthMixins
-      include API::NotFoundRescue
+      include API::ErrorHandling
       include API::Pagination
       include API::ResponseHelper
 
