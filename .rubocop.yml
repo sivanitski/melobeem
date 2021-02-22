@@ -38,3 +38,6 @@ RSpec/MultipleMemoizedHelpers:
 
 RSpec/NestedGroups:
   Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 5
