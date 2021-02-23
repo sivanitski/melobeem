@@ -12,7 +12,8 @@
           "gender": {"type": "string"},
           "name": {"type": "string"},
           "image_url": {"type": "string"},
-          "total_votes": {"type": "integer"}
+          "total_votes": {"type": "integer"},
+          "rank": {"type": "integer"}
         }
       }
     },

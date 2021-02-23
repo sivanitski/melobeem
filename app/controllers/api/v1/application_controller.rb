@@ -11,7 +11,7 @@ module API
       private
 
       def set_competition
-        @competition = Competition.order(created_at: :desc).take!
+        @competition = Competition.current!
       end
     end
   end
