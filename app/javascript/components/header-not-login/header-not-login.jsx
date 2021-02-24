@@ -12,18 +12,14 @@ import LogoIcon from "../../images/logo-icon.svg";
 import LogoText from "../../images/logo-text.svg";
 
 const HeaderNotLogin = () => {
-  const {
-    api: {
-      options: { appId },
-    },
-  } = useContext(FacebookContext);
-  const api = createFbAPI();
+  const { api: api } = useContext(FacebookContext);
+  const fbAPI = createFbAPI();
 
   const handleResponse = (data) => {
     // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
-    document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
+    document.cookie = `fbsr_${api.options.appId}=${data.tokenDetail.signedRequest}`;
 
-    api.get(``).then((res) => {
+    fbAPI.get(``).then((res) => {
       console.log(res);
     });
   };
