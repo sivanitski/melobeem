@@ -4,7 +4,7 @@ module Votes
 
     def call(params:) # rubocop:disable Metrics/MethodLength
       @params = params
-      return Success.new({ ttl: current_ttl }) if key_exists?
+      return Success.new({ ttl_in_seconds: current_ttl }) if key_exists?
 
       vote = Vote.new(params)
       ActiveRecord::Base.transaction do
@@ -14,7 +14,7 @@ module Votes
 
       create_uniq_vote_key
 
-      Success.new({ ttl: TIME_BETWEEN_VOTING })
+      Success.new({ ttl_in_seconds: TIME_BETWEEN_VOTING })
     rescue ActiveRecord::ActiveRecordError => e
       Failure.new(e.message)
     end

@@ -6,7 +6,6 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/check_payment_status', to: 'webhooks#check_payment_status'
 
-      resources :votes, only: :create
       resources :charges, only: :create
 
       resources :entries, only: %i[index create show] do
@@ -14,6 +13,7 @@ Rails.application.routes.draw do
         get 'current', on: :collection
         resources :votes, module: :entries, only: [] do
           get 'expiration_time_for_free', on: :collection
+          post 'create_free', on: :collection
         end
       end
 

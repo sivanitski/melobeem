@@ -35,4 +35,38 @@ RSpec.describe API::V1::Entries::VotesController do
       end
     end
   end
+
+  describe 'POST /create_free' do
+    before { sign_in user }
+
+    context 'with valid attributes' do
+      before { post :create_free, params: { value: 1, entry_id: entry.id, user_id: user.id }, format: :json }
+
+      it { expect(Vote.count).to eq 1 }
+
+      it 'returns status :created' do
+        expect(response.status).to eq 201
+      end
+
+      it 'returns time between voting' do
+        expect(JSON.parse(response.body)['ttl_in_seconds']).to eq Votes::Create::TIME_BETWEEN_VOTING
+      end
+    end
+
+    context 'with invalid attributes' do
+      before { post :create_free, params: { value: nil, entry_id: entry.id, user_id: user.id }, format: :json }
+
+      it 'does not save the vote' do
+        expect { response }.not_to change(Vote, :count)
+      end
+
+      it 'return status :unprocessable_entity' do
+        expect(response.status).to eq 422
+      end
+
+      it 'returns error message' do
+        expect(JSON.parse(response.body)['message']).to eq "Validation failed: Value can't be blank"
+      end
+    end
+  end
 end
