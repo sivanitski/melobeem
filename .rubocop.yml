@@ -23,8 +23,9 @@ Style/Documentation:
   Enabled: false
 
 Metrics/BlockLength:
-  Enabled: true
-  Max: 80
+  Exclude:
+    - 'config/**/*.rb'
+    - 'spec/**/*.rb'
 
 Layout/LineLength:
   Enabled: true

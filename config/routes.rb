@@ -9,8 +9,11 @@ Rails.application.routes.draw do
       resources :charges, only: :create
 
       resources :entries, only: %i[index create show] do
+        collection do
+          get 'current'
+          get 'search'
+        end
         get 'latest_voters', on: :member
-        get 'current', on: :collection
         resources :votes, module: :entries, only: [] do
           get 'expiration_time_for_free', on: :collection
           post 'create_free', on: :collection

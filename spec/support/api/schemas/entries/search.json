@@ -1,0 +1,29 @@
+{
+  "type": "object",
+  "required": ["entries", "meta"],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "image_url", "total_votes", "username"],
+        "properties": {
+          "id": {"type": "integer"},
+          "name": {"type": "string"},
+          "image_url": {"type": "string"},
+          "total_votes": {"type": "integer"},
+          "username": {"type": "string"}
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": ["total_count", "per", "page"],
+      "properties": {
+        "total_count": {"type": "integer"},
+        "per": {"type": "integer"},
+        "page": {"type": "integer"}
+      }
+    }
+  }
+}

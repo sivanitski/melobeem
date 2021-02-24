@@ -104,4 +104,44 @@ RSpec.describe API::V1::EntriesController do
       expect(JSON.parse(response.body)['entry']['id']).to eq entry.id
     end
   end
+
+  describe 'GET /search' do
+    context 'when name was founded' do
+      before do
+        get :search, params: { id: entry.id, q: entry.name.downcase.split.first }, format: :json
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it { expect(response).to match_response_schema('entries/search') }
+
+      it 'returns entry name' do
+        expect(JSON.parse(response.body)['entries'][0]['name']).to eq entry.name
+      end
+    end
+
+    context 'when search request is empty' do
+      before do
+        get :search, params: { id: entry.id, q: nil }, format: :json
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it 'returns an empty array' do
+        expect(JSON.parse(response.body)['entries']).to eq []
+      end
+    end
+
+    context 'when entrant was not found' do
+      before do
+        get :search, params: { id: entry.id, q: 'baby' }, format: :json
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it 'returns an empty array' do
+        expect(JSON.parse(response.body)['entries']).to eq []
+      end
+    end
+  end
 end

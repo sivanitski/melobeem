@@ -39,6 +39,13 @@ module API
         render json: @competition.entries.find_by!(user: current_user), serializer: ::Entries::CurrentSerializer
       end
 
+      def search
+        respond_with_item_list(
+          ::Entries::SearchEntriesQuery.new.call(params[:q]),
+          ::Entries::SearchSerializer
+        )
+      end
+
       private
 
       def entries_params
