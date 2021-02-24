@@ -1,6 +1,6 @@
 import "./style.less";
 
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FacebookContext, LoginButton } from "react-facebook";
 
 import { createFbAPI } from "../../api";
@@ -12,11 +12,14 @@ import LogoIcon from "../../images/logo-icon.svg";
 import LogoText from "../../images/logo-text.svg";
 
 const HeaderNotLogin = () => {
-  const {
-    api: {
-      options: { appId },
-    },
-  } = useContext(FacebookContext);
+  const facebookContext = useContext(FacebookContext);
+  const [appId, setAppId] = useState("");
+  useEffect(() => {
+    if (facebookContext.isReady) {
+      setAppId(facebookContext.api.options.appId);
+    }
+  }, [facebookContext.isReady]);
+
   const api = createFbAPI();
 
   const handleResponse = (data) => {
