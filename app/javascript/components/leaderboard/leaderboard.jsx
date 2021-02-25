@@ -54,7 +54,7 @@ const Leaderboard = () => {
       ) : (
         <HeaderNotLogin />
       )}
-      <CompetitorsSearch competitors={childrenData} />
+      <CompetitorsSearch />
       <CompetitionInfo
         timeLeft={competitionData.endsAt}
         prize={competitionData.prizeCents}

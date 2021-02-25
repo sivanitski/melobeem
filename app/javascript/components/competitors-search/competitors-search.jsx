@@ -1,16 +1,24 @@
 import "swiper/swiper.less";
 import "./style.less";
 
-import propTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
-import defaultProptypes from "../../default-proptypes";
-import { filterCompetitors } from "../../helpers/utils";
+import { createAPI } from "../../api";
+import useDebounce from "../../helpers/use-debounce";
 import { CompetitorsList } from "../competitors-list";
 
-const CompetitorsSearch = ({ competitors }) => {
+const CompetitorsSearch = () => {
   const [searchString, setSearchString] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [competitors, setCompetitors] = useState([]);
+  const api = createAPI();
+  const debouncedValue = useDebounce(searchString, 500);
+
+  useEffect(() => {
+    api.get(`/entries/search?q=${debouncedValue}`).then((res) => {
+      setCompetitors(res.data.entries);
+    });
+  }, [debouncedValue]);
 
   const onSearchFilledChange = (evt) => {
     setSearchString(evt.currentTarget.value);
@@ -47,17 +55,9 @@ const CompetitorsSearch = ({ competitors }) => {
         )}
       </div>
 
-      {isVisible && (
-        <CompetitorsList
-          competitors={filterCompetitors(searchString, competitors)}
-        />
-      )}
+      {isVisible && <CompetitorsList competitors={competitors} />}
     </div>
   );
-};
-
-CompetitorsSearch.propTypes = {
-  competitors: propTypes.arrayOf(defaultProptypes.CHILD).isRequired,
 };
 
 export default CompetitorsSearch;
