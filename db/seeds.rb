@@ -8,9 +8,8 @@ competition = Competition.create!(title: 'Kiddy',
 # generate 20 users with avatars
 avatars = Pathname.glob('db/fixtures/user_avatars/*')
 
-(1..20).each do |id|
-  user = User.create!(
-    id: id,
+20.times do
+  User.create!(
     name: FFaker::Name.name,
     email: FFaker::Internet.email,
     provider: FFaker::Internet.domain_word,
@@ -18,30 +17,49 @@ avatars = Pathname.glob('db/fixtures/user_avatars/*')
     password: "password",
     password_confirmation: "password",
   )
-  avatar = avatars[id -1]
+end
+
+User.all.find_each do |user|
+  avatar = avatars[user.id - 1]
   user.avatar.attach(io: avatar.open, filename: avatar.basename)
 end
 
-# generate 20 entries with images
+#generate 20 entries with images
 images = Pathname.glob('db/fixtures/entry_images/*')
 
-(1..20).each do |id|
-  entry = Entry.create!(
-    id: id,
+User.all.find_each do |user|
+  Entry.create!(
     name: FFaker::Name.name,
     gender: FFaker::Gender.binary,
-    user_id: id,
+    user_id: user.id,
     competition_id: competition.id
   )
-  image = images[id - 1]
+end
+
+Entry.all.find_each do |entry|
+  image = images[entry.id - 1]
   entry.image.attach(io: image.open, filename: image.basename)
 end
 
-# generate 2000 votes
-(1..2000).each do |id|
-  Vote.create!(
-    id: id,
-    entry_id: rand(1..20),
-    user_id: rand(1..20)
-  )
-end
+# generate votes
+
+# level 1: from 0 to 1 votes
+Entry.where(id: 1..3).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample) }
+
+# level 2: from 2 to 4 votes
+Entry.where(id: 4..6).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(2..4)) }
+
+# level 3: from 5 to 9 votes
+Entry.where(id: 7..9).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(5..9)) }
+
+# level 4: from 10 to 14 votes
+Entry.where(id: 10..12).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(10..14)) }
+
+# level 5: from 15 to 19 votes
+Entry.where(id: 13..15).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(15..19)) }
+
+# level 6: from 20 to 29 votes
+Entry.where(id: 16..20).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(20..29)) }
+
+# summarize votes into total_votes
+Entry.all.find_each { |entry| entry.update(total_votes: Vote.where(entry: entry).sum(:value)) }
