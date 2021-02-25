@@ -4,6 +4,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { FacebookContext, LoginButton } from "react-facebook";
 
 import { createFbAPI } from "../../api";
+import UserContext from "../../helpers/user-context";
 import headerLeft from "../../images/header-left.png";
 import headerLeft2x from "../../images/header-left@2x.png";
 import headerRight from "../../images/header-right.png";
@@ -12,6 +13,7 @@ import LogoIcon from "../../images/logo-icon.svg";
 import LogoText from "../../images/logo-text.svg";
 
 const HeaderNotLogin = () => {
+  const { setUser } = useContext(UserContext);
   const facebookContext = useContext(FacebookContext);
   const [appId, setAppId] = useState("");
   useEffect(() => {
@@ -27,7 +29,7 @@ const HeaderNotLogin = () => {
     document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
 
     api.get(``).then((res) => {
-      console.log(res);
+      setUser(res.data.user);
     });
   };
 

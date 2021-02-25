@@ -1,16 +1,19 @@
 import { useRequest } from "ahooks";
-import React from "react";
+import React, { useContext } from "react";
 
 import { createAPI } from "../../api";
+import UserContext from "../../helpers/user-context";
 import { CompetitionInfo } from "../competition-info";
 import { Competitors } from "../competitors";
 import { CompetitorsSearch } from "../competitors-search/";
 import { Error } from "../error";
 import { Footer } from "../footer";
+import { HeaderLogin } from "../header-login";
 import { HeaderNotLogin } from "../header-not-login";
 import { Loading } from "../loading";
 
 const Leaderboard = () => {
+  const { user } = useContext(UserContext);
   const api = createAPI();
 
   const getCompetition = () => {
@@ -46,7 +49,11 @@ const Leaderboard = () => {
 
   return (
     <>
-      <HeaderNotLogin />
+      {user ? (
+        <HeaderLogin endsAt={competitionData.endsAt} />
+      ) : (
+        <HeaderNotLogin />
+      )}
       <CompetitorsSearch competitors={childrenData} />
       <CompetitionInfo
         timeLeft={competitionData.endsAt}

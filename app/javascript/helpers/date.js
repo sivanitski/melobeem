@@ -13,3 +13,5 @@ export const calcTimeDuration = (latestDate) => {
 };
 
 export const formatTimeInMinutesAndSeconds = (time) => format(time, "mm:ss");
+
+export const formatTimeDayAndMonth = (time) => format(new Date(time), "d MMM");
