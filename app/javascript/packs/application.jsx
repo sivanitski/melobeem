@@ -15,7 +15,7 @@ import ReactDOM from "react-dom";
 const root = document.createElement("div");
 root.classList.add("root");
 
-const appId = "369601344469446";
+const appId = "2495138454127282";
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
