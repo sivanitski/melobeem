@@ -1,7 +1,8 @@
 module Entries
   class WithRankQuery
     def call(competition_id)
-      Entry.select('*')
+      Entry.preload(:user)
+           .select('*')
            .joins(entry_ranking(competition_id))
            .order(total_votes: :desc)
     end
