@@ -2,7 +2,7 @@ module API
   module V1
     class EntriesController < API::V1::ApplicationController
       skip_before_action :authenticate_user!, except: %i[create current]
-      before_action :set_entry, only: %i[show latest_voters]
+      before_action :set_entry, only: %i[show latest_voters total_votes_by_date]
 
       def index
         respond_with_item_list(
@@ -33,6 +33,12 @@ module API
         else
           render json: { message: 'No voted' }, status: :not_found
         end
+      end
+
+      def total_votes_by_date
+        total_votes = ::Entries::TotalVotesByDateQuery.new(entry: @entry, date: params[:date]).call
+
+        render json: { total_votes: total_votes, date: params[:date] }
       end
 
       def current

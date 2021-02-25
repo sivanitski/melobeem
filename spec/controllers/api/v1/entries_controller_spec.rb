@@ -88,6 +88,37 @@ RSpec.describe API::V1::EntriesController do
     end
   end
 
+  describe 'GET /total_votes_by_date' do
+    let(:total_votes) { JSON.parse(response.body)['total_votes'] }
+    let(:entrant) { create :entry, user: user, competition: competition }
+
+    context 'when votes are present' do
+      let(:voters) { create_list :user, 2 }
+
+      before do
+        create_list :vote, 3, value: 1, entry: entrant, user: voters.first, created_at: Time.current - 1.day
+        create_list :vote, 2, value: 1, entry: entrant, user: voters.second
+      end
+
+      it 'returns amount of votes for today' do
+        get :total_votes_by_date, params: { id: entrant.id, date: Time.current.to_s }
+        expect(total_votes).to eq(2)
+      end
+
+      it 'returns amount of votes for yesteday' do
+        get :total_votes_by_date, params: { id: entrant.id, date: (Time.current - 1.day).to_s }
+        expect(total_votes).to eq(3)
+      end
+    end
+
+    context 'when voters are absent' do
+      it 'returns amount of votes for today' do
+        get :total_votes_by_date, params: { id: entrant.id }
+        expect(total_votes).to eq(0)
+      end
+    end
+  end
+
   describe 'GET /current' do
     let!(:entry) { create(:entry, competition: competition, user: user, gender: 'male') }
 

@@ -13,7 +13,12 @@ Rails.application.routes.draw do
           get 'current'
           get 'search'
         end
-        get 'latest_voters', on: :member
+
+        member do
+          get :latest_voters
+          get :total_votes_by_date
+        end
+
         resources :votes, module: :entries, only: [] do
           get 'expiration_time_for_free', on: :collection
           post 'create_free', on: :collection
