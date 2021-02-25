@@ -42,7 +42,7 @@ RSpec.describe API::V1::EntriesController do
       get :show, params: { competition_id: competition.id, id: entry.id }, format: :json
     end
 
-    include_examples 'success status and correct schema'
+    it { expect(response).to match_response_schema('entries/ranked') }
 
     it { expect(JSON.parse(response.body)['entry']['id']).to eq entry.id }
   end

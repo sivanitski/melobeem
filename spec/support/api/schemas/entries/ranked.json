@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "required": ["entry"],
+  "properties": {
+    "entry": {
+      "type": "object",
+      "required": ["id", "gender", "name", "image_url", "total_votes", "rank", "username"],
+      "properties": {
+        "id": {"type": "integer"},
+        "gender": {"type": "string"},
+        "name": {"type": "string"},
+        "image_url": {"type": "string"},
+        "total_votes": {"type": "integer"},
+        "rank": {"type": "integer"},
+        "username": {"type": "string"}
+
+      }
+    }
+  }
+}

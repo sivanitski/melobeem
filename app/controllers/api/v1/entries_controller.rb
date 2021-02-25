@@ -2,17 +2,18 @@ module API
   module V1
     class EntriesController < API::V1::ApplicationController
       skip_before_action :authenticate_user!, except: %i[create current]
-      before_action :set_entry, only: %i[show latest_voters voters_by_day total_votes_by_date]
+      before_action :set_entry, only: %i[latest_voters voters_by_day total_votes_by_date]
 
       def index
         respond_with_item_list(
-          ::Entries::WithRankQuery.new.call(@competition.id).with_attached_image,
-          ::Entries::IndexSerializer
+          ::Entries::WithRankQuery.new.call(@competition.id),
+          ::Entries::RankedSerializer
         )
       end
 
       def show
-        respond_with @entry, serializer: ::Entries::ShowSerializer
+        entry = ::Entries::WithRankQuery.new.call(@competition.id).find(params[:id])
+        respond_with entry, serializer: ::Entries::RankedSerializer
       end
 
       def create
