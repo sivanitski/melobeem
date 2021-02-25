@@ -44,22 +44,22 @@ end
 # generate votes
 
 # level 1: from 0 to 1 votes
-Entry.where(id: 1..3).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample) }
+Entry.where(id: 1..3).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, source_type: :user) }
 
 # level 2: from 2 to 4 votes
-Entry.where(id: 4..6).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(2..4)) }
+Entry.where(id: 4..6).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(2..4), source_type: :user) }
 
 # level 3: from 5 to 9 votes
-Entry.where(id: 7..9).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(5..9)) }
+Entry.where(id: 7..9).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(5..9), source_type: :user) }
 
 # level 4: from 10 to 14 votes
-Entry.where(id: 10..12).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(10..14)) }
+Entry.where(id: 10..12).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(10..14), source_type: :user) }
 
 # level 5: from 15 to 19 votes
-Entry.where(id: 13..15).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(15..19)) }
+Entry.where(id: 13..15).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(15..19), source_type: :user) }
 
 # level 6: from 20 to 29 votes
-Entry.where(id: 16..20).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(20..29)) }
+Entry.where(id: 16..20).each { |entry| Vote.create!(entry: entry, user_id: User.pluck(:id).sample, value: rand(20..29), source_type: :user) }
 
 # summarize votes into total_votes
 Entry.all.find_each { |entry| entry.update(total_votes: Vote.where(entry: entry).sum(:value)) }

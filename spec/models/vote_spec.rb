@@ -4,6 +4,9 @@ RSpec.describe Vote, type: :model do
   it { is_expected.to belong_to :entry }
   it { is_expected.to belong_to :user }
 
+  it { is_expected.to define_enum_for(:source_type).with_values(user: 'user', spinner: 'spinner', bonus: 'bonus').backed_by_column_of_type(:enum) }
+
+  it { is_expected.to allow_values(:user, :spinner, :bonus).for(:source_type) }
   it { is_expected.to validate_presence_of(:value) }
 
   describe '#apply!' do

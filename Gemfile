@@ -26,6 +26,9 @@ gem 'active_model_serializers', '~> 0.10.0'
 # pagination
 gem 'kaminari-activerecord'
 
+# active record PG extension
+gem 'activerecord-postgres_enum'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
 gem 'aws-sdk-s3', require: false

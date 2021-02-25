@@ -175,4 +175,34 @@ RSpec.describe API::V1::EntriesController do
       end
     end
   end
+
+  describe 'GET /voters_by_day' do
+    before { sign_in(user) }
+
+    context 'when have no votes' do
+      it 'returns status :not_found' do
+        get :voters_by_day, params: { id: entry.id }, format: :json
+
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+    context 'with votes' do
+      before { create_list :vote, 2, entry: entry, user: user, source_type: :user }
+
+      it 'return grouped votes' do
+        get :voters_by_day, params: { id: entry.id }, format: :json
+
+        expect(JSON.parse(response.body)['votes'].size).to eq(1)
+      end
+
+      context 'when page params present' do
+        it 'returns no voted' do
+          get :voters_by_day, params: { id: entry.id, page: 3, per: 1 }
+
+          expect(JSON.parse(response.body)['message']).to eq('No voted')
+        end
+      end
+    end
+  end
 end

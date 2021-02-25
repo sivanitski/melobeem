@@ -15,6 +15,12 @@ ActiveRecord::Schema.define(version: 2021_02_23_063408) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_enum :vote_source_type, [
+    "user",
+    "spinner",
+    "bonus",
+  ], force: :cascade
+
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
     t.string "record_type", null: false
@@ -111,6 +117,7 @@ ActiveRecord::Schema.define(version: 2021_02_23_063408) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index "entry_id, ((created_at)::date)", name: "votes_entry_id_created_at_idx"
+    t.enum "source_type", default: "user", null: false, enum_name: "vote_source_type"
     t.index ["entry_id"], name: "index_votes_on_entry_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
   end

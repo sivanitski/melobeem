@@ -2,7 +2,7 @@ module API
   module V1
     class EntriesController < API::V1::ApplicationController
       skip_before_action :authenticate_user!, except: %i[create current]
-      before_action :set_entry, only: %i[show latest_voters total_votes_by_date]
+      before_action :set_entry, only: %i[show latest_voters voters_by_day total_votes_by_date]
 
       def index
         respond_with_item_list(
@@ -50,6 +50,16 @@ module API
           ::Entries::SearchEntriesQuery.new.call(params[:q]),
           ::Entries::SearchSerializer
         )
+      end
+
+      def voters_by_day
+        voters = ::Entries::VotersGroupByDayQuery.new(entry: @entry, page: params[:page], per: params[:per], date: params[:date]).call
+
+        if voters.any?
+          render json: voters, each_serializer: ::Entries::VotersByDaySerializer
+        else
+          render json: { message: 'No voted' }, status: :not_found
+        end
       end
 
       private
