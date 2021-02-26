@@ -10,6 +10,7 @@ class User < ApplicationRecord
 
   validates :name, :provider, presence: true
   validates :uid, presence: true, uniqueness: { scope: :provider }
+  validates :email, uniqueness: true, allow_blank: true # rubocop:disable Rails/UniqueValidationWithoutIndex
 
   def self.from_omniauth(auth)
     where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
