@@ -1,11 +1,12 @@
 // min number of likes that we should have to be on this level
+
 export const LEVEL_INTERVALS = {
   1: 0,
-  2: 5,
-  3: 10,
-  4: 20,
-  5: 40,
-  6: 60,
+  2: 2,
+  3: 5,
+  4: 10,
+  5: 15,
+  6: 20,
 };
 
 // max level

@@ -7,8 +7,6 @@ import defaultProptypes from "../../default-proptypes";
 import IconHeart from "../../images/icon-heart.svg";
 
 const CompetitorsItem = ({ competitor }) => {
-  competitor.rank = 1;
-  competitor.parentName = `John Doe`;
   return (
     <div className="competitors__item" key={competitor.id}>
       <Link to={`entry/${competitor.id}`}>
@@ -21,7 +19,7 @@ const CompetitorsItem = ({ competitor }) => {
               {competitor.name}
             </div>
             <div className="competitors__item__names__parent text-smaller text-grey">
-              {competitor.parentName}
+              {competitor.username}
             </div>
           </div>
           <div className="competitors__item__info">

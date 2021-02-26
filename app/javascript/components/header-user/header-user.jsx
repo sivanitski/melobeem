@@ -7,7 +7,6 @@ import { HeaderUserItem } from "../header-user-item";
 import { HeaderUserLevel } from "../header-user-level";
 
 const HeaderUser = ({ child }) => {
-  child.rank = 1;
   return (
     <div className="header-user">
       <div className="header-user__list">

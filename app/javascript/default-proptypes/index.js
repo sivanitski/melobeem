@@ -6,8 +6,8 @@ const defaultProptypes = {
     name: propTypes.string.isRequired,
     imageUrl: propTypes.string.isRequired,
     totalVotes: propTypes.number.isRequired,
-    // parentName: propTypes.string.isRequired, // now it does not exist in back data
-    // rank: propTypes.number.isRequired, // now it does not exist in back data
+    username: propTypes.string.isRequired,
+    rank: propTypes.number,
   }).isRequired,
 };
 
