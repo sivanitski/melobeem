@@ -27,7 +27,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :users, only: [] do
+      resources :users, only: :show do
         collection do
           resources :entries, only: %i[edit update destroy], module: :users
         end

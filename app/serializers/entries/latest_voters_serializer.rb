@@ -1,5 +1,5 @@
 module Entries
-  class LatestVotersSerializer < Entries::BaseSerializer
+  class LatestVotersSerializer < ::BaseSerializer
     attributes :id, :name, :avatar_url
 
     def avatar_url
