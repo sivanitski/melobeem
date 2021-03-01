@@ -201,4 +201,14 @@ RSpec.describe API::V1::EntriesController do
       end
     end
   end
+
+  describe 'GET /ranking_details' do
+    before do
+      get :ranking_details, params: { id: entry.id }, format: :json
+    end
+
+    it { expect(response).to match_response_schema('entries/ranking_details') }
+
+    it { expect(JSON.parse(response.body)['entry']['id']).to eq entry.id }
+  end
 end

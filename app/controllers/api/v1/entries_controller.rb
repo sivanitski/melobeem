@@ -63,6 +63,11 @@ module API
         end
       end
 
+      def ranking_details
+        entry = ::Entries::WithRankQuery.new.call(@competition.id).find(params[:id])
+        respond_with entry, serializer: ::Entries::RankingDetailsSerializer
+      end
+
       private
 
       def entries_params

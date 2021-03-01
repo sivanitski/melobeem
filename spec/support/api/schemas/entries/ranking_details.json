@@ -1,0 +1,15 @@
+{
+  "type": "object",
+  "required": ["entry"],
+  "properties": {
+    "entry": {
+      "type": "object",
+      "required": ["id", "total_votes", "rank"],
+      "properties": {
+        "id": {"type": "integer"},
+        "total_votes": {"type": "integer"},
+        "rank": {"type": "integer"}
+      }
+    }
+  }
+}

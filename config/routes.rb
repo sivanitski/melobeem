@@ -18,6 +18,7 @@ Rails.application.routes.draw do
           get :total_votes_by_date
           get :voters_by_day
           get :latest_voters
+          get :ranking_details
         end
 
         resources :votes, module: :entries, only: [] do
