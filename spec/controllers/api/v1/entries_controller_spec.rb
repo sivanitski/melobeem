@@ -1,11 +1,5 @@
 require 'rails_helper'
 
-RSpec.shared_examples 'success status and correct schema' do
-  it { expect(response.status).to eq 200 }
-
-  it { expect(response).to match_response_schema('entries/show') }
-end
-
 RSpec.describe API::V1::EntriesController do
   let(:competition) { create(:competition) }
   let(:user) { create(:user) }
@@ -32,7 +26,9 @@ RSpec.describe API::V1::EntriesController do
       post :create, params: { competition_id: competition.id, entry: attributes_for(:entry) }, format: :json
     end
 
-    include_examples 'success status and correct schema'
+    it { expect(response.status).to eq 200 }
+
+    it { expect(response).to match_response_schema('entries/show') }
 
     it { expect(Entry.count).to be 1 }
   end
