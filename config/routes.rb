@@ -28,6 +28,7 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: :show do
+        get :user_entries, on: :member
         collection do
           resources :entries, only: %i[edit update destroy], module: :users
         end

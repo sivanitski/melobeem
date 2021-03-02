@@ -1,10 +1,14 @@
 module API
   module V1
     class UsersController < API::V1::ApplicationController
-      skip_before_action :authenticate_user!, only: :show
+      skip_before_action :authenticate_user!, only: %i[show user_entries]
 
       def show
         render json: user, serializer: ::Users::ShowSerializer
+      end
+
+      def user_entries
+        render json: user.entries, each_serializer: ::Users::EntriesSerializer
       end
 
       private
