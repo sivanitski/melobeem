@@ -4,7 +4,7 @@ module API
       skip_before_action :authenticate_user!, only: :current
 
       def current
-        render json: @competition, serializer: Competitions::CurrentSerializer
+        render json: competition, serializer: Competitions::CurrentSerializer
       end
     end
   end

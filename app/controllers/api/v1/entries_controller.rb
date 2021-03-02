@@ -2,22 +2,21 @@ module API
   module V1
     class EntriesController < API::V1::ApplicationController
       skip_before_action :authenticate_user!, except: %i[create current]
-      before_action :set_entry, only: %i[latest_voters voters_by_day total_votes_by_date]
 
       def index
         respond_with_item_list(
-          ::Entries::WithRankQuery.new.call(@competition.id),
+          ::Entries::WithRankQuery.new.call(competition.id),
           ::Entries::RankedSerializer
         )
       end
 
       def show
-        entry = ::Entries::WithRankQuery.new.call(@competition.id).find(params[:id])
+        entry = ::Entries::WithRankQuery.new.call(competition.id).find(params[:id])
         respond_with entry, serializer: ::Entries::RankedSerializer
       end
 
       def create
-        entry = @competition.entries.new(entries_params.merge(user: current_user))
+        entry = competition.entries.new(entries_params.merge(user: current_user))
 
         if entry.save
           render json: entry, serializer: ::Entries::ShowSerializer
@@ -27,7 +26,7 @@ module API
       end
 
       def latest_voters
-        users = ::Entries::LatestVotersQuery.new.call(@entry)
+        users = ::Entries::LatestVotersQuery.new.call(entry)
 
         if users.any?
           render json: users, each_serializer: ::Entries::LatestVotersSerializer
@@ -37,13 +36,13 @@ module API
       end
 
       def total_votes_by_date
-        total_votes = ::Entries::TotalVotesByDateQuery.new(entry: @entry, date: params[:date]).call
+        total_votes = ::Entries::TotalVotesByDateQuery.new(entry: entry, date: params[:date]).call
 
         render json: { total_votes: total_votes, date: params[:date] }
       end
 
       def current
-        render json: @competition.entries.find_by!(user: current_user), serializer: ::Entries::CurrentSerializer
+        render json: competition.entries.find_by!(user: current_user), serializer: ::Entries::CurrentSerializer
       end
 
       def search
@@ -54,7 +53,7 @@ module API
       end
 
       def voters_by_day
-        voters = ::Entries::VotersGroupByDayQuery.new(entry: @entry, page: params[:page], per: params[:per], date: params[:date]).call
+        voters = ::Entries::VotersGroupByDayQuery.new(entry: entry, page: params[:page], per: params[:per], date: params[:date]).call
 
         if voters.any?
           render json: voters, each_serializer: ::Entries::VotersByDaySerializer
@@ -64,7 +63,7 @@ module API
       end
 
       def ranking_details
-        entry = ::Entries::WithRankQuery.new.call(@competition.id).find(params[:id])
+        entry = ::Entries::WithRankQuery.new.call(competition.id).find(params[:id])
         respond_with entry, serializer: ::Entries::RankingDetailsSerializer
       end
 
@@ -74,8 +73,8 @@ module API
         params.require(:entry).permit(:gender, :name, :image, :total_votes)
       end
 
-      def set_entry
-        @entry = @competition.entries.find(params[:id])
+      def entry
+        @entry ||= competition.entries.find(params[:id])
       end
     end
   end
