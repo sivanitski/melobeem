@@ -1,7 +1,9 @@
 module API
   module V1
     class EntriesController < API::V1::ApplicationController
-      skip_before_action :authenticate_user!, except: %i[create current]
+      NO_LOGIN_ACTIONS = %i[index show latest_voters total_votes_by_date search voters_by_day ranking_details].freeze
+
+      skip_before_action :authenticate_user!, only: NO_LOGIN_ACTIONS
 
       def index
         respond_with_item_list(
