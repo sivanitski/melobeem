@@ -10,7 +10,6 @@ RSpec.describe Entry, type: :model do
   it { is_expected.to belong_to :competition }
   it { is_expected.to belong_to :user }
 
-  it { is_expected.to validate_presence_of(:gender) }
   it { is_expected.to validate_presence_of(:name) }
   it { expect(entry).to validate_uniqueness_of(:user_id).scoped_to(:competition_id) }
 

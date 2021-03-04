@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe API::V1::EntriesController do
   let(:competition) { create(:competition) }
   let(:user) { create(:user) }
-  let(:entry) { create(:entry, competition: competition, user: user, gender: 'male') }
+  let(:entry) { create(:entry, competition: competition, user: user) }
 
   describe 'GET /index' do
     before do
@@ -116,7 +116,7 @@ RSpec.describe API::V1::EntriesController do
   end
 
   describe 'GET /current' do
-    let!(:entry) { create(:entry, competition: competition, user: user, gender: 'male') }
+    let!(:entry) { create(:entry, competition: competition, user: user) }
 
     before do
       sign_in user
