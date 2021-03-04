@@ -30,7 +30,6 @@ images = Pathname.glob('db/fixtures/entry_images/*')
 User.all.find_each do |user|
   Entry.create!(
     name: FFaker::Name.name,
-    gender: FFaker::Gender.binary,
     user_id: user.id,
     competition_id: competition.id
   )
