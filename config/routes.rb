@@ -29,7 +29,7 @@ Rails.application.routes.draw do
 
       resources :users, only: :show do
         member do
-          get :user_entries
+          get :entries
         end
         collection do
           resources :entries, only: %i[edit update destroy], module: :users
