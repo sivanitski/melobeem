@@ -21,7 +21,9 @@ const Footer = () => {
         <div className="footer__item__title">Spinner</div>
       </a>
       <a className="footer__button">
-        <IconButton />
+        <Link to="/sign-up">
+          <IconButton />
+        </Link>
       </a>
       <a className="footer__item">
         <IconLevels />

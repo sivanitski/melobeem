@@ -5,6 +5,7 @@ import UserContext from "../../helpers/user-context";
 import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
 import { Profile } from "../profile";
+import { SignUp } from "../sign-up";
 import { Vote } from "../vote";
 import { Voters } from "../voters";
 
@@ -30,6 +31,9 @@ const App = () => {
           </Route>
           <Route exact path={"/profile/:id"}>
             <Profile />
+          </Route>
+          <Route exact path={"/sign-up"}>
+            <SignUp />
           </Route>
         </Switch>
       </Router>
