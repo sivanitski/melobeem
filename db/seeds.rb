@@ -62,3 +62,11 @@ Entry.where(id: 16..20).each { |entry| Vote.create!(entry: entry, user_id: User.
 
 # summarize votes into total_votes
 Entry.all.find_each { |entry| entry.update(total_votes: Vote.where(entry: entry).sum(:value)) }
+
+# generate 100 notifications for random users
+100.times do
+  Notification.create!(title: FFaker::Book.title, text: FFaker::Tweet.body, status: FFaker::Name.name, user_id: User.pluck(:id).sample)
+end
+
+# make different date for notifications
+Notification.find_each { |notification| notification.update!(created_at: rand(0..2).days.ago) }

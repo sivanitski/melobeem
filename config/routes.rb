@@ -28,7 +28,9 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: :show do
-        get :user_entries, on: :member
+        member do
+          get :user_entries
+        end
         collection do
           resources :entries, only: %i[edit update destroy], module: :users
         end
@@ -37,6 +39,8 @@ Rails.application.routes.draw do
       resources :competitions, only: [] do
         get 'current', on: :collection
       end
+
+      resources :notifications, only: :index
     end
   end
 

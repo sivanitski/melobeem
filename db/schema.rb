@@ -72,6 +72,16 @@ ActiveRecord::Schema.define(version: 2021_03_04_104358) do
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
+  create_table "notifications", force: :cascade do |t|
+    t.string "title"
+    t.string "text"
+    t.string "status"
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_notifications_on_user_id"
+  end
+
   create_table "purchase_transactions", force: :cascade do |t|
     t.string "intent_id"
     t.integer "amount"
@@ -125,6 +135,7 @@ ActiveRecord::Schema.define(version: 2021_03_04_104358) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "entries", "competitions"
   add_foreign_key "entries", "users"
+  add_foreign_key "notifications", "users"
   add_foreign_key "purchase_transactions", "entries"
   add_foreign_key "purchase_transactions", "users"
   add_foreign_key "votes", "entries"

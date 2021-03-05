@@ -3,11 +3,10 @@ require 'rails_helper'
 RSpec.describe API::V1::UsersController do
   let(:user) { create :user }
 
-  describe 'GET /show' do
-    before do
-      create :competition
-      get :show, params: { id: user.id }, format: :json
-    end
+  before { create :competition }
+
+  describe 'GET #show' do
+    before { get :show, params: { id: user.id }, format: :json }
 
     it { expect(response.status).to eq 200 }
 
@@ -18,7 +17,6 @@ RSpec.describe API::V1::UsersController do
 
   describe 'GET /user_entries' do
     before do
-      create :competition
       create_list :entry, 2, user: user
       get :user_entries, params: { id: user.id }, format: :json
     end
