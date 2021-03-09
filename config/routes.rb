@@ -34,6 +34,7 @@ Rails.application.routes.draw do
         end
         collection do
           resources :entries, only: %i[edit update destroy], module: :users
+          get :current
         end
       end
 
