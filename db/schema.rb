@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_04_104358) do
+ActiveRecord::Schema.define(version: 2021_03_04_145343) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -70,6 +70,11 @@ ActiveRecord::Schema.define(version: 2021_03_04_104358) do
     t.index ["total_votes"], name: "index_entries_on_total_votes"
     t.index ["user_id", "competition_id"], name: "index_entries_on_user_id_and_competition_id", unique: true
     t.index ["user_id"], name: "index_entries_on_user_id"
+  end
+
+  create_table "friendships", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "friend_id"
   end
 
   create_table "notifications", force: :cascade do |t|

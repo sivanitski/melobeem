@@ -11,6 +11,13 @@ module API
         render json: user.entries, each_serializer: ::Users::EntriesSerializer
       end
 
+      def friends
+        respond_with_item_list(
+          current_user.friends,
+          ::Users::ShowSerializer
+        )
+      end
+
       private
 
       def user
