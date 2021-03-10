@@ -1,6 +1,8 @@
-import React, { useState } from "react";
+import { useRequest } from "ahooks";
+import React, { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
+import { createAPI } from "../../api";
 import UserContext from "../../helpers/user-context";
 import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
@@ -10,8 +12,23 @@ import { Vote } from "../vote";
 import { Voters } from "../voters";
 
 const App = () => {
+  const api = createAPI();
   const [user, setUser] = useState(null);
   const value = { user, setUser };
+
+  const getCurrentUser = () => {
+    return api.get("/users/current");
+  };
+
+  const { data } = useRequest(getCurrentUser, {
+    formatResult: (res) => res.data.user,
+  });
+
+  useEffect(() => {
+    if (data) {
+      setUser(data);
+    }
+  }, [data]);
 
   return (
     <UserContext.Provider value={value}>
