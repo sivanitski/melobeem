@@ -5,11 +5,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import defaultProptypes from "../../default-proptypes";
-import RightArrow from "../../images/arrow-right.svg";
 import Share from "../../images/share.svg";
+import { EntryVoters } from "../entry-voters";
 
 const EntryChild = ({ child, voters }) => {
-  const lastThreeVoters = voters.slice(0, 3);
   return (
     <div className="entry">
       <div className="entry__img">
@@ -23,30 +22,14 @@ const EntryChild = ({ child, voters }) => {
         Vote
       </Link>
 
-      <Link to={`/entry/${child.id}/voters`} className="entry__voters">
-        <div className="entry__voters__list">
-          {lastThreeVoters.map((voter) => (
-            <div key={voter.id} className="entry__voters__item">
-              <img src={voter.avatarUrl} />
-            </div>
-          ))}
-        </div>
-
-        <RightArrow className="entry__voters__right-arrow" />
-      </Link>
+      {voters && <EntryVoters childId={child.id} voters={voters} />}
     </div>
   );
 };
 
 EntryChild.propTypes = {
   child: defaultProptypes.CHILD,
-  voters: propTypes.arrayOf(
-    propTypes.shape({
-      id: propTypes.number.isRequired,
-      name: propTypes.string.isRequired,
-      avatarUrl: propTypes.string.isRequired,
-    }).isRequired
-  ).isRequired,
+  voters: propTypes.arrayOf(defaultProptypes.VOTER),
 };
 
 export default EntryChild;

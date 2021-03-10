@@ -2,8 +2,9 @@ import "./style.less";
 
 import propTypes from "prop-types";
 import React from "react";
+import { Link } from "react-router-dom";
 
-const SignUpShare = ({ imagePreviewUrl }) => {
+const SignUpShare = ({ imagePreviewUrl, entryId }) => {
   return (
     <div className="form-share">
       <div className="form-share__img">
@@ -18,15 +19,19 @@ const SignUpShare = ({ imagePreviewUrl }) => {
       <button className="button button--facebook form-share__button">
         Share on Facebook{" "}
       </button>
-      <div className="text-grey text-small form-share__text-enter">
+      <Link
+        to={`entry/${entryId}`}
+        className="text-grey text-small form-share__text-enter"
+      >
         Enter without sharing
-      </div>
+      </Link>
     </div>
   );
 };
 
 SignUpShare.propTypes = {
   imagePreviewUrl: propTypes.string.isRequired,
+  entryId: propTypes.number.isRequired,
 };
 
 export default SignUpShare;

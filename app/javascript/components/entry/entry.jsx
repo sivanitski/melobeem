@@ -31,15 +31,11 @@ const Entry = ({
     return api.get(`/entries/${id}/latest_voters`);
   };
 
-  const {
-    data: voters,
-    error: votersError,
-    loading: votersLoading,
-  } = useRequest(getMainVoters, {
+  const { data: voters, loading: votersLoading } = useRequest(getMainVoters, {
     formatResult: (res) => res.data.users,
   });
 
-  if (error || votersError) {
+  if (error) {
     return <Error />;
   }
   if (loading || votersLoading) {

@@ -9,6 +9,11 @@ const defaultProptypes = {
     username: propTypes.string.isRequired,
     rank: propTypes.number,
   }).isRequired,
+  VOTER: propTypes.shape({
+    id: propTypes.number.isRequired,
+    name: propTypes.string.isRequired,
+    avatarUrl: propTypes.string.isRequired,
+  }).isRequired,
 };
 
 export default defaultProptypes;

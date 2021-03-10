@@ -14,6 +14,7 @@ const SignUp = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
   const { user } = useContext(UserContext);
+  const [entryId, setEntryId] = useState({});
   const api = createAPI();
 
   const goNext = () => {
@@ -31,7 +32,6 @@ const SignUp = () => {
       if (!user) {
         goNext();
       } else {
-        setStep(4);
         handlePostData();
       }
     }
@@ -53,7 +53,6 @@ const SignUp = () => {
 
   const handleLogin = () => {
     handlePostData();
-    goNext();
   };
 
   const handlePostData = () => {
@@ -66,8 +65,9 @@ const SignUp = () => {
           "Content-Type": "multipart/form-data",
         },
       })
-      .then(() => {
-        console.log("ok"); // It will be removed in task to use Context for current baby
+      .then((res) => {
+        setEntryId(res.data.entry.id);
+        setStep(4);
       })
       .catch(() => {
         console.log("error");
@@ -95,7 +95,12 @@ const SignUp = () => {
           />
         );
       case 4:
-        return <SignUpShare imagePreviewUrl={photo.imagePreviewUrl} />;
+        return (
+          <SignUpShare
+            imagePreviewUrl={photo.imagePreviewUrl}
+            entryId={entryId}
+          />
+        );
 
       default:
         return null;
