@@ -30,8 +30,10 @@ const Footer = () => {
         <div className="footer__item__title">Levels</div>
       </a>
       <a className="footer__item">
-        <IconProfile />
-        <div className="footer__item__title">Profile</div>
+        <Link to="/profile" className="footer__item">
+          <IconProfile />
+          <div className="footer__item__title">Profile</div>
+        </Link>
       </a>
     </div>
   );

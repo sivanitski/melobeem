@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import { createAPI } from "../../api";
 import UserContext from "../../helpers/user-context";
@@ -26,19 +26,16 @@ const SignUp = () => {
     setName(value);
   };
 
-  const handlePostData = () => {
-    api
-      .post(`/entries`, {
-        name: name,
-        image: photo.file,
-      })
-      .then(() => {
-        console.log("ok"); // It will be removed in task to use Context for current baby
-      })
-      .catch(() => {
-        console.log("error");
-      });
-  };
+  useEffect(() => {
+    if (photo.file) {
+      if (!user) {
+        goNext();
+      } else {
+        setStep(4);
+        handlePostData();
+      }
+    }
+  }, [photo]);
 
   const handleChangePhoto = (evt) => {
     let reader = new FileReader();
@@ -50,19 +47,31 @@ const SignUp = () => {
         imagePreviewUrl: reader.result,
       });
     };
-    reader.readAsDataURL(file);
 
-    if (!user) {
-      goNext();
-    } else {
-      handlePostData();
-      setStep(4);
-    }
+    reader.readAsDataURL(file);
   };
 
   const handleLogin = () => {
     handlePostData();
     goNext();
+  };
+
+  const handlePostData = () => {
+    const data = new FormData();
+    data.append(`entry[name]`, name);
+    data.append(`entry[image]`, photo.file);
+    api
+      .post(`/entries`, data, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      })
+      .then(() => {
+        console.log("ok"); // It will be removed in task to use Context for current baby
+      })
+      .catch(() => {
+        console.log("error");
+      });
   };
 
   const renderSignScreen = (idStep) => {
