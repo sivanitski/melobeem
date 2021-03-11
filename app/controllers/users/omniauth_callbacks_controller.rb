@@ -2,6 +2,8 @@ module Users
   class OmniauthCallbacksController < Devise::OmniauthCallbacksController
     include API::CsrfCookie
 
+    skip_before_action :authenticate
+
     def facebook
       @user = User.from_omniauth(auth)
 
