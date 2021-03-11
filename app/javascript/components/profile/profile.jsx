@@ -5,10 +5,13 @@ import propTypes from "prop-types";
 import React from "react";
 import { withRouter } from "react-router";
 
-import { createMockAPI } from "../../api";
+import { createAPI } from "../../api";
 import { BackButton } from "../back-button";
 import { Error } from "../error";
+import { Footer } from "../footer";
 import { Loading } from "../loading";
+import { ProfileChildren } from "../profile-children";
+import { ProfileHeader } from "../profile-header";
 
 const Profile = ({
   match: {
@@ -16,14 +19,14 @@ const Profile = ({
   },
   history,
 }) => {
-  const api = createMockAPI();
+  const api = createAPI();
 
   const getProfile = () => {
-    return api.get(`/parents/${id}`);
+    return api.get(`/users/${id}`);
   };
 
   const { data, error, loading } = useRequest(getProfile, {
-    formatResult: (res) => res.data,
+    formatResult: (res) => res.data.user,
   });
 
   if (error) {
@@ -34,42 +37,16 @@ const Profile = ({
   }
 
   return (
-    <div className="profile">
-      {history.action !== "POP" && <BackButton />}
-      <div className="profile-header">
-        <div>
-          <img className="profile-header__img" src={data.avatar} />
-        </div>
-        <div className="profile-header__main">
-          <div className="profile-header__name headline--medium">
-            Baby: {data.name}
-          </div>
-          <div className="profile-header__child text-small text-grey">
-            {data.childName}
-          </div>
-          <button type="button" className="profile-header__button">
-            ADD TO FRIENDS
-          </button>
-        </div>
-      </div>
-      <div className="profile-children">
-        <div className="profile-children__item">
-          <div className="profile-children__img">
-            <img src={data.child[0].avatar} />
-          </div>
-          <span className="text-grey">Now</span>
-        </div>
+    <>
+      <div className="profile">
+        {history.action !== "POP" && <BackButton />}
 
-        {data.children.map((child) => (
-          <div key={child.id} className="profile-children__item">
-            <div className="profile-children__img">
-              <img src={child.avatar} />
-            </div>
-            <span className="text-grey">Previous</span>
-          </div>
-        ))}
+        <ProfileHeader user={data} isAnotherUser />
+
+        <ProfileChildren />
       </div>
-    </div>
+      <Footer />
+    </>
   );
 };
 

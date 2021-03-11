@@ -33,6 +33,7 @@ const Entry = ({
 
   const { data: voters, loading: votersLoading } = useRequest(getMainVoters, {
     formatResult: (res) => res.data.users,
+    throwOnError: true,
   });
 
   if (error) {

@@ -6,6 +6,7 @@ import { createAPI } from "../../api";
 import UserContext from "../../helpers/user-context";
 import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
+import { Loading } from "../loading";
 import { Profile } from "../profile";
 import { ProfileUser } from "../profile-user";
 import { SignUp } from "../sign-up";
@@ -21,7 +22,7 @@ const App = () => {
     return api.get("/users/current");
   };
 
-  const { data } = useRequest(getCurrentUser, {
+  const { data, loading } = useRequest(getCurrentUser, {
     formatResult: (res) => res.data.user,
   });
 
@@ -30,6 +31,10 @@ const App = () => {
       setUser(data);
     }
   }, [data]);
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <UserContext.Provider value={value}>
