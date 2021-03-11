@@ -5,11 +5,11 @@ module Users
     skip_before_action :authenticate
 
     def facebook
-      @user = User.from_omniauth(auth)
+      @user = Users::FromOmniauth.new(auth: auth).call
 
       if @user.persisted?
         sign_in @user, event: :authentication
-        render json: { user: @user }, status: :ok
+        render json: @user, serializer: Users::ShowSerializer
       else
         render json: { errors: @user.errors, auth: auth.except(:extra) }, status: :bad_request
       end
