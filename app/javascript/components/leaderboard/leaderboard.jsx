@@ -54,7 +54,10 @@ const Leaderboard = () => {
   return (
     <>
       {user ? (
-        <HeaderLogin endsAt={competitionData.endsAt} />
+        <HeaderLogin
+          endsAt={competitionData.endsAt}
+          createdAt={competitionData.createdAt}
+        />
       ) : (
         <HeaderNotLogin />
       )}
