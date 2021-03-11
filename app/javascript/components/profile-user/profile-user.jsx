@@ -19,6 +19,7 @@ const ProfileUser = () => {
 
   const { data, loading } = useRequest(getCurrentBaby, {
     formatResult: (res) => res.data.entry,
+    throwOnError: true,
   });
 
   if (loading) {
@@ -32,7 +33,7 @@ const ProfileUser = () => {
   return (
     <>
       <div className="profile">
-        <ProfileHeader user={user} babyName={data.name} />
+        <ProfileHeader user={user} babyName={data?.name} />
 
         <ProfileNav currentChild={data} userId={user.id} />
       </div>

@@ -21,6 +21,7 @@ const Footer = () => {
 
   const { data, run, loading } = useRequest(getCurrentBaby, {
     formatResult: (res) => res.data.entry,
+    throwOnError: true,
   });
 
   useEffect(() => {

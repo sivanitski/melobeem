@@ -46,7 +46,7 @@ ProfileNav.propTypes = {
     imageUrl: propTypes.string.isRequired,
   }),
   previousChildren: propTypes.arrayOf(defaultProptypes.CHILD),
-  userId: propTypes.string.isRequired,
+  userId: propTypes.number.isRequired,
 };
 
 export default ProfileNav;
