@@ -2,7 +2,7 @@ module API
   module Pagination
     extend ActiveSupport::Concern
 
-    PER_PAGE = 20
+    PER_PAGE = 30
     PAGE_NUMBER = 1
 
     included do
