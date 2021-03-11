@@ -21,7 +21,11 @@ const Leaderboard = () => {
   };
 
   const getEntries = () => {
-    return api.get("/entries");
+    return api.get("/entries", {
+      params: {
+        per: 50,
+      },
+    });
   };
 
   const {
