@@ -34,7 +34,7 @@ const ProfileUser = () => {
       <div className="profile">
         <ProfileHeader user={user} babyName={data.name} />
 
-        <ProfileNav currentChild={data} />
+        <ProfileNav currentChild={data} userId={user.id} />
       </div>
       <Footer />
     </>

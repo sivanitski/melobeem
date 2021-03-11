@@ -5,13 +5,14 @@ import React, { useState } from "react";
 
 import defaultProptypes from "../../default-proptypes";
 import { ProfileChildren } from "../profile-children";
+import ProfileFriends from "../profile-frineds/profile-friends";
 
 const TABS = {
   BABY: "Baby",
   FRIENDS: "Friends",
 };
 
-const ProfileNav = ({ currentChild }) => {
+const ProfileNav = ({ currentChild, userId }) => {
   const [activeTab, setActiveTab] = useState(TABS.BABY);
 
   return (
@@ -29,8 +30,10 @@ const ProfileNav = ({ currentChild }) => {
           </div>
         ))}
       </div>
-      {activeTab === TABS.BABY && (
+      {activeTab === TABS.BABY ? (
         <ProfileChildren currentChild={currentChild} />
+      ) : (
+        <ProfileFriends userId={userId} />
       )}
     </>
   );
@@ -43,6 +46,7 @@ ProfileNav.propTypes = {
     imageUrl: propTypes.string.isRequired,
   }),
   previousChildren: propTypes.arrayOf(defaultProptypes.CHILD),
+  userId: propTypes.string.isRequired,
 };
 
 export default ProfileNav;
