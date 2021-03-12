@@ -6,11 +6,12 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "image_url"],
+        "required": ["id", "name", "image_url", "level"],
         "properties": {
           "id": {"type": "integer"},
           "name": {"type": "string"},
-          "image_url": {"type": "string"}
+          "image_url": {"type": "string"},
+          "level": {"type": "integer"}
         }
       }
     }

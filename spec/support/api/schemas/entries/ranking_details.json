@@ -4,11 +4,12 @@
   "properties": {
     "entry": {
       "type": "object",
-      "required": ["id", "total_votes", "rank"],
+      "required": ["id", "total_votes", "rank", "level"],
       "properties": {
         "id": {"type": "integer"},
         "total_votes": {"type": "integer"},
-        "rank": {"type": "integer"}
+        "rank": {"type": "integer"},
+        "level": {"type": "integer"}
       }
     }
   }

@@ -9,5 +9,6 @@ class Vote < ApplicationRecord
 
   def apply!
     entry.increment!(:total_votes, value) # rubocop:disable Rails/SkipsModelValidations
+    entry.update_level!
   end
 end
