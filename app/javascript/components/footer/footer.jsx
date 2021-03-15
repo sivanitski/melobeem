@@ -1,11 +1,9 @@
 import "./style.less";
 
-import { useRequest } from "ahooks";
-import React, { useContext, useEffect } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { createAPI } from "../../api";
-import UserContext from "../../helpers/user-context";
+import ChildContext from "../../helpers/child-context";
 import IconButton from "../../images/button.svg";
 import IconLeaderboard from "../../images/icon-leaderboard.svg";
 import IconLevels from "../../images/icon-levels.svg";
@@ -13,30 +11,13 @@ import IconProfile from "../../images/icon-profile.svg";
 import IconSpinner from "../../images/icon-spinner.svg";
 
 const Footer = () => {
-  const { user } = useContext(UserContext);
-  const api = createAPI();
-  const getCurrentBaby = () => {
-    return api.get("/entries/current");
-  };
+  const { currentChild } = useContext(ChildContext);
 
-  const { data, run, loading } = useRequest(getCurrentBaby, {
-    formatResult: (res) => res.data.entry,
-    throwOnError: true,
-  });
-
-  useEffect(() => {
-    run();
-  }, [user]);
-
-  const renderCentralButton = (baby) => {
-    if (loading) {
-      return <div className="footer__button"></div>;
-    }
-
-    if (baby) {
+  const renderCentralButton = (child) => {
+    if (child) {
       return (
-        <Link to={`/entry/${baby.id}`} className="footer__button">
-          <img src={baby.imageUrl} />
+        <Link to={`/entry/${child.id}`} className="footer__button">
+          <img src={child.imageUrl} />
         </Link>
       );
     }
@@ -58,7 +39,7 @@ const Footer = () => {
         <IconSpinner />
         <div className="footer__item__title">Spinner</div>
       </a>
-      {renderCentralButton(data)}
+      {renderCentralButton(currentChild)}
       <a className="footer__item">
         <IconLevels />
         <div className="footer__item__title">Levels</div>

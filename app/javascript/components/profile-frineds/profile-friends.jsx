@@ -42,7 +42,7 @@ const ProfileFriends = ({ userId }) => {
                   {friend.name}
                 </div>
                 <div className="profile-friend__child text-smaller text-grey">
-                  Baby: {friend.babyName || "Not participating"}
+                  Baby: {friend.childName || "Not participating"}
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 
 import { createAPI } from "../../api";
+import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { Footer } from "../footer";
 import { SignUpLogin } from "../sign-up-login";
@@ -14,7 +15,7 @@ const SignUp = () => {
   const [isDisabled, setIsDisabled] = useState(true);
   const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
   const { user } = useContext(UserContext);
-  const [entryId, setEntryId] = useState({});
+  const { currentChild, setCurrentChild } = useContext(ChildContext);
   const api = createAPI();
 
   const goNext = () => {
@@ -55,23 +56,20 @@ const SignUp = () => {
     handlePostData();
   };
 
-  const handlePostData = () => {
+  const handlePostData = async () => {
     const data = new FormData();
     data.append(`entry[name]`, name);
     data.append(`entry[image]`, photo.file);
-    api
-      .post(`/entries`, data, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      })
-      .then((res) => {
-        setEntryId(res.data.entry.id);
-        setStep(4);
-      })
-      .catch(() => {
-        console.log("error");
-      });
+
+    try {
+      const {
+        data: { entry },
+      } = await api.post(`/entries`, data);
+      setCurrentChild(entry);
+      setStep(4);
+    } catch (e) {
+      console.log("error");
+    }
   };
 
   const renderSignScreen = (idStep) => {
@@ -98,7 +96,7 @@ const SignUp = () => {
         return (
           <SignUpShare
             imagePreviewUrl={photo.imagePreviewUrl}
-            entryId={entryId}
+            entryId={currentChild.id}
           />
         );
 

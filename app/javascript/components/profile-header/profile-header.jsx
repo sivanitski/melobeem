@@ -3,7 +3,7 @@ import React from "react";
 
 import imageAvatar from "../../images/avatar.png";
 
-const ProfileHeader = ({ user, babyName, isAnotherUser }) => {
+const ProfileHeader = ({ user, childName, isAnotherUser }) => {
   return (
     <div className="profile-header">
       <div>
@@ -15,7 +15,7 @@ const ProfileHeader = ({ user, babyName, isAnotherUser }) => {
       <div className="profile-header__main">
         <div className="profile-header__name headline--medium">{user.name}</div>
         <div className="profile-header__child text-small text-grey">
-          Baby: {babyName || "Not participating"}
+          Baby: {childName || "Not participating"}
         </div>
         {isAnotherUser && (
           <button type="button" className="profile-header__button">
@@ -33,7 +33,7 @@ ProfileHeader.propTypes = {
     name: propTypes.string.isRequired,
     avatarUrl: propTypes.string.isRequired,
   }).isRequired,
-  babyName: propTypes.string,
+  childName: propTypes.string,
   isAnotherUser: propTypes.bool,
 };
 
