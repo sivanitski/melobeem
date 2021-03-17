@@ -20,18 +20,19 @@ const App = () => {
     return api.get("/entries/current");
   };
 
-  const { data: userData, loading } = useRequest(getCurrentUser, {
+  const { data: userData, loading: userLoading } = useRequest(getCurrentUser, {
     formatResult: (res) => res.data.user,
     throwOnError: true,
   });
 
-  const { data: currentChildData, run: requestCurrentBaby } = useRequest(
-    getCurrentChildren,
-    {
-      formatResult: (res) => res.data.entry,
-      throwOnError: true,
-    }
-  );
+  const {
+    data: currentChildData,
+    run: requestCurrentBaby,
+    loading: childLoading,
+  } = useRequest(getCurrentChildren, {
+    formatResult: (res) => res.data.entry,
+    throwOnError: true,
+  });
 
   useEffect(() => {
     if (userData && !currentChildData) {
@@ -44,12 +45,12 @@ const App = () => {
     }
   }, [userData, currentChildData]);
 
-  if (loading) {
-    return <Loading />;
-  }
-
   const valueUser = { user, setUser };
   const valueCurrentChild = { currentChild, setCurrentChild };
+
+  if (childLoading || userLoading) {
+    return <Loading />;
+  }
 
   return (
     <UserContext.Provider value={valueUser}>
