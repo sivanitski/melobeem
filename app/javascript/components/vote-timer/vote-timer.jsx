@@ -1,20 +1,18 @@
 import propTypes from "prop-types";
 import React, { useEffect, useState } from "react";
 
-import {
-  calcTimeDuration,
-  formatTimeInMinutesAndSeconds,
-} from "../../helpers/date";
+import { formatTimeInMinutesAndSeconds } from "../../helpers/date";
 
-const VoteTimer = ({ date, handlePrizeClick }) => {
-  const [timeLeft, setTimeLeft] = useState(calcTimeDuration(date));
+const VoteTimer = ({ timeLeftInSeconds, handlePrizeClick }) => {
+  const timeLeftInMiliseconds = 1000 * timeLeftInSeconds;
+  const [timeLeft, setTimeLeft] = useState(timeLeftInMiliseconds);
   useEffect(() => {
     if (timeLeft <= 0) {
       return () => {};
     }
 
     const timer = setTimeout(() => {
-      setTimeLeft(calcTimeDuration(date));
+      setTimeLeft(timeLeftInMiliseconds);
     }, 1000);
 
     return () => {
@@ -38,7 +36,7 @@ const VoteTimer = ({ date, handlePrizeClick }) => {
 };
 
 VoteTimer.propTypes = {
-  date: propTypes.number.isRequired,
+  timeLeftInSeconds: propTypes.number.isRequired,
   handlePrizeClick: propTypes.func.isRequired,
 };
 
