@@ -30,7 +30,7 @@ module Votes
     end
 
     def uniq_key
-      @uniq_key ||= [@params[:user_id], @params[:entry_id]].join(':')
+      @uniq_key ||= [@params[:entry_id], @params[:user_id]].join(':')
     end
 
     def create_uniq_vote_key
