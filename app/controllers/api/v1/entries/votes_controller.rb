@@ -3,7 +3,7 @@ module API
     module Entries
       class VotesController < API::V1::ApplicationController
         def expiration_time_for_free
-          uniq_key = [entry.id, current_user.id].join(':')
+          uniq_key = [current_user.id, entry.id].join(':')
           ttl = [0, Redis.current.ttl(uniq_key)].max
 
           render json: { ttl_in_seconds: ttl }

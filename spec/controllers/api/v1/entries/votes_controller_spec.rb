@@ -7,7 +7,7 @@ end
 RSpec.describe API::V1::Entries::VotesController do
   let(:user) { create :user }
   let(:entry) { create :entry }
-  let(:uniq_key) { [entry.id, user.id].join(':') }
+  let(:uniq_key) { [user.id, entry.id].join(':') }
 
   describe 'GET /expiration_time_for_free' do
     include_examples 'success status'
