@@ -3,7 +3,7 @@ module Users
     attributes :id, :name, :image_url, :level
 
     def image_url
-      object.image.attached? ? rails_blob_url(object.image) : ''
+      object.image.attached? ? object.image.imgproxy_url : ''
     end
   end
 end

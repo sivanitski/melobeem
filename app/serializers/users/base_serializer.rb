@@ -1,7 +1,7 @@
 module Users
   class BaseSerializer < ::BaseSerializer
     def avatar_url
-      object.avatar.attached? ? rails_blob_url(object.avatar) : ''
+      object.avatar.attached? ? object.avatar.imgproxy_url : ''
     end
   end
 end

@@ -3,7 +3,7 @@ module Entries
     attributes :id, :name, :avatar_url
 
     def avatar_url
-      object.avatar.attached? ? rails_blob_url(object.avatar) : ''
+      object.avatar.attached? ? object.avatar.imgproxy_url : ''
     end
   end
 end

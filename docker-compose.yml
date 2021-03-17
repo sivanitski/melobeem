@@ -41,6 +41,7 @@ services:
     depends_on:
       - postgres
       - redis
+      - imgproxy
 
   runner:
     <<: *backend
@@ -70,6 +71,25 @@ services:
       - redis:/data
     ports:
       - '6379:6379'
+
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    restart: always
+    environment:
+      - IMGPROXY_KEY=${IMGPROXY_KEY}
+      - IMGPROXY_SALT=${IMGPROXY_SALT}
+      - IMGPROXY_ENDPOINT=${IMGPROXY_ENDPOINT}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - IMGPROXY_USE_S3=${IMGPROXY_USE_S3}
+    ports:
+      - '8080:8080'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
 
   webpacker:
     <<: *app

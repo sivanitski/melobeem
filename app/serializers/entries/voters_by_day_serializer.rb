@@ -5,7 +5,7 @@ module Entries
     def avatar_url
       case object.source_type
       when 'user'
-        object.user.avatar.attached? ? rails_blob_url(object.user.avatar) : ''
+        object.user.avatar.attached? ? object.user.avatar.imgproxy_url : ''
       when 'spinner', 'bonus'
         nil
       end

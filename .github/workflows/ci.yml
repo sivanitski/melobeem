@@ -64,6 +64,10 @@ jobs:
 
       - name: Zeitwerk Check
         run: bundle exec rails zeitwerk:check
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_BUCKET_NAMES3_BUCKET: ${{ secrets.AWS_BUCKET_NAMES3_BUCKET }}
 
       - name: Upload coverage report
         uses: actions/upload-artifact@v2
