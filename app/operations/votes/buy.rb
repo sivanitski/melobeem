@@ -10,8 +10,9 @@ module Votes
 
     def create_intent(entry_id:, vote_value:, user:)
       intent = Stripe::PaymentIntent.create(amount: VOTES_TO_AMOUNT[vote_value],
-                                            description: user.email, currency: 'gbp',
-                                            metadata: { user_id: user.id, entry_id: entry_id, vote_value: vote_value })
+                                            description: "Buying #{vote_value} votes", currency: 'gbp',
+                                            metadata: { user_id: user.id, entry_id: entry_id, vote_value: vote_value,
+                                                        username: user.name, email: user.email })
 
       raise(Stripe::CardError.new(intent.error.message, intent, http_status: 500)) if intent.try(:id).blank?
 

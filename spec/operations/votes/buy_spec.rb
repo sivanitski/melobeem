@@ -3,8 +3,7 @@ require 'stripe_mock'
 
 describe Votes::Buy do
   let(:user) { create(:user) }
-  let(:competition) { create(:competition) }
-  let(:entry) { create(:entry, competition: competition, user: user) }
+  let(:entry) { create(:entry, user: user) }
 
   context 'when creates Stripe::PaymentIntent object' do
     let(:result) { described_class.new.call(params: { entry_id: entry.id, vote_value: '50' }, user: user) }
