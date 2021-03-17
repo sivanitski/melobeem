@@ -45,4 +45,13 @@ RSpec.describe API::V1::UsersController do
       expect(user.friends.ids - [friend1.id, friend2.id]).to eq []
     end
   end
+
+  describe 'DELETE #deactivate' do
+    before do
+      sign_in user
+      delete :deactivate, params: { id: user.id }, format: :json
+    end
+
+    it { expect(response.status).to eq 204 }
+  end
 end

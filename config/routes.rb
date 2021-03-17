@@ -31,6 +31,7 @@ Rails.application.routes.draw do
         member do
           get :entries
           get :friends
+          delete :deactivate
         end
         collection do
           resources :entries, only: %i[edit update destroy], module: :users

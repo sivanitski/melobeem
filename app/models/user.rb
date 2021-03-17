@@ -14,8 +14,10 @@ class User < ApplicationRecord
   has_one_attached :avatar, dependent: :destroy
 
   validates :name, :provider, presence: true
-  validates :uid, presence: true, uniqueness: { scope: :provider }
+  validates :uid, presence: true, uniqueness: { scope: %i[provider deactivated] }
   validates :email, uniqueness: true, allow_blank: true # rubocop:disable Rails/UniqueValidationWithoutIndex
+
+  scope :active, -> { where(deactivated: false) }
 
   def email_required?
     false

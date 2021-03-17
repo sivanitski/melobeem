@@ -6,8 +6,8 @@ module Users
       @auth = auth
     end
 
-    def call
-      User.where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
+    def call # rubocop:disable Metrics/AbcSize
+      User.active.where(provider: auth.provider, uid: auth.uid).first_or_create do |user|
         user.email = user_email
         user.password = generate_password
         user.name = auth.info.name

@@ -1,7 +1,7 @@
 module Entries
   class WithRankQuery
     def call(competition_id)
-      Entry.with_attached_image
+      Entry.active.with_attached_image
            .preload(:user)
            .select('*')
            .joins(entry_ranking(competition_id))

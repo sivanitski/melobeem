@@ -22,6 +22,11 @@ module API
         )
       end
 
+      def deactivate
+        ::Users::Deactivate.new(current_user).call
+        sign_out current_user
+      end
+
       private
 
       def user

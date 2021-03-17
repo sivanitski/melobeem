@@ -5,5 +5,9 @@ FactoryBot.define do
     provider { FFaker::Internet.domain_word }
     uid { FFaker::Internet.slug }
     password { SecureRandom.hex(8) }
+
+    trait :deactivated do
+      deactivated { true }
+    end
   end
 end

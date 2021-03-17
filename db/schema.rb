@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_10_082400) do
+ActiveRecord::Schema.define(version: 2021_03_16_173145) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 2021_03_10_082400) do
     t.string "name", null: false
     t.integer "total_votes", default: 0, null: false
     t.integer "level", default: 1, null: false
+    t.boolean "deactivated", default: false, null: false
     t.index ["competition_id"], name: "index_entries_on_competition_id"
     t.index ["total_votes"], name: "index_entries_on_total_votes"
     t.index ["user_id", "competition_id"], name: "index_entries_on_user_id_and_competition_id", unique: true
@@ -119,8 +120,9 @@ ActiveRecord::Schema.define(version: 2021_03_10_082400) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.boolean "deactivated", default: false, null: false
+    t.index ["deactivated", "provider", "uid"], name: "index_users_on_deactivated_and_provider_and_uid", unique: true
     t.index ["email"], name: "index_users_on_email"
-    t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
