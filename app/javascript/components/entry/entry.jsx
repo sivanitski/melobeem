@@ -2,7 +2,7 @@ import "./style.less";
 
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
-import React from "react";
+import React, { useEffect } from "react";
 import { withRouter } from "react-router";
 
 import { createAPI } from "../../api";
@@ -19,11 +19,16 @@ const Entry = ({
 }) => {
   const api = createAPI();
 
-  const getCurrentCompetitor = () => {
+  const getChild = () => {
     return api.get(`/entries/${id}`);
   };
 
-  const { data, error, loading } = useRequest(getCurrentCompetitor, {
+  const {
+    data: child,
+    error: childError,
+    loading: childLoading,
+    run: requestChild,
+  } = useRequest(getChild, {
     formatResult: (res) => res.data.entry,
   });
 
@@ -31,22 +36,31 @@ const Entry = ({
     return api.get(`/entries/${id}/latest_voters`);
   };
 
-  const { data: voters, loading: votersLoading } = useRequest(getMainVoters, {
+  const {
+    data: voters,
+    loading: votersLoading,
+    run: requestVoters,
+  } = useRequest(getMainVoters, {
     formatResult: (res) => res.data.users,
     throwOnError: true,
   });
 
-  if (error) {
+  useEffect(() => {
+    requestChild();
+    requestVoters();
+  }, [id]);
+
+  if (childError) {
     return <Error />;
   }
-  if (loading || votersLoading) {
+  if (childLoading || votersLoading) {
     return <Loading />;
   }
 
   return (
     <>
-      <HeaderUser child={data} />
-      <EntryChild child={data} voters={voters} />
+      <HeaderUser child={child} />
+      <EntryChild child={child} voters={voters} />
       <Footer />
     </>
   );
