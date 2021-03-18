@@ -1,3 +1,5 @@
+require 'open-uri'
+
 module Users
   class FromOmniauth
     attr_accessor :auth
