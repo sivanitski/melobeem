@@ -1,7 +1,7 @@
 module Users
   class BaseSerializer < ::BaseSerializer
     def avatar_url
-      object.avatar.attached? ? object.avatar.imgproxy_url : ''
+      image_path(object.avatar)
     end
   end
 end

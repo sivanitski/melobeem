@@ -3,7 +3,7 @@ module Users
     attributes :id, :name, :image_url, :level
 
     def image_url
-      object.image.attached? ? object.image.imgproxy_url : ''
+      image_path(object.image)
     end
   end
 end

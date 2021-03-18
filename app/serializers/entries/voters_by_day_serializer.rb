@@ -5,7 +5,7 @@ module Entries
     def avatar_url
       case object.source_type
       when 'user'
-        object.user.avatar.attached? ? object.user.avatar.imgproxy_url : ''
+        image_path(object.user.avatar)
       when 'spinner', 'bonus'
         nil
       end
