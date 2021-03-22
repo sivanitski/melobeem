@@ -8,8 +8,10 @@ module API
       end
 
       def previous_winners
-        entries = ::Competitions::PreviousWinnersQuery.new.call
-        render json: entries, each_serializer: ::Competitions::PreviousWinnersSerializer
+        winners = ::Competitions::PreviousWinnersQuery.new.call
+        win_ids = winners.map {|w| w.winner_id}
+        entry_images = Entry.with_attached_image.select('id').where(id: win_ids)
+        render json: winners, each_serializer: ::Competitions::PreviousWinnersSerializer, entry_images: entry_images
       end
     end
   end

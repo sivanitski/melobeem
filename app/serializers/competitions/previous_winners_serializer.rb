@@ -1,21 +1,10 @@
 module Competitions
   class PreviousWinnersSerializer < BaseSerializer
-    attributes :id, :name, :image_url, :competition_month, :entries_quantity, :prize
+    attributes :id, :title, :prize_cents, :starts_at, :entries_count, :winner_id, :winner_image_url
 
-    def competition_month
-      object.starts_at.strftime('%B')
-    end
-
-    def image_url
-      object.image.attached? ? object.image.imgproxy_url : ''
-    end
-
-    def entries_quantity
-      object.entries_count
-    end
-
-    def prize
-      object.prize_cents
+    def winner_image_url
+      entry_image = instance_options[:entry_images].find { |e| e.id == object.winner_id }
+      image_path(entry_image.image)
     end
   end
 end

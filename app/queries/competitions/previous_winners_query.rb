@@ -1,23 +1,33 @@
 module Competitions
   class PreviousWinnersQuery
     def call
-      Entry.joins(:competition)
-           .joins(inner_join)
-           .select('entries.*, t.entries_count, competitions.starts_at AS starts_at, competitions.prize_cents AS prize_cents')
+        Competition.joins(joins)
+          .select('competitions.id, title, starts_at, prize_cents, entries_count, winner_id')
+          .page(0).per(4)
     end
 
     private
 
-    def inner_join
+    def joins
       <<~SQL.squish
         INNER JOIN (
           SELECT
-            competition_id,
-            COUNT(*) AS entries_count,
-            MAX(total_votes) AS total_votes
-          FROM entries
-          GROUP BY competition_id
-        ) AS t ON t.competition_id = entries.competition_id AND t.total_votes = entries.total_votes
+              id AS winner_id,
+              competition_id,
+              total_votes,
+              entries_count
+          FROM (
+              SELECT
+                  id,
+                  competition_id,
+                  total_votes,
+                  row_number() OVER (PARTITION BY competition_id ORDER BY total_votes) AS place,
+                  count(*) OVER (PARTITION BY competition_id) AS entries_count
+              FROM
+                  entries) AS s
+          WHERE
+              place = 1
+        ) as w on competitions.id = w.competition_id
       SQL
     end
   end
