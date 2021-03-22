@@ -42,7 +42,6 @@ const ProfileSetting = () => {
   };
 
   const DELETE_OPTIONS = {
-    DELETE_BABY: { NAME: "Delete my entry", HANDLE_CLICK: () => {} },
     DELETE_USER: { NAME: "Delete my account", HANDLE_CLICK: handleDelete },
     LOGOUT: { NAME: "Log out", HANDLE_CLICK: handleLogout },
   };

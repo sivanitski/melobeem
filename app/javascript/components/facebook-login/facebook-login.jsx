@@ -2,11 +2,13 @@ import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
 import { FacebookContext, LoginButton } from "react-facebook";
 
-import { createFbAPI } from "../../api";
+import { createAPI, createFbAPI } from "../../api";
+import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 
 const FacebookLogin = ({ title, classes, handleLogin }) => {
   const { setUser } = useContext(UserContext);
+  const { setCurrentChild } = useContext(ChildContext);
   const facebookContext = useContext(FacebookContext);
   const [appId, setAppId] = useState("");
   useEffect(() => {
@@ -14,18 +16,20 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
       setAppId(facebookContext.api.options.appId);
     }
   }, [facebookContext.isReady]);
-  const api = createFbAPI();
+  const apiFb = createFbAPI();
+  const api = createAPI();
 
-  const handleResponse = (data) => {
+  const handleResponse = async (data) => {
     // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
     document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
 
-    api.get(``).then((res) => {
-      setUser(res.data.user);
-      if (handleLogin) {
-        handleLogin();
-      }
-    });
+    const res = await apiFb.get(``);
+    const child = await api.get(`/entries/current`);
+    setCurrentChild(child.data.entry);
+    setUser(res.data.user);
+    if (handleLogin) {
+      handleLogin();
+    }
   };
 
   const handleError = (error) => {
