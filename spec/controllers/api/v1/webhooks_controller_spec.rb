@@ -14,7 +14,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
           amount_received: 5000
         }
       },
-      type: 'payment_intent.succeeded'
+      type: 'payment_intent.created'
     }
   end
   let!(:entry) { create(:entry) }

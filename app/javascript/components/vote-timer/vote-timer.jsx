@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 
 import { formatTimeInMinutesAndSeconds } from "../../helpers/date";
 
-const VoteTimer = ({ timeLeftInSeconds, handlePrizeClick }) => {
+const VoteTimer = ({ timeLeftInSeconds, handleFreeVoteClick }) => {
   const timeLeftInMiliseconds = 1000 * timeLeftInSeconds;
   const [timeLeft, setTimeLeft] = useState(timeLeftInMiliseconds);
   useEffect(() => {
@@ -29,7 +29,7 @@ const VoteTimer = ({ timeLeftInSeconds, handlePrizeClick }) => {
   }
 
   return (
-    <div className="vote-item__button" onClick={handlePrizeClick}>
+    <div className="vote-item__button" onClick={handleFreeVoteClick}>
       Free
     </div>
   );
@@ -37,7 +37,7 @@ const VoteTimer = ({ timeLeftInSeconds, handlePrizeClick }) => {
 
 VoteTimer.propTypes = {
   timeLeftInSeconds: propTypes.number.isRequired,
-  handlePrizeClick: propTypes.func.isRequired,
+  handleFreeVoteClick: propTypes.func.isRequired,
 };
 
 export default VoteTimer;

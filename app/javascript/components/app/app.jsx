@@ -1,3 +1,5 @@
+import { Elements } from "@stripe/react-stripe-js";
+import { loadStripe } from "@stripe/stripe-js";
 import { useRequest } from "ahooks";
 import React, { useEffect, useState } from "react";
 
@@ -52,10 +54,16 @@ const App = () => {
     return <Loading />;
   }
 
+  const stripePromise = loadStripe(
+    "pk_test_crNp0aHBZcBsGatP9KRqk7w800UBHkAwP6"
+  );
+
   return (
     <UserContext.Provider value={valueUser}>
       <ChildContext.Provider value={valueCurrentChild}>
-        <Routes />
+        <Elements stripe={stripePromise}>
+          <Routes />
+        </Elements>
       </ChildContext.Provider>
     </UserContext.Provider>
   );

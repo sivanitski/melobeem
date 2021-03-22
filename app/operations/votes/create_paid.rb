@@ -24,7 +24,8 @@ module Votes
       event = Stripe::Webhook.construct_event(payload, sig_header, WH_SECRET)
 
       case event['type']
-      when 'payment_intent.succeeded'
+      # change to payment_intent.succeeded, here is used  created for demo
+      when 'payment_intent.created'
         event['data']['object']
       end
     end

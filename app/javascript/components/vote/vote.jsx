@@ -3,16 +3,15 @@ import "./style.less";
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useContext, useState } from "react";
-import { withRouter } from "react-router";
+import { Redirect, withRouter } from "react-router";
 
 import { createAPI } from "../../api";
 import UserContext from "../../helpers/user-context";
-import HeartVote from "../../images/heart-vote.svg";
 import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
 import { Loading } from "../loading";
-import { VotePopup } from "../vote-popup";
-import { VoteTimer } from "../vote-timer";
+import { VoteList } from "../vote-list/";
+import { VotePayment } from "../vote-payment/";
 
 const Vote = ({
   match: {
@@ -20,6 +19,15 @@ const Vote = ({
   },
 }) => {
   const { user } = useContext(UserContext);
+
+  if (!user) {
+    return <Redirect to={`/entry/${id}`} />;
+  }
+  const [activeOption, setActiveOption] = useState({
+    price: null,
+    amount: null,
+  });
+  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const api = createAPI();
 
   const getCurrentCompetitor = () => {
@@ -29,9 +37,9 @@ const Vote = ({
   const getFreeVoteTimer = () => {
     return api.get(`/entries/${id}/votes/expiration_time_for_free`);
   };
-  const [isPopupShown, setIsPopupShown] = useState(false);
   const { data: child, error, loading } = useRequest(getCurrentCompetitor, {
     formatResult: (res) => res.data.entry,
+    throwOnError: true,
   });
   const {
     data: timeFreeVote,
@@ -41,19 +49,6 @@ const Vote = ({
     formatResult: (res) => res.data.ttlInSeconds,
   });
 
-  const handlePrizeClick = () => {
-    setIsPopupShown(true);
-    api.post(`/entries/${id}/votes/create_free`, {
-      entryId: id,
-      value: 1,
-      userId: user.id,
-    });
-  };
-
-  const handlePopupClose = () => {
-    setIsPopupShown(false);
-  };
-
   if (error || timeError) {
     return <Error />;
   }
@@ -61,45 +56,35 @@ const Vote = ({
     return <Loading />;
   }
 
+  const handlePriceClick = (option) => {
+    setActiveOption(option);
+    setIsPaymentOpen(true);
+  };
+
+  const handlePaymentClose = () => {
+    setIsPaymentOpen(false);
+    setActiveOption(null);
+  };
+
   return (
     <>
       <HeaderUserWithChild child={child} />
-      <div className="vote">
-        <div className="vote-item">
-          <div className="vote-item__img">
-            <HeartVote className="vote-item__img--free" />
-          </div>
 
-          <div className="vote-item__text">1 Vote</div>
-          <VoteTimer
-            timeLeftInSeconds={timeFreeVote}
-            handlePrizeClick={handlePrizeClick}
-          />
-        </div>
-        <div className="vote-item">
-          <div className="vote-item__img">
-            <HeartVote className="vote-item__img--small" />
-          </div>
-          <div className="vote-item__text">10 Votes</div>
-          <div className="vote-item__button">£ 10</div>
-        </div>
-        <div className="vote-item">
-          <div className="vote-item__img">
-            <HeartVote className="vote-item__img--medium" />
-          </div>
-          <div className="vote-item__text">20 Votes</div>
-          <div className="vote-item__button">£ 20</div>
-        </div>
-        <div className="vote-item">
-          <div className="vote-item__img">
-            <HeartVote className="vote-item__img--big" />
-          </div>
-          <div className="vote-item__text">50 Votes</div>
-          <div className="vote-item__button">£ 50</div>
-        </div>
-      </div>
-
-      {isPopupShown && <VotePopup handlePopupClose={handlePopupClose} />}
+      {isPaymentOpen ? (
+        <VotePayment
+          activePrice={activeOption.price}
+          activeVoteAmount={activeOption.amount}
+          handlePaymentClose={handlePaymentClose}
+          childId={child.id}
+          userId={user.id}
+        />
+      ) : (
+        <VoteList
+          childId={child.id}
+          timeFreeVote={timeFreeVote}
+          handlePriceClick={handlePriceClick}
+        />
+      )}
     </>
   );
 };

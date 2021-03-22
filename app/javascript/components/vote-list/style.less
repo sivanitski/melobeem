@@ -1,0 +1,59 @@
+.vote {
+  margin: 13px 16px;
+  display: flex;
+  flex-direction: column;
+}
+
+.vote-item {
+  height: 112px;
+  margin-bottom: 20px;
+  border: 0.5px solid rgba(255, 112, 152, 0.3);
+  box-sizing: border-box;
+  box-shadow: 7px 8px 0 0 #f6eaee;
+  border-radius: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.vote-item__img {
+  margin-left: 23px;
+  width: 40px;
+  height: 32px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &--free {
+    transform: scale(0.7059);
+  }
+
+  &--small {
+    transform: scale(0.8529);
+  }
+
+  &--big {
+    transform: scale(1.1471);
+  }
+}
+
+.vote-item__text {
+  margin-left: 34px;
+}
+
+.vote-item__button {
+  width: 87px;
+  height: 48px;
+  margin-right: 41px;
+  margin-left: auto;
+  color: #fff;
+  background: #47d580;
+  border-radius: 30px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+
+  &--orange {
+    background: #fa9e67;
+  }
+}
