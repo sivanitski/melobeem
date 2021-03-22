@@ -5,7 +5,7 @@ module Entries
            .preload(:user)
            .select('*')
            .joins(entry_ranking(competition_id))
-           .order(total_votes: :desc)
+           .order(:rank, :id)
     end
 
     private

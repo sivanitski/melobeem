@@ -10,7 +10,8 @@ RSpec.describe Entries::WithRankQuery do
   describe '#call' do
     subject { described_class.new.call(competition.id) }
 
-    it 'returns ranked entries from the given competition ordered by total_votes' do
+    it 'returns ranked entries from the given competition ordered consistently by rank' do
+      entry1.update(updated_at: 1.minute.from_now) # touch updated_at to mess with default postgres ordering
       expect(subject).to match([entry1, entry3, entry2])
       expect(subject).not_to include(entry_from_different_competition)
     end
