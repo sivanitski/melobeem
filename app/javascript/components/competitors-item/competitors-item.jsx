@@ -9,7 +9,7 @@ import IconHeart from "../../images/icon-heart.svg";
 const CompetitorsItem = ({ competitor }) => {
   return (
     <div className="competitors__item" key={competitor.id}>
-      <Link to={`entry/${competitor.id}`}>
+      <Link to={`/entry/${competitor.id}`}>
         <div className="competitors__wrapper">
           <div className="competitors__item__img">
             <img src={competitor.imageUrl} />

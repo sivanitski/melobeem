@@ -6,7 +6,7 @@ import imageChild from "../../images/header-left@2x.png";
 
 const ProfileChildrenItem = ({ child, isCurrent }) => {
   return (
-    <Link to={`entry/${child.id}`} className="profile-children__item">
+    <Link to={`/entry/${child.id}`} className="profile-children__item">
       <div className="profile-children__img">
         <img src={child.imageUrl || imageChild} />
       </div>

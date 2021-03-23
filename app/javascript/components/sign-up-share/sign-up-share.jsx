@@ -20,7 +20,7 @@ const SignUpShare = ({ imagePreviewUrl, entryId }) => {
         Share on Facebook{" "}
       </button>
       <Link
-        to={`entry/${entryId}`}
+        to={`/entry/${entryId}`}
         className="text-grey text-small form-share__text-enter"
       >
         Enter without sharing

@@ -11,8 +11,8 @@ import UserContext from "../../helpers/user-context";
 import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
 import { Profile } from "../profile";
+import { ProfileRoute } from "../profile-route";
 import { ProfileSetting } from "../profile-setting";
-import { ProfileUser } from "../profile-user";
 import { SignUp } from "../sign-up";
 import { Vote } from "../vote";
 import { Voters } from "../voters";
@@ -36,7 +36,7 @@ const Routes = () => {
           <Voters />
         </Route>
         <Route exact path={"/profile"}>
-          {user ? <ProfileUser /> : <Redirect to="/" />}
+          <ProfileRoute />
         </Route>
         <Route exact path={"/profile/setting"}>
           {user ? <ProfileSetting /> : <Redirect to="/" />}

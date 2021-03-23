@@ -2,16 +2,19 @@ import "./style.less";
 
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router";
 
 import { createAPI } from "../../api";
+import ChildContext from "../../helpers/child-context";
+import UserContext from "../../helpers/user-context";
 import { BackButton } from "../back-button";
 import { Error } from "../error";
 import { Footer } from "../footer";
 import { Loading } from "../loading";
 import { ProfileChildren } from "../profile-children";
 import { ProfileHeader } from "../profile-header";
+import { ProfileNav } from "../profile-nav";
 
 const Profile = ({
   match: {
@@ -19,6 +22,8 @@ const Profile = ({
   },
   history,
 }) => {
+  const { user } = useContext(UserContext);
+  const { currentChild } = useContext(ChildContext);
   const api = createAPI();
 
   const getProfile = () => {
@@ -39,11 +44,18 @@ const Profile = ({
   return (
     <>
       <div className="profile">
-        {history.action !== "POP" && <BackButton />}
-
-        <ProfileHeader user={data} isAnotherUser />
-
-        <ProfileChildren />
+        {user?.id === data.id ? (
+          <>
+            <ProfileHeader user={user} childName={currentChild?.name} />
+            <ProfileNav currentChild={currentChild} userId={user.id} />
+          </>
+        ) : (
+          <>
+            {history.action !== "POP" && <BackButton />}
+            <ProfileHeader user={data} isAnotherUser />
+            <ProfileChildren />
+          </>
+        )}
       </div>
       <Footer />
     </>
