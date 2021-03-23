@@ -211,4 +211,17 @@ RSpec.describe API::V1::EntriesController do
 
     it { expect(JSON.parse(response.body)['entry']['id']).to eq entry.id }
   end
+
+  describe 'GET #prices_of_votes' do
+    before do
+      sign_in user
+      get :vote_prices, format: :json
+    end
+
+    it 'returns 200 status' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it { expect(response).to match_response_schema('entries/vote_prices') }
+  end
 end

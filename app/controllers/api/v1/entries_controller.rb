@@ -69,6 +69,10 @@ module API
         respond_with entry, serializer: ::Entries::RankingDetailsSerializer
       end
 
+      def vote_prices
+        render json: VOTE_PRICES, adapter: nil
+      end
+
       private
 
       def entries_params
