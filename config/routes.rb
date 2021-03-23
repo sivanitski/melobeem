@@ -44,7 +44,10 @@ Rails.application.routes.draw do
       end
 
       resources :competitions, only: [] do
-        get 'current', on: :collection
+        collection do
+          get :current
+          get :previous_winners
+        end
       end
 
       resources :notifications, only: :index

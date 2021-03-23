@@ -1,0 +1,32 @@
+{
+  "type": "object",
+  "required": ["entries", "meta"],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "winner_id", "title", "winner_image_url", "starts_at", "entries_count", "prize_cents", "winner_total_votes"],
+        "properties": {
+          "id": {"type": "integer"},
+          "winner_id": {"type": "integer"},
+          "title": {"type": "string"},
+          "winner_image_url": {"type": "string"},
+          "starts_at": {"type": "timestamp"},
+          "entries_count": {"type": "integer"},
+          "prize_cents": {"type": "integer"},
+          "winner_total_votes": {"type": "integer"}
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": ["total_count", "per", "page"],
+      "properties": {
+        "total_count": {"type": "integer"},
+        "per": {"type": "integer"},
+        "page": {"type": "integer"}
+      }
+    }
+  }
+}

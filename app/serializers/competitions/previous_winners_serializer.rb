@@ -1,0 +1,33 @@
+module Competitions
+  class PreviousWinnersSerializer < BaseSerializer
+    attributes :id, :title, :prize_cents, :starts_at, :entries_count, :winner_id, :winner_total_votes, :winner_image_url
+
+    def id
+      object.competition_id
+    end
+
+    def title
+      object.competition_title
+    end
+
+    def prize_cents
+      object.competition_prize_cents
+    end
+
+    def starts_at
+      object.competition_starts_at
+    end
+
+    def winner_id
+      object.id
+    end
+
+    def winner_total_votes
+      object.total_votes
+    end
+
+    def winner_image_url
+      image_path(object.image)
+    end
+  end
+end
