@@ -49,6 +49,10 @@ WORKDIR /app
 # Install gems
 ADD Gemfile* /app/
 RUN gem install bundler:2.2.5
+
+# Explicitly add mimemagic-0.3.5
+COPY vendor/mimemagic-0.3.5 /app/vendor/mimemagic-0.3.5
+
 RUN bundle config --global frozen 1 \
  && bundle install -j4 --retry 3 \
  # Remove unneeded files (cached *.gem, *.o, *.c)

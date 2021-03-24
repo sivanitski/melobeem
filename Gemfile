@@ -36,6 +36,8 @@ gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
 # imgproxy
 gem 'imgproxy'
+# explicitly adding mimemagic because 0.3.5 got yanked
+gem 'mimemagic', '0.3.5', path: './vendor/mimemagic-0.3.5'
 
 # environment variables
 gem 'dotenv-rails'
