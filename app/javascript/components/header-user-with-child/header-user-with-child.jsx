@@ -25,7 +25,7 @@ const HeaderUserWithChild = ({ child }) => {
         </div>
         <HeaderUserItem title="Rank" value={child.rank} />
       </div>
-      <HeaderUserLevel />
+      <HeaderUserLevel level={child.level} totalVotes={child.totalVotes} />
     </div>
   );
 };

@@ -1,51 +1,37 @@
 import "swiper/swiper.less";
 
-import classNames from "classnames";
 import propTypes from "prop-types";
 import React, { useState } from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
 
-import { LEVEL_INTERVALS, MAX_LEVEL } from "../../helpers/level";
+import defaultProptypes from "../../default-proptypes";
+import { LEVEL_INTERVALS } from "../../helpers/level";
+import { CompetitorsSwiper } from "../competitors-swiper";
 
-const CompetitorsSwiperMenu = ({ onSliderClick }) => {
+const CompetitorsSwiperMenu = ({
+  onSliderClick,
+  maxLevel,
+  competitors,
+  levels,
+}) => {
   const [activeLevel, setActiveLevel] = useState(1);
 
   const handleSlideCLick = (index) => () => {
     setActiveLevel(index);
     onSliderClick(index);
   };
-  const renderSlides = () => {
-    let slides = [];
-    for (let i = 1; i < MAX_LEVEL + 1; i++) {
-      const sliderClass = classNames("competitors__swiper__item headline", {
-        active: activeLevel === i,
-        "text-pink": !(activeLevel === i),
-      });
-      slides.push(
-        <SwiperSlide
-          className={sliderClass}
-          key={i}
-          onClick={handleSlideCLick(i)}
-        >
-          {i}
-        </SwiperSlide>
-      );
-    }
-    return <>{slides}</>;
-  };
 
   return (
     <>
-      <Swiper
-        className="competitors__swiper swiper"
-        spaceBetween={1}
-        slidesPerView="auto"
-      >
-        {renderSlides()}
-      </Swiper>
-      <div className="competitors__level">
-        <div className="competitors__level__amount">Level {activeLevel}</div>
-        <div className="competitors__level__comment text-grey">
+      <CompetitorsSwiper
+        levels={levels}
+        maxLevel={maxLevel}
+        competitors={competitors}
+        activeLevel={activeLevel}
+        handleSlideCLick={handleSlideCLick}
+      />
+      <div className="competitors-level">
+        <div className="competitors-level__amount">Level {activeLevel}</div>
+        <div className="competitors-level__comment text-grey">
           (From {LEVEL_INTERVALS[activeLevel]} to{" "}
           {LEVEL_INTERVALS[activeLevel + 1]} Votes){" "}
         </div>
@@ -56,6 +42,9 @@ const CompetitorsSwiperMenu = ({ onSliderClick }) => {
 
 CompetitorsSwiperMenu.propTypes = {
   onSliderClick: propTypes.func.isRequired,
+  maxLevel: propTypes.number.isRequired,
+  competitors: propTypes.arrayOf(defaultProptypes.CHILD).isRequired,
+  levels: propTypes.arrayOf(propTypes.number.isRequired).isRequired,
 };
 
 export default CompetitorsSwiperMenu;

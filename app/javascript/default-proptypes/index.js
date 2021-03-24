@@ -7,7 +7,8 @@ const defaultProptypes = {
     imageUrl: propTypes.string.isRequired,
     totalVotes: propTypes.number.isRequired,
     username: propTypes.string.isRequired,
-    rank: propTypes.number,
+    rank: propTypes.number.isRequired,
+    level: propTypes.number.isRequired,
   }).isRequired,
   VOTER: propTypes.shape({
     id: propTypes.number.isRequired,

@@ -11,7 +11,7 @@ const HeaderUser = ({ child }) => {
     <div className="header-user">
       <div className="header-user__list">
         <HeaderUserItem title="Votes" value={child.totalVotes} />
-        <HeaderUserLevel />
+        <HeaderUserLevel level={child.level} totalVotes={child.totalVotes} />
         <HeaderUserItem title="Rank" value={child.rank} />
       </div>
     </div>
