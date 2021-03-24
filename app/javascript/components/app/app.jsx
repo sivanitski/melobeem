@@ -54,9 +54,7 @@ const App = () => {
     return <Loading />;
   }
 
-  const stripePromise = loadStripe(
-    "pk_test_crNp0aHBZcBsGatP9KRqk7w800UBHkAwP6"
-  );
+  const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
   return (
     <UserContext.Provider value={valueUser}>

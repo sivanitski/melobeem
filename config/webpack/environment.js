@@ -1,3 +1,6 @@
+const dotenv = require("dotenv");
+dotenv.config();
+
 const { environment } = require("@rails/webpacker");
 
 const { less, svg, svgInLess } = require("./loaders");

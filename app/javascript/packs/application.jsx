@@ -15,7 +15,7 @@ import ReactDOM from "react-dom";
 const root = document.createElement("div");
 root.classList.add("root");
 
-const appId = "2495138454127282";
+const appId = process.env.FACEBOOK_KEY;
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
