@@ -19,17 +19,28 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
   const apiFb = createFbAPI();
   const api = createAPI();
 
-  const handleResponse = async (data) => {
-    // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
-    document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
+  const handleResponse = () => {
+    // console.log(data);
+    // debugger;
 
-    const res = await apiFb.get(``);
-    const child = await api.get(`/entries/current`);
-    setCurrentChild(child.data.entry);
-    setUser(res.data.user);
-    if (handleLogin) {
-      handleLogin();
-    }
+    // api.get("/users/current)
+
+    // // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
+    // document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
+
+    apiFb.get(``).then((res) => console.log(res));
+
+    // const child = await api.get(`/entries/current`);
+    // debugger;
+
+    // console.log(child);
+
+    // setCurrentChild(child.data.entry);
+    // setUser(res.data.user);
+    // console.log(res.data.user);
+    // if (handleLogin) {
+    //   handleLogin();
+    // }
   };
 
   const handleError = (error) => {
@@ -37,9 +48,16 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
   };
 
   return (
-    <LoginButton onCompleted={handleResponse} onError={handleError}>
-      <span className={`button button--facebook ${classes}`}>{title}</span>
-    </LoginButton>
+    // <LoginButton
+    //   redirectURI="https://3d297b06dfc3.ngrok.io/users/auth/facebook/callback"
+    //   onCompleted={handleResponse}
+    //   onError={handleError}
+    // >
+    //   <span className={`button button--facebook ${classes}`}>{title}</span>
+    // </LoginButton>
+    <div className="button" onClick={handleResponse}>
+      Login via Facebbok
+    </div>
   );
 };
 

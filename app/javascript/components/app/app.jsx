@@ -14,56 +14,58 @@ const App = () => {
   const [user, setUser] = useState(null);
   const [currentChild, setCurrentChild] = useState(null);
 
-  const getCurrentUser = () => {
-    return api.get("/users/current");
-  };
+  // const getCurrentUser = () => {
+  //   return api.get("/users/current");
+  // };
 
-  const getCurrentChildren = () => {
-    return api.get("/entries/current");
-  };
+  // const getCurrentChildren = () => {
+  //   return api.get("/entries/current");
+  // };
 
-  const { data: userData, loading: userLoading } = useRequest(getCurrentUser, {
-    formatResult: (res) => res.data.user,
-    throwOnError: true,
-  });
+  // const { data: userData, loading: userLoading } = useRequest(getCurrentUser, {
+  //   formatResult: (res) => res.data.user,
+  //   throwOnError: true,
+  // });
 
-  const {
-    data: currentChildData,
-    run: requestCurrentBaby,
-    loading: childLoading,
-  } = useRequest(getCurrentChildren, {
-    formatResult: (res) => res.data.entry,
-    throwOnError: true,
-  });
+  // const {
+  //   data: currentChildData,
+  //   run: requestCurrentBaby,
+  //   loading: childLoading,
+  // } = useRequest(getCurrentChildren, {
+  //   formatResult: (res) => res.data.entry,
+  //   throwOnError: true,
+  // });
 
-  useEffect(() => {
-    if (userData && !currentChildData) {
-      setUser(userData);
-      requestCurrentBaby();
-    }
+  // useEffect(() => {
+  //   if (userData && !currentChildData) {
+  //     setUser(userData);
+  //     requestCurrentBaby();
+  //   }
 
-    if (currentChildData) {
-      setCurrentChild(currentChildData);
-    }
-  }, [userData, currentChildData]);
+  //   if (currentChildData) {
+  //     setCurrentChild(currentChildData);
+  //   }
+  // }, [userData, currentChildData]);
 
   const valueUser = { user, setUser };
   const valueCurrentChild = { currentChild, setCurrentChild };
 
-  if (childLoading || userLoading) {
-    return <Loading />;
-  }
+  // if (childLoading || userLoading) {
+  //   return <Loading />;
+  // }
 
   const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
   return (
-    <UserContext.Provider value={valueUser}>
-      <ChildContext.Provider value={valueCurrentChild}>
-        <Elements stripe={stripePromise}>
-          <Routes />
-        </Elements>
-      </ChildContext.Provider>
-    </UserContext.Provider>
+    <>
+      <UserContext.Provider value={valueUser}>
+        <ChildContext.Provider value={valueCurrentChild}>
+          <Elements stripe={stripePromise}>
+            <Routes />
+          </Elements>
+        </ChildContext.Provider>
+      </UserContext.Provider>
+    </>
   );
 };
 

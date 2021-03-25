@@ -24,8 +24,10 @@ const ProfileSetting = () => {
 
   const handleLogout = async () => {
     await axios.delete("/users/sign_out");
-    window.FB.logout();
+    // window.FB.logout();
+    document.cookie = `fbsr_${process.env.FACEBOOK_APP_ID}=`;
     clearContext();
+    // setTimeout(() => window.FB.logout(), 2000);
   };
 
   const handleDelete = async () => {

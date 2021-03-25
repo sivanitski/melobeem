@@ -47,7 +47,7 @@ export const createAPI = () => {
 
 export const createFbAPI = () => {
   const api = axios.create({
-    baseURL: `users/auth/facebook/callback`,
+    baseURL: `users/auth/facebook`,
     timeout: 1000 * 5,
   });
 
