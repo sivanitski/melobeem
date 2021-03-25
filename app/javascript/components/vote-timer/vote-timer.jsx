@@ -6,13 +6,14 @@ import { formatTimeInMinutesAndSeconds } from "../../helpers/date";
 const VoteTimer = ({ timeLeftInSeconds, handleFreeVoteClick }) => {
   const timeLeftInMiliseconds = 1000 * timeLeftInSeconds;
   const [timeLeft, setTimeLeft] = useState(timeLeftInMiliseconds);
+
   useEffect(() => {
     if (timeLeft <= 0) {
       return () => {};
     }
 
     const timer = setTimeout(() => {
-      setTimeLeft(timeLeftInMiliseconds);
+      setTimeLeft(timeLeft - 1000);
     }, 1000);
 
     return () => {

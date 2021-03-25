@@ -61,6 +61,7 @@ const VotePayment = ({
           voteValue: activeVoteAmount,
           userId: userId,
         });
+
         handlePaymentClose();
       } catch (e) {
         setErrorMessage("Something went wrong, please try again");

@@ -37,14 +37,18 @@ const Vote = ({
   const getFreeVoteTimer = () => {
     return api.get(`/entries/${id}/votes/expiration_time_for_free`);
   };
-  const { data: child, error, loading } = useRequest(getCurrentCompetitor, {
-    formatResult: (res) => res.data.entry,
-    throwOnError: true,
-  });
+  const { data: child, error, loading, run: requestChild } = useRequest(
+    getCurrentCompetitor,
+    {
+      formatResult: (res) => res.data.entry,
+      throwOnError: true,
+    }
+  );
   const {
     data: timeFreeVote,
     error: timeError,
     loading: timeLoading,
+    run: requestTimeFreeVote,
   } = useRequest(getFreeVoteTimer, {
     formatResult: (res) => res.data.ttlInSeconds,
   });
@@ -66,6 +70,11 @@ const Vote = ({
     setActiveOption(null);
   };
 
+  const updateData = () => {
+    requestTimeFreeVote();
+    requestChild();
+  };
+
   return (
     <>
       <HeaderUserWithChild child={child} />
@@ -83,6 +92,7 @@ const Vote = ({
           childId={child.id}
           timeFreeVote={timeFreeVote}
           handlePriceClick={handlePriceClick}
+          updateData={updateData}
         />
       )}
     </>

@@ -17,7 +17,7 @@ const voteOptions = [
   { price: "50", amount: "50" },
 ];
 
-const VoteList = ({ childId, timeFreeVote, handlePriceClick }) => {
+const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
   const [isPopupShown, setIsPopupShown] = useState(false);
   const [activeOption, setActiveOption] = useState(null);
   const { user } = useContext(UserContext);
@@ -33,6 +33,8 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick }) => {
     if (activeOption) {
       handlePriceClick(activeOption);
       setActiveOption(null);
+    } else {
+      updateData();
     }
   };
 
@@ -88,6 +90,7 @@ VoteList.propTypes = {
   timeFreeVote: propTypes.number.isRequired,
   childId: propTypes.number.isRequired,
   handlePriceClick: propTypes.func.isRequired,
+  updateData: propTypes.func.isRequired,
 };
 
 export default withRouter(VoteList);
