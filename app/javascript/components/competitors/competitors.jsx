@@ -6,7 +6,7 @@ import React, { useState } from "react";
 
 import defaultProptypes from "../../default-proptypes";
 import {
-  defineMaxLevel,
+  defineLevels,
   filterChildrenByLevel,
   findAllExsistingLevels,
 } from "../../helpers/level";
@@ -14,10 +14,10 @@ import { CompetitorsList } from "../competitors-list";
 import { CompetitorsSwiperMenu } from "../competitors-swiper-menu";
 
 const Competitors = ({ competitors }) => {
-  const maxLevel = defineMaxLevel(competitors);
+  const { maxLevel, minLevel } = defineLevels(competitors);
 
   const [shownCompetitors, setShownCompetitors] = useState(
-    filterChildrenByLevel(competitors, 1, maxLevel)
+    filterChildrenByLevel(competitors, minLevel, maxLevel)
   );
 
   const onSliderClick = (index) => {
@@ -32,6 +32,7 @@ const Competitors = ({ competitors }) => {
       <CompetitorsSwiperMenu
         onSliderClick={onSliderClick}
         maxLevel={maxLevel}
+        minLevel={minLevel}
         competitors={competitors}
         levels={levels}
       />

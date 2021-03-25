@@ -132,6 +132,17 @@ export const defineMaxLevel = (children) => {
   return Math.max(...children.map((child) => child.level), 1);
 };
 
+export const defineMinLevel = (children) => {
+  return Math.min(...children.map((child) => child.level));
+};
+
+export const defineLevels = (children) => {
+  const levels = {};
+  levels.minLevel = defineMinLevel(children);
+  levels.maxLevel = defineMaxLevel(children);
+  return levels;
+};
+
 export function compareLevels(a, b) {
   return a.level - b.level;
 }
