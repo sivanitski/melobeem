@@ -4,6 +4,13 @@ module Users
 
     skip_before_action :authenticate
 
+    after_filter :set_access_control_headers
+
+    def set_access_control_headers
+      headers['Access-Control-Allow-Origin'] = ''
+      headers['Access-Control-Request-Method'] = ''
+    end
+
     def facebook
       @user = Users::FromOmniauth.new(auth: auth).call
 

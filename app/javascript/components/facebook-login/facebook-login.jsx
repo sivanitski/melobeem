@@ -19,8 +19,8 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
   const apiFb = createFbAPI();
   const api = createAPI();
 
-  const handleResponse = () => {
-    // console.log(data);
+  const handleResponse = (data) => {
+    console.log(data);
     // debugger;
 
     // api.get("/users/current)
@@ -28,7 +28,7 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
     // // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
     // document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
 
-    apiFb.get(``).then((res) => console.log(res));
+    apiFb.post(``, data);
 
     // const child = await api.get(`/entries/current`);
     // debugger;
@@ -48,16 +48,16 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
   };
 
   return (
-    // <LoginButton
-    //   redirectURI="https://3d297b06dfc3.ngrok.io/users/auth/facebook/callback"
-    //   onCompleted={handleResponse}
-    //   onError={handleError}
-    // >
-    //   <span className={`button button--facebook ${classes}`}>{title}</span>
-    // </LoginButton>
-    <div className="button" onClick={handleResponse}>
-      Login via Facebbok
-    </div>
+    <LoginButton
+      redirectURI="https://3d297b06dfc3.ngrok.io/users/auth/facebook/callback"
+      onCompleted={handleResponse}
+      onError={handleError}
+    >
+      <span className={`button button--facebook ${classes}`}>{title}</span>
+    </LoginButton>
+    // <div className="button" onClick={handleResponse}>
+    //   Login via Facebbok
+    // </div>
   );
 };
 
