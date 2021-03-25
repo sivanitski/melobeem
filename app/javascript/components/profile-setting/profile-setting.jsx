@@ -24,7 +24,11 @@ const ProfileSetting = () => {
 
   const handleLogout = async () => {
     await axios.delete("/users/sign_out");
-    window.FB.logout();
+    FB.getLoginStatus(function(response) {
+      if (response && response.status === 'connected') {
+        FB.logout();
+      }
+    });
     clearContext();
   };
 
