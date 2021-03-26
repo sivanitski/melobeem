@@ -47,9 +47,10 @@ gem 'rubocop-rails', require: false
 gem 'rubocop-rspec', require: false
 
 # authentication
-gem 'devise'
-gem 'omniauth', '~> 1.9.1' # TODO: update to v2, resolve issue with devise
+gem "devise", github: "heartcombo/devise", branch: "master"
+gem 'omniauth'
 gem 'omniauth-facebook'
+# gem 'httplog'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
