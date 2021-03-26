@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
-import { FacebookContext, LoginButton } from "react-facebook";
+// import { FacebookContext, LoginButton } from "react-facebook";
 
 import { createAPI, createFbAPI } from "../../api";
 import ChildContext from "../../helpers/child-context";
@@ -10,28 +10,50 @@ import axios from 'axios'
 const FacebookLogin = ({ title, classes, handleLogin }) => {
   const { setUser } = useContext(UserContext);
   const { setCurrentChild } = useContext(ChildContext);
-  const facebookContext = useContext(FacebookContext);
+  // const facebookContext = useContext(FacebookContext);
   const [appId, setAppId] = useState("");
-  useEffect(() => {
-    if (facebookContext.isReady) {
-      setAppId(facebookContext.api.options.appId);
-    }
-  }, [facebookContext.isReady]);
+
+  // useEffect(() => {
+  //   if (facebookContext.isReady) {
+  //     setAppId(facebookContext.api.options.appId);
+  //   }
+  // }, [facebookContext.isReady]);
+  // useEffect(() => {
+  //   FB.init({
+  //     appId: "2495138454127282", 
+  //     cookie: true, 
+  //     xfbml: true,
+  //     version: 'v10.0'
+  //   });
+  // }), [];
   // const apiFb = createFbAPI();
   const api = createAPI();
 
   const handleResponse = async (evn) => {
     // console.log(evn)
     evn.preventDefault();
+           
+    // await FB.init({ appId: "2495138454127282", 
+    //           status: true, 
+    //               cookie: true, 
+    //               xfbml: true,
+    //               oauth: true,
+    //               version: 'v10.0'
+    //               });
     // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
 
     FB.login(function(res) {
       if (res.authResponse) {
         console.log('Welcome!  Fetching your information.... ');
-        document.cookie = `fbsr_${appId}=${res.authResponse.signedRequest}`;
+        document.cookie = `fbsr_2495138454127282=${res.authResponse.signedRequest}`;
         console.log(res)
 
-        const resAuth = axios.get(`/users/auth/facebook/callback`).then(function(resAuth) {
+        const resAuth = axios.get(
+          `/users/auth/facebook/callback`
+          // {
+          //   params: {state: csrf, code: res.authResponse.signedRequest}
+          // }
+        ).then(function(resAuth) {
           console.log('data fetched')
           console.log(resAuth)
           setUser(resAuth.data.user);

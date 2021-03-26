@@ -15,11 +15,11 @@ import ReactDOM from "react-dom";
 const root = document.createElement("div");
 root.classList.add("root");
 
-const appId = process.env.FACEBOOK_APP_ID;
+const appId = "2495138454127282";
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <FacebookProvider appId={appId} version="v9.0" cookie={true}>
+    <FacebookProvider appId={appId} version="v9.0" cookie={false}>
       <App />
     </FacebookProvider>,
     document.body.appendChild(root)
