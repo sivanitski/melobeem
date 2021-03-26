@@ -46,10 +46,12 @@ export const createAPI = () => {
 };
 
 export const createFbAPI = () => {
-  const api = axios.create({
-    baseURL: `users/auth/facebook/callback`,
-    timeout: 1000 * 5,
-  });
+  const api = applyCaseMiddleware(
+    axios.create({
+      baseURL: `/users/sign_in`,
+      timeout: 1000 * 5,
+    })
+  );
 
   const onSuccess = (response) => {
     return response;

@@ -154,6 +154,7 @@ GEM
     jbuilder (2.11.2)
       activesupport (>= 5.0.0)
     jmespath (1.4.0)
+    json (2.5.1)
     json-schema (2.8.1)
       addressable (>= 2.4)
     jsonapi-renderer (0.2.2)
@@ -162,6 +163,10 @@ GEM
       activerecord
       kaminari-core (= 1.2.1)
     kaminari-core (1.2.1)
+    koala (3.0.0)
+      addressable
+      faraday
+      json (>= 1.8)
     listen (3.4.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -379,6 +384,7 @@ DEPENDENCIES
   jbuilder (~> 2.7)
   json-schema
   kaminari-activerecord
+  koala
   listen (~> 3.3)
   mimemagic (= 0.3.5)!
   omniauth (~> 1.9.1)

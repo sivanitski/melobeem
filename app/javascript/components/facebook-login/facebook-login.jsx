@@ -21,12 +21,16 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
 
   const handleResponse = async (data) => {
     // { cookie: true } for FB.init does not work. We'll have to set the required cookie manually
-    document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
-
-    const res = await apiFb.get(``);
-    const child = await api.get(`/entries/current`);
-    setCurrentChild(child.data.entry);
+    // document.cookie = `fbsr_${appId}=${data.tokenDetail.signedRequest}`;
+    // console.log(data);
+    // debugger;
+    const res = await apiFb.post(``, {
+      access_token: data.tokenDetail.accessToken,
+    });
+    // const child = await api.get(`/entries/current`);
+    // setCurrentChild(child.data.entry);
     setUser(res.data.user);
+    // debugger;
     if (handleLogin) {
       handleLogin();
     }
