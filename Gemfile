@@ -50,7 +50,7 @@ gem 'rubocop-rspec', require: false
 gem "devise", github: "heartcombo/devise", branch: "master"
 gem 'omniauth'
 gem 'omniauth-facebook'
-# gem 'httplog'
+gem 'httplog'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console

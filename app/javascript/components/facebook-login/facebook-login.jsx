@@ -30,6 +30,7 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
         console.log('Welcome!  Fetching your information.... ');
         document.cookie = `fbsr_${appId}=${res.authResponse.signedRequest}`;
         console.log(res)
+
         const resAuth = axios.get(`/users/auth/facebook/callback`).then(function(resAuth) {
           console.log('data fetched')
           console.log(resAuth)
