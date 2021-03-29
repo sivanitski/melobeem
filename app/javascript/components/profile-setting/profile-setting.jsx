@@ -24,7 +24,6 @@ const ProfileSetting = () => {
 
   const handleLogout = async () => {
     await axios.delete("/users/sign_out");
-    window.FB.logout();
     clearContext();
   };
 

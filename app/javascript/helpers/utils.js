@@ -5,3 +5,10 @@ export const filterCompetitors = (childName, children) => {
 };
 
 export const roundToHundredths = (number) => Math.round(number * 100) / 100;
+
+export const getLoginPayload = (data) => {
+  const parts = data.tokenDetail.signedRequest.split(".");
+  const payloadString = window.atob(parts[1]);
+  const payload = JSON.parse(payloadString);
+  return payload;
+};
