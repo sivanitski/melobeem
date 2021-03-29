@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_22_070400) do
+ActiveRecord::Schema.define(version: 2021_03_25_105504) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_enum :notification_source_type, [
+    "unlock",
+    "vote",
+    "purchase",
+    "bonus",
+  ], force: :cascade
 
   create_enum :vote_source_type, [
     "user",
@@ -80,12 +87,13 @@ ActiveRecord::Schema.define(version: 2021_03_22_070400) do
   end
 
   create_table "notifications", force: :cascade do |t|
-    t.string "title"
     t.string "text"
-    t.string "status"
     t.bigint "user_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "entry_id"
+    t.enum "source_type", enum_name: "notification_source_type"
+    t.index ["entry_id"], name: "index_notifications_on_entry_id"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
@@ -143,6 +151,7 @@ ActiveRecord::Schema.define(version: 2021_03_22_070400) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "entries", "competitions"
   add_foreign_key "entries", "users"
+  add_foreign_key "notifications", "entries"
   add_foreign_key "notifications", "users"
   add_foreign_key "purchase_transactions", "entries"
   add_foreign_key "purchase_transactions", "users"

@@ -7,6 +7,7 @@ RSpec.describe Entry, type: :model do
 
   it { is_expected.to have_many(:votes).dependent(:destroy) }
   it { is_expected.to have_many(:purchase_transactions).dependent(:destroy) }
+  it { is_expected.to have_many(:notifications).dependent(:destroy) }
   it { is_expected.to belong_to :competition }
   it { is_expected.to belong_to :user }
 

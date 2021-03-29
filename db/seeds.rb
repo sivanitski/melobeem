@@ -65,7 +65,7 @@ Entry.all.find_each { |entry| entry.update(total_votes: Vote.where(entry: entry)
 
 # generate 100 notifications for random users
 100.times do
-  Notification.create!(title: FFaker::Book.title, text: FFaker::Tweet.body, status: FFaker::Name.name, user_id: User.pluck(:id).sample)
+  Notification.create!(source_type: %w[unlock vote purchase bonus].sample, text: FFaker::Tweet.body, entry_id: Entry.pluck(:id).sample, user_id: User.pluck(:id).sample)
 end
 
 # make different date for notifications

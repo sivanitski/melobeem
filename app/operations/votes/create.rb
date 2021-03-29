@@ -10,6 +10,7 @@ module Votes
       ActiveRecord::Base.transaction do
         vote.save!
         vote.apply!
+        Notifications::Vote.new(vote).call
       end
 
       create_uniq_vote_key
