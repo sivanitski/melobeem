@@ -11,6 +11,7 @@ module Votes
         transaction.update!(amount_received: intent.amount_received, status: :done)
         vote.save!
         vote.apply!
+        Notifications::Buy.new(vote).call
       end
 
       Success.new(vote.value)
