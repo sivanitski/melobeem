@@ -3,17 +3,10 @@ import "swiper/swiper.less";
 import propTypes from "prop-types";
 import React, { useState } from "react";
 
-import defaultProptypes from "../../default-proptypes";
 import { LEVEL_INTERVALS } from "../../helpers/level";
 import { CompetitorsSwiper } from "../competitors-swiper";
 
-const CompetitorsSwiperMenu = ({
-  onSliderClick,
-  maxLevel,
-  minLevel,
-  competitors,
-  levels,
-}) => {
+const CompetitorsSwiperMenu = ({ onSliderClick, maxLevel, minLevel }) => {
   const [activeLevel, setActiveLevel] = useState(minLevel);
 
   const handleSlideCLick = (index) => () => {
@@ -24,9 +17,7 @@ const CompetitorsSwiperMenu = ({
   return (
     <>
       <CompetitorsSwiper
-        levels={levels}
         maxLevel={maxLevel}
-        competitors={competitors}
         activeLevel={activeLevel}
         handleSlideCLick={handleSlideCLick}
       />
@@ -45,8 +36,6 @@ CompetitorsSwiperMenu.propTypes = {
   onSliderClick: propTypes.func.isRequired,
   maxLevel: propTypes.number.isRequired,
   minLevel: propTypes.number.isRequired,
-  competitors: propTypes.arrayOf(defaultProptypes.CHILD).isRequired,
-  levels: propTypes.arrayOf(propTypes.number.isRequired).isRequired,
 };
 
 export default CompetitorsSwiperMenu;

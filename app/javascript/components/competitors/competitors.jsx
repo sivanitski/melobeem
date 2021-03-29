@@ -5,11 +5,7 @@ import propTypes from "prop-types";
 import React, { useState } from "react";
 
 import defaultProptypes from "../../default-proptypes";
-import {
-  defineLevels,
-  filterChildrenByLevel,
-  findAllExsistingLevels,
-} from "../../helpers/level";
+import { defineLevels, filterChildrenByLevel } from "../../helpers/level";
 import { CompetitorsList } from "../competitors-list";
 import { CompetitorsSwiperMenu } from "../competitors-swiper-menu";
 
@@ -24,8 +20,6 @@ const Competitors = ({ competitors }) => {
     setShownCompetitors(filterChildrenByLevel(competitors, index, maxLevel));
   };
 
-  const levels = findAllExsistingLevels(competitors);
-
   return (
     <div className="competitors">
       <div className="competitors__title headline--medium">Leaderboard </div>
@@ -33,8 +27,6 @@ const Competitors = ({ competitors }) => {
         onSliderClick={onSliderClick}
         maxLevel={maxLevel}
         minLevel={minLevel}
-        competitors={competitors}
-        levels={levels}
       />
       <CompetitorsList competitors={shownCompetitors} />
     </div>

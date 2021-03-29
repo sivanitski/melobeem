@@ -147,15 +147,6 @@ export function compareLevels(a, b) {
   return a.level - b.level;
 }
 
-export const findAllExsistingLevels = (children) => {
-  const levelSet = new Set();
-  children.sort(compareLevels).forEach((child) => {
-    levelSet.add(child.level);
-  });
-
-  return Array.from(levelSet);
-};
-
 export const filterChildrenByLevel = (children, level) => {
   return children.filter((child) => child.level === level);
 };

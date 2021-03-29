@@ -5,13 +5,13 @@ import propTypes from "prop-types";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import defaultProptypes from "../../default-proptypes";
+import LockerImage from "../../images/locker.svg";
 
-const CompetitorsSwiper = ({ activeLevel, handleSlideCLick, levels }) => {
+const CompetitorsSwiper = ({ activeLevel, handleSlideCLick, maxLevel }) => {
   const renderSlides = () => {
     let slides = [];
 
-    levels.forEach((level) => {
+    for (let level = 1; level < maxLevel + 1; level++) {
       const sliderClass = classNames("competitors-swiper__item headline", {
         active: activeLevel === level,
         "text-pink": !(activeLevel === level),
@@ -25,7 +25,13 @@ const CompetitorsSwiper = ({ activeLevel, handleSlideCLick, levels }) => {
           {level}
         </SwiperSlide>
       );
-    });
+    }
+
+    slides.push(
+      <SwiperSlide className="competitors-swiper__item headline" key="locker">
+        <LockerImage />
+      </SwiperSlide>
+    );
 
     return <>{slides}</>;
   };
@@ -45,8 +51,6 @@ CompetitorsSwiper.propTypes = {
   handleSlideCLick: propTypes.func.isRequired,
   activeLevel: propTypes.number.isRequired,
   maxLevel: propTypes.number.isRequired,
-  competitors: propTypes.arrayOf(defaultProptypes.CHILD).isRequired,
-  levels: propTypes.arrayOf(propTypes.number.isRequired).isRequired,
 };
 
 export default CompetitorsSwiper;
