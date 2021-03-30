@@ -9,7 +9,7 @@ module API
       private
 
       def record_not_found(error)
-        render json: { error: error.message }, status: :not_found
+        render json: { error: "Couldn't find #{error.model} record!" }, status: :not_found
       end
 
       def invalid_csrf_token(_error)
