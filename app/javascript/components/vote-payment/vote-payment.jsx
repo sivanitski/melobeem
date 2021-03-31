@@ -9,7 +9,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useEventTarget } from "ahooks";
 import propTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { createAPI } from "../../api";
 import ButtonClose from "../../images/close-icon.svg";
@@ -25,14 +25,61 @@ const VotePayment = ({
   const stripe = useStripe();
   const elements = useElements();
   const [errorMessage, setErrorMessage] = useState(null);
+  const [succeeded, setSucceeded] = useState(false);
+  const [processing, setProcessing] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
   const [value, { onChange: onChangePostal }] = useEventTarget({
     initialValue: "",
   });
 
   const api = createAPI();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  useEffect(() => {
+    // Create PaymentIntent as soon as the page loads
+
+    // window
+    //   .fetch("/api/v1/charges", {
+    //     method: "POST",
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //       "X-CSRF-Token": csrfToken,
+    //     },
+    //     body: JSON.stringify({
+    //       entryId: childId,
+    //       voteValue: activeVoteAmount,
+    //       userId: userId,
+    //     }),
+    //   })
+    //   .then((res) => {
+    //     debugger;
+    //     return res.json();
+    //   })
+    //   .then((data) => {
+    //     setClientSecret(data.clientSecret);
+    //   });
+
+    api
+      .post(`/charges`, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+        entryId: childId,
+        voteValue: activeVoteAmount,
+        userId: userId,
+      })
+      // .then((res) => {
+      //   debugger;
+      //   return res.json();
+      // })
+      .then((res) => {
+        setClientSecret(res.clientSecret);
+        console.log(clientSecret);
+      });
+  }, []);
+
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    setProcessing(true);
 
     if (!stripe || !elements) {
       return;
@@ -40,7 +87,7 @@ const VotePayment = ({
 
     const cardElement = elements.getElement(CardNumberElement);
 
-    const payload = await stripe.createPaymentMethod({
+    const payload = await stripe.createPaymentMethod(clientSecret, {
       type: "card",
       card: cardElement,
       billing_details: {
@@ -53,6 +100,7 @@ const VotePayment = ({
     if (payload.error) {
       console.log("[error]", payload.error);
       setErrorMessage(payload.error.message);
+      setProcessing(false);
     } else {
       try {
         setErrorMessage(null);
@@ -146,6 +194,8 @@ const VotePayment = ({
         </div>
 
         {errorMessage && <div className="error">{errorMessage}</div>}
+        {succeeded && <div>OK</div>}
+        {processing && <div>process</div>}
 
         <button
           type="submit"
