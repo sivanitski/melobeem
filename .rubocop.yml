@@ -13,7 +13,6 @@ AllCops:
     - 'node_modules/**/*'
     - 'tmp/**/*'
     - '.git/**/*'
-    - 'vendor/mimemagic-0.3.5/**/*'
     - 'vendor/bundle/**/*'
     - 'db/**/*'
 
