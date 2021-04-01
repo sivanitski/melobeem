@@ -2,6 +2,7 @@ import { useRequest } from "ahooks";
 import React, { useContext } from "react";
 
 import { createAPI } from "../../api";
+import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { CompetitionInfo } from "../competition-info";
 import { Competitors } from "../competitors";
@@ -14,6 +15,7 @@ import { Loading } from "../loading";
 
 const Leaderboard = () => {
   const { user } = useContext(UserContext);
+  const { setCurrentChild } = useContext(ChildContext);
   const api = createAPI();
 
   const getCompetition = () => {
@@ -26,6 +28,13 @@ const Leaderboard = () => {
         per: 50,
       },
     });
+  };
+
+  const getCurrentEntryWhenUserLogin = async () => {
+    const {
+      data: { entry },
+    } = await api.get("/entries/current");
+    setCurrentChild(entry);
   };
 
   const {
@@ -59,7 +68,7 @@ const Leaderboard = () => {
           createdAt={competitionData.createdAt}
         />
       ) : (
-        <HeaderNotLogin />
+        <HeaderNotLogin getCurrentEntry={getCurrentEntryWhenUserLogin} />
       )}
       <CompetitorsSearch />
       <CompetitionInfo

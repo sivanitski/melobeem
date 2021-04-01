@@ -41,7 +41,6 @@ const Vote = ({
     getCurrentCompetitor,
     {
       formatResult: (res) => res.data.entry,
-      throwOnError: true,
     }
   );
   const {

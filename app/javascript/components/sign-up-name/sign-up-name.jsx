@@ -1,11 +1,19 @@
 import "./style.less";
 
 import propTypes from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
+import { Redirect } from "react-router";
 
-const SignUpName = ({ name, handleChange, goNext, isDisabled }) => {
+import ChildContext from "../../helpers/child-context";
+
+const SignUpName = ({ name, handleChange, goNext, isButtonDisabled }) => {
+  const { currentChild } = useContext(ChildContext);
+  if (currentChild) {
+    return <Redirect to={`/entry/${currentChild.id}`} />;
+  }
+
   const handleClick = () => {
-    if (!isDisabled) {
+    if (!isButtonDisabled) {
       goNext();
     }
   };
@@ -33,7 +41,8 @@ const SignUpName = ({ name, handleChange, goNext, isDisabled }) => {
 
         <button
           className={`button form__button
-            ${isDisabled ? "form__button--disabled" : ""}`}
+            ${isButtonDisabled ? "form__button--disabled" : ""}`}
+          disabled={isButtonDisabled}
           onClick={handleClick}
         >
           Next
@@ -47,7 +56,7 @@ SignUpName.propTypes = {
   name: propTypes.string,
   handleChange: propTypes.func.isRequired,
   goNext: propTypes.func.isRequired,
-  isDisabled: propTypes.bool.isRequireds,
+  isButtonDisabled: propTypes.bool.isRequireds,
 };
 
 export default SignUpName;

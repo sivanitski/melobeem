@@ -4,7 +4,9 @@ import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-const SignUpShare = ({ imagePreviewUrl, entryId }) => {
+import { FacebookShare } from "../facebook-share";
+
+const SignUpShare = ({ imagePreviewUrl, childId }) => {
   return (
     <div className="form-share">
       <div className="form-share__img">
@@ -16,11 +18,15 @@ const SignUpShare = ({ imagePreviewUrl, entryId }) => {
         more chance to win.
       </div>
 
-      <button className="button button--facebook form-share__button">
-        Share on Facebook{" "}
-      </button>
+      <FacebookShare
+        childId={childId}
+        classes="button button--facebook form-share__button"
+      >
+        Share on Facebook
+      </FacebookShare>
+
       <Link
-        to={`/entry/${entryId}`}
+        to={`/entry/${childId}`}
         className="text-grey text-small form-share__text-enter"
       >
         Enter without sharing
@@ -31,7 +37,7 @@ const SignUpShare = ({ imagePreviewUrl, entryId }) => {
 
 SignUpShare.propTypes = {
   imagePreviewUrl: propTypes.string.isRequired,
-  entryId: propTypes.number.isRequired,
+  childId: propTypes.number.isRequired,
 };
 
 export default SignUpShare;

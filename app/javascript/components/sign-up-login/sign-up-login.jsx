@@ -5,7 +5,7 @@ import React from "react";
 
 import { FacebookLogin } from "../facebook-login";
 
-const SignUpLogin = ({ imagePreviewUrl, handleLogin }) => {
+const SignUpLogin = ({ imagePreviewUrl, handleLoginWhileSignUp }) => {
   return (
     <div className="form-preview">
       <div className="form__progress progress">
@@ -22,7 +22,7 @@ const SignUpLogin = ({ imagePreviewUrl, handleLogin }) => {
       <FacebookLogin
         title="Continue via Facebook"
         classes="form__button form-preview__button"
-        handleLogin={handleLogin}
+        handleLoginWhileSignUp={handleLoginWhileSignUp}
       />
     </div>
   );
@@ -30,7 +30,7 @@ const SignUpLogin = ({ imagePreviewUrl, handleLogin }) => {
 
 SignUpLogin.propTypes = {
   imagePreviewUrl: propTypes.string.isRequired,
-  handleLogin: propTypes.func.isRequired,
+  handleLoginWhileSignUp: propTypes.func.isRequired,
 };
 
 export default SignUpLogin;

@@ -1,5 +1,6 @@
 import "./style.less";
 
+import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -11,7 +12,7 @@ import LogoIcon from "../../images/logo-icon.svg";
 import LogoText from "../../images/logo-text.svg";
 import { FacebookLogin } from "../facebook-login";
 
-const HeaderNotLogin = () => {
+const HeaderNotLogin = ({ getCurrentEntry }) => {
   return (
     <div className="header-not-login">
       <div className="header-not-login__pictures">
@@ -44,12 +45,17 @@ const HeaderNotLogin = () => {
         </Link>
 
         <FacebookLogin
+          getCurrentEntry={getCurrentEntry}
           title="Login with Facebook"
           classes="header-not-login__button"
         />
       </div>
     </div>
   );
+};
+
+HeaderNotLogin.propTypes = {
+  getCurrentEntry: propTypes.func.isRequired,
 };
 
 export default HeaderNotLogin;

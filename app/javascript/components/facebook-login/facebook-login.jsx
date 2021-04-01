@@ -6,7 +6,12 @@ import { LoginButton } from "react-facebook";
 import UserContext from "../../helpers/user-context";
 import { getLoginPayload } from "../../helpers/utils";
 
-const FacebookLogin = ({ title, classes, handleLogin }) => {
+const FacebookLogin = ({
+  title,
+  classes,
+  handleLoginWhileSignUp,
+  getCurrentEntry,
+}) => {
   const { setUser } = useContext(UserContext);
 
   const handleResponse = async (data) => {
@@ -17,8 +22,10 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
     });
     setUser(res.data.user);
 
-    if (handleLogin) {
-      handleLogin();
+    if (handleLoginWhileSignUp) {
+      handleLoginWhileSignUp();
+    } else {
+      getCurrentEntry();
     }
   };
 
@@ -40,7 +47,8 @@ const FacebookLogin = ({ title, classes, handleLogin }) => {
 FacebookLogin.propTypes = {
   title: propTypes.string.isRequired,
   classes: propTypes.string.isRequired,
-  handleLogin: propTypes.func,
+  handleLoginWhileSignUp: propTypes.func,
+  getCurrentEntry: propTypes.func,
 };
 
 export default FacebookLogin;

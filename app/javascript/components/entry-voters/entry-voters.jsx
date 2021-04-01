@@ -24,7 +24,7 @@ const EntryVoters = ({ childId, voters }) => {
 
 EntryVoters.propTypes = {
   childId: propTypes.number.isRequired,
-  voters: propTypes.arrayOf(defaultProptypes.CHILD),
+  voters: propTypes.arrayOf(defaultProptypes.VOTER),
 };
 
 export default EntryVoters;

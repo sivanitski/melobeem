@@ -32,6 +32,7 @@ const SignUp = () => {
     if (photo.file) {
       if (!user) {
         goNext();
+        setStep(3);
       } else {
         handlePostData();
       }
@@ -52,7 +53,7 @@ const SignUp = () => {
     reader.readAsDataURL(file);
   };
 
-  const handleLogin = () => {
+  const handleLoginWhileSignUp = () => {
     handlePostData();
   };
 
@@ -80,7 +81,7 @@ const SignUp = () => {
             email={name}
             handleChange={handleChangeName}
             goNext={goNext}
-            isDisabled={isDisabled}
+            isButtonDisabled={isDisabled}
           />
         );
       case 2:
@@ -89,14 +90,14 @@ const SignUp = () => {
         return (
           <SignUpLogin
             imagePreviewUrl={photo.imagePreviewUrl}
-            handleLogin={handleLogin}
+            handleLoginWhileSignUp={handleLoginWhileSignUp}
           />
         );
       case 4:
         return (
           <SignUpShare
             imagePreviewUrl={photo.imagePreviewUrl}
-            entryId={currentChild.id}
+            childId={currentChild.id}
           />
         );
 

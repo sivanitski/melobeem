@@ -6,7 +6,6 @@ import {
   Switch,
 } from "react-router-dom";
 
-import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
@@ -18,7 +17,6 @@ import { Vote } from "../vote";
 import { Voters } from "../voters";
 
 const Routes = () => {
-  const { currentChild } = useContext(ChildContext);
   const { user } = useContext(UserContext);
   return (
     <Router>
@@ -45,11 +43,7 @@ const Routes = () => {
           <Profile />
         </Route>
         <Route exact path={"/sign-up"}>
-          {currentChild ? (
-            <Redirect to={`/entry/${currentChild.id}`} />
-          ) : (
-            <SignUp />
-          )}
+          <SignUp />
         </Route>
       </Switch>
     </Router>

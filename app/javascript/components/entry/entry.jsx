@@ -42,7 +42,6 @@ const Entry = ({
     run: requestVoters,
   } = useRequest(getMainVoters, {
     formatResult: (res) => res.data.users,
-    throwOnError: true,
   });
 
   useEffect(() => {

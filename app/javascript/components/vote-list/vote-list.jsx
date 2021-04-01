@@ -81,7 +81,9 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
         </div>
       ))}
 
-      {isPopupShown && <VotePopup handlePopupClose={handlePopupClose} />}
+      {isPopupShown && (
+        <VotePopup handlePopupClose={handlePopupClose} childId={childId} />
+      )}
     </div>
   );
 };

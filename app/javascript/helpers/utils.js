@@ -12,3 +12,5 @@ export const getLoginPayload = (data) => {
   const payload = JSON.parse(payloadString);
   return payload;
 };
+
+export const getSiteBaseUrl = () => window.location.origin;

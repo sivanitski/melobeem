@@ -18,21 +18,37 @@ const App = () => {
     return api.get("/users/current");
   };
 
+  const getCurrentChildren = () => {
+    return api.get("/entries/current");
+  };
+
+  const {
+    data: currentChildData,
+    run: requestCurrentBaby,
+    loading: childLoading,
+  } = useRequest(getCurrentChildren, {
+    formatResult: (res) => res.data.entry,
+  });
+
   const { data: userData, loading: userLoading } = useRequest(getCurrentUser, {
     formatResult: (res) => res.data.user,
-    throwOnError: true,
   });
 
   useEffect(() => {
-    if (userData) {
+    if (userData && !currentChildData) {
       setUser(userData);
+      requestCurrentBaby();
     }
-  }, [userData]);
+
+    if (currentChildData) {
+      setCurrentChild(currentChildData);
+    }
+  }, [userData, currentChildData]);
 
   const valueUser = { user, setUser };
   const valueCurrentChild = { currentChild, setCurrentChild };
 
-  if (userLoading) {
+  if (userLoading || childLoading) {
     return <Loading />;
   }
 

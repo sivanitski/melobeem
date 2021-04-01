@@ -5,8 +5,9 @@ import React from "react";
 
 import ButtonClose from "../../images/close-icon.svg";
 import TestImage from "../../images/header-left@2x.png";
+import { FacebookShare } from "../facebook-share";
 
-const VotePopup = ({ handlePopupClose }) => {
+const VotePopup = ({ handlePopupClose, childId }) => {
   return (
     <div className="popup">
       <div className="popup__inner">
@@ -21,7 +22,9 @@ const VotePopup = ({ handlePopupClose }) => {
           Every Facebook post <br /> may make Diana closer to <br /> the wining
           point
         </div>
-        <div className="popup__button">Share on Facebook</div>
+        <FacebookShare childId={childId} classes="popup__button">
+          Share on Facebook
+        </FacebookShare>
       </div>
     </div>
   );
@@ -29,6 +32,7 @@ const VotePopup = ({ handlePopupClose }) => {
 
 VotePopup.propTypes = {
   handlePopupClose: propTypes.func.isRequired,
+  childId: propTypes.number.isRequired,
 };
 
 export default VotePopup;

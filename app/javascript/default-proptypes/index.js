@@ -13,8 +13,8 @@ const defaultProptypes = {
   VOTER: propTypes.shape({
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
-    avatarUrl: propTypes.string.isRequired,
-  }).isRequired,
+    avatarUrl: propTypes.string,
+  }),
 };
 
 export default defaultProptypes;
