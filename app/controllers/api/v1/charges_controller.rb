@@ -4,7 +4,8 @@ module API
       rescue_from Stripe::CardError, with: :catch_exception
 
       def create
-        Votes::Buy.new.call(params: charges_params, user: current_user)
+        result = Votes::Buy.new.call(params: charges_params, user: current_user)
+        render json: result, adapter: nil, status: :ok
       end
 
       private

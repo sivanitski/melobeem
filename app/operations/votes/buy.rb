@@ -17,7 +17,7 @@ module Votes
       raise(Stripe::CardError.new(intent.error.message, intent, http_status: 500)) if intent.try(:id).blank?
 
       create_transaction(intent)
-      { client_secret: intent.client_secret }.to_json # key for front, POST "/api/v1/charges"
+      { client_secret: intent.client_secret }.to_json
     end
 
     def create_transaction(intent)
