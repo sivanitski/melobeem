@@ -3,15 +3,24 @@ module API
     class ChargesController < API::V1::ApplicationController
       rescue_from Stripe::CardError, with: :catch_exception
 
-      def create
-        result = Votes::Buy.new.call(params: charges_params, user: current_user)
+      def buy_votes
+        result = Votes::Buy.new.call(params: vote_params, user: current_user)
+        render json: result, adapter: nil, status: :ok
+      end
+
+      def buy_spins
+        result = Spins::Buy.new.call(params: spin_params, user: current_user)
         render json: result, adapter: nil, status: :ok
       end
 
       private
 
-      def charges_params
+      def vote_params
         params.permit(:entry_id, :vote_value)
+      end
+
+      def spin_params
+        params.permit(:value)
       end
 
       def catch_exception(exception)

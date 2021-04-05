@@ -8,9 +8,15 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      post '/check_payment_status', to: 'webhooks#check_payment_status'
+      post '/check_votes_payment', to: 'webhooks#check_votes_payment'
+      post '/check_spins_payment', to: 'webhooks#check_spins_payment'
 
-      resources :charges, only: :create
+      resources :charges, only: [] do
+        collection do
+          post :buy_votes
+          post :buy_spins
+        end
+      end
 
       resources :entries, only: %i[index create show] do
         collection do
@@ -51,6 +57,8 @@ Rails.application.routes.draw do
       end
 
       resources :notifications, only: :index
+
+      resources :spins, only: :create
     end
   end
 

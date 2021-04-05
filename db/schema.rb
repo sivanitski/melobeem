@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_03_25_105504) do
+ActiveRecord::Schema.define(version: 2021_04_02_073015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -101,7 +101,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_105504) do
     t.string "intent_id"
     t.integer "amount"
     t.integer "amount_received"
-    t.integer "vote_value"
+    t.integer "value"
     t.integer "status", default: 0
     t.jsonb "full_info", default: {}, null: false
     t.bigint "user_id"
@@ -110,6 +110,15 @@ ActiveRecord::Schema.define(version: 2021_03_25_105504) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["entry_id"], name: "index_purchase_transactions_on_entry_id"
     t.index ["user_id"], name: "index_purchase_transactions_on_user_id"
+  end
+
+  create_table "spins", force: :cascade do |t|
+    t.boolean "paid", default: false, null: false
+    t.integer "value", default: 0, null: false
+    t.bigint "user_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_spins_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -129,6 +138,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_105504) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "deactivated", default: false, null: false
+    t.integer "premium_spins", default: 0, null: false
     t.index ["email"], name: "index_users_on_email"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, where: "(deactivated IS FALSE)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -155,6 +165,7 @@ ActiveRecord::Schema.define(version: 2021_03_25_105504) do
   add_foreign_key "notifications", "users"
   add_foreign_key "purchase_transactions", "entries"
   add_foreign_key "purchase_transactions", "users"
+  add_foreign_key "spins", "users"
   add_foreign_key "votes", "entries"
   add_foreign_key "votes", "users"
 end
