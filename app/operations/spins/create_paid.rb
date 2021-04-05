@@ -11,6 +11,7 @@ module Spins
       ActiveRecord::Base.transaction do
         transaction.update!(amount_received: intent.amount_received, status: :done)
         user.save!
+        Notifications::BuySpins.new(transaction).call
       end
 
       Success.new(user.premium_spins)

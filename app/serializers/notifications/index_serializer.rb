@@ -1,6 +1,6 @@
 module Notifications
   class IndexSerializer < ::BaseSerializer
-    attributes :id, :user_id, :text, :source_type, :image_url, :created_at_date
+    attributes :id, :user_id, :entry_id, :entry_name, :image_url, :payload, :source_type, :created_at_date
 
     def created_at_date
       object.created_at.to_date
@@ -13,6 +13,14 @@ module Notifications
       when 'unlock', 'purchase', 'bonus'
         ''
       end
+    end
+
+    def entry_id
+      object.entry.id
+    end
+
+    def entry_name
+      object.entry.name
     end
   end
 end

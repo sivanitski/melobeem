@@ -7,8 +7,7 @@ module Notifications
     end
 
     def call
-      Notification.create!(text: "You voted for #{vote.entry.name}",
-                           source_type: :vote,
+      Notification.create!(source_type: :vote,
                            user: vote.user,
                            entry: vote.entry)
     end

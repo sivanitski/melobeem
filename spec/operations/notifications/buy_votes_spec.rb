@@ -1,8 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe Notifications::Buy do
-  let(:entry) { create :entry }
-  let(:vote) { create :vote, value: 50, entry: entry }
+RSpec.describe Notifications::BuyVotes do
+  let(:vote) { create :vote, value: 50 }
 
   describe '#call' do
     subject { described_class.new(vote).call }
@@ -11,9 +10,14 @@ RSpec.describe Notifications::Buy do
       expect { subject }.to change(Notification, :count).from(0).to(1)
     end
 
-    it 'notification contains vote value in text field' do
+    it 'notification contains vote value in payload' do
       subject
-      expect(Notification.first.text).to include(vote.value.to_s)
+      expect(Notification.first.payload['votes']).to eq(vote.value)
+    end
+
+    it 'belongs to voted entry' do
+      subject
+      expect(Notification.first.entry).to eq vote.entry
     end
 
     it 'notification belongs to the user who made purchase' do

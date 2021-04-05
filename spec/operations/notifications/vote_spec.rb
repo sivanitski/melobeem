@@ -1,8 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Notifications::Vote do
-  let(:entry) { create :entry }
-  let(:vote) { create :vote, entry: entry }
+  let(:vote) { create :vote }
 
   describe '#call' do
     subject { described_class.new(vote).call }
@@ -11,9 +10,9 @@ RSpec.describe Notifications::Vote do
       expect { subject }.to change(Notification, :count).from(0).to(1)
     end
 
-    it 'notification contains entry name in text field' do
+    it 'belongs to voted entry' do
       subject
-      expect(Notification.first.text).to include(entry.name)
+      expect(Notification.first.entry).to eq vote.entry
     end
 
     it 'notification belongs to the user who voted' do

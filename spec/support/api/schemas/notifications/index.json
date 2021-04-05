@@ -6,14 +6,16 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "user_id", "source_type", "text", "image_url", "created_at_date"],
+        "required": ["id", "user_id", "source_type", "payload", "image_url", "created_at_date", "entry_id", "entry_name"],
         "properties": {
           "id": {"type": "integer"},
           "user_id": {"type": "integer"},
           "source_type": {"type": "string"},
-          "text": {"type": "string"},
+          "payload": {"type": "hash"},
           "image_url": {"type": "string"},
-          "created_at_date": {"type": "timestamp"}
+          "created_at_date": {"type": "timestamp"},
+          "entry_id": {"type": "integer"},
+          "entry_name": {"type": "string"}
         }
       }
     },

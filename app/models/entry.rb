@@ -15,5 +15,6 @@ class Entry < ApplicationRecord
   def update_level!
     level = LEVELS.detect { |_k, v| v.include? total_votes }&.first || LEVELS.keys.last
     update!(level: level)
+    Notifications::CompleteLevel.new(self).call unless level == 1
   end
 end

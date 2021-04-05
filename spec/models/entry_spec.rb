@@ -41,5 +41,13 @@ RSpec.describe Entry, type: :model do
       all_keys = LEVELS.keys.each_with_object([]) { |key, arr| arr << key }
       expect(all_keys - (1..124).to_a).to eq []
     end
+
+    context 'when checks that not sends notification about complete level if entry level == 1' do
+      before { entry.update!(total_votes: 1) }
+
+      it 'not changes notifications count' do
+        expect { entry.update_level! }.not_to change(Notification, :count)
+      end
+    end
   end
 end
