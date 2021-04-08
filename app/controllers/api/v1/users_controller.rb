@@ -15,13 +15,6 @@ module API
         render json: current_user, serializer: ::Users::ShowSerializer
       end
 
-      def friends
-        respond_with_item_list(
-          current_user.friends,
-          ::Users::ShowSerializer
-        )
-      end
-
       def deactivate
         ::Users::Deactivate.new(current_user).call
         sign_out current_user

@@ -1,5 +1,6 @@
 import { useRequest } from "ahooks";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 import { createAPI } from "../../api";
 import ChildContext from "../../helpers/child-context";
@@ -17,11 +18,11 @@ const Leaderboard = () => {
   const { user } = useContext(UserContext);
   const { setCurrentChild } = useContext(ChildContext);
   const api = createAPI();
+  const location = useLocation();
 
   const getCompetition = () => {
     return api.get(`/competitions/current`);
   };
-
   const getEntries = () => {
     return api.get("/entries", {
       params: {
@@ -52,6 +53,15 @@ const Leaderboard = () => {
   } = useRequest(getCompetition, {
     formatResult: (res) => res.data.competition,
   });
+
+  useEffect(() => {
+    const referralParams = new URLSearchParams(location.search);
+    const referralId = referralParams.get("ref");
+
+    if (referralId) {
+      document.cookie = `ref=${referralId}; max-age=86400`;
+    }
+  }, [location.search]);
 
   if (competitionError || childrenError) {
     return <Error />;

@@ -33,11 +33,14 @@ const FacebookLogin = ({
     console.log(error);
   };
 
+  const fbScope = "public_profile, email";
+
   return (
     <LoginButton
       onCompleted={handleResponse}
       onError={handleError}
       reauthorize={true}
+      scope={fbScope}
     >
       <span className={`button button--facebook ${classes}`}>{title}</span>
     </LoginButton>

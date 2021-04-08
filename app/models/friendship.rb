@@ -5,7 +5,7 @@ class Friendship < ApplicationRecord
   validate :already_friends, :self_friend
 
   def already_friends
-    return unless Friendship.exists?(user_id: friend_id, friend_id: user_id) || Friendship.exists?(user_id: user_id, friend_id: friend_id)
+    return unless Friendship.exists?(user_id: user_id, friend_id: friend_id)
 
     errors.add(:user_id, 'and you are already friends')
   end

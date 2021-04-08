@@ -38,9 +38,12 @@ Rails.application.routes.draw do
       end
 
       resources :users, only: :show do
+        resources :friends, only: %i[index], module: :users do
+          post :add_friend, on: :collection
+        end
+
         member do
           get :entries
-          get :friends
           delete :deactivate
         end
         collection do
