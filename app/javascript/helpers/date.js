@@ -15,3 +15,22 @@ export const calcTimeDuration = (latestDate) => {
 export const formatTimeInMinutesAndSeconds = (time) => format(time, "mm:ss");
 
 export const formatTimeDayAndMonth = (time) => format(new Date(time), "d MMM");
+
+export const formatMonthAndDay = (time) => format(new Date(time), "MMMM dd");
+
+export const formatDateNotification = (time) => {
+  const yesterday = new Date();
+  yesterday.setDate(yesterday.getDate() - 1);
+
+  const formattedTime = formatMonthAndDay(time);
+
+  if (formattedTime === formatMonthAndDay(new Date())) {
+    return "Today";
+  }
+
+  if (formattedTime === formatMonthAndDay(yesterday)) {
+    return "Yesterday";
+  }
+
+  return formattedTime;
+};

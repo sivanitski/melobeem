@@ -26,6 +26,7 @@
     "dotenv": "^8.2.0",
     "less": "^4.1.0",
     "less-loader": "^7.2.1",
+    "lodash.groupby": "^4.6.0",
     "prop-types": "^15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",

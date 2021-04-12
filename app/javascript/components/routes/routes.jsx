@@ -11,6 +11,7 @@ import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
 import { Level } from "../level";
 import { Profile } from "../profile";
+import { ProfileNotification } from "../profile-notification";
 import { ProfileRoute } from "../profile-route";
 import { ProfileSetting } from "../profile-setting";
 import { SignUp } from "../sign-up";
@@ -36,6 +37,9 @@ const Routes = () => {
         </Route>
         <Route exact path={"/profile"}>
           <ProfileRoute />
+        </Route>
+        <Route exact path={"/profile/notifications"}>
+          <ProfileNotification />
         </Route>
         <Route exact path={"/profile/setting"}>
           {user ? <ProfileSetting /> : <Redirect to="/" />}
