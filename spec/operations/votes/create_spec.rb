@@ -23,6 +23,17 @@ describe Votes::Create do
     it 'changes entry total_votes by vote.value' do
       expect { result }.to change(entry, :total_votes).by(vote.value)
     end
+
+    context 'when user has prize time' do
+      let!(:prize_time) { create :prize_time, entry: entry }
+
+      before { result }
+
+      it 'changes time between voting from TIME_BETWEEN_VOTING to prize time' do
+        expect(result).to be_a Success
+        expect(result.value[:ttl_in_seconds]).to eq(prize_time.value.to_i * 60)
+      end
+    end
   end
 
   context 'when result fail' do

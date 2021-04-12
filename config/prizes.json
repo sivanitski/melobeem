@@ -1,0 +1,34 @@
+[
+  {
+    "source_type": "vote",
+    "value": 1
+  },
+  {
+    "source_type": "vote",
+    "value": 10
+  },
+  {
+    "source_type": "spin",
+    "value": 1
+  },
+  {
+    "source_type": "spin",
+    "value": 5
+  },
+  {
+    "source_type": "spin",
+    "value": 10
+  },
+  {
+    "source_type": "min",
+    "value": 10
+  },
+  {
+    "source_type": "min",
+    "value": 20
+  },
+  {
+    "source_type": "min",
+    "value": 30
+  }
+]

@@ -69,6 +69,24 @@ module API
         respond_with entry, serializer: ::Entries::RankingDetailsSerializer
       end
 
+      def prize_by_level
+        if prize && !prize.spent
+          render json: prize, serializer: ::Entries::PrizeByLevelSerializer
+        else
+          render json: { message: 'No prize' }, status: :not_found
+        end
+      end
+
+      def take_prize
+        result = Prizes::Take.new(prize).call
+        render json: result, adapter: nil, status: :ok
+      end
+
+      def prize_time
+        prize_time = PrizeTime.not_expired.where(entry: entry)
+        render json: { message: (prize_time.take.created_at + 24.hours).to_s }, adapter: nil, status: :ok if prize_time.any?
+      end
+
       private
 
       def entries_params
@@ -77,6 +95,10 @@ module API
 
       def entry
         @entry ||= competition.entries.find(params[:id])
+      end
+
+      def prize
+        @prize ||= entry.prizes.find_by(level: params[:level])
       end
     end
   end

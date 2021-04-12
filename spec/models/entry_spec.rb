@@ -8,6 +8,8 @@ RSpec.describe Entry, type: :model do
   it { is_expected.to have_many(:votes).dependent(:destroy) }
   it { is_expected.to have_many(:purchase_transactions).dependent(:destroy) }
   it { is_expected.to have_many(:notifications).dependent(:destroy) }
+  it { is_expected.to have_many(:prizes).dependent(:destroy) }
+  it { is_expected.to have_many(:prize_times).dependent(:destroy) }
   it { is_expected.to belong_to :competition }
   it { is_expected.to belong_to :user }
 
@@ -24,6 +26,17 @@ RSpec.describe Entry, type: :model do
   end
 
   describe '#update_level!' do
+    context 'when updates level of entry' do
+      before do
+        entry.update!(total_votes: 5)
+        entry.update_level!
+      end
+
+      it 'updates level of given entry' do
+        expect(entry.level).to eq 3
+      end
+    end
+
     context 'when votes are out of level range' do
       before { entry.update_level! }
 
@@ -42,8 +55,39 @@ RSpec.describe Entry, type: :model do
       expect(all_keys - (1..124).to_a).to eq []
     end
 
-    context 'when checks that not sends notification about complete level if entry level == 1' do
+    context 'when checks that creates level prize and sends notification about complete level' do
+      before { entry.update!(total_votes: 2) }
+
+      it 'changes prizes count' do
+        expect { entry.update_level! }.to change(Prize, :count).from(0).to(1)
+      end
+
+      it 'changes notifications count' do
+        expect { entry.update_level! }.to change(Notification, :count).from(0).to(1)
+      end
+    end
+
+    context 'when checks that does not create level prize and does not send notification if entry level does not change' do
+      before do
+        entry.update!(total_votes: 2)
+        entry.update_level!
+      end
+
+      it 'not changes prizes count' do
+        expect { entry.update_level! }.not_to change(Prize, :count)
+      end
+
+      it 'not changes notifications count' do
+        expect { entry.update_level! }.not_to change(Notification, :count)
+      end
+    end
+
+    context 'when checks that does not create level prize and does not send notification if entry level == 1' do
       before { entry.update!(total_votes: 1) }
+
+      it 'not changes prizes count' do
+        expect { entry.update_level! }.not_to change(Prize, :count)
+      end
 
       it 'not changes notifications count' do
         expect { entry.update_level! }.not_to change(Notification, :count)

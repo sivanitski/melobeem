@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_03_082806) do
+ActiveRecord::Schema.define(version: 2021_04_09_075527) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -20,6 +20,12 @@ ActiveRecord::Schema.define(version: 2021_04_03_082806) do
     "vote",
     "purchase",
     "bonus",
+  ], force: :cascade
+
+  create_enum :prize_source_type, [
+    "vote",
+    "spin",
+    "min",
   ], force: :cascade
 
   create_enum :vote_source_type, [
@@ -97,6 +103,26 @@ ActiveRecord::Schema.define(version: 2021_04_03_082806) do
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 
+  create_table "prize_times", force: :cascade do |t|
+    t.integer "value", null: false
+    t.bigint "entry_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["entry_id"], name: "index_prize_times_on_entry_id"
+  end
+
+  create_table "prizes", force: :cascade do |t|
+    t.integer "level", default: 1, null: false
+    t.boolean "spent", default: false, null: false
+    t.bigint "entry_id"
+    t.integer "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.enum "source_type", enum_name: "prize_source_type"
+    t.index ["entry_id"], name: "index_prizes_on_entry_id"
+    t.check_constraint "value = ANY (ARRAY[1, 5, 10, 20, 30])"
+  end
+
   create_table "purchase_transactions", force: :cascade do |t|
     t.string "intent_id"
     t.integer "amount"
@@ -163,6 +189,8 @@ ActiveRecord::Schema.define(version: 2021_04_03_082806) do
   add_foreign_key "entries", "users"
   add_foreign_key "notifications", "entries"
   add_foreign_key "notifications", "users"
+  add_foreign_key "prize_times", "entries"
+  add_foreign_key "prizes", "entries"
   add_foreign_key "purchase_transactions", "entries"
   add_foreign_key "purchase_transactions", "users"
   add_foreign_key "spins", "users"

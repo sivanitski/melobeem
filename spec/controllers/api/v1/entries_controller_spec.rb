@@ -4,6 +4,7 @@ RSpec.describe API::V1::EntriesController do
   let(:competition) { create(:competition) }
   let(:user) { create(:user) }
   let(:entry) { create(:entry, competition: competition, user: user) }
+  let(:prize) { create :prize, entry: entry }
 
   describe 'GET /index' do
     before do
@@ -210,5 +211,75 @@ RSpec.describe API::V1::EntriesController do
     it { expect(response).to match_response_schema('entries/ranking_details') }
 
     it { expect(JSON.parse(response.body)['entry']['id']).to eq entry.id }
+  end
+
+  describe 'GET #prize_by_level' do
+    before { sign_in user }
+
+    context 'when prize was found' do
+      before { get :prize_by_level, params: { id: entry.id, level: prize.level }, format: :json }
+
+      it { expect(response).to match_response_schema('entries/prize_by_level') }
+
+      it { expect(response.status).to eq 200 }
+    end
+
+    context 'when prize is already spent' do
+      before do
+        prize.update!(spent: true)
+        get :prize_by_level, params: { id: entry.id, level: prize.level }, format: :json
+      end
+
+      it { expect(response.status).to eq 404 }
+
+      it 'returns message that prize was not found' do
+        expect(JSON.parse(response.body)['message']).to eq 'No prize'
+      end
+    end
+
+    context 'when prize was not found' do
+      before { get :prize_by_level, params: { id: entry.id, level: 1 }, format: :json }
+
+      it { expect(response.status).to eq 404 }
+
+      it 'returns message that prize was not found' do
+        expect(JSON.parse(response.body)['message']).to eq 'No prize'
+      end
+    end
+  end
+
+  describe 'PUT #take_prize' do
+    before do
+      sign_in user
+      put :take_prize, params: { id: entry.id, level: prize.level }, format: :json
+    end
+
+    it { expect(response.status).to eq 200 }
+  end
+
+  describe 'GET #prize_time' do
+    before { sign_in user }
+
+    context 'when prize time was found' do
+      let!(:prize_time) { create :prize_time, entry: entry }
+
+      before { get :prize_time, params: { id: entry.id }, format: :json }
+
+      it { expect(response.status).to eq 200 }
+
+      it 'returns message with remaining time' do
+        expect(JSON.parse(response.body)['message']).to eq (prize_time.created_at + 24.hours).to_s
+      end
+    end
+
+    context 'when prize time was not found' do
+      before { get :prize_time, params: { id: entry.id }, format: :json }
+
+      it { expect(response.status).to eq 204 }
+
+      it 'returns empty response' do
+        expect(response.body).to be_empty
+      end
+    end
   end
 end

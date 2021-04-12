@@ -29,6 +29,9 @@ Rails.application.routes.draw do
           get :voters_by_day
           get :latest_voters
           get :ranking_details
+          get :prize_by_level
+          get :prize_time
+          put :take_prize
         end
 
         resources :votes, module: :entries, only: [] do

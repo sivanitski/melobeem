@@ -1,26 +1,26 @@
 module Notifications
   class CompleteLevel
-    PRIZES = ['1 Vote', '10 Votes', '5 Spins', '1 Spin', '10 Spins', 'Time 10 min', 'Time 20 min', 'Time 30 min'].freeze
+    attr_reader :entry, :prize, :level
 
-    attr_reader :entry
-
-    def initialize(entry)
+    def initialize(entry:, prize:, level:)
       @entry = entry
+      @prize = prize
+      @level = level
     end
 
     def call
       Notification.create!(source_type: :unlock,
                            user: entry.user,
                            entry: entry,
-                           payload: payload(entry))
+                           payload: payload)
     end
 
     private
 
-    def payload(entry)
+    def payload
       {
-        prize: PRIZES.sample,
-        level: entry.level
+        prize: prize,
+        level: level
       }
     end
   end

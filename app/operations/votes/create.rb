@@ -15,7 +15,7 @@ module Votes
 
       create_uniq_vote_key
 
-      Success.new({ ttl_in_seconds: TIME_BETWEEN_VOTING })
+      Success.new({ ttl_in_seconds: time_between_voting(@params[:entry_id]) })
     rescue ActiveRecord::ActiveRecordError => e
       Failure.new(e.message)
     end
@@ -35,7 +35,19 @@ module Votes
     end
 
     def create_uniq_vote_key
-      Redis.current.setex(uniq_key, TIME_BETWEEN_VOTING, uniq_key)
+      Redis.current.setex(uniq_key, time_between_voting(@params[:entry_id]), uniq_key)
+    end
+
+    def time_between_voting(entry_id)
+      prize_time?(entry_id) ? apply_prize_time(entry_id) : TIME_BETWEEN_VOTING
+    end
+
+    def prize_time?(entry_id)
+      PrizeTime.not_expired.where(entry_id: entry_id).any?
+    end
+
+    def apply_prize_time(entry_id)
+      PrizeTime.not_expired.where(entry_id: entry_id).take.value * 60
     end
   end
 end
