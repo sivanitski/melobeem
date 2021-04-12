@@ -7,7 +7,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import LockerImage from "../../images/locker.svg";
 
-const CompetitorsSwiper = ({ activeLevel, handleSlideCLick, maxLevel }) => {
+const LevelSwiperMenu = ({ activeLevel, handleSlideCLick, maxLevel }) => {
   const renderSlides = () => {
     let slides = [];
 
@@ -47,10 +47,10 @@ const CompetitorsSwiper = ({ activeLevel, handleSlideCLick, maxLevel }) => {
   );
 };
 
-CompetitorsSwiper.propTypes = {
+LevelSwiperMenu.propTypes = {
   handleSlideCLick: propTypes.func.isRequired,
   activeLevel: propTypes.number.isRequired,
   maxLevel: propTypes.number.isRequired,
 };
 
-export default CompetitorsSwiper;
+export default LevelSwiperMenu;

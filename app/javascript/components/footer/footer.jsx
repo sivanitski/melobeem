@@ -35,15 +35,19 @@ const Footer = () => {
         <IconLeaderboard />
         <div className="footer__item__title">Leaderboard</div>
       </Link>
+
       <a className="footer__item">
         <IconSpinner />
         <div className="footer__item__title">Spinner</div>
       </a>
+
       {renderCentralButton(currentChild)}
-      <a className="footer__item">
+
+      <Link to="/level" className="footer__item">
         <IconLevels />
         <div className="footer__item__title">Levels</div>
-      </a>
+      </Link>
+
       <Link to="/profile" className="footer__item">
         <IconProfile />
         <div className="footer__item__title">Profile</div>

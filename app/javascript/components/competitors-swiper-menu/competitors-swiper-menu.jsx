@@ -3,8 +3,8 @@ import "swiper/swiper.less";
 import propTypes from "prop-types";
 import React, { useState } from "react";
 
-import { LEVEL_INTERVALS } from "../../helpers/level";
-import { CompetitorsSwiper } from "../competitors-swiper";
+import { getVoteIntervalFromLevel } from "../../helpers/level";
+import { LevelSwiperMenu } from "../level-swiper-menu";
 
 const CompetitorsSwiperMenu = ({ onSliderClick, maxLevel, minLevel }) => {
   const [activeLevel, setActiveLevel] = useState(minLevel);
@@ -16,7 +16,7 @@ const CompetitorsSwiperMenu = ({ onSliderClick, maxLevel, minLevel }) => {
 
   return (
     <>
-      <CompetitorsSwiper
+      <LevelSwiperMenu
         maxLevel={maxLevel}
         activeLevel={activeLevel}
         handleSlideCLick={handleSlideCLick}
@@ -24,8 +24,7 @@ const CompetitorsSwiperMenu = ({ onSliderClick, maxLevel, minLevel }) => {
       <div className="competitors-level">
         <div className="competitors-level__amount">Level {activeLevel}</div>
         <div className="competitors-level__comment text-grey">
-          (From {LEVEL_INTERVALS[activeLevel]} to{" "}
-          {LEVEL_INTERVALS[activeLevel + 1]} Votes){" "}
+          {getVoteIntervalFromLevel(activeLevel)}
         </div>
       </div>
     </>

@@ -9,6 +9,7 @@ import {
 import UserContext from "../../helpers/user-context";
 import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
+import { Level } from "../level";
 import { Profile } from "../profile";
 import { ProfileRoute } from "../profile-route";
 import { ProfileSetting } from "../profile-setting";
@@ -41,6 +42,9 @@ const Routes = () => {
         </Route>
         <Route exact path={"/profile/:id"}>
           <Profile />
+        </Route>
+        <Route exact path={"/level"}>
+          <Level />
         </Route>
         <Route exact path={"/sign-up"}>
           <SignUp />

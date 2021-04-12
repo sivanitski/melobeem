@@ -1,15 +1,18 @@
 import propTypes from "prop-types";
 import React from "react";
 
-import { LEVEL_INTERVALS } from "../../helpers/level";
-import HeartRating from "../../images/heart-rating.svg";
+import { getAnimationLevel, getVoteValueFromLevel } from "../../helpers/level";
+import { HeartAnimationSmall } from "../heart-animation";
+
 const HeaderUserLevel = ({ level, totalVotes }) => {
+  const animationLevel = getAnimationLevel(totalVotes, level);
+
   return (
     <div className="half-circle header-user__level">
       <div className="header-user__text text-grey text-tiny">
-        Level {level} ({totalVotes}/{LEVEL_INTERVALS[level + 1]})
+        Level {level} ({totalVotes}/{getVoteValueFromLevel(level + 1)})
       </div>
-      <HeartRating />
+      <HeartAnimationSmall animationLevel={animationLevel} />
     </div>
   );
 };

@@ -128,6 +128,17 @@ export const LEVEL_INTERVALS = {
   125: 30000,
 };
 
+export const getVoteValueFromLevel = (level) => LEVEL_INTERVALS[level];
+
+export const getVoteIntervalFromLevel = (level) => {
+  return `(From ${getVoteValueFromLevel(level)} to ${getVoteValueFromLevel(
+    level + 1
+  )} votes)`;
+};
+
+export const getAnimationLevel = (totalVotes, level) =>
+  1 - totalVotes / LEVEL_INTERVALS[level + 1];
+
 export const defineMaxLevel = (children) => {
   return Math.max(...children.map((child) => child.level), 1);
 };
