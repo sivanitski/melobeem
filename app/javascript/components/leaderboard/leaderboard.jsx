@@ -7,7 +7,6 @@ import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { CompetitionInfo } from "../competition-info";
 import { Competitors } from "../competitors";
-import { CompetitorsSearch } from "../competitors-search/";
 import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderLogin } from "../header-login";
@@ -80,7 +79,6 @@ const Leaderboard = () => {
       ) : (
         <HeaderNotLogin getCurrentEntry={getCurrentEntryWhenUserLogin} />
       )}
-      <CompetitorsSearch />
       <CompetitionInfo
         timeLeft={competitionData.endsAt}
         prize={competitionData.prizeCents}

@@ -7,9 +7,13 @@ import {
 } from "react-router-dom";
 
 import UserContext from "../../helpers/user-context";
+import { CompetitorsSearch } from "../competitors-search";
 import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
+import { LeaderboardInfo } from "../leaderboard-info";
+import { LeaderboardWinners } from "../leaderboard-winners";
 import { Level } from "../level";
+import { Prizes } from "../prizes";
 import { Profile } from "../profile";
 import { ProfileNotification } from "../profile-notification";
 import { ProfileRoute } from "../profile-route";
@@ -25,6 +29,18 @@ const Routes = () => {
       <Switch>
         <Route exact path="/">
           <Leaderboard />
+        </Route>
+        <Route exact path="/competition-info">
+          <LeaderboardInfo />
+        </Route>
+        <Route exact path="/competition-info/winners">
+          <LeaderboardWinners />
+        </Route>
+        <Route exact path="/competition-info/prizes">
+          <Prizes />
+        </Route>
+        <Route exact path="/search">
+          <CompetitorsSearch />
         </Route>
         <Route exact path={"/entry/:id"}>
           <Entry />

@@ -1,6 +1,9 @@
 .competitors__title {
   margin-left: 16px;
   margin-bottom: 9px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .competitors-swiper {
@@ -72,6 +75,9 @@
 
 .competitors-item__info {
   margin-left: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 .competitors-item__likes {
@@ -86,6 +92,16 @@
   }
 }
 
+.competitors-item__place {
+  display: flex;
+  margin-bottom: 10px;
+
+  svg {
+    margin-top: -3px;
+    margin-right: 5px;
+  }
+}
+
 .competitors-item__img {
   width: 72px;
   height: 72px;
@@ -95,5 +111,33 @@
     height: 100%;
     border-radius: 50%;
     object-fit: cover;
+  }
+}
+
+.leaderboard-icons {
+  display: flex;
+  margin-right: 22px;
+}
+
+.leaderboard-icons__item {
+  width: 41px;
+  height: 41px;
+  border: 0.5px solid rgba(255, 112, 152, 0.3);
+  box-shadow:
+    0 2px 4px rgba(239, 88, 160, 0.06),
+    0 4px 4px rgba(209, 209, 209, 0.12),
+    0 1px 8px rgba(163, 163, 163, 0.08);
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 10px;
+
+  svg {
+    fill: #ff7098;
+  }
+
+  &--info svg {
+    transform: scale(1.1);
   }
 }

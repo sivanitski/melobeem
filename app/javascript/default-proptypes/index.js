@@ -10,6 +10,13 @@ const defaultProptypes = {
     rank: propTypes.number.isRequired,
     level: propTypes.number.isRequired,
   }).isRequired,
+  WINNER_OF_COMPETITION: propTypes.shape({
+    id: propTypes.number.isRequired,
+    title: propTypes.string.isRequired,
+    winnerImageUrl: propTypes.string.isRequired,
+    entriesCount: propTypes.number.isRequired,
+    prizeCents: propTypes.number.isRequired,
+  }).isRequired,
   VOTER: propTypes.shape({
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,

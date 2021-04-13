@@ -5,25 +5,34 @@ import React from "react";
 
 import defaultProptypes from "../../default-proptypes";
 import { CompetitorsItem } from "../competitors-item";
+import { WinnerItem } from "../winner-item";
 
-const CompetitorsList = ({ competitors }) => {
+const CompetitorsList = ({ competitors, messageNoChildren }) => {
   return (
     <>
       {competitors.length > 0 ? (
-        competitors.map((competitor) => (
-          <CompetitorsItem competitor={competitor} key={competitor.id} />
-        ))
+        competitors.map((child) =>
+          child.name ? (
+            <CompetitorsItem competitor={child} key={child.id} />
+          ) : (
+            <WinnerItem winner={child} key={child.id} />
+          )
+        )
       ) : (
-        <div className="competitors__empty text-grey">
-          There’s no one on this level right now.
-        </div>
+        <div className="competitors__empty text-grey">{messageNoChildren}</div>
       )}
     </>
   );
 };
 
 CompetitorsList.propTypes = {
-  competitors: propTypes.arrayOf(defaultProptypes.CHILD).isRequired,
+  competitors: propTypes.arrayOf(
+    propTypes.oneOfType([
+      defaultProptypes.CHILD,
+      defaultProptypes.WINNER_OF_COMPETITION,
+    ])
+  ),
+  messageNoChildren: propTypes.string.isRequired,
 };
 
 export default CompetitorsList;

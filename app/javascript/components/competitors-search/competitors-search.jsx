@@ -2,10 +2,12 @@ import "swiper/swiper.less";
 import "./style.less";
 
 import React, { useEffect, useState } from "react";
+import { useHistory, withRouter } from "react-router";
 
 import { createAPI } from "../../api";
 import useDebounce from "../../helpers/use-debounce";
 import { CompetitorsList } from "../competitors-list";
+import { Footer } from "../footer";
 
 const CompetitorsSearch = () => {
   const [searchString, setSearchString] = useState("");
@@ -13,6 +15,7 @@ const CompetitorsSearch = () => {
   const [competitors, setCompetitors] = useState([]);
   const api = createAPI();
   const debouncedValue = useDebounce(searchString, 500);
+  const history = useHistory();
 
   useEffect(() => {
     api.get(`/entries/search?q=${debouncedValue}`).then((res) => {
@@ -31,33 +34,41 @@ const CompetitorsSearch = () => {
 
   const handleResetClick = () => {
     setSearchString("");
-    setIsVisible(false);
+    history.push("/");
   };
 
   return (
-    <div className="search">
-      <div className="search__wrapper">
-        <input
-          value={searchString}
-          className="search__input"
-          onChange={onSearchFilledChange}
-          placeholder="Type Baby’s name"
-        />
+    <>
+      <div className="search">
+        <div className="search__wrapper">
+          <input
+            value={searchString}
+            className="search__input"
+            onChange={onSearchFilledChange}
+            placeholder="Type Baby’s name"
+          />
+
+          {isVisible && (
+            <button
+              className="search__button text-pink"
+              type="reset"
+              onClick={handleResetClick}
+            >
+              Cancel
+            </button>
+          )}
+        </div>
 
         {isVisible && (
-          <button
-            className="search__button text-pink"
-            type="reset"
-            onClick={handleResetClick}
-          >
-            Cancel
-          </button>
+          <CompetitorsList
+            competitors={competitors}
+            messageNoChildren="There is no baby with this name"
+          />
         )}
       </div>
-
-      {isVisible && <CompetitorsList competitors={competitors} />}
-    </div>
+      <Footer />
+    </>
   );
 };
 
-export default CompetitorsSearch;
+export default withRouter(CompetitorsSearch);

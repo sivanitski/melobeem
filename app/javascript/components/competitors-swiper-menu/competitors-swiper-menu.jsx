@@ -16,17 +16,19 @@ const CompetitorsSwiperMenu = ({ onSliderClick, maxLevel, minLevel }) => {
 
   return (
     <>
+      <div className="competitors-level">
+        <div className="competitors-level__amount text-grey">
+          Level {activeLevel}
+        </div>
+        <div className="competitors-level__comment text-grey">
+          {getVoteIntervalFromLevel(activeLevel)}
+        </div>
+      </div>
       <LevelSwiperMenu
         maxLevel={maxLevel}
         activeLevel={activeLevel}
         handleSlideCLick={handleSlideCLick}
       />
-      <div className="competitors-level">
-        <div className="competitors-level__amount">Level {activeLevel}</div>
-        <div className="competitors-level__comment text-grey">
-          {getVoteIntervalFromLevel(activeLevel)}
-        </div>
-      </div>
     </>
   );
 };
