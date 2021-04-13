@@ -56,7 +56,7 @@ const VotePayment = ({
     } else {
       try {
         setErrorMessage(null);
-        await api.post(`/charges`, {
+        await api.post(`/charges/buy_votes`, {
           entryId: childId,
           voteValue: activeVoteAmount,
           userId: userId,
