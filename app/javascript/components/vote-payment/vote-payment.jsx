@@ -59,7 +59,7 @@ const VotePayment = ({
     //   });
 
     api
-      .post(`/charges`, {
+      .post(`/charges/buy_votes`, {
         headers: {
           "Content-Type": "application/json",
         },
