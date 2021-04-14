@@ -64,7 +64,9 @@ Rails.application.routes.draw do
 
       resources :notifications, only: :index
 
-      resources :spins, only: :create
+      resources :spins, only: :create do
+        get :check_presence, on: :collection
+      end
     end
   end
 
