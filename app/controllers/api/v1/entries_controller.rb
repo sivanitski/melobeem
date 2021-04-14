@@ -44,7 +44,8 @@ module API
       end
 
       def current
-        render json: competition.entries.find_by!(user: current_user), serializer: ::Entries::CurrentSerializer
+        entry = ::Entries::WithRankQuery.new.call(competition.id).find_by!(user: current_user)
+        respond_with entry, serializer: ::Entries::CurrentSerializer
       end
 
       def search
