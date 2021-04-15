@@ -6,13 +6,11 @@ import React from "react";
 import { ShareButton } from "react-facebook";
 import { Link } from "react-router-dom";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import { Loading } from "../loading";
 
 const ProfileFriends = ({ userId }) => {
   const currentHost = window.location.hostname;
-
-  const api = createAPI();
 
   const getFriends = () => {
     return api.get(`/users/${userId}/friends`);

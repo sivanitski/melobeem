@@ -4,7 +4,7 @@ import propTypes from "prop-types";
 import React, { useContext, useState } from "react";
 import { withRouter } from "react-router";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import UserContext from "../../helpers/user-context";
 import HeartVote from "../../images/heart-vote.svg";
 import { VotePopup } from "../vote-popup";
@@ -21,7 +21,6 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
   const [isPopupShown, setIsPopupShown] = useState(false);
   const [activeOption, setActiveOption] = useState(null);
   const { user } = useContext(UserContext);
-  const api = createAPI();
 
   const handlePopupOpen = () => {
     setIsPopupShown(true);

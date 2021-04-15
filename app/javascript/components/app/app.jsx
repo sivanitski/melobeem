@@ -3,14 +3,13 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useRequest } from "ahooks";
 import React, { useEffect, useState } from "react";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { Loading } from "../loading";
 import { Routes } from "../routes";
 
 const App = () => {
-  const api = createAPI();
   const [user, setUser] = useState(null);
   const [currentChild, setCurrentChild] = useState(null);
 

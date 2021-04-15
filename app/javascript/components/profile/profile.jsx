@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import React, { useContext } from "react";
 import { withRouter } from "react-router";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { BackButton } from "../back-button";
@@ -24,7 +24,6 @@ const Profile = ({
 }) => {
   const { user } = useContext(UserContext);
   const { currentChild } = useContext(ChildContext);
-  const api = createAPI();
 
   const getProfile = () => {
     return api.get(`/users/${id}`);

@@ -5,7 +5,7 @@ import groupBy from "lodash.groupby";
 import React, { useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import { formatDateNotification } from "../../helpers/date";
 import UserContext from "../../helpers/user-context";
 import GoBack from "../../images/go-back.svg";
@@ -16,7 +16,6 @@ import { ProfileNotificationItem } from "../profile-notification-item";
 
 const ProfileNotification = () => {
   const { user } = useContext(UserContext);
-  const api = createAPI();
 
   if (!user) {
     <Redirect to="/" />;

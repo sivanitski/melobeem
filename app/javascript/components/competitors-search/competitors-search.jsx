@@ -4,7 +4,7 @@ import "./style.less";
 import React, { useEffect, useState } from "react";
 import { useHistory, withRouter } from "react-router";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import useDebounce from "../../helpers/use-debounce";
 import { CompetitorsList } from "../competitors-list";
 import { Footer } from "../footer";
@@ -13,7 +13,7 @@ const CompetitorsSearch = () => {
   const [searchString, setSearchString] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [competitors, setCompetitors] = useState([]);
-  const api = createAPI();
+
   const debouncedValue = useDebounce(searchString, 500);
   const history = useHistory();
 

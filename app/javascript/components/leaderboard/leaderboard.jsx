@@ -2,7 +2,7 @@ import { useRequest } from "ahooks";
 import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { CompetitionInfo } from "../competition-info";
@@ -16,7 +16,7 @@ import { Loading } from "../loading";
 const Leaderboard = () => {
   const { user } = useContext(UserContext);
   const { setCurrentChild } = useContext(ChildContext);
-  const api = createAPI();
+
   const location = useLocation();
 
   const getCompetition = () => {

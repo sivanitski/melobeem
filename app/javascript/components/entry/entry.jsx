@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import React, { useEffect } from "react";
 import { withRouter } from "react-router";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import { EntryChild } from "../entry-child";
 import { Error } from "../error";
 import { Footer } from "../footer";
@@ -17,8 +17,6 @@ const Entry = ({
     params: { id },
   },
 }) => {
-  const api = createAPI();
-
   const getChild = () => {
     return api.get(`/entries/${id}`);
   };

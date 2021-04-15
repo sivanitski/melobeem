@@ -1,8 +1,8 @@
-import axios from "axios";
 import propTypes from "prop-types";
 import React, { useContext } from "react";
 import { LoginButton } from "react-facebook";
 
+import { userAPI } from "../../api";
 import UserContext from "../../helpers/user-context";
 import { getLoginPayload } from "../../helpers/utils";
 
@@ -17,7 +17,7 @@ const FacebookLogin = ({
   const handleResponse = async (data) => {
     const { code } = getLoginPayload(data);
 
-    const res = await axios.get(`/users/auth/facebook/callback`, {
+    const res = await userAPI.get(`/auth/facebook/callback`, {
       params: { code },
     });
     setUser(res.data.user);

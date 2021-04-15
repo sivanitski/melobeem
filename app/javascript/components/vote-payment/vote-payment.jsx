@@ -11,7 +11,7 @@ import { useEventTarget } from "ahooks";
 import propTypes from "prop-types";
 import React, { useState } from "react";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import ButtonClose from "../../images/close-icon.svg";
 import HeartImage from "../../images/heart-payment.svg";
 
@@ -28,8 +28,6 @@ const VotePayment = ({
   const [value, { onChange: onChangePostal }] = useEventTarget({
     initialValue: "",
   });
-
-  const api = createAPI();
 
   const handleSubmit = async (event) => {
     event.preventDefault();

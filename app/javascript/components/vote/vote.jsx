@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import React, { useContext, useState } from "react";
 import { Redirect, withRouter } from "react-router";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import UserContext from "../../helpers/user-context";
 import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
@@ -28,7 +28,6 @@ const Vote = ({
     amount: null,
   });
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
-  const api = createAPI();
 
   const getCurrentCompetitor = () => {
     return api.get(`/entries/${id}`);

@@ -1,10 +1,9 @@
 import "./style.less";
 
-import axios from "axios";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import { createAPI } from "../../api";
+import { api, userAPI } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import RightArrow from "../../images/arrow-right.svg";
@@ -15,7 +14,6 @@ import { Footer } from "../footer";
 const ProfileSetting = () => {
   const { user, setUser } = useContext(UserContext);
   const { setCurrentChild } = useContext(ChildContext);
-  const api = createAPI();
 
   const clearContext = () => {
     setUser(null);
@@ -23,13 +21,13 @@ const ProfileSetting = () => {
   };
 
   const handleLogout = async () => {
-    await axios.delete("/users/sign_out");
+    await userAPI.delete("/sign_out");
     clearContext();
   };
 
   const handleDelete = async () => {
     // Here firstly will be alert confirmation on the next task and after api call for deleting
-    await api.delete(`/users/${user.id}/deactivate`);
+    await api.delete(`users/${user.id}/deactivate`);
     clearContext();
   };
 

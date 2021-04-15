@@ -2,7 +2,7 @@ import { useRequest } from "ahooks";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import GoBack from "../../images/go-back.svg";
 import { CompetitorsList } from "../competitors-list";
 import { Error } from "../error";
@@ -10,8 +10,6 @@ import { Footer } from "../footer";
 import { Loading } from "../loading";
 
 const LeaderboardWinners = () => {
-  const api = createAPI();
-
   const getWinners = () => {
     return api.get(`/competitions/previous_winners`);
   };

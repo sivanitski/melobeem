@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 
-import { createAPI } from "../../api";
+import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { Footer } from "../footer";
@@ -16,7 +16,6 @@ const SignUp = () => {
   const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
   const { user } = useContext(UserContext);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
-  const api = createAPI();
 
   const goNext = () => {
     setStep(step + 1);
