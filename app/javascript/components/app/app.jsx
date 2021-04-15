@@ -35,9 +35,12 @@ const App = () => {
   });
 
   useEffect(() => {
-    if (userData && !currentChildData) {
+    if (userData) {
       setUser(userData);
-      requestCurrentBaby();
+
+      if (!currentChildData) {
+        requestCurrentBaby();
+      }
     }
 
     if (currentChildData) {
