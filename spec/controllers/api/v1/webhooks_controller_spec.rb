@@ -68,8 +68,8 @@ RSpec.describe API::V1::WebhooksController, type: :request do
 
   describe 'post #check_spins_payment' do
     before do
-      allow(ENV).to receive(:fetch).with('STRIPE_ENDPOINT_SECRET', any_args).and_return('stripe_endpoint_secret')
-      stripe_signature = generate_stripe_signature(params.to_json)
+      allow(ENV).to receive(:fetch).with('STRIPE_ENDPOINT_SECRET_SPIN', any_args).and_return('stripe_endpoint_secret')
+      stripe_signature = generate_stripe_spin_signature(params.to_json)
       headers = { 'Stripe-Signature' => stripe_signature }
       post '/api/v1/check_spins_payment', params: params.to_json, headers: headers
     end
@@ -83,7 +83,8 @@ RSpec.describe API::V1::WebhooksController, type: :request do
         let!(:transaction) { create :purchase_transaction }
 
         before do
-          stripe_signature = generate_stripe_signature(params.to_json)
+          transaction.user.update!(premium_spins: 5)
+          stripe_signature = generate_stripe_spin_signature(params.to_json)
           headers = { 'Stripe-Signature' => stripe_signature }
           post '/api/v1/check_spins_payment', params: params.to_json, headers: headers
         end
@@ -91,7 +92,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
         it_behaves_like 'Webhook succeed'
 
         it 'enrolls premium_spins with value from transaction value' do
-          expect(transaction.value).to eq(transaction.user.reload.premium_spins)
+          expect(transaction.value + transaction.user.premium_spins).to eq transaction.user.reload.premium_spins
         end
       end
     end

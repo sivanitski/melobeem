@@ -1,6 +1,7 @@
 env:
   RUBY_VERSION: 2.7.2
   STRIPE_ENDPOINT_SECRET: ${{ secrets.STRIPE_ENDPOINT_SECRET }}
+  STRIPE_ENDPOINT_SECRET_SPIN: ${{ secrets.STRIPE_ENDPOINT_SECRET_SPIN }}
 
 name: Run Tests & Linters
 on:

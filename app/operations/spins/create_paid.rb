@@ -1,12 +1,12 @@
 module Spins
   class CreatePaid
-    WH_SECRET = ENV.fetch('STRIPE_ENDPOINT_SECRET') { raise 'NO STRIPE TOKEN, CANNOT START APPLICATION' }
+    WH_SECRET = ENV.fetch('STRIPE_ENDPOINT_SECRET_SPIN') { raise 'NO STRIPE TOKEN, CANNOT START APPLICATION' }
 
-    def call(payload:, sig_header:) # rubocop:disable Metrics/MethodLength
+    def call(payload:, sig_header:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       intent = fetch_event(payload: payload, sig_header: sig_header)
       transaction = find_transaction(intent.id)
       user = transaction.user
-      user.premium_spins = transaction.value
+      user.premium_spins += transaction.value
 
       ActiveRecord::Base.transaction do
         transaction.update!(amount_received: intent.amount_received, status: :done)
