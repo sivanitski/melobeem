@@ -21,6 +21,11 @@ module API
           render json: { message: 'No spin' }
         end
       end
+
+      def time_to_free_spin
+        free_spin = current_user.spins.free.where(created_at: Date.current.all_day)
+        render json: { message: (Date.current.end_of_day - free_spin.take.created_at).round }, adapter: nil, status: :ok if free_spin.any?
+      end
     end
   end
 end

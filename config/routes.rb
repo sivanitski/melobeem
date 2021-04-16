@@ -66,6 +66,7 @@ Rails.application.routes.draw do
 
       resources :spins, only: :create do
         get :check_presence, on: :collection
+        get :time_to_free_spin, on: :collection
       end
     end
   end

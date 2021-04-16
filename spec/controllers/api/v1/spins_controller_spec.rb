@@ -60,4 +60,30 @@ RSpec.describe API::V1::SpinsController do
       end
     end
   end
+
+  describe 'GET #time_to_free_spin' do
+    before { sign_in user }
+
+    context 'when free spin was found' do
+      let!(:spin) { create :spin, user: user }
+
+      before { get :time_to_free_spin, format: :json }
+
+      it { expect(response.status).to eq 200 }
+
+      it 'returns message with remaining time' do
+        expect(JSON.parse(response.body)['message']).to eq (Date.current.end_of_day - spin.created_at).round
+      end
+    end
+
+    context 'when free spin was not found' do
+      before { get :time_to_free_spin, format: :json }
+
+      it { expect(response.status).to eq 204 }
+
+      it 'returns empty response' do
+        expect(response.body).to be_empty
+      end
+    end
+  end
 end
