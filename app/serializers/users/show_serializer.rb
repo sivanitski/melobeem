@@ -3,7 +3,7 @@ module Users
     attributes :id, :name, :avatar_url, :current_baby_name
 
     def current_baby_name
-      object.entries.where(competition: Competition.current!).name
+      object.entries.where(competition: Competition.current!).first&.name
     rescue ActiveRecord::RecordNotFound
       nil
     end
