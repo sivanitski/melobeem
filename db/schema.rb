@@ -15,6 +15,11 @@ ActiveRecord::Schema.define(version: 2021_04_09_075527) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_enum :friendships_source_type, [
+    "internal",
+    "external",
+  ], force: :cascade
+
   create_enum :notification_source_type, [
     "unlock",
     "vote",
@@ -90,6 +95,7 @@ ActiveRecord::Schema.define(version: 2021_04_09_075527) do
   create_table "friendships", force: :cascade do |t|
     t.integer "user_id"
     t.integer "friend_id"
+    t.enum "source_type", default: "internal", null: false, enum_name: "friendships_source_type"
   end
 
   create_table "notifications", force: :cascade do |t|

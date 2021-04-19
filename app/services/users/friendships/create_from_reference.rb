@@ -15,8 +15,8 @@ module Users
       private
 
       def make_friendship_both_ways
-        referrer.friends << user
-        user.friends << referrer
+        referrer.external_friends << user
+        user.external_friends << referrer
       end
     end
   end

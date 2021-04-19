@@ -1,4 +1,6 @@
 class Friendship < ApplicationRecord
+  enum source_type: { internal: 'internal', external: 'external' }
+
   belongs_to :user
   belongs_to :friend, class_name: 'User'
 

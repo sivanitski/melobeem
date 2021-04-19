@@ -6,12 +6,12 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "avatar_url", "current_baby_name"],
+        "required": ["id", "name", "avatar_url", "source_type"],
         "properties": {
           "id": {"type": "integer"},
           "name": {"type": "string"},
           "avatar_url": {"type": "string"},
-          "current_baby_name" : {"type": "nullable"}
+          "source_type": {"type": "string"}
         }
       }
     },

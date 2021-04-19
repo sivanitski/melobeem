@@ -4,12 +4,14 @@
   "properties": {
     "user": {
       "type": "object",
-      "required": ["id", "name", "avatar_url", "current_baby_name"],
+      "required": ["id", "name", "avatar_url", "current_baby_name", "friends_with_current_user?", "friendship_source_type"],
       "properties": {
         "id": {"type": "integer"},
         "name": {"type": "string"},
         "avatar_url" : {"type": "string"},
-        "current_baby_name" : {"type": "nullable"}
+        "current_baby_name" : {"type": "nullable"},
+        "friends_with_current_user?" : {"type": "boolean"},
+        "friendship_source_type" : {"type": "string"}
       }
     }
   }

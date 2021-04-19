@@ -11,17 +11,34 @@ RSpec.describe API::V1::Users::FriendsController do
     let(:friend2) { create :user }
 
     before do
-      create :friendship, user: user, friend: friend1
-      create :friendship, user: user, friend: friend2
-      get :index, params: { user_id: user.id }, format: :json
+      create :friendship, user: user, friend: friend1, source_type: 'internal'
+      create :friendship, user: user, friend: friend2, source_type: 'external'
     end
 
-    it { expect(response.status).to eq 200 }
+    context 'when source type is blank' do
+      before do
+        get :index, params: { user_id: user.id }, format: :json
+      end
 
-    it { expect(response).to match_response_schema('friends/index') }
+      it { expect(response.status).to eq 200 }
 
-    it 'returns all user friends' do
-      expect(user.friends.ids - [friend1.id, friend2.id]).to eq []
+      it { expect(response).to match_response_schema('friends/index') }
+
+      it 'returns all user friends' do
+        expect(user.friends.ids - [friend1.id, friend2.id]).to eq []
+      end
+    end
+
+    context 'when source type present' do
+      it 'returns all internal friends' do
+        get :index, params: { user_id: user.id, source_type: 'internal' }, format: :json
+        expect(JSON.parse(response.body)['users'].first['id']).to eq friend1.id
+      end
+
+      it 'returns all external friends' do
+        get :index, params: { user_id: user.id, source_type: 'external' }, format: :json
+        expect(JSON.parse(response.body)['users'].first['id']).to eq friend2.id
+      end
     end
   end
 
