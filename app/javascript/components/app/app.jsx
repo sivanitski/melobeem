@@ -9,6 +9,8 @@ import UserContext from "../../helpers/user-context";
 import { Loading } from "../loading";
 import { Routes } from "../routes";
 
+const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
+
 const App = () => {
   const [user, setUser] = useState(null);
   const [currentChild, setCurrentChild] = useState(null);
@@ -53,8 +55,6 @@ const App = () => {
   if (userLoading || childLoading) {
     return <Loading />;
   }
-
-  const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
   return (
     <UserContext.Provider value={valueUser}>

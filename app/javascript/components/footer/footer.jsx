@@ -36,10 +36,10 @@ const Footer = () => {
         <div className="footer__item__title">Leaderboard</div>
       </Link>
 
-      <a className="footer__item">
+      <Link to="/spinner" className="footer__item">
         <IconSpinner />
         <div className="footer__item__title">Spinner</div>
-      </a>
+      </Link>
 
       {renderCentralButton(currentChild)}
 

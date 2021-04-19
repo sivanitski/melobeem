@@ -3,9 +3,9 @@ import "./style.less";
 import propTypes from "prop-types";
 import React from "react";
 
-import ButtonClose from "../../images/close-icon.svg";
-import TestImage from "../../images/header-left@2x.png";
-import { FacebookShare } from "../facebook-share";
+import ButtonClose from "../../../images/close-icon.svg";
+import TestImage from "../../../images/header-left@2x.png";
+import { FacebookShare } from "../../facebook-share";
 
 const VotePopup = ({ handlePopupClose, childId }) => {
   return (

@@ -4,11 +4,11 @@ import propTypes from "prop-types";
 import React, { useContext, useState } from "react";
 import { withRouter } from "react-router";
 
-import { api } from "../../api";
-import UserContext from "../../helpers/user-context";
-import HeartVote from "../../images/heart-vote.svg";
+import { api } from "../../../api";
+import UserContext from "../../../helpers/user-context";
+import HeartVote from "../../../images/heart-vote.svg";
+import { Timer } from "../../timer";
 import { VotePopup } from "../vote-popup";
-import { VoteTimer } from "../vote-timer";
 
 // These options will be taken from the backend later
 const voteOptions = [
@@ -59,9 +59,10 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
         </div>
 
         <div className="vote-item__text">1 Vote</div>
-        <VoteTimer
+        <Timer
           timeLeftInSeconds={timeFreeVote}
           handleFreeVoteClick={handleFreeVoteClick}
+          type="votes"
         />
       </div>
 

@@ -19,6 +19,7 @@ import { ProfileNotification } from "../profile-notification";
 import { ProfileRoute } from "../profile-route";
 import { ProfileSetting } from "../profile-setting";
 import { SignUp } from "../sign-up";
+import { SpinnerPage } from "../spinner-page";
 import { Vote } from "../vote";
 import { Voters } from "../voters";
 
@@ -65,6 +66,9 @@ const Routes = () => {
         </Route>
         <Route exact path={"/level"}>
           <Level />
+        </Route>
+        <Route exact path="/spinner">
+          <SpinnerPage />
         </Route>
         <Route exact path={"/sign-up"}>
           <SignUp />

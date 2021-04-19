@@ -10,8 +10,8 @@ import UserContext from "../../helpers/user-context";
 import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
 import { Loading } from "../loading";
-import { VoteList } from "../vote-list/";
-import { VotePayment } from "../vote-payment/";
+import { Payment } from "../payment";
+import { VoteList } from "./vote-list";
 
 const Vote = ({
   match: {
@@ -78,9 +78,10 @@ const Vote = ({
       <HeaderUserWithChild child={child} />
 
       {isPaymentOpen ? (
-        <VotePayment
+        <Payment
+          activeType="vote"
           activePrice={activeOption.price}
-          activeVoteAmount={activeOption.amount}
+          activeAmount={activeOption.amount}
           handlePaymentClose={handlePaymentClose}
           childId={child.id}
           userId={user.id}

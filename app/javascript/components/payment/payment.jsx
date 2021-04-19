@@ -14,10 +14,12 @@ import React, { useState } from "react";
 import { api } from "../../api";
 import ButtonClose from "../../images/close-icon.svg";
 import HeartImage from "../../images/heart-payment.svg";
+import SpinnerImage from "../../images/spinner-purple.svg";
 
-const VotePayment = ({
+const Payment = ({
+  activeType,
   activePrice,
-  activeVoteAmount,
+  activeAmount,
   handlePaymentClose,
   childId,
   userId,
@@ -28,6 +30,20 @@ const VotePayment = ({
   const [value, { onChange: onChangePostal }] = useEventTarget({
     initialValue: "",
   });
+
+  const makeVotePurchase = async () => {
+    await api.post(`/charges/buy_votes`, {
+      entryId: childId,
+      voteValue: activeAmount,
+      userId: userId,
+    });
+  };
+
+  const makeSpinPurchase = async () => {
+    await api.post(`charges/buy_spins`, {
+      value: activeAmount,
+    });
+  };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -54,11 +70,7 @@ const VotePayment = ({
     } else {
       try {
         setErrorMessage(null);
-        await api.post(`/charges/buy_votes`, {
-          entryId: childId,
-          voteValue: activeVoteAmount,
-          userId: userId,
-        });
+        activeType === "vote" ? makeVotePurchase() : makeSpinPurchase();
 
         handlePaymentClose();
       } catch (e) {
@@ -95,8 +107,15 @@ const VotePayment = ({
       <div className="vote-payment__close" onClick={handlePaymentClose}>
         <ButtonClose />
       </div>
-      <HeartImage className="vote-payment__img" />
-      <div className="vote-payment__product">{activeVoteAmount} votes</div>
+      {activeType === "vote" ? (
+        <HeartImage className="vote-payment__img" />
+      ) : (
+        <SpinnerImage className="vote-payment__img" />
+      )}
+
+      <div className="vote-payment__product">
+        {activeAmount} {activeType === "vote" ? "votes" : "spinners"}
+      </div>
       <form onSubmit={handleSubmit} className="vote-payment__form">
         <div className="vote-payment__card">
           <label htmlFor="cardNumber" className="vote-payment__text">
@@ -157,12 +176,13 @@ const VotePayment = ({
   );
 };
 
-VotePayment.propTypes = {
+Payment.propTypes = {
+  activeType: propTypes.string.isRequired,
   activePrice: propTypes.string.isRequired,
-  activeVoteAmount: propTypes.string.isRequired,
+  activeAmount: propTypes.string.isRequired,
   handlePaymentClose: propTypes.func.isRequired,
-  childId: propTypes.number.isRequired,
-  userId: propTypes.number.isRequired,
+  childId: propTypes.number,
+  userId: propTypes.number,
 };
 
-export default VotePayment;
+export default Payment;

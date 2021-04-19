@@ -14,6 +14,9 @@ export const calcTimeDuration = (latestDate) => {
 
 export const formatTimeInMinutesAndSeconds = (time) => format(time, "mm:ss");
 
+export const formatTimeInHoursMinutesAndSeconds = (time) =>
+  format(time, "kk:mm:ss");
+
 export const formatTimeDayAndMonth = (time) => format(new Date(time), "d MMM");
 
 export const formatMonthAndDay = (time) => format(new Date(time), "MMMM dd");
