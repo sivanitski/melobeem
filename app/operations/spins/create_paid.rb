@@ -32,7 +32,7 @@ module Spins
     end
 
     def find_transaction(intent_id)
-      PurchaseTransaction.find_by!(intent_id: intent_id)
+      PurchaseTransaction.find_by!(intent_id: intent_id, product_type: :spin)
     end
   end
 end

@@ -32,7 +32,7 @@ module Votes
     end
 
     def find_transaction(intent_id)
-      PurchaseTransaction.find_by!(intent_id: intent_id)
+      PurchaseTransaction.find_by!(intent_id: intent_id, product_type: :vote)
     end
 
     def build_vote(transaction)

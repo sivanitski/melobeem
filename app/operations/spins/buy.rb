@@ -22,7 +22,8 @@ module Spins
     def create_transaction(intent)
       PurchaseTransaction.create!(intent_id: intent.id, amount: intent.amount, amount_received: intent.amount_capturable,
                                   status: :process, full_info: intent.to_json, value: intent.metadata[:value].to_i,
-                                  user_id: intent.metadata[:user_id].to_i, entry_id: intent.metadata[:entry_id].to_i)
+                                  user_id: intent.metadata[:user_id].to_i, entry_id: intent.metadata[:entry_id].to_i,
+                                  product_type: :spin)
     end
   end
 end

@@ -37,7 +37,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
 
     context 'when transaction was found' do
       context 'when vote.value were enrolled' do
-        let!(:transaction) { create :purchase_transaction, entry: entry }
+        let!(:transaction) { create :purchase_transaction, entry: entry, product_type: :vote }
 
         before do
           stripe_signature = generate_stripe_signature(params.to_json)
@@ -80,7 +80,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
 
     context 'when transaction was found' do
       context 'when vote.value were enrolled' do
-        let!(:transaction) { create :purchase_transaction }
+        let!(:transaction) { create :purchase_transaction, product_type: :spin }
 
         before do
           transaction.user.update!(premium_spins: 5)

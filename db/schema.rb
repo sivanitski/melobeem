@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_09_075527) do
+ActiveRecord::Schema.define(version: 2021_04_20_103744) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -31,6 +31,11 @@ ActiveRecord::Schema.define(version: 2021_04_09_075527) do
     "vote",
     "spin",
     "min",
+  ], force: :cascade
+
+  create_enum :product_type, [
+    "vote",
+    "spin",
   ], force: :cascade
 
   create_enum :vote_source_type, [
@@ -140,6 +145,7 @@ ActiveRecord::Schema.define(version: 2021_04_09_075527) do
     t.bigint "entry_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.enum "product_type", enum_name: "product_type"
     t.index ["entry_id"], name: "index_purchase_transactions_on_entry_id"
     t.index ["user_id"], name: "index_purchase_transactions_on_user_id"
   end
