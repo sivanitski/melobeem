@@ -14,3 +14,14 @@ export const getLoginPayload = (data) => {
 };
 
 export const getSiteBaseUrl = () => window.location.origin;
+
+export const makeFirstLetterUppercase = (string) =>
+  string.charAt(0).toUpperCase() + string.slice(1);
+
+export const makePluralForm = (string, condition) => {
+  if (condition > 1) {
+    return string + "s";
+  }
+
+  return string;
+};

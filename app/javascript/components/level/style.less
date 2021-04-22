@@ -17,7 +17,7 @@
 
 .level__info {
   position: absolute;
-  left: 88px;
+  left: 100px;
   top: -3px;
   display: flex;
   align-items: center;
@@ -40,4 +40,50 @@
 .level__child-votes {
   margin-top: 40px;
   font-size: 56px;
+}
+
+.level-prizes {
+  width: 256px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.level-prizes__avatar {
+  height: 129px;
+  width: 176px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  background: url("../../images/decorations.png") no-repeat;
+  background-position: center;
+
+  @media (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+    background: url("../../images/decorations@2x.png") no-repeat;
+    background-position: center;
+    background-size: contain;
+  }
+
+  img {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+  }
+}
+
+.level-prizes__text {
+  max-width: 190px;
+  margin-bottom: 27px;
+  text-align: center;
+}
+
+.level-prizes__title {
+  margin-bottom: 16px;
+}
+
+.level-prizes__button {
+  width: 128px;
+  height: 48px;
+  font-size: 17px;
 }

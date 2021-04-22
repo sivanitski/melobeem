@@ -1,5 +1,3 @@
-import "./style.less";
-
 import { useRequest } from "ahooks";
 import React, { useContext } from "react";
 import { Redirect } from "react-router";
@@ -43,7 +41,7 @@ const SpinnerPage = () => {
     }
 
     if (data.type === "premium") {
-      return <PremiumSpinner />;
+      return <PremiumSpinner spinnerAmount={data.count} />;
     }
 
     if (data.type === "free") {

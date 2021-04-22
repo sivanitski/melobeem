@@ -14,6 +14,13 @@ export const calcTimeDuration = (latestDate) => {
 
 export const formatTimeInMinutesAndSeconds = (time) => format(time, "mm:ss");
 
+export const getExperationTimeInHoursInMinutes = (time) => {
+  return format(
+    time * 1000 - Date.now() + new Date().getTimezoneOffset() * 60 * 1000,
+    "HH:mm"
+  );
+};
+
 export const formatTimeInHoursMinutesAndSeconds = (time) =>
   format(time, "kk:mm:ss");
 

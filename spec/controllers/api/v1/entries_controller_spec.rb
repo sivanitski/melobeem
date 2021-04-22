@@ -268,7 +268,7 @@ RSpec.describe API::V1::EntriesController do
       it { expect(response.status).to eq 200 }
 
       it 'returns message with remaining time' do
-        expect(JSON.parse(response.body)['message']).to eq (prize_time.created_at + 24.hours).to_s
+        expect(JSON.parse(response.body)['message']).to eq (prize_time.created_at + 24.hours).to_i
       end
     end
 

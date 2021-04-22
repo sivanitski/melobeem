@@ -85,7 +85,7 @@ module API
 
       def prize_time
         prize_time = PrizeTime.not_expired.where(entry: entry)
-        render json: { message: (prize_time.take.created_at + 24.hours).to_s }, adapter: nil, status: :ok if prize_time.any?
+        render json: { message: (prize_time.take.created_at + 24.hours).to_i }, adapter: nil, status: :ok if prize_time.any?
       end
 
       private
