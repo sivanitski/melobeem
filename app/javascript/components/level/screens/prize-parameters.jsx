@@ -45,7 +45,7 @@ const definePrizeImage = (currentPrize) => {
   }
 };
 
-const definePrizeTitle = (currentPrize) => {
+export const definePrizeTitle = (currentPrize) => {
   if (currentPrize.sourceType === "min") {
     return `Time ${currentPrize.value} min`;
   }

@@ -2,6 +2,7 @@ import propTypes from "prop-types";
 import React from "react";
 
 import PrizeIconLevel from "../../../images/prize-icon-level.svg";
+import { definePrizeTitle } from "../../level/screens/prize-parameters";
 
 const UnlockNotification = ({ level, prize }) => {
   return (
@@ -13,7 +14,7 @@ const UnlockNotification = ({ level, prize }) => {
       <div className="notification-item__text text-grey">
         Level {level} completed
         <span className="notification-item__value text-black">
-          {` ${prize} `}
+          {` ${definePrizeTitle(prize)} `}
         </span>
         awarded
       </div>
@@ -23,7 +24,12 @@ const UnlockNotification = ({ level, prize }) => {
 
 UnlockNotification.propTypes = {
   level: propTypes.number.isRequired,
-  prize: propTypes.string.isRequired,
+  prize: propTypes.shape({
+    sourceType: propTypes.string.isRequired,
+    spent: propTypes.bool.isRequired,
+    value: propTypes.number.isRequired,
+    level: propTypes.number.isRequired,
+  }),
 };
 
 export default UnlockNotification;
