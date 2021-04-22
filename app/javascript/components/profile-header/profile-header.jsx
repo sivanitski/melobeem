@@ -7,13 +7,14 @@ import imageAvatar from "../../images/avatar.png";
 import NotificationImage from "../../images/notification.svg";
 import SettingImage from "../../images/setting.svg";
 
-const ProfileHeader = ({ user, childName, isAnotherUser }) => {
+const ProfileHeader = ({ user, childName, isAnotherUser, requestProfile }) => {
   const handleAddFriend = async () => {
     if (user.friendsWithCurrentUser) {
       return;
     }
 
     await api.post(`/users/${user.id}/friends/add_friend`);
+    requestProfile();
   };
 
   return (
@@ -67,6 +68,7 @@ ProfileHeader.propTypes = {
   }).isRequired,
   childName: propTypes.string,
   isAnotherUser: propTypes.bool,
+  requestProfile: propTypes.func,
 };
 
 export default ProfileHeader;

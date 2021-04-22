@@ -55,7 +55,11 @@ const Profile = ({
         ) : (
           <>
             {history.action !== "POP" && <BackButton />}
-            <ProfileHeader user={data} isAnotherUser />
+            <ProfileHeader
+              requestProfile={requestProfile}
+              user={data}
+              isAnotherUser
+            />
             <ProfileChildren />
           </>
         )}

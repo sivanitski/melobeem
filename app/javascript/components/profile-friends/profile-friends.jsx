@@ -41,7 +41,7 @@ const ProfileFriends = ({ userId }) => {
     "sourceType"
   );
 
-  const sortedFriends = [...friendsMelobeem, ...friendsFb];
+  const sortedFriends = [...friendsFb, ...friendsMelobeem];
 
   return (
     <div className="profile-friends">
