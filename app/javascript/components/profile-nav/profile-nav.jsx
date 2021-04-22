@@ -5,7 +5,7 @@ import React, { useState } from "react";
 
 import defaultProptypes from "../../default-proptypes";
 import { ProfileChildren } from "../profile-children";
-import ProfileFriends from "../profile-frineds/profile-friends";
+import { ProfileFriends } from "../profile-friends";
 
 const TABS = {
   BABY: "Baby",

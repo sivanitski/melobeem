@@ -2,11 +2,20 @@ import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
+import { api } from "../../api";
 import imageAvatar from "../../images/avatar.png";
 import NotificationImage from "../../images/notification.svg";
 import SettingImage from "../../images/setting.svg";
 
 const ProfileHeader = ({ user, childName, isAnotherUser }) => {
+  const handleAddFriend = async () => {
+    if (user.friendsWithCurrentUser) {
+      return;
+    }
+
+    await api.post(`/users/${user.id}/friends/add_friend`);
+  };
+
   return (
     <div className="profile-header">
       {!isAnotherUser && (
@@ -35,8 +44,12 @@ const ProfileHeader = ({ user, childName, isAnotherUser }) => {
           Baby: {childName || "Not participating"}
         </div>
         {isAnotherUser && (
-          <button type="button" className="profile-header__button">
-            ADD TO FRIENDS
+          <button
+            type="button"
+            className="profile-header__button"
+            onClick={handleAddFriend}
+          >
+            {user.friendsWithCurrentUser ? "FRIENDS" : "ADD TO FRIENDS"}
           </button>
         )}
       </div>
@@ -49,6 +62,8 @@ ProfileHeader.propTypes = {
     id: propTypes.number.isRequired,
     name: propTypes.string.isRequired,
     avatarUrl: propTypes.string.isRequired,
+    friendsWithCurrentUser: propTypes.bool,
+    friendshipSourceType: propTypes.string,
   }).isRequired,
   childName: propTypes.string,
   isAnotherUser: propTypes.bool,

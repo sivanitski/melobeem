@@ -2,7 +2,7 @@ import "./style.less";
 
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { withRouter } from "react-router";
 
 import { api } from "../../api";
@@ -29,9 +29,13 @@ const Profile = ({
     return api.get(`/users/${id}`);
   };
 
-  const { data, error, loading } = useRequest(getProfile, {
+  const { data, error, loading, run: requestProfile } = useRequest(getProfile, {
     formatResult: (res) => res.data.user,
   });
+
+  useEffect(() => {
+    requestProfile();
+  }, [id]);
 
   if (error) {
     return <Error />;

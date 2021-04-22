@@ -24,7 +24,7 @@ const CompetitorsItem = ({ competitor }) => {
           </div>
           <div className="competitors-item__info">
             <div className="competitors-item__likes">
-              <IconHeart />
+              <IconHeart className="svg-pink" />
               <div className="text-smaller text-pink">
                 {competitor.totalVotes}
               </div>
