@@ -9,7 +9,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useEventTarget } from "ahooks";
 import propTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { api } from "../../api";
 import ButtonClose from "../../images/close-icon.svg";
@@ -26,27 +26,37 @@ const Payment = ({
 }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const [succeeded, setSucceeded] = useState(false);
+  const [processing, setProcessing] = useState("");
+  const [clientSecret, setClientSecret] = useState("");
   const [errorMessage, setErrorMessage] = useState(null);
   const [value, { onChange: onChangePostal }] = useEventTarget({
     initialValue: "",
   });
 
-  const makeVotePurchase = async () => {
-    await api.post(`/charges/buy_votes`, {
-      entryId: childId,
-      voteValue: activeAmount,
-      userId: userId,
-    });
-  };
+  useEffect(() => {
+    async function makeChargeIntent() {
+      let res;
+      if (activeType === "vote") {
+        res = await api.post(`/charges/buy_votes`, {
+          entryId: childId,
+          voteValue: activeAmount,
+          userId: userId,
+        });
+      } else {
+        res = await api.post(`charges/buy_spins`, {
+          value: activeAmount,
+        });
+      }
+      setClientSecret(res.data.clientSecret);
+    }
 
-  const makeSpinPurchase = async () => {
-    await api.post(`charges/buy_spins`, {
-      value: activeAmount,
-    });
-  };
+    makeChargeIntent();
+  }, []);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const handleSubmit = async (evt) => {
+    evt.preventDefault();
+    setProcessing(true);
 
     if (!stripe || !elements) {
       return;
@@ -54,12 +64,13 @@ const Payment = ({
 
     const cardElement = elements.getElement(CardNumberElement);
 
-    const payload = await stripe.createPaymentMethod({
-      type: "card",
-      card: cardElement,
-      billing_details: {
-        address: {
-          postal_code: value,
+    const payload = await stripe.confirmCardPayment(clientSecret, {
+      payment_method: {
+        card: cardElement,
+        billing_details: {
+          address: {
+            postal_code: value,
+          },
         },
       },
     });
@@ -67,15 +78,12 @@ const Payment = ({
     if (payload.error) {
       console.log("[error]", payload.error);
       setErrorMessage(payload.error.message);
+      setProcessing(false);
     } else {
-      try {
-        setErrorMessage(null);
-        activeType === "vote" ? makeVotePurchase() : makeSpinPurchase();
-
-        handlePaymentClose();
-      } catch (e) {
-        setErrorMessage("Something went wrong, please try again");
-      }
+      setErrorMessage(null);
+      setProcessing(false);
+      setSucceeded(true);
+      handlePaymentClose();
     }
   };
 
@@ -163,6 +171,8 @@ const Payment = ({
         </div>
 
         {errorMessage && <div className="error">{errorMessage}</div>}
+        {succeeded && <div>Operation succeeded</div>}
+        {processing && <div>Process is running</div>}
 
         <button
           type="submit"

@@ -65,6 +65,7 @@ const Vote = ({
 
   const handlePaymentClose = () => {
     setIsPaymentOpen(false);
+    child.totalVotes += Number(activeOption.amount);
     setActiveOption(null);
   };
 
