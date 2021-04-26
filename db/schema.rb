@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_20_103744) do
+ActiveRecord::Schema.define(version: 2021_04_22_084740) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -110,7 +110,9 @@ ActiveRecord::Schema.define(version: 2021_04_20_103744) do
     t.bigint "entry_id"
     t.enum "source_type", enum_name: "notification_source_type"
     t.jsonb "payload", default: {}, null: false
+    t.boolean "read", default: false
     t.index ["entry_id"], name: "index_notifications_on_entry_id"
+    t.index ["read"], name: "index_notifications_on_read"
     t.index ["user_id"], name: "index_notifications_on_user_id"
   end
 

@@ -6,7 +6,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "user_id", "source_type", "payload", "image_url", "created_at_date", "entry_id", "entry_name"],
+        "required": ["id", "user_id", "source_type", "payload", "image_url", "created_at_date", "entry_id", "entry_name", "read"],
         "properties": {
           "id": {"type": "integer"},
           "user_id": {"type": "integer"},
@@ -15,7 +15,8 @@
           "image_url": {"type": "string"},
           "created_at_date": {"type": "timestamp"},
           "entry_id": {"type": "integer"},
-          "entry_name": {"type": "string"}
+          "entry_name": {"type": "string"},
+          "read": {"type":  "boolean"}
         }
       }
     },

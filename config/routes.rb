@@ -62,7 +62,9 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :notifications, only: :index
+      resources :notifications, only: :index do
+        get :unread_present, on: :collection
+      end
 
       resources :spins, only: :create do
         get :check_presence, on: :collection
