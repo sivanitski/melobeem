@@ -49,6 +49,10 @@ gem 'devise'
 gem 'omniauth', '~> 1.9.1' # TODO: update to v2, resolve issue with devise
 gem 'omniauth-facebook'
 
+# sidekiq and sidekiq-scheduler
+gem 'sidekiq'
+gem 'sidekiq-scheduler'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
@@ -57,6 +61,8 @@ group :development, :test do
 end
 
 # payments
+gem 'money', '~> 6.7', '>= 6.7.1'
+gem 'money-open-exchange-rates', '~> 1.4', require: 'money/bank/open_exchange_rates_bank'
 gem 'stripe'
 
 group :development do
@@ -85,11 +91,11 @@ group :test do
   # gem 'factory_girl_rails'
   gem 'factory_bot_rails'
   gem 'ffaker'
-
   gem 'json-schema'
-
   # testing Stripe
   gem 'stripe-ruby-mock', '~> 3.0.1', require: 'stripe_mock'
+  # testing jobs
+  gem 'rspec-sidekiq'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

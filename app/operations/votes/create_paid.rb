@@ -2,7 +2,7 @@ module Votes
   class CreatePaid
     WH_SECRET = ENV.fetch('STRIPE_ENDPOINT_SECRET') { raise 'NO STRIPE TOKEN, CANNOT START APPLICATION' }
 
-    def call(payload:, sig_header:) # rubocop:disable Metrics/MethodLength
+    def call(payload:, sig_header:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       intent = fetch_event(payload: payload, sig_header: sig_header)
       transaction = find_transaction(intent.id)
       vote = build_vote(transaction.values_at(:entry_id, :user_id, :value))
@@ -12,6 +12,7 @@ module Votes
         vote.save!
         vote.apply!
         Notifications::BuyVotes.new(vote).call
+        Competition.current!.increment_revenue!(transaction)
       end
 
       Success.new(vote.value)

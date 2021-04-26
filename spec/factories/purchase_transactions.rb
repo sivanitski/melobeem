@@ -8,5 +8,6 @@ FactoryBot.define do
 
     user
     entry
+    competition
   end
 end

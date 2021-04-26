@@ -34,4 +34,7 @@ RSpec.configure do |config|
     StripeMock.toggle_live(true)
     puts 'Running **live** tests against Stripe...'
   end
+
+  # make sure jobs don't linger between tests
+  config.before { Sidekiq::Worker.clear_all }
 end

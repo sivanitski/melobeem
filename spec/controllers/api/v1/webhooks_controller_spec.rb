@@ -63,6 +63,18 @@ RSpec.describe API::V1::WebhooksController, type: :request do
           expect(entry.reload.total_votes).to eq entry.votes.first.value
         end
       end
+
+      context 'when votes where bought' do
+        let!(:transaction) { create :purchase_transaction, entry: entry }
+
+        it 'increments revenue of current competition' do
+          expect do
+            stripe_signature = generate_stripe_signature(params.to_json)
+            headers = { 'Stripe-Signature' => stripe_signature }
+            post '/api/v1/check_votes_payment', params: params.to_json, headers: headers
+          end.to change(Competition.current!, :revenue).by(transaction.amount_received)
+        end
+      end
     end
   end
 
@@ -93,6 +105,18 @@ RSpec.describe API::V1::WebhooksController, type: :request do
 
         it 'enrolls premium_spins with value from transaction value' do
           expect(transaction.value + transaction.user.premium_spins).to eq transaction.user.reload.premium_spins
+        end
+      end
+
+      context 'when spins where bought' do
+        let!(:transaction) { create :purchase_transaction, entry: entry }
+
+        it 'increments revenue of current competition' do
+          expect do
+            stripe_signature = generate_stripe_spin_signature(params.to_json)
+            headers = { 'Stripe-Signature' => stripe_signature }
+            post '/api/v1/check_spins_payment', params: params.to_json, headers: headers
+          end.to change(Competition.current!, :revenue).by(transaction.amount_received)
         end
       end
     end

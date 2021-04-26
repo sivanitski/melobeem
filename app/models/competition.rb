@@ -1,12 +1,19 @@
 class Competition < ApplicationRecord
+  enum status: { started: 'started', finished: 'finished' }, _prefix: :competition
+
   has_many :entries, dependent: :destroy
+  has_many :purchase_transactions, dependent: :destroy
 
   validates :title, presence: true
   validates :prize_cents, presence: true
-  validates :starts_at, presence: true
+  validates :starts_at, presence: true, uniqueness: true
   validates :ends_at, presence: true
 
   def self.current!
-    order(created_at: :desc).take!
+    where(status: :started).take!
+  end
+
+  def increment_revenue!(transaction)
+    increment!(:revenue, transaction.amount_received) # rubocop:disable Rails/SkipsModelValidations
   end
 end

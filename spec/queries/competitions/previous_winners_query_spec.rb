@@ -1,9 +1,9 @@
 require 'rails_helper'
 
 RSpec.describe Competitions::PreviousWinnersQuery do
-  let!(:first_competition) { create :competition, starts_at: Time.zone.today - 3.days }
-  let!(:last_competition) { create :competition, starts_at: Time.zone.today - 2.days }
-  let!(:current_competition) { create :competition, starts_at: Time.zone.today - 1.day }
+  let!(:first_competition) { create :competition, :finished, starts_at: Time.zone.today - 3.days }
+  let!(:last_competition) { create :competition, :finished, starts_at: Time.zone.today - 2.days }
+  let!(:current_competition) { create :competition }
   let!(:entry1) { create :entry, competition: current_competition, total_votes: 10 }
   let!(:entry2) { create :entry, competition: first_competition, total_votes: 3 }
   let!(:entry3) { create :entry, competition: first_competition, total_votes: 1 }

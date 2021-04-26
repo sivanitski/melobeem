@@ -4,6 +4,7 @@ class PurchaseTransaction < ApplicationRecord
 
   belongs_to :user
   belongs_to :entry
+  belongs_to :competition
 
-  validates :user_id, :entry_id, presence: true
+  validates :user_id, :entry_id, :competition_id, presence: true
 end

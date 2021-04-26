@@ -12,6 +12,7 @@ module Spins
         transaction.update!(amount_received: intent.amount_received, status: :done)
         user.save!
         Notifications::BuySpins.new(transaction).call
+        Competition.current!.increment_revenue!(transaction)
       end
 
       Success.new(user.premium_spins)

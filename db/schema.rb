@@ -10,10 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_22_084740) do
+ActiveRecord::Schema.define(version: 2021_04_23_123002) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_enum :competition_status, [
+    "started",
+    "finished",
+  ], force: :cascade
 
   create_enum :friendships_source_type, [
     "internal",
@@ -75,11 +80,13 @@ ActiveRecord::Schema.define(version: 2021_04_22_084740) do
   create_table "competitions", force: :cascade do |t|
     t.string "title", null: false
     t.integer "prize_cents", null: false
-    t.string "status"
     t.datetime "starts_at", null: false
     t.datetime "ends_at", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.enum "status", default: "started", null: false, enum_name: "competition_status"
+    t.integer "revenue", default: 0, null: false
+    t.index ["starts_at"], name: "index_competitions_on_starts_at", unique: true
   end
 
   create_table "entries", force: :cascade do |t|
@@ -91,6 +98,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_084740) do
     t.integer "total_votes", default: 0, null: false
     t.integer "level", default: 1, null: false
     t.boolean "deactivated", default: false, null: false
+    t.integer "competition_money_prize", default: 0, null: false
     t.index ["competition_id"], name: "index_entries_on_competition_id"
     t.index ["total_votes"], name: "index_entries_on_total_votes"
     t.index ["user_id", "competition_id"], name: "index_entries_on_user_id_and_competition_id", unique: true
@@ -147,7 +155,9 @@ ActiveRecord::Schema.define(version: 2021_04_22_084740) do
     t.bigint "entry_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "competition_id"
     t.enum "product_type", enum_name: "product_type"
+    t.index ["competition_id"], name: "index_purchase_transactions_on_competition_id"
     t.index ["entry_id"], name: "index_purchase_transactions_on_entry_id"
     t.index ["user_id"], name: "index_purchase_transactions_on_user_id"
   end
@@ -179,6 +189,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_084740) do
     t.datetime "updated_at", precision: 6, null: false
     t.boolean "deactivated", default: false, null: false
     t.integer "premium_spins", default: 0, null: false
+    t.boolean "admin", default: false
     t.index ["email"], name: "index_users_on_email"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, where: "(deactivated IS FALSE)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
@@ -205,6 +216,7 @@ ActiveRecord::Schema.define(version: 2021_04_22_084740) do
   add_foreign_key "notifications", "users"
   add_foreign_key "prize_times", "entries"
   add_foreign_key "prizes", "entries"
+  add_foreign_key "purchase_transactions", "competitions"
   add_foreign_key "purchase_transactions", "entries"
   add_foreign_key "purchase_transactions", "users"
   add_foreign_key "spins", "users"
