@@ -8,7 +8,7 @@ Sidekiq.configure_server do |config|
   config.redis = { url: ENV['REDIS_URL'], network_timeout: 5 }
 
   config.on(:startup) do
-    schedule = YAML.safe_load(ERB.new(Rails.root.join('config/sidekiq_scheduler.yml').read).result)
+    schedule = YAML.safe_load(ERB.new(Rails.root.join('config/sidekiq.yml').read).result)
     Sidekiq.schedule = schedule
     Sidekiq::Scheduler.reload_schedule!
   end
