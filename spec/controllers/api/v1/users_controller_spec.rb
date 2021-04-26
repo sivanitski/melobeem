@@ -2,8 +2,7 @@ require 'rails_helper'
 
 RSpec.describe API::V1::UsersController do
   let(:user) { create :user }
-
-  before { create :competition }
+  let!(:competition) { create :competition }
 
   describe 'GET #show' do
     before { get :show, params: { id: user.id }, format: :json }
@@ -33,5 +32,28 @@ RSpec.describe API::V1::UsersController do
     end
 
     it { expect(response.status).to eq 204 }
+  end
+
+  describe 'GET #previous_entries' do
+    let(:prev_competition) { create :competition, :finished }
+    let!(:prev_entry) { create :entry, user: user, competition: prev_competition }
+    let!(:entry) { create :entry, user: user, competition: competition }
+
+    before do
+      sign_in user
+      get :previous_entries, params: { id: user.id }, format: :json
+    end
+
+    it { expect(response.status).to eq 200 }
+
+    it { expect(response).to match_response_schema('users/entries') }
+
+    it 'returns entry from previous competition' do
+      expect(response.body).to include(prev_entry.name)
+    end
+
+    it 'does not return entry from current competition' do
+      expect(response.body).not_to include(entry.name)
+    end
   end
 end

@@ -20,6 +20,10 @@ module API
         sign_out current_user
       end
 
+      def previous_entries
+        render json: user.entries.where.not(competition: Competition.current!), each_serializer: ::Users::EntriesSerializer
+      end
+
       private
 
       def user

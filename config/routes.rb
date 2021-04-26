@@ -54,6 +54,7 @@ Rails.application.routes.draw do
         member do
           get :entries
           delete :deactivate
+          get :previous_entries
         end
         collection do
           resources :entries, only: %i[edit update destroy], module: :users
