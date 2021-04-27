@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_23_123002) do
+ActiveRecord::Schema.define(version: 2021_04_26_065526) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(version: 2021_04_23_123002) do
     "vote",
     "purchase",
     "bonus",
+    "invitation",
   ], force: :cascade
 
   create_enum :prize_source_type, [
@@ -47,6 +48,7 @@ ActiveRecord::Schema.define(version: 2021_04_23_123002) do
     "user",
     "spinner",
     "bonus",
+    "invitation",
   ], force: :cascade
 
   create_table "active_storage_attachments", force: :cascade do |t|
@@ -109,6 +111,7 @@ ActiveRecord::Schema.define(version: 2021_04_23_123002) do
     t.integer "user_id"
     t.integer "friend_id"
     t.enum "source_type", default: "internal", null: false, enum_name: "friendships_source_type"
+    t.integer "invitation_prize"
   end
 
   create_table "notifications", force: :cascade do |t|
@@ -155,8 +158,8 @@ ActiveRecord::Schema.define(version: 2021_04_23_123002) do
     t.bigint "entry_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "competition_id"
     t.enum "product_type", enum_name: "product_type"
+    t.bigint "competition_id"
     t.index ["competition_id"], name: "index_purchase_transactions_on_competition_id"
     t.index ["entry_id"], name: "index_purchase_transactions_on_entry_id"
     t.index ["user_id"], name: "index_purchase_transactions_on_user_id"

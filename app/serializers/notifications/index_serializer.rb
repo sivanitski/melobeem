@@ -13,6 +13,8 @@ module Notifications
         image_path(object.entry.image)
       when 'unlock', 'purchase', 'bonus'
         ''
+      when 'invitation'
+        image_path(object.user.avatar)
       end
     end
 

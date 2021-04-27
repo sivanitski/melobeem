@@ -1,5 +1,5 @@
 class Vote < ApplicationRecord
-  enum source_type: { user: 'user', spinner: 'spinner', bonus: 'bonus' }
+  enum source_type: { user: 'user', spinner: 'spinner', bonus: 'bonus', invitation: 'invitation' }
 
   belongs_to :entry
   belongs_to :user

@@ -1,4 +1,6 @@
 class User < ApplicationRecord
+  include WithFriendships
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :omniauthable, omniauth_providers: %i[facebook]
@@ -8,18 +10,6 @@ class User < ApplicationRecord
   has_many :purchase_transactions, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :spins, dependent: :destroy
-  has_many :friendships, inverse_of: :user, dependent: :destroy
-  has_many :friends,
-           -> { select('users.*, friendships.source_type AS source_type') },
-           through: :friendships
-  has_many :internal_friends,
-           -> { where(friendships: { source_type: 'internal' }).select('users.*, friendships.source_type AS source_type') },
-           through: :friendships,
-           source: :friend
-  has_many :external_friends,
-           -> { where(friendships: { source_type: 'external' }).select('users.*, friendships.source_type AS source_type') },
-           through: :friendships,
-           source: :friend
 
   has_one_attached :avatar, dependent: :destroy
 

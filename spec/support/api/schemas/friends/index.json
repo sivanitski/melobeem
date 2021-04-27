@@ -6,12 +6,13 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "avatar_url", "source_type"],
+        "required": ["id", "name", "avatar_url", "source_type", "invitation_prize"],
         "properties": {
           "id": {"type": "integer"},
           "name": {"type": "string"},
           "avatar_url": {"type": "string"},
-          "source_type": {"type": "string"}
+          "source_type": {"type": "string"},
+          "invitation_prize": {"type":  "nullable"}
         }
       }
     },
