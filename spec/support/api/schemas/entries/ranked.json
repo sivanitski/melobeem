@@ -4,7 +4,7 @@
   "properties": {
     "entry": {
       "type": "object",
-      "required": ["id", "name", "image_url", "total_votes", "rank", "username", "level"],
+      "required": ["id", "name", "image_url", "total_votes", "rank", "username", "level", "user_id"],
       "properties": {
         "id": {"type": "integer"},
         "name": {"type": "string"},
@@ -12,7 +12,8 @@
         "total_votes": {"type": "integer"},
         "rank": {"type": "integer"},
         "username": {"type": "string"},
-        "level": {"type": "integer"}
+        "level": {"type": "integer"},
+        "user_id": {"type": "integer"}
       }
     }
   }
