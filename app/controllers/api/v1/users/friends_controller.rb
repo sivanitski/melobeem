@@ -21,10 +21,13 @@ module API
         private
 
         def friends
-          return current_user.external_friends if params[:source_type].eql?('external')
-          return current_user.internal_friends if params[:source_type].eql?('internal')
+          friends = case params[:source_type]
+                    when 'external' then current_user.external_friends
+                    when 'internal' then current_user.internal_friends
+                    else current_user.friends
+                    end.with_attached_avatar
 
-          current_user.friends
+          Friendships::WithCurrentBabyQuery.new.call(friends)
         end
       end
     end

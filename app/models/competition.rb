@@ -1,5 +1,5 @@
 class Competition < ApplicationRecord
-  enum status: { started: 'started', finished: 'finished' }, _prefix: :competition
+  enum status: { started: 'started', finished: 'finished' }
 
   has_many :entries, dependent: :destroy
   has_many :purchase_transactions, dependent: :destroy
