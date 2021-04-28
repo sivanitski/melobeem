@@ -14,7 +14,8 @@ import React, { useEffect, useState } from "react";
 import { api } from "../../api";
 import ButtonClose from "../../images/close-icon.svg";
 import HeartImage from "../../images/heart-payment.svg";
-import SpinnerImage from "../../images/spinner-purple.svg";
+import SpinnerOrange from "../../images/spinner-orange-small.svg";
+import SpinnerPurple from "../../images/spinner-purple-small.svg";
 
 const Payment = ({
   activeType,
@@ -110,17 +111,24 @@ const Payment = ({
     },
   };
 
+  const renderImage = () => {
+    if (activeType === "vote") {
+      return <HeartImage className="vote-payment__img" />;
+    }
+
+    if (activeAmount > 5) {
+      return <SpinnerOrange className="vote-payment__img" />;
+    }
+
+    return <SpinnerPurple className="vote-payment__img" />;
+  };
+
   return (
     <div className="vote-payment">
       <div className="vote-payment__close" onClick={handlePaymentClose}>
         <ButtonClose />
       </div>
-      {activeType === "vote" ? (
-        <HeartImage className="vote-payment__img" />
-      ) : (
-        <SpinnerImage className="vote-payment__img" />
-      )}
-
+      {renderImage()}
       <div className="vote-payment__product">
         {activeAmount} {activeType === "vote" ? "votes" : "spinners"}
       </div>

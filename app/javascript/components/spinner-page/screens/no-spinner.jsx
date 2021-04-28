@@ -2,7 +2,7 @@ import propTypes from "prop-types";
 import React, { useState } from "react";
 
 import { Payment } from "../../payment";
-import SpinnerList from "./spinner-list";
+import SpinnerList from "../blocks/spinner-list";
 
 const NoSpinner = ({ infoTitle, infoText }) => {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);

@@ -8,9 +8,8 @@ import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderUser } from "../header-user";
 import { Loading } from "../loading";
-import FreeSpinner from "./screens/free-spinner";
 import NoSpinner from "./screens/no-spinner";
-import PremiumSpinner from "./screens/premium-spinner";
+import Spinner from "./screens/spinner";
 
 const FREE_SPINNER_TITLE_INFO = "What is Free Spinner?";
 const FREE_SPINNER_TEXT_INFO =
@@ -40,17 +39,8 @@ const SpinnerPage = () => {
       return <Loading />;
     }
 
-    if (data.type === "premium") {
-      return <PremiumSpinner spinnerAmount={data.count} />;
-    }
-
-    if (data.type === "free") {
-      return (
-        <FreeSpinner
-          infoTotle={FREE_SPINNER_TITLE_INFO}
-          infoText={FREE_SPINNER_TEXT_INFO}
-        />
-      );
+    if (data.type) {
+      return <Spinner spinnerData={data} />;
     }
 
     return (

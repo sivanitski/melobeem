@@ -29,14 +29,21 @@
   }
 }
 
-.free-spinner__image {
+.spinner__image {
   position: relative;
 }
 
-.free-spinner__pointer {
+.spinner__pointer {
   position: absolute;
   top: -5px;
   left: calc(50% - 10px);
+  z-index: 1;
+}
+
+.spinner__button {
+  position: absolute;
+  left: calc(50% - 33px);
+  top: 131px;
 }
 
 .spinner-list {
