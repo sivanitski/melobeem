@@ -1,14 +1,11 @@
 module Entries
   class VotersByDaySerializer < BaseSerializer
-    attributes :id, :user_name, :avatar_url, :vote_amount, :source_type
+    attributes :user_name, :avatar_url, :vote_amount, :source_type, :user_id
 
     def avatar_url
-      case object.source_type
-      when 'user'
-        image_path(object.user.avatar)
-      when 'spinner', 'bonus'
-        nil
-      end
+      return nil unless object.source_type == 'user'
+
+      image_path(object.user.avatar)
     end
   end
 end

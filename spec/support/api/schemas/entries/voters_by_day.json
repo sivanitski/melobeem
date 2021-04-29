@@ -1,0 +1,20 @@
+{
+  "type": "object",
+  "required": ["votes"],
+  "properties": {
+    "votes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["user_id", "user_name", "avatar_url", "vote_amount", "source_type"],
+        "properties": {
+          "user_id": {"type": "integer"},
+          "user_name": {"type": "string"},
+          "avatar_url": {"type": "string"},
+          "vote_amount": {"type": "integer"},
+          "source_type": {"type": "string"}
+        }
+      }
+    }
+  }
+}

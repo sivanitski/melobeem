@@ -158,8 +158,8 @@ ActiveRecord::Schema.define(version: 2021_04_26_065526) do
     t.bigint "entry_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.enum "product_type", enum_name: "product_type"
     t.bigint "competition_id"
+    t.enum "product_type", enum_name: "product_type"
     t.index ["competition_id"], name: "index_purchase_transactions_on_competition_id"
     t.index ["entry_id"], name: "index_purchase_transactions_on_entry_id"
     t.index ["user_id"], name: "index_purchase_transactions_on_user_id"

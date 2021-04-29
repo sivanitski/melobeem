@@ -185,11 +185,14 @@ RSpec.describe API::V1::EntriesController do
     end
 
     context 'with votes' do
-      before { create_list :vote, 2, entry: entry, user: user, source_type: :user }
+      before do
+        create_list :vote, 2, entry: entry, user: user, source_type: :user
+        get :voters_by_day, params: { id: entry.id }, format: :json
+      end
+
+      it { expect(response).to match_response_schema('entries/voters_by_day') }
 
       it 'return grouped votes' do
-        get :voters_by_day, params: { id: entry.id }, format: :json
-
         expect(JSON.parse(response.body)['votes'].size).to eq(1)
       end
 
