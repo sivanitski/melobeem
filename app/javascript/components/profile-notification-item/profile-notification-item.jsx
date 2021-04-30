@@ -1,6 +1,7 @@
 import propTypes from "prop-types";
 import React from "react";
 
+import InviteNotification from "./notification-type/notification-invite";
 import PurchaseNotification from "./notification-type/notification-purchase";
 import UnlockNotification from "./notification-type/notification-unlock";
 import VoteNotification from "./notification-type/notification-vote";
@@ -30,6 +31,10 @@ const ProfileNotificationItem = ({ notification }) => {
           entryName={notification.entryName}
         />
       );
+    case "invitation":
+      return <InviteNotification payload={notification.payload} />;
+    default:
+      return null;
   }
 };
 
@@ -56,6 +61,13 @@ ProfileNotificationItem.propTypes = {
       propTypes.shape({
         level: propTypes.number.isRequired,
         prize: propTypes.string.isRequired,
+      }),
+      propTypes.shape({
+        prize: propTypes.number.isRequired,
+        referrer: propTypes.shape({
+          name: propTypes.string.isRequired,
+          id: propTypes.number.isRequired,
+        }),
       }),
       propTypes.shape({}),
     ]),
