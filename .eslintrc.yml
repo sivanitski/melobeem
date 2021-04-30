@@ -33,4 +33,5 @@ rules:
     "prettier/prettier": "error",
     "no-unused-vars": "error",
     "import/extensions": ["error", "never"],
+    "no-console": ["error", { allow: ["error"] }],
   }

@@ -75,7 +75,7 @@ const SignUp = () => {
       setCurrentChild(entry);
       setStep(4);
     } catch (e) {
-      console.log("error");
+      console.error("error");
     }
   };
 

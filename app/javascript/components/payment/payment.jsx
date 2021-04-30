@@ -77,7 +77,7 @@ const Payment = ({
     });
 
     if (payload.error) {
-      console.log("[error]", payload.error);
+      console.error("[error]", payload.error);
       setErrorMessage(payload.error.message);
       setProcessing(false);
     } else {

@@ -30,7 +30,7 @@ const FacebookLogin = ({
   };
 
   const handleError = (error) => {
-    console.log(error);
+    console.error(error);
   };
 
   const fbScope = "public_profile, email";
