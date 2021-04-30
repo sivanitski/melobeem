@@ -68,7 +68,7 @@ const ProfileFriends = ({ userId }) => {
         slidesPerView="auto"
       >
         {friendsFb &&
-          friendsFb.map((friend, index) => (
+          friendsFb.map((friend) => (
             <SwiperSlide key={friend.id} className=" fb-friend__slide">
               <Link className="fb-friend__item" to={`/profile/${friend.id}`}>
                 <div className="fb-friend__img">
@@ -77,9 +77,9 @@ const ProfileFriends = ({ userId }) => {
                 <span className="text-black fb-friend__name">
                   {friend.name}
                 </span>
-                <span className="text-pink">
-                  + <IconHeart className="fb-friend__heart svg-pink" />
-                  {` ${(index + 1) * 5}`}
+                <span className="text-pink fb-friend__prize">
+                  + <IconHeart className="fb-friend__heart svg-pink" />{" "}
+                  {friend.invitationPrize}
                 </span>
               </Link>
             </SwiperSlide>
@@ -95,7 +95,7 @@ const ProfileFriends = ({ userId }) => {
             >
               Invite Friends
             </ShareButton>
-            <span className="text-grey">
+            <span className="text-grey fb-friend__prize">
               + <IconHeart className="fb-friend__heart svg-grey" />
               {` ${friendsFb.length ? (friendsFb.length + 1) * 5 : 5}`}
             </span>
