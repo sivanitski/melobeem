@@ -1,12 +1,19 @@
 import "./style.less";
 
+import classNames from "classnames";
 import propTypes from "prop-types";
 import React, { useContext } from "react";
 import { Redirect } from "react-router";
 
 import ChildContext from "../../helpers/child-context";
 
-const SignUpName = ({ name, handleChange, goNext, isButtonDisabled }) => {
+const SignUpName = ({
+  name,
+  handleChange,
+  goNext,
+  isButtonDisabled,
+  isFormNotEmpty,
+}) => {
   const { currentChild } = useContext(ChildContext);
   if (currentChild) {
     return <Redirect to={`/entry/${currentChild.id}`} />;
@@ -18,6 +25,11 @@ const SignUpName = ({ name, handleChange, goNext, isButtonDisabled }) => {
     }
   };
 
+  const formButtonClasses = classNames("button form__button", {
+    "form__button--disabled": isButtonDisabled,
+    "form__button--small-margin": isFormNotEmpty,
+  });
+
   return (
     <div className="form">
       <div className="form__progress progress">
@@ -28,26 +40,23 @@ const SignUpName = ({ name, handleChange, goNext, isButtonDisabled }) => {
       <div className="headline--medium form__title">
         What is your Baby name?
       </div>
-      <div className="form__content">
-        <input
-          minLength="2"
-          name="name"
-          value={name}
-          onChange={handleChange}
-          id="name"
-          className="form__input"
-          type="text"
-        />
+      <input
+        minLength="2"
+        name="name"
+        value={name}
+        onChange={handleChange}
+        id="name"
+        className="form__input"
+        type="text"
+      />
 
-        <button
-          className={`button form__button
-            ${isButtonDisabled ? "form__button--disabled" : ""}`}
-          disabled={isButtonDisabled}
-          onClick={handleClick}
-        >
-          Next
-        </button>
-      </div>
+      <button
+        className={formButtonClasses}
+        disabled={isButtonDisabled}
+        onClick={handleClick}
+      >
+        Next
+      </button>
     </div>
   );
 };
@@ -57,6 +66,7 @@ SignUpName.propTypes = {
   handleChange: propTypes.func.isRequired,
   goNext: propTypes.func.isRequired,
   isButtonDisabled: propTypes.bool.isRequireds,
+  isFormNotEmpty: propTypes.bool.isRequired,
 };
 
 export default SignUpName;

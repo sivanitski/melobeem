@@ -13,6 +13,7 @@ const SignUp = () => {
   const [step, setStep] = useState(1);
   const [name, setName] = useState(``);
   const [isDisabled, setIsDisabled] = useState(true);
+  const [isFormNotEmpty, setIsFormNotEmpty] = useState(false);
   const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
   const { user } = useContext(UserContext);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
@@ -23,6 +24,12 @@ const SignUp = () => {
 
   const handleChangeName = (evt) => {
     const { value } = evt.target;
+    if (value.length > 0) {
+      setIsFormNotEmpty(true);
+    } else {
+      setIsFormNotEmpty(false);
+    }
+
     value.length >= 2 ? setIsDisabled(false) : setIsDisabled(true);
     setName(value);
   };
@@ -81,6 +88,7 @@ const SignUp = () => {
             handleChange={handleChangeName}
             goNext={goNext}
             isButtonDisabled={isDisabled}
+            isFormNotEmpty={isFormNotEmpty}
           />
         );
       case 2:
@@ -108,7 +116,7 @@ const SignUp = () => {
   return (
     <>
       {renderSignScreen(step)}
-      <Footer />
+      <Footer isEnterButtonSmall={true} />
     </>
   );
 };

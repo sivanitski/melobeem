@@ -1,5 +1,6 @@
 import "./style.less";
 
+import propTypes from "prop-types";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
@@ -10,7 +11,7 @@ import IconLevels from "../../images/icon-levels.svg";
 import IconProfile from "../../images/icon-profile.svg";
 import IconSpinner from "../../images/icon-spinner.svg";
 
-const Footer = () => {
+const Footer = ({ isEnterButtonSmall }) => {
   const { currentChild } = useContext(ChildContext);
 
   const renderCentralButton = (child) => {
@@ -23,7 +24,12 @@ const Footer = () => {
     }
 
     return (
-      <Link to="/sign-up" className="footer__button">
+      <Link
+        to="/sign-up"
+        className={`footer__button ${
+          isEnterButtonSmall && "footer__button--small"
+        }`}
+      >
         <IconButton />
       </Link>
     );
@@ -54,6 +60,10 @@ const Footer = () => {
       </Link>
     </div>
   );
+};
+
+Footer.propTypes = {
+  isEnterButtonSmall: propTypes.bool,
 };
 
 export default Footer;
