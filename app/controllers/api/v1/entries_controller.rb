@@ -74,7 +74,7 @@ module API
         if prize && !prize.spent
           render json: prize, serializer: ::Entries::PrizeByLevelSerializer
         else
-          render json: { message: 'No prize' }, status: :not_found
+          render json: { prize: nil }, status: :ok
         end
       end
 

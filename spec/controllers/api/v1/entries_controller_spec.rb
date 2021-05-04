@@ -233,20 +233,20 @@ RSpec.describe API::V1::EntriesController do
         get :prize_by_level, params: { id: entry.id, level: prize.level }, format: :json
       end
 
-      it { expect(response.status).to eq 404 }
+      it { expect(response.status).to eq 200 }
 
       it 'returns message that prize was not found' do
-        expect(JSON.parse(response.body)['message']).to eq 'No prize'
+        expect(JSON.parse(response.body)['prize']).to be_nil
       end
     end
 
     context 'when prize was not found' do
       before { get :prize_by_level, params: { id: entry.id, level: 1 }, format: :json }
 
-      it { expect(response.status).to eq 404 }
+      it { expect(response.status).to eq 200 }
 
       it 'returns message that prize was not found' do
-        expect(JSON.parse(response.body)['message']).to eq 'No prize'
+        expect(JSON.parse(response.body)['prize']).to be_nil
       end
     end
   end
