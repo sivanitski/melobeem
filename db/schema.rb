@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_26_065526) do
+ActiveRecord::Schema.define(version: 2021_05_03_061133) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -50,6 +50,20 @@ ActiveRecord::Schema.define(version: 2021_04_26_065526) do
     "bonus",
     "invitation",
   ], force: :cascade
+
+  create_table "active_admin_comments", force: :cascade do |t|
+    t.string "namespace"
+    t.text "body"
+    t.string "resource_type"
+    t.bigint "resource_id"
+    t.string "author_type"
+    t.bigint "author_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
+    t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
+    t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
 
   create_table "active_storage_attachments", force: :cascade do |t|
     t.string "name", null: false
@@ -158,8 +172,8 @@ ActiveRecord::Schema.define(version: 2021_04_26_065526) do
     t.bigint "entry_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "competition_id"
     t.enum "product_type", enum_name: "product_type"
+    t.bigint "competition_id"
     t.index ["competition_id"], name: "index_purchase_transactions_on_competition_id"
     t.index ["entry_id"], name: "index_purchase_transactions_on_entry_id"
     t.index ["user_id"], name: "index_purchase_transactions_on_user_id"

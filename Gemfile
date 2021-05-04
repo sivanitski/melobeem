@@ -53,6 +53,11 @@ gem 'omniauth-facebook'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
+# admin
+gem 'activeadmin'
+gem 'activeadmin-searchable_select'
+gem 'chartkick'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
