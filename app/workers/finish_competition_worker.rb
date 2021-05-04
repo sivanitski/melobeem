@@ -8,8 +8,8 @@ class FinishCompetitionWorker
     ActiveRecord::Base.transaction do
       competition = Competition.current!
 
-      Competitions::Finish.new.call(competition)
       Competitions::RewardWinners.new(competition).call
+      Competitions::Finish.new.call(competition)
       Competitions::StartNext.new.call
     end
   end

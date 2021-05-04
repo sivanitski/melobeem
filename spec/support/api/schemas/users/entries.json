@@ -6,12 +6,13 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "image_url", "level"],
+        "required": ["id", "name", "image_url", "level", "current_competition"],
         "properties": {
           "id": {"type": "integer"},
           "name": {"type": "string"},
           "image_url": {"type": "string"},
-          "level": {"type": "integer"}
+          "level": {"type": "integer"},
+          "current_competition": {"type":  "boolean"}
         }
       }
     }
