@@ -27,7 +27,10 @@ const SignUpName = ({
 
   const formButtonClasses = classNames("button form__button", {
     "form__button--disabled": isButtonDisabled,
-    "form__button--small-margin": isFormNotEmpty,
+  });
+
+  const formWrapperClasses = classNames("form__wrapper", {
+    "form__wrapper--small": isFormNotEmpty,
   });
 
   return (
@@ -49,14 +52,15 @@ const SignUpName = ({
         className="form__input"
         type="text"
       />
-
-      <button
-        className={formButtonClasses}
-        disabled={isButtonDisabled}
-        onClick={handleClick}
-      >
-        Next
-      </button>
+      <div className={formWrapperClasses}>
+        <button
+          className={formButtonClasses}
+          disabled={isButtonDisabled}
+          onClick={handleClick}
+        >
+          Next
+        </button>
+      </div>
     </div>
   );
 };
