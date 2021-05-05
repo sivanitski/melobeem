@@ -2,10 +2,11 @@ import "swiper/swiper.less";
 import "./style.less";
 
 import propTypes from "prop-types";
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
 import defaultProptypes from "../../default-proptypes";
+import ChildContext from "../../helpers/child-context";
 import { defineLevels, filterChildrenByLevel } from "../../helpers/level";
 import InfoIcon from "../../images/info-sign.svg";
 import SearchIcon from "../../images/search-icon.svg";
@@ -13,7 +14,12 @@ import { CompetitorsList } from "../competitors-list";
 import { CompetitorsSwiperMenu } from "../competitors-swiper-menu";
 
 const Competitors = ({ competitors }) => {
-  const { maxLevel, minLevel } = defineLevels(competitors);
+  let { maxLevel, minLevel } = defineLevels(competitors);
+  const { currentChild } = useContext(ChildContext);
+
+  if (currentChild?.level) {
+    minLevel = currentChild.level;
+  }
 
   const [shownCompetitors, setShownCompetitors] = useState(
     filterChildrenByLevel(competitors, minLevel, maxLevel)
