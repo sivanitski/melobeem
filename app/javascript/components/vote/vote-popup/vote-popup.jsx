@@ -7,7 +7,7 @@ import ButtonClose from "../../../images/close-icon.svg";
 import TestImage from "../../../images/header-left@2x.png";
 import { FacebookShare } from "../../facebook-share";
 
-const VotePopup = ({ handlePopupClose, childId }) => {
+const VotePopup = ({ handlePopupClose, childId, childName }) => {
   return (
     <div className="popup">
       <div className="popup__inner">
@@ -19,8 +19,8 @@ const VotePopup = ({ handlePopupClose, childId }) => {
         </div>
         <div className="popup__share headline">Share</div>
         <div className="popup__text text-grey">
-          Every Facebook post <br /> may make Diana closer to <br /> the wining
-          point
+          Sharing is the best way to get more love for your cute photo of{" "}
+          {childName}
         </div>
         <FacebookShare childId={childId} classes="popup__button">
           Share on Facebook
@@ -33,6 +33,7 @@ const VotePopup = ({ handlePopupClose, childId }) => {
 VotePopup.propTypes = {
   handlePopupClose: propTypes.func.isRequired,
   childId: propTypes.number.isRequired,
+  childName: propTypes.string.isRequired,
 };
 
 export default VotePopup;

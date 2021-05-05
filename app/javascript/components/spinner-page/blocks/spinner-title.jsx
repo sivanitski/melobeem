@@ -8,9 +8,9 @@ import InfoImage from "../../../images/info-sign.svg";
 import { InfoBlock } from "../../info-block";
 import { Timer } from "../../timer";
 
-const FREE_SPINNER_TITLE_INFO = "What is Free Spinner?";
+const FREE_SPINNER_TITLE_INFO = "What is Spinner?";
 const FREE_SPINNER_TEXT_INFO =
-  "You have one free spin every 24 hours, to win extra votes.";
+  "You get one complimentary spin every day to get some extra love from us!";
 
 const SpinnerTitle = ({ spinnerType, spinnerAmount }) => {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
@@ -26,18 +26,13 @@ const SpinnerTitle = ({ spinnerType, spinnerAmount }) => {
     }
   );
 
-  if (spinnerType === "premium") {
-    return (
-      <div className="spinner__title headline--medium">
-        {makePluralForm(`${spinnerAmount} spin`, spinnerAmount)}
-      </div>
-    );
-  }
-
   return (
     <>
       <div className="spinner__title headline--medium">
-        Vote wheel
+        {spinnerType === "premium"
+          ? `${makePluralForm(`${spinnerAmount} spin`, spinnerAmount)}`
+          : "Love Spinner"}
+
         <div className="spinner__info" onClick={() => setIsInfoOpen(true)}>
           <InfoImage />
         </div>

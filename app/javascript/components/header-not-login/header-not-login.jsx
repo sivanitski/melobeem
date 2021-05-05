@@ -35,8 +35,8 @@ const HeaderNotLogin = ({ getCurrentEntry }) => {
           <LogoText />
         </div>
         <div className="header-not-login__text text-grey">
-          Vote, share with your friends <br /> complete the tasks, <br /> there
-          is many ways to win
+          Think you have The Cutest Baby Photo? Enter Melobeem and have a chance
+          <br /> to be the next big winner
         </div>
       </div>
       <div className="header-not-login__buttons">

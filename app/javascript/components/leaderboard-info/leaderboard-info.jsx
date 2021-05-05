@@ -16,7 +16,7 @@ const PAGES = {
     LINK: "/competition-info/winners",
     IMG: IconCrown,
   },
-  PRIZES: { NAME: "Prize", LINK: "/competition-info/prizes", IMG: IconGift },
+  PRIZES: { NAME: "Prizes", LINK: "/competition-info/prizes", IMG: IconGift },
 };
 
 const LeaderboardInfo = () => {

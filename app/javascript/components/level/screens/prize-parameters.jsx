@@ -69,7 +69,7 @@ const definePrizeText = (currentPrize, currentData) => {
     )}`;
   }
 
-  return "You and your frinds can Vote every 10 min for 24 hours";
+  return "You and your friends can Vote every 10 min for 24 hours";
 };
 
 export const definePrizeParameters = (currentPrize, time) => {

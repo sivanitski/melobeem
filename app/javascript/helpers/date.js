@@ -24,7 +24,8 @@ export const getExperationTimeInHoursInMinutes = (time) => {
 export const formatTimeInHoursMinutesAndSeconds = (time) =>
   format(time, "kk:mm:ss");
 
-export const formatTimeDayAndMonth = (time) => format(new Date(time), "d MMM");
+export const formatTimeDayAndMonth = (time) =>
+  format(new Date(time), "do MMMM");
 
 export const formatMonthAndDay = (time) => format(new Date(time), "MMMM dd");
 

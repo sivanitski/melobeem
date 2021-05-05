@@ -1,10 +1,9 @@
-import propTypes from "prop-types";
 import React, { useState } from "react";
 
 import { Payment } from "../../payment";
 import SpinnerList from "../blocks/spinner-list";
 
-const NoSpinner = ({ infoTitle, infoText }) => {
+const NoSpinner = () => {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [activeOption, setActiveOption] = useState({
     price: null,
@@ -32,18 +31,7 @@ const NoSpinner = ({ infoTitle, infoText }) => {
     );
   }
 
-  return (
-    <SpinnerList
-      handlePriceClick={handlePriceClick}
-      infoTitle={infoTitle}
-      infoText={infoText}
-    />
-  );
-};
-
-NoSpinner.propTypes = {
-  infoTitle: propTypes.string.isRequired,
-  infoText: propTypes.string.isRequired,
+  return <SpinnerList handlePriceClick={handlePriceClick} />;
 };
 
 export default NoSpinner;

@@ -28,7 +28,7 @@ const Prizes = () => {
           <GoBack />
         </Link>
         <div className="prizes__wrapper">
-          <h1 className="headline--small prizes__title">Prize</h1>
+          <h1 className="headline--small prizes__title">Prizes</h1>
           <div className="prizes__main-prize text-pink">£ 3,000.56</div>
 
           <div className="prizes__top-places top-places">

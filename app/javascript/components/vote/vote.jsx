@@ -93,6 +93,7 @@ const Vote = ({
           timeFreeVote={timeFreeVote}
           handlePriceClick={handlePriceClick}
           updateData={updateData}
+          childName={child.name}
         />
       )}
     </>
