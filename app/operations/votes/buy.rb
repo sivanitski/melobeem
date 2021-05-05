@@ -8,8 +8,9 @@ module Votes
 
     private
 
-    def create_intent(entry_id:, vote_value:, user:)
-      intent = Stripe::PaymentIntent.create(amount: VOTES_TO_AMOUNT[vote_value],
+    def create_intent(entry_id:, vote_value:, user:) # rubocop:disable Metrics/AbcSize
+      customer = Stripe::Customer.create
+      intent = Stripe::PaymentIntent.create(amount: VOTES_TO_AMOUNT[vote_value], customer: customer['id'],
                                             description: "Buying #{vote_value} votes", currency: 'gbp',
                                             metadata: { user_id: user.id, entry_id: entry_id, vote_value: vote_value,
                                                         username: user.name, email: user.email,
@@ -18,7 +19,7 @@ module Votes
       raise(Stripe::CardError.new(intent.error.message, intent, http_status: 500)) if intent.try(:id).blank?
 
       create_transaction(intent)
-      { client_secret: intent.client_secret }.to_json
+      { client_secret: intent.client_secret, id: intent['id'] }.to_json
     end
 
     def create_transaction(intent)

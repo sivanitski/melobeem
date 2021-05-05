@@ -8,7 +8,8 @@ module Spins
     end
 
     def create_intent(entry:, value:, user:) # rubocop:disable Metrics/AbcSize
-      intent = Stripe::PaymentIntent.create(amount: SPINS_TO_AMOUNT[value],
+      customer = Stripe::Customer.create
+      intent = Stripe::PaymentIntent.create(amount: SPINS_TO_AMOUNT[value], customer: customer['id'],
                                             description: "Buying #{value} spins", currency: 'gbp',
                                             metadata: { user_id: user.id, entry_id: entry.id, value: value,
                                                         username: user.name, email: user.email,
@@ -17,7 +18,7 @@ module Spins
       raise(Stripe::CardError.new(intent.error.message, intent, http_status: 500)) if intent.try(:id).blank?
 
       create_transaction(intent)
-      { client_secret: intent.client_secret }.to_json
+      { client_secret: intent.client_secret, id: intent['id'] }.to_json
     end
 
     def create_transaction(intent)

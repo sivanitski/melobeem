@@ -7,8 +7,9 @@ shared_examples_for 'Buy operation' do
 
     after { StripeMock.stop }
 
-    it 'returns json with a client_secret key' do
+    it 'returns json with a client_secret key and id' do
       expect(JSON.parse(result)).to have_key('client_secret')
+      expect(JSON.parse(result)).to have_key('id')
     end
 
     it 'creates a new transaction' do
