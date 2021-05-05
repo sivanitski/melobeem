@@ -60,6 +60,7 @@ Rails.application.routes.draw do
         collection do
           resources :entries, only: %i[edit update destroy], module: :users
           get :current
+          get :show_share_modal
         end
       end
 

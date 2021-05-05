@@ -56,4 +56,31 @@ RSpec.describe API::V1::UsersController do
       expect(response.body).not_to include(entry.name)
     end
   end
+
+  describe 'GET #show_share_modal' do
+    before { sign_in user }
+
+    context 'when user does not have any votes for today' do
+      before { get :show_share_modal, params: { id: user.id }, format: :json }
+
+      it 'returns true' do
+        expect(JSON.parse(response.body)).to eq true
+      end
+
+      it { expect(response.status).to eq 200 }
+    end
+
+    context 'when user has votes for today' do
+      before do
+        create :vote, user: user
+        get :show_share_modal, params: { id: user.id }, format: :json
+      end
+
+      it 'returns false' do
+        expect(JSON.parse(response.body)).to eq false
+      end
+
+      it { expect(response.status).to eq 200 }
+    end
+  end
 end

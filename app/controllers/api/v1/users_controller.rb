@@ -24,6 +24,10 @@ module API
         render json: user.entries.where.not(competition: Competition.current!), each_serializer: ::Users::EntriesSerializer
       end
 
+      def show_share_modal
+        render json: user.votes.where(created_at: Date.current.all_day).empty?, adapter: nil, status: :ok
+      end
+
       private
 
       def user
