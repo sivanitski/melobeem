@@ -285,4 +285,18 @@ RSpec.describe API::V1::EntriesController do
       end
     end
   end
+
+  describe 'GET #max_level_entry' do
+    before do
+      create :entry, level: 2, competition: competition
+      create :entry, level: 10, competition: competition
+      get :max_level_entry, format: :json
+    end
+
+    it { expect(response.status).to eq 200 }
+
+    it 'returns max entry level' do
+      expect(JSON.parse(response.body)).to eq 10
+    end
+  end
 end

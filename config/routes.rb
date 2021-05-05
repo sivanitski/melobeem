@@ -27,8 +27,9 @@ Rails.application.routes.draw do
 
       resources :entries, only: %i[index create show] do
         collection do
-          get 'current'
-          get 'search'
+          get :current
+          get :search
+          get :max_level_entry
         end
 
         member do

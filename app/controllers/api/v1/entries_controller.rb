@@ -1,7 +1,7 @@
 module API
   module V1
     class EntriesController < API::V1::ApplicationController
-      NO_LOGIN_ACTIONS = %i[index show latest_voters total_votes_by_date search voters_by_day ranking_details].freeze
+      NO_LOGIN_ACTIONS = %i[index show latest_voters total_votes_by_date search voters_by_day ranking_details max_level_entry].freeze
 
       skip_before_action :authenticate_user!, only: NO_LOGIN_ACTIONS
 
@@ -87,6 +87,10 @@ module API
       def prize_time
         prize_time = PrizeTime.not_expired.where(entry: entry)
         render json: { message: (prize_time.take.created_at + 24.hours).to_i }, adapter: nil, status: :ok if prize_time.any?
+      end
+
+      def max_level_entry
+        render json: competition.entries.maximum('level'), adapter: nil, status: :ok
       end
 
       private
