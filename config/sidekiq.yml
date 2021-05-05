@@ -1,4 +1,3 @@
-:schedule:
-  finish_competition:
-    cron: '0 0 1 * *' # Monthly at 00:00 on day-of-month 1
-    class: FinishCompetitionWorker
+finish_competition:
+  cron: '0 0 1 * *'  # Monthly at 00:00 on day-of-month 1
+  class: FinishCompetitionWorker
