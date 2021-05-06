@@ -3,6 +3,7 @@ class Vote < ApplicationRecord
 
   belongs_to :entry
   belongs_to :user
+  belongs_to :invited_user, class_name: 'User', optional: true
 
   validates :value, presence: true
   validates :source_type, inclusion: { in: source_types.keys }

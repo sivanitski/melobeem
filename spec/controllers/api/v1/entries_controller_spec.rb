@@ -193,7 +193,7 @@ RSpec.describe API::V1::EntriesController do
       it { expect(response).to match_response_schema('entries/voters_by_day') }
 
       it 'return grouped votes' do
-        expect(JSON.parse(response.body)['votes'].size).to eq(1)
+        expect(JSON.parse(response.body)['votes'].size).to eq(2)
       end
 
       context 'when page params present' do

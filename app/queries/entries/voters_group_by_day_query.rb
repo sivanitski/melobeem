@@ -10,14 +10,16 @@ module Entries
     end
 
     def call
-      Vote.left_joins(:user)
-          .select('votes.source_type, votes.user_id, users.name as user_name, sum(votes.value) AS vote_amount')
+      Vote.left_joins(:user, :invited_user)
+          .select('votes.source_type, votes.user_id, votes.invited_user_id, users.name as user_name,
+                   invited_users_votes.name as invited_user_name, sum(votes.value) AS vote_amount, votes.created_at::date as vote_date')
           .where(votes: { entry_id: entry.id })
           .where('votes.created_at::date = ?::date', date)
-          .group('votes.source_type, votes.user_id, users.id')
-          .order('max(votes.created_at) DESC')
+          .group('votes.source_type, votes.user_id, users.id, votes.invited_user_id, invited_users_votes.name, votes.created_at')
+          .order('vote_date DESC')
           .page(page)
-          .per(per).preload(user: { avatar_attachment: :blob })
+          .per(per)
+          .preload(user: { avatar_attachment: :blob }, invited_user: { avatar_attachment: :blob })
     end
 
     private

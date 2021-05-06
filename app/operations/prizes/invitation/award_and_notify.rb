@@ -33,7 +33,8 @@ module Prizes
             value: prize,
             entry_id: current_entry.id,
             user: user,
-            source_type: :invitation
+            source_type: :invitation,
+            invited_user_id: referrer.id
           )
           vote.apply!
         end

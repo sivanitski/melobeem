@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_03_061133) do
+ActiveRecord::Schema.define(version: 2021_05_05_060334) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -221,8 +221,10 @@ ActiveRecord::Schema.define(version: 2021_05_03_061133) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.enum "source_type", default: "user", null: false, enum_name: "vote_source_type"
+    t.bigint "invited_user_id"
     t.index "entry_id, ((created_at)::date)", name: "votes_entry_id_created_at_idx"
     t.index ["entry_id"], name: "index_votes_on_entry_id"
+    t.index ["invited_user_id"], name: "index_votes_on_invited_user_id"
     t.index ["user_id"], name: "index_votes_on_user_id"
   end
 

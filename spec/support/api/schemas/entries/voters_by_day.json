@@ -6,13 +6,17 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["user_id", "user_name", "avatar_url", "vote_amount", "source_type"],
+        "required": ["user_id", "user_name", "avatar_url", "vote_amount", "source_type", "invited_user_id", "invited_user_name", "invited_user_avatar_url", "vote_date"],
         "properties": {
           "user_id": {"type": "integer"},
           "user_name": {"type": "string"},
           "avatar_url": {"type": "string"},
           "vote_amount": {"type": "integer"},
-          "source_type": {"type": "string"}
+          "vote_date": {"type": "string"},
+          "source_type": {"type": "string"},
+          "invited_user_id": {"type": "nullable"},
+          "invited_user_name": {"type": "nullable"},
+          "invited_user_avatar_url": {"type": "nullable"}
         }
       }
     }
