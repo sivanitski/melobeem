@@ -49,8 +49,19 @@ const App = () => {
     }
   }, [userData, currentChildData]);
 
+  const updateCurrentChildVotes = (votes) => {
+    setCurrentChild({
+      ...currentChild,
+      totalVotes: currentChild.totalVotes + votes,
+    });
+  };
+
   const valueUser = { user, setUser };
-  const valueCurrentChild = { currentChild, setCurrentChild };
+  const valueCurrentChild = {
+    currentChild,
+    setCurrentChild,
+    updateCurrentChildVotes,
+  };
 
   if (userLoading || childLoading) {
     return <Loading />;

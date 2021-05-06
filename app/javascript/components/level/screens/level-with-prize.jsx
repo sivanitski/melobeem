@@ -9,7 +9,7 @@ import { defineColorClass, definePrizeParameters } from "./prize-parameters";
 
 const LevelWithPrize = ({ prize }) => {
   const [prizeTime, setPrizeTime] = useState(null);
-  const { currentChild } = useContext(ChildContext);
+  const { currentChild, updateCurrentChildVotes } = useContext(ChildContext);
   const history = useHistory();
 
   useEffect(() => {
@@ -32,6 +32,10 @@ const LevelWithPrize = ({ prize }) => {
     await api.put(`/entries/${currentChild.id}/take_prize`, {
       level: prize.level,
     });
+
+    if (prize.sourceType === "vote") {
+      updateCurrentChildVotes(prize.value);
+    }
 
     if (prize.sourceType === "spin") {
       history.push("/spinner");

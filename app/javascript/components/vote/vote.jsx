@@ -6,6 +6,7 @@ import React, { useContext, useState } from "react";
 import { Redirect, withRouter } from "react-router";
 
 import { api } from "../../api";
+import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
@@ -19,6 +20,7 @@ const Vote = ({
   },
 }) => {
   const { user } = useContext(UserContext);
+  const { currentChild, updateCurrentChildVotes } = useContext(ChildContext);
 
   if (!user) {
     return <Redirect to={`/entry/${id}`} />;
@@ -36,12 +38,9 @@ const Vote = ({
   const getFreeVoteTimer = () => {
     return api.get(`/entries/${id}/votes/expiration_time_for_free`);
   };
-  const { data: child, error, loading, run: requestChild } = useRequest(
-    getCurrentCompetitor,
-    {
-      formatResult: (res) => res.data.entry,
-    }
-  );
+  const { data: child, error, loading } = useRequest(getCurrentCompetitor, {
+    formatResult: (res) => res.data.entry,
+  });
   const {
     data: timeFreeVote,
     error: timeError,
@@ -65,13 +64,25 @@ const Vote = ({
 
   const handlePaymentClose = () => {
     setIsPaymentOpen(false);
-    child.totalVotes += Number(activeOption.amount);
     setActiveOption(null);
+  };
+
+  const handlePaymentSucceedClose = () => {
+    child.totalVotes += Number(activeOption.amount);
+    if (currentChild?.id === id) {
+      updateCurrentChildVotes(Number(activeAmount));
+    }
+
+    handlePaymentClose();
   };
 
   const updateData = () => {
     requestTimeFreeVote();
-    requestChild();
+
+    child.totalVotes += 1;
+    if (currentChild?.id === id) {
+      updateCurrentChildVotes(1);
+    }
   };
 
   return (
@@ -83,6 +94,7 @@ const Vote = ({
           activeType="vote"
           activePrice={activeOption.price}
           activeAmount={activeOption.amount}
+          handlePaymentSucceedClose={handlePaymentSucceedClose}
           handlePaymentClose={handlePaymentClose}
           childId={child.id}
           userId={user.id}

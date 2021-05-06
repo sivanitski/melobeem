@@ -21,6 +21,7 @@ const Payment = ({
   activeType,
   activePrice,
   activeAmount,
+  handlePaymentSucceedClose,
   handlePaymentClose,
   childId,
   userId,
@@ -84,7 +85,12 @@ const Payment = ({
       setErrorMessage(null);
       setProcessing(false);
       setSucceeded(true);
-      handlePaymentClose();
+
+      if (activeType === "vote") {
+        handlePaymentSucceedClose();
+      } else {
+        handlePaymentClose();
+      }
     }
   };
 
@@ -199,6 +205,7 @@ Payment.propTypes = {
   activePrice: propTypes.string.isRequired,
   activeAmount: propTypes.string.isRequired,
   handlePaymentClose: propTypes.func.isRequired,
+  handlePaymentSucceedClose: propTypes.func,
   childId: propTypes.number,
   userId: propTypes.number,
 };

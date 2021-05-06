@@ -41,6 +41,7 @@ const LevelSwiperMenu = ({ activeLevel, handleSlideCLick, maxLevel }) => {
       className="competitors-swiper swiper"
       spaceBetween={1}
       slidesPerView="auto"
+      initialSlide={activeLevel - 1}
     >
       {renderSlides()}
     </Swiper>
