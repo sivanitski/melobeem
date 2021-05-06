@@ -7,7 +7,13 @@ import { Swiper, SwiperSlide } from "swiper/react";
 
 import LockerImage from "../../images/locker.svg";
 
-const LevelSwiperMenu = ({ activeLevel, handleSlideCLick, maxLevel }) => {
+const LevelSwiperMenu = ({
+  activeLevel,
+  handleSlideCLick,
+  maxLevel,
+  lockerAmount,
+  initialSlide,
+}) => {
   const renderSlides = () => {
     let slides = [];
 
@@ -27,11 +33,16 @@ const LevelSwiperMenu = ({ activeLevel, handleSlideCLick, maxLevel }) => {
       );
     }
 
-    slides.push(
-      <SwiperSlide className="competitors-swiper__item headline" key="locker">
-        <LockerImage />
-      </SwiperSlide>
-    );
+    for (let i = 0; i < lockerAmount; i++) {
+      slides.push(
+        <SwiperSlide
+          className="competitors-swiper__item headline"
+          key={`locker-${i}`}
+        >
+          <LockerImage />
+        </SwiperSlide>
+      );
+    }
 
     return <>{slides}</>;
   };
@@ -41,7 +52,7 @@ const LevelSwiperMenu = ({ activeLevel, handleSlideCLick, maxLevel }) => {
       className="competitors-swiper swiper"
       spaceBetween={1}
       slidesPerView="auto"
-      initialSlide={activeLevel - 1}
+      initialSlide={initialSlide}
     >
       {renderSlides()}
     </Swiper>
@@ -52,6 +63,8 @@ LevelSwiperMenu.propTypes = {
   handleSlideCLick: propTypes.func.isRequired,
   activeLevel: propTypes.number.isRequired,
   maxLevel: propTypes.number.isRequired,
+  lockerAmount: propTypes.number.isRequired,
+  initialSlide: propTypes.number.isRequired,
 };
 
 export default LevelSwiperMenu;

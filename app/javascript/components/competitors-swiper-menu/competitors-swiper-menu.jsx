@@ -28,6 +28,8 @@ const CompetitorsSwiperMenu = ({ onSliderClick, maxLevel, minLevel }) => {
         maxLevel={maxLevel}
         activeLevel={activeLevel}
         handleSlideCLick={handleSlideCLick}
+        lockerAmount={1}
+        initialSlide={activeLevel > 1 ? activeLevel - 1 : 1}
       />
     </>
   );

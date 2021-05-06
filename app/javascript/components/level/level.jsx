@@ -1,13 +1,16 @@
 import "./style.less";
 
+import { useRequest } from "ahooks";
 import React, { useContext, useState } from "react";
 import { Redirect } from "react-router";
 
+import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import InfoImage from "../../images/info-sign.svg";
 import { Footer } from "../footer";
 import { InfoBlock } from "../info-block";
 import { LevelSwiperMenu } from "../level-swiper-menu";
+import { Loading } from "../loading";
 import LevelContent from "./screens/level-content";
 
 const LEVEL_TITLE_INFO = "What are Levels?";
@@ -21,6 +24,14 @@ const Level = () => {
     return <Redirect to="/" />;
   }
 
+  const getMaxLevel = () => {
+    return api.get("/entries/max_level_entry");
+  };
+
+  const { data: maxLevel, loading } = useRequest(getMaxLevel, {
+    formatResult: (res) => res.data,
+  });
+
   const [activeLevel, setActiveLevel] = useState(currentChild.level);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
 
@@ -29,6 +40,10 @@ const Level = () => {
     setActiveLevel(index);
   };
 
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <>
       <div className="level">
@@ -36,6 +51,8 @@ const Level = () => {
           handleSlideCLick={handleSlideCLick}
           maxLevel={currentChild.level}
           activeLevel={activeLevel}
+          lockerAmount={maxLevel - currentChild.level}
+          initialSlide={activeLevel > 4 ? activeLevel - 4 : activeLevel}
         />
         <div className="level__wrapper">
           <div className="level__title headline--medium">
