@@ -39,9 +39,9 @@ module API
       end
 
       def total_votes_by_date
-        total_votes = ::Entries::TotalVotesByDateQuery.new(entry: entry, date: params[:date]).call
+        votes = ::Entries::TotalVotesByDateQuery.new(entry: entry, per: params[:per], page: params[:page]).call
 
-        render json: { total_votes: total_votes, date: params[:date] }
+        render json: votes, each_serializer: ::Entries::TotalVotesByDateSerializer
       end
 
       def current

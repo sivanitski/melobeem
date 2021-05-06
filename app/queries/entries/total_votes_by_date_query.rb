@@ -1,14 +1,20 @@
 module Entries
   class TotalVotesByDateQuery
-    attr_accessor :entry, :date
+    attr_accessor :entry, :per, :page
 
-    def initialize(entry:, date:)
+    def initialize(entry:, per:, page:)
       @entry = entry
-      @date = Time.zone.parse(date.presence || Time.current.to_s)
+      @per = per
+      @page = page
     end
 
     def call
-      entry.votes.where('votes.created_at::date = ?::date', date).sum(:value)
+      entry.votes
+           .select('created_at::date as vote_date, sum(value) as total_count')
+           .group('created_at::date')
+           .order('created_at::date DESC')
+           .page(page)
+           .per(per)
     end
   end
 end
