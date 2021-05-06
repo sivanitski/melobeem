@@ -87,7 +87,7 @@ const ProfileSetting = () => {
           ))}
         </ul>
       </div>
-      <Footer />
+      <Footer active="profile" />
     </>
   );
 };

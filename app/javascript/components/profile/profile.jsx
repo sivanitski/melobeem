@@ -64,7 +64,7 @@ const Profile = ({
           </>
         )}
       </div>
-      <Footer />
+      <Footer active="profile" />
     </>
   );
 };

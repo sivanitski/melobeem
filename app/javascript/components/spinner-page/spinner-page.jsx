@@ -48,7 +48,7 @@ const SpinnerPage = () => {
 
       {renderSpinnerScreen()}
 
-      <Footer />
+      <Footer active="spinner" />
     </>
   );
 };

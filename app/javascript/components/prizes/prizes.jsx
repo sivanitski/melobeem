@@ -71,7 +71,7 @@ const Prizes = () => {
         </div>
       </div>
 
-      <Footer />
+      <Footer active="levels" />
     </>
   );
 };

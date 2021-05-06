@@ -62,7 +62,7 @@ const ProfileNotification = () => {
           ))}
         </div>
       </div>
-      <Footer />
+      <Footer active="profile" />
     </>
   );
 };

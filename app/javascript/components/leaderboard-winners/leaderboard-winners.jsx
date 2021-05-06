@@ -38,7 +38,7 @@ const LeaderboardWinners = () => {
         />
       </div>
 
-      <Footer />
+      <Footer active="leaderboard" />
     </>
   );
 };

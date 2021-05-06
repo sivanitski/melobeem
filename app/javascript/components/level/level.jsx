@@ -56,7 +56,7 @@ const Level = () => {
           <LevelContent activeLevel={activeLevel} />
         </div>
       </div>
-      <Footer />
+      <Footer active="levels" />
     </>
   );
 };

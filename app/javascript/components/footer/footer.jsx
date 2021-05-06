@@ -11,7 +11,7 @@ import IconLevels from "../../images/icon-levels.svg";
 import IconProfile from "../../images/icon-profile.svg";
 import IconSpinner from "../../images/icon-spinner.svg";
 
-const Footer = ({ isEnterButtonSmall }) => {
+const Footer = ({ isEnterButtonSmall, active }) => {
   const { currentChild } = useContext(ChildContext);
 
   const renderCentralButton = (child) => {
@@ -38,24 +38,32 @@ const Footer = ({ isEnterButtonSmall }) => {
   return (
     <div className="footer">
       <Link to="/" className="footer__item">
-        <IconLeaderboard />
+        <IconLeaderboard
+          className={`svg-beige ${active === "leaderboard" && "svg-pink"}`}
+        />
         <div className="footer__item__title">Leaderboard</div>
       </Link>
 
       <Link to="/spinner" className="footer__item">
-        <IconSpinner />
+        <IconSpinner
+          className={`svg-beige ${active === "spinner" && "svg-pink"}`}
+        />
         <div className="footer__item__title">Spinner</div>
       </Link>
 
       {renderCentralButton(currentChild)}
 
       <Link to="/level" className="footer__item">
-        <IconLevels />
+        <IconLevels
+          className={`svg-beige ${active === "levels" && "svg-pink"}`}
+        />
         <div className="footer__item__title">Levels</div>
       </Link>
 
       <Link to="/profile" className="footer__item">
-        <IconProfile />
+        <IconProfile
+          className={`svg-beige ${active === "profile" && "svg-pink"}`}
+        />
         <div className="footer__item__title">Profile</div>
       </Link>
     </div>
@@ -64,6 +72,7 @@ const Footer = ({ isEnterButtonSmall }) => {
 
 Footer.propTypes = {
   isEnterButtonSmall: propTypes.bool,
+  active: propTypes.string,
 };
 
 export default Footer;

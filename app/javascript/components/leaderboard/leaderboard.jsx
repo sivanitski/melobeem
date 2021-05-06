@@ -84,7 +84,7 @@ const Leaderboard = () => {
         prize={competitionData.prizeCents}
       />
       <Competitors competitors={childrenData} />
-      <Footer />
+      <Footer active="leaderboard" />
     </>
   );
 };
