@@ -9,8 +9,8 @@ module Votes
     private
 
     def create_intent(entry_id:, vote_value:, user:) # rubocop:disable Metrics/AbcSize
-      customer = Stripe::Customer.create
-      intent = Stripe::PaymentIntent.create(amount: VOTES_TO_AMOUNT[vote_value], customer: customer['id'],
+      customer_id = retrieve_customer_id(user)
+      intent = Stripe::PaymentIntent.create(amount: VOTES_TO_AMOUNT[vote_value], customer: customer_id,
                                             description: "Buying #{vote_value} votes", currency: 'gbp',
                                             metadata: { user_id: user.id, entry_id: entry_id, vote_value: vote_value,
                                                         username: user.name, email: user.email,
@@ -27,6 +27,18 @@ module Votes
                                   status: :process, full_info: intent.to_json, value: intent.metadata[:vote_value].to_i,
                                   user_id: intent.metadata[:user_id].to_i, entry_id: intent.metadata[:entry_id].to_i,
                                   product_type: :vote, competition: Competition.current!)
+    end
+
+    def create_customer(user)
+      Stripe::Customer.create({ email: user.email, description: user.id })
+    end
+
+    def retrieve_customer_id(user)
+      return user.stripe_customer_id if user.stripe_customer_id.present?
+
+      customer = create_customer(user)
+      user.update!(stripe_customer_id: customer.id)
+      user.stripe_customer_id
     end
   end
 end

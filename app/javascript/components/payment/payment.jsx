@@ -35,6 +35,7 @@ const Payment = ({
   const [value, { onChange: onChangePostal }] = useEventTarget({
     initialValue: "",
   });
+  const [isSavingCard, setIsSavingCard] = useState(false);
 
   useEffect(() => {
     async function makeChargeIntent() {
@@ -50,11 +51,16 @@ const Payment = ({
           value: activeAmount,
         });
       }
+
       setClientSecret(res.data.clientSecret);
     }
 
     makeChargeIntent();
   }, []);
+
+  const handleSaveCard = () => {
+    setIsSavingCard(!isSavingCard);
+  };
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -75,6 +81,8 @@ const Payment = ({
           },
         },
       },
+      save_payment_method: isSavingCard,
+      setup_future_usage: isSavingCard ? "on_session" : "",
     });
 
     if (payload.error) {
@@ -185,6 +193,12 @@ const Payment = ({
             />
           </div>
         </div>
+
+        <label className="vote-payment__save-card">
+          <input type="checkbox" id="save-card" onChange={handleSaveCard} />
+          <span className="vote-payment__save-text"></span> Save card for future
+          payments
+        </label>
 
         {errorMessage && <div className="error">{errorMessage}</div>}
         {succeeded && <div>Operation succeeded</div>}

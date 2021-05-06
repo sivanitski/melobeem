@@ -8,8 +8,8 @@ module Spins
     end
 
     def create_intent(entry:, value:, user:) # rubocop:disable Metrics/AbcSize
-      customer = Stripe::Customer.create
-      intent = Stripe::PaymentIntent.create(amount: SPINS_TO_AMOUNT[value], customer: customer['id'],
+      customer_id = retrieve_customer_id(user)
+      intent = Stripe::PaymentIntent.create(amount: SPINS_TO_AMOUNT[value], customer: customer_id,
                                             description: "Buying #{value} spins", currency: 'gbp',
                                             metadata: { user_id: user.id, entry_id: entry.id, value: value,
                                                         username: user.name, email: user.email,
@@ -26,6 +26,18 @@ module Spins
                                   status: :process, full_info: intent.to_json, value: intent.metadata[:value].to_i,
                                   user_id: intent.metadata[:user_id].to_i, entry_id: intent.metadata[:entry_id].to_i,
                                   product_type: :spin, competition: Competition.current!)
+    end
+
+    def create_customer(user)
+      Stripe::Customer.create({ email: user.email, description: user.id })
+    end
+
+    def retrieve_customer_id(user)
+      return user.stripe_customer_id if user.stripe_customer_id.present?
+
+      customer = create_customer(user)
+      user.update!(stripe_customer_id: customer.id)
+      user.stripe_customer_id
     end
   end
 end
