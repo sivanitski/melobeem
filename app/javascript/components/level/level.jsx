@@ -52,7 +52,7 @@ const Level = () => {
           maxLevel={currentChild.level}
           activeLevel={activeLevel}
           lockerAmount={maxLevel - currentChild.level + 1}
-          initialSlide={activeLevel > 4 ? activeLevel - 4 : activeLevel}
+          initialSlide={activeLevel - 4}
         />
         <div className="level__wrapper">
           <div className="level__title headline--medium">
