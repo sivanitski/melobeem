@@ -55,18 +55,6 @@ RSpec.describe Entry, type: :model do
       expect(all_keys - (1..124).to_a).to eq []
     end
 
-    context 'when checks that creates level prize and sends notification about complete level' do
-      before { entry.update!(total_votes: 2) }
-
-      it 'changes prizes count' do
-        expect { entry.update_level! }.to change(Prize, :count).from(0).to(1)
-      end
-
-      it 'changes notifications count' do
-        expect { entry.update_level! }.to change(Notification, :count).from(0).to(1)
-      end
-    end
-
     context 'when checks that does not create level prize and does not send notification if entry level does not change' do
       before do
         entry.update!(total_votes: 2)
