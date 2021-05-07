@@ -3,8 +3,9 @@ import React from "react";
 
 import { getAnimationLevel, getVoteValueFromLevel } from "../../helpers/level";
 import { HeartAnimationSmall } from "../heart-animation";
+import HeartLevel from "../heart-animation/heart-level";
 
-const HeaderUserLevel = ({ level, totalVotes }) => {
+const HeaderUserLevel = ({ level, totalVotes, isAnimation }) => {
   const animationLevel = getAnimationLevel(totalVotes, level);
 
   return (
@@ -12,7 +13,11 @@ const HeaderUserLevel = ({ level, totalVotes }) => {
       <div className="header-user__text text-grey text-tiny">
         Level {level} ({totalVotes}/{getVoteValueFromLevel(level + 1)})
       </div>
-      <HeartAnimationSmall animationLevel={animationLevel} />
+      {isAnimation ? (
+        <HeartAnimationSmall animationLevel={animationLevel} />
+      ) : (
+        <HeartLevel animationLevel={animationLevel} />
+      )}
     </div>
   );
 };
@@ -20,6 +25,7 @@ const HeaderUserLevel = ({ level, totalVotes }) => {
 HeaderUserLevel.propTypes = {
   level: propTypes.number.isRequired,
   totalVotes: propTypes.number.isRequired,
+  isAnimation: propTypes.bool,
 };
 
 export default HeaderUserLevel;

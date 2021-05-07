@@ -87,7 +87,9 @@ const Payment = ({
       setSucceeded(true);
 
       if (activeType === "vote") {
-        handlePaymentSucceedClose();
+        setErrorMessage("Please, wait till this window closes");
+        // We dont have websockets now to get the call from back
+        setTimeout(handlePaymentSucceedClose, 5000);
       } else {
         handlePaymentClose();
       }

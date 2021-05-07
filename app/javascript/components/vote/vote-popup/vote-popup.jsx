@@ -4,10 +4,9 @@ import propTypes from "prop-types";
 import React from "react";
 
 import ButtonClose from "../../../images/close-icon.svg";
-import TestImage from "../../../images/header-left@2x.png";
 import { FacebookShare } from "../../facebook-share";
 
-const VotePopup = ({ handlePopupClose, childId, childName }) => {
+const VotePopup = ({ handlePopupClose, childId, childName, childImage }) => {
   return (
     <div className="popup">
       <div className="popup__inner">
@@ -15,7 +14,7 @@ const VotePopup = ({ handlePopupClose, childId, childName }) => {
           <ButtonClose />
         </div>
         <div className="popup__avatar">
-          <img src={TestImage} />
+          <img src={childImage} />
         </div>
         <div className="popup__share headline">Share</div>
         <div className="popup__text text-grey">
@@ -34,6 +33,7 @@ VotePopup.propTypes = {
   handlePopupClose: propTypes.func.isRequired,
   childId: propTypes.number.isRequired,
   childName: propTypes.string.isRequired,
+  childImage: propTypes.string.isRequired,
 };
 
 export default VotePopup;

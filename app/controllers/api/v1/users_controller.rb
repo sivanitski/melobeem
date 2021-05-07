@@ -25,7 +25,7 @@ module API
       end
 
       def show_share_modal
-        render json: user.votes.where(created_at: Date.current.all_day).empty?, adapter: nil, status: :ok
+        render json: current_user.votes.where(created_at: Date.current.all_day).empty?, adapter: nil, status: :ok
       end
 
       private

@@ -1,10 +1,9 @@
 import "./style.less";
 
 import propTypes from "prop-types";
-import React, { useContext, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 import { api } from "../../../api";
-import ChildContext from "../../../helpers/child-context";
 import {
   calcSecondAnimationParameters,
   FIRST_ANIMATION_TIME,
@@ -16,8 +15,7 @@ import SpinnerPointer from "../../../images/stopper.svg";
 import SpinnerImageColor from "../blocks/spinner-image";
 import SpinnerTitle from "../blocks/spinner-title";
 
-const Spinner = ({ spinnerData }) => {
-  const { updateCurrentChildVotes } = useContext(ChildContext);
+const Spinner = ({ spinnerData, updateCurrentChild }) => {
   const spinnerElement = useRef(null);
   const [isAnimationPlay, setIsAnimationPlay] = useState(false);
   const [spinnerAnimation, setSpinnerAnimation] = useState(null);
@@ -68,10 +66,7 @@ const Spinner = ({ spinnerData }) => {
 
     setSpinnerAnimation(null);
 
-    setTimeout(
-      () => updateCurrentChildVotes(res.data.value),
-      animationParams.secondAnimationTime
-    );
+    setTimeout(updateCurrentChild, animationParams.secondAnimationTime);
   };
 
   return (
@@ -104,6 +99,7 @@ Spinner.propTypes = {
     type: propTypes.string.isRequired,
     count: propTypes.number,
   }),
+  updateCurrentChild: propTypes.func.isRequired,
 };
 
 export default Spinner;

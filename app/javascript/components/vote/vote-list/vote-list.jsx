@@ -1,14 +1,13 @@
 import "./style.less";
 
 import propTypes from "prop-types";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { withRouter } from "react-router";
 
 import { api } from "../../../api";
 import UserContext from "../../../helpers/user-context";
 import HeartVote from "../../../images/heart-vote.svg";
 import { Timer } from "../../timer";
-import { VotePopup } from "../vote-popup";
 
 // These options will be taken from the backend later
 const voteOptions = [
@@ -17,44 +16,20 @@ const voteOptions = [
   { price: "50", amount: "50" },
 ];
 
-const VoteList = ({
-  childId,
-  timeFreeVote,
-  handlePriceClick,
-  updateData,
-  childName,
-}) => {
-  const [isPopupShown, setIsPopupShown] = useState(false);
-  const [activeOption, setActiveOption] = useState(null);
+const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
   const { user } = useContext(UserContext);
 
-  const handlePopupOpen = () => {
-    setIsPopupShown(true);
-  };
-
-  const handlePopupClose = () => {
-    setIsPopupShown(false);
-
-    if (activeOption) {
-      handlePriceClick(activeOption);
-      setActiveOption(null);
-    } else {
-      updateData();
-    }
-  };
-
   const handleFreeVoteClick = async () => {
-    handlePopupOpen();
     await api.post(`/entries/${childId}/votes/create_free`, {
       entryId: childId,
       value: 1,
       userId: user.id,
     });
+    updateData();
   };
 
   const handlePaidClick = (clickedVoteOption) => {
-    handlePopupOpen();
-    setActiveOption(clickedVoteOption);
+    handlePriceClick(clickedVoteOption);
   };
 
   return (
@@ -86,14 +61,6 @@ const VoteList = ({
           </div>
         </div>
       ))}
-
-      {isPopupShown && (
-        <VotePopup
-          handlePopupClose={handlePopupClose}
-          childId={childId}
-          childName={childName}
-        />
-      )}
     </div>
   );
 };
@@ -103,7 +70,6 @@ VoteList.propTypes = {
   childId: propTypes.number.isRequired,
   handlePriceClick: propTypes.func.isRequired,
   updateData: propTypes.func.isRequired,
-  childName: propTypes.string.isRequired,
 };
 
 export default withRouter(VoteList);

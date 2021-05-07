@@ -13,14 +13,17 @@ import { HeaderUserWithChild } from "../header-user-with-child";
 import { Loading } from "../loading";
 import { Payment } from "../payment";
 import { VoteList } from "./vote-list";
+import { VotePopup } from "./vote-popup";
 
 const Vote = ({
   match: {
     params: { id },
   },
 }) => {
+  const [isPopupShown, setIsPopupShown] = useState(false);
+  const [isAnimation, setIsAnimation] = useState(false);
   const { user } = useContext(UserContext);
-  const { currentChild, updateCurrentChildVotes } = useContext(ChildContext);
+  const { currentChild, setCurrentChild } = useContext(ChildContext);
 
   if (!user) {
     return <Redirect to={`/entry/${id}`} />;
@@ -38,9 +41,18 @@ const Vote = ({
   const getFreeVoteTimer = () => {
     return api.get(`/entries/${id}/votes/expiration_time_for_free`);
   };
-  const { data: child, error, loading } = useRequest(getCurrentCompetitor, {
-    formatResult: (res) => res.data.entry,
-  });
+
+  const getIsShowPopup = () => {
+    return api.get("/users/show_share_modal");
+  };
+
+  const { data: child, error, loading, run: requestChild } = useRequest(
+    getCurrentCompetitor,
+    {
+      formatResult: (res) => res.data.entry,
+    }
+  );
+
   const {
     data: timeFreeVote,
     error: timeError,
@@ -50,10 +62,17 @@ const Vote = ({
     formatResult: (res) => res.data.ttlInSeconds,
   });
 
+  const { data: isPopup, loading: isPopupLoading } = useRequest(
+    getIsShowPopup,
+    {
+      formatResult: (res) => res.data,
+    }
+  );
+
   if (error || timeError) {
     return <Error />;
   }
-  if (loading || timeLoading) {
+  if (loading || timeLoading || isPopupLoading) {
     return <Loading />;
   }
 
@@ -67,27 +86,37 @@ const Vote = ({
     setActiveOption(null);
   };
 
-  const handlePaymentSucceedClose = () => {
-    child.totalVotes += Number(activeOption.amount);
-    if (currentChild?.id === id) {
-      updateCurrentChildVotes(Number(activeAmount));
-    }
-
-    handlePaymentClose();
+  const handlePopupClose = () => {
+    setIsPopupShown(false);
   };
 
-  const updateData = () => {
-    requestTimeFreeVote();
+  const updateStateAfterVote = async () => {
+    requestChild();
+    setIsAnimation(true);
 
-    child.totalVotes += 1;
-    if (currentChild?.id === id) {
-      updateCurrentChildVotes(1);
+    if (currentChild?.id === Number(id) && isPopup) {
+      const {
+        data: { entry },
+      } = await api.get("/entries/current");
+      setCurrentChild(entry);
+
+      setTimeout(() => setIsPopupShown(true), 3000);
     }
+  };
+
+  const handlePaymentSucceedClose = async () => {
+    handlePaymentClose();
+    updateStateAfterVote();
+  };
+
+  const updateData = async () => {
+    requestTimeFreeVote();
+    updateStateAfterVote();
   };
 
   return (
     <>
-      <HeaderUserWithChild child={child} />
+      <HeaderUserWithChild child={child} isAnimation={isAnimation} />
 
       {isPaymentOpen ? (
         <Payment
@@ -105,7 +134,15 @@ const Vote = ({
           timeFreeVote={timeFreeVote}
           handlePriceClick={handlePriceClick}
           updateData={updateData}
+        />
+      )}
+
+      {isPopupShown && (
+        <VotePopup
+          handlePopupClose={handlePopupClose}
+          childId={child.id}
           childName={child.name}
+          childImage={child.imageUrl}
         />
       )}
     </>

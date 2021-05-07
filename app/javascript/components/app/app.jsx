@@ -25,7 +25,7 @@ const App = () => {
 
   const {
     data: currentChildData,
-    run: requestCurrentBaby,
+    run: requestCurrentChild,
     loading: childLoading,
   } = useRequest(getCurrentChildren, {
     formatResult: (res) => res.data.entry,
@@ -40,7 +40,7 @@ const App = () => {
       setUser(userData);
 
       if (!currentChildData) {
-        requestCurrentBaby();
+        requestCurrentChild();
       }
     }
 
@@ -49,18 +49,10 @@ const App = () => {
     }
   }, [userData, currentChildData]);
 
-  const updateCurrentChildVotes = (votes) => {
-    setCurrentChild({
-      ...currentChild,
-      totalVotes: currentChild.totalVotes + votes,
-    });
-  };
-
   const valueUser = { user, setUser };
   const valueCurrentChild = {
     currentChild,
     setCurrentChild,
-    updateCurrentChildVotes,
   };
 
   if (userLoading || childLoading) {

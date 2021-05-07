@@ -1,5 +1,6 @@
 import "./style.less";
 
+import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -8,7 +9,7 @@ import GoBack from "../../images/go-back.svg";
 import { HeaderUserItem } from "../header-user-item";
 import { HeaderUserLevel } from "../header-user-level";
 
-const HeaderUserWithChild = ({ child }) => {
+const HeaderUserWithChild = ({ child, isAnimation }) => {
   child.rank = 1;
   return (
     <div className="header-user header-user--with-info">
@@ -25,13 +26,18 @@ const HeaderUserWithChild = ({ child }) => {
         </div>
         <HeaderUserItem title="Rank" value={child.rank} />
       </div>
-      <HeaderUserLevel level={child.level} totalVotes={child.totalVotes} />
+      <HeaderUserLevel
+        level={child.level}
+        totalVotes={child.totalVotes}
+        isAnimation={isAnimation}
+      />
     </div>
   );
 };
 
 HeaderUserWithChild.propTypes = {
   child: defaultProptypes.CHILD,
+  isAnimation: propTypes.bool,
 };
 
 export default HeaderUserWithChild;

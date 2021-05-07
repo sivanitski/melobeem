@@ -12,7 +12,7 @@ import NoSpinner from "./screens/no-spinner";
 import Spinner from "./screens/spinner";
 
 const SpinnerPage = () => {
-  const { currentChild } = useContext(ChildContext);
+  const { currentChild, setCurrentChild } = useContext(ChildContext);
 
   if (!currentChild) {
     return <Redirect to="/" />;
@@ -26,6 +26,13 @@ const SpinnerPage = () => {
     formatResult: (res) => res.data,
   });
 
+  const updateCurrentChild = async () => {
+    const {
+      data: { entry },
+    } = await api.get("/entries/current");
+    setCurrentChild(entry);
+  };
+
   const renderSpinnerScreen = () => {
     if (error) {
       return <Error />;
@@ -36,7 +43,9 @@ const SpinnerPage = () => {
     }
 
     if (data.type) {
-      return <Spinner spinnerData={data} />;
+      return (
+        <Spinner spinnerData={data} updateCurrentChild={updateCurrentChild} />
+      );
     }
 
     return <NoSpinner />;
