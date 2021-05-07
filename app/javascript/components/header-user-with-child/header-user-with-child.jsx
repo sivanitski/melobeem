@@ -10,7 +10,6 @@ import { HeaderUserItem } from "../header-user-item";
 import { HeaderUserLevel } from "../header-user-level";
 
 const HeaderUserWithChild = ({ child, isAnimation }) => {
-  child.rank = 1;
   return (
     <div className="header-user header-user--with-info">
       <Link to={`/entry/${child.id}`} className="go-back">
