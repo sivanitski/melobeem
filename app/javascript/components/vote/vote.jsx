@@ -94,12 +94,14 @@ const Vote = ({
     requestChild();
     setIsAnimation(true);
 
-    if (currentChild?.id === Number(id) && isPopup) {
+    if (currentChild?.id === Number(id)) {
       const {
         data: { entry },
       } = await api.get("/entries/current");
       setCurrentChild(entry);
+    }
 
+    if (isPopup) {
       setTimeout(() => setIsPopupShown(true), 3000);
     }
   };
