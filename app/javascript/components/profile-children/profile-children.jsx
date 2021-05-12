@@ -1,16 +1,32 @@
+import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React from "react";
 
-import defaultProptypes from "../../default-proptypes";
+import { api } from "../../api";
+import { Error } from "../error";
+import { Loading } from "../loading";
 import { ProfileChildrenItem } from "../profile-children-item";
 
-const ProfileChildren = ({ currentChild, previousChildren }) => {
+const ProfileChildren = ({ userId }) => {
+  const getUserEntries = () => {
+    return api.get(`/users/${userId}/entries`);
+  };
+
+  const { data: children, error, loading } = useRequest(getUserEntries, {
+    formatResult: (res) => res.data.entries,
+  });
+
+  if (error) {
+    return <Error />;
+  }
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="profile-children">
-      {currentChild && <ProfileChildrenItem child={currentChild} isCurrent />}
-
-      {previousChildren &&
-        previousChildren.map((child) => (
+      {children &&
+        children.map((child) => (
           <ProfileChildrenItem key={child.id} child={child} />
         ))}
     </div>
@@ -18,12 +34,7 @@ const ProfileChildren = ({ currentChild, previousChildren }) => {
 };
 
 ProfileChildren.propTypes = {
-  currentChild: propTypes.shape({
-    id: propTypes.number.isRequired,
-    name: propTypes.string.isRequired,
-    imageUrl: propTypes.string.isRequired,
-  }),
-  previousChildren: propTypes.arrayOf(defaultProptypes.CHILD),
+  userId: propTypes.number.isRequired,
 };
 
 export default ProfileChildren;

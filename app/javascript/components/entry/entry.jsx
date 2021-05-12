@@ -6,11 +6,11 @@ import React, { useEffect } from "react";
 import { withRouter } from "react-router";
 
 import { api } from "../../api";
-import { EntryChild } from "../entry-child";
 import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderUser } from "../header-user";
 import { Loading } from "../loading";
+import EntryContent from "./blocks/entry-content";
 
 const Entry = ({
   match: {
@@ -57,7 +57,7 @@ const Entry = ({
   return (
     <>
       <HeaderUser child={child} />
-      <EntryChild child={child} voters={voters} />
+      <EntryContent child={child} voters={voters} />
       <Footer />
     </>
   );

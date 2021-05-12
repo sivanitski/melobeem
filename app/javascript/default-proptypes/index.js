@@ -18,8 +18,8 @@ const defaultProptypes = {
     prizeCents: propTypes.number.isRequired,
   }).isRequired,
   VOTER: propTypes.shape({
-    id: propTypes.number.isRequired,
-    name: propTypes.string.isRequired,
+    id: propTypes.number,
+    name: propTypes.string,
     avatarUrl: propTypes.string,
   }),
 };

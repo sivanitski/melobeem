@@ -50,7 +50,7 @@ const Profile = ({
         {user?.id === data.id ? (
           <>
             <ProfileHeader user={user} childName={currentChild?.name} />
-            <ProfileNav currentChild={currentChild} userId={user.id} />
+            <ProfileNav userId={user.id} />
           </>
         ) : (
           <>
@@ -60,7 +60,7 @@ const Profile = ({
               user={data}
               isAnotherUser
             />
-            <ProfileChildren />
+            <ProfileChildren userId={data.id} />
           </>
         )}
       </div>

@@ -12,7 +12,7 @@ const TABS = {
   FRIENDS: "Friends",
 };
 
-const ProfileNav = ({ currentChild, userId }) => {
+const ProfileNav = ({ userId }) => {
   const [activeTab, setActiveTab] = useState(TABS.BABY);
 
   return (
@@ -31,7 +31,7 @@ const ProfileNav = ({ currentChild, userId }) => {
         ))}
       </div>
       {activeTab === TABS.BABY ? (
-        <ProfileChildren currentChild={currentChild} />
+        <ProfileChildren userId={userId} />
       ) : (
         <ProfileFriends userId={userId} />
       )}
