@@ -16,6 +16,9 @@ RSpec.describe Entry, type: :model do
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:level) }
   it { expect(entry).to validate_uniqueness_of(:user_id).scoped_to(:competition_id) }
+  it { is_expected.to validate_content_type_of(:image).allowing('image/png', 'image/gif', 'image/jpeg', 'image/jpg') }
+  it { is_expected.to validate_content_type_of(:image).rejecting('text/plain', 'text/xml') }
+  it { is_expected.to validate_size_of(:image).less_than(10.megabytes) }
 
   context 'when user create new entry on the same competition' do
     it 'return validation error' do

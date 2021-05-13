@@ -8,7 +8,7 @@ require File.expand_path('../config/environment', __dir__)
 # Prevent database truncation if the environment is production
 abort('The Rails environment is running in production mode!') if Rails.env.production?
 require 'rspec/rails'
-
+require 'active_storage_validations/matchers'
 Dir[Rails.root.join('spec/support/**/*.rb')].sort.each { |f| require f }
 
 # Add additional requires below this line. Rails is not loaded until this point!
@@ -73,6 +73,7 @@ RSpec.configure do |config|
   config.include FactoryBot::Syntax::Methods
   config.include Devise::Test::ControllerHelpers, type: :controller
   config.include LoginHelper, type: :controller
+  config.include ActiveStorageValidations::Matchers
 end
 
 Shoulda::Matchers.configure do |config|

@@ -36,6 +36,8 @@ gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.4', require: false
 # imgproxy
 gem 'imgproxy'
+# active storage validations
+gem 'active_storage_validations', '~> 0.9.3'
 
 # environment variables
 gem 'dotenv-rails'
