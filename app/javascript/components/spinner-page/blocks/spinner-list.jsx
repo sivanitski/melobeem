@@ -24,7 +24,7 @@ const SpinnerList = ({ handlePriceClick }) => {
               className="button spinner-item__button"
               onClick={() => handlePriceClick(spinOption)}
             >
-              £ {spinOption.price}
+              £{spinOption.price}
             </div>
           </div>
         ))}

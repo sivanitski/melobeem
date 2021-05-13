@@ -18,8 +18,7 @@ const VotePopup = ({ handlePopupClose, childId, childName, childImage }) => {
         </div>
         <div className="popup__share headline">Share</div>
         <div className="popup__text text-grey">
-          Sharing is the best way to get more love for your cute photo of{" "}
-          {childName}
+          Every Facebook post may make {childName} closer to the wining point!
         </div>
         <FacebookShare childId={childId} classes="popup__button">
           Share on Facebook
