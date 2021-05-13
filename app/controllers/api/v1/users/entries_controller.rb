@@ -21,7 +21,7 @@ module API
         def destroy
           entry = current_user.entries.find(params[:id])
 
-          if entry.delete
+          if entry.destroy
             render json: entry, serializer: ::Entries::ShowSerializer
           else
             render_fail_response(entry.errors)
