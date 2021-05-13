@@ -20,6 +20,7 @@ Rails.application.routes.draw do
 
       resources :charges, only: [] do
         collection do
+          get :available_payment_methods
           post :buy_votes
           post :buy_spins
         end
