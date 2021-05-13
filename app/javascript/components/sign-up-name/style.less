@@ -1,18 +1,8 @@
 .form {
-  height: calc(100vh - 80px);
   margin: 0 15px;
   position: relative;
   display: flex;
   flex-direction: column;
-}
-
-@media (max-width: 640px) {
-  .form {
-    height: 100%;
-    height: -moz-available;
-    height: -webkit-fill-available;
-    height: fill-available;
-  }
 }
 
 .form__title {
@@ -33,23 +23,20 @@
 }
 
 .form__button {
-  margin-bottom: 20px;
+  position: fixed;
+  width: calc(100% - 30px);
+  bottom: 100px;
 }
 
-.form__wrapper {
-  flex-grow: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
-}
-
-.form__input:focus + .form__wrapper {
-  flex-grow: 0;
+.form__input:focus + .form__button {
+  width: 100%;
+  position: static;
   margin-top: 47px;
 }
 
-.form__wrapper--small {
-  flex-grow: 0;
+.form__button--small-margin {
+  width: 100%;
+  position: static;
   margin-top: 47px;
 }
 

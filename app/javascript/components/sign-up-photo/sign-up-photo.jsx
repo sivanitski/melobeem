@@ -26,10 +26,7 @@ const SignUpPhoto = ({ handleChange, name }) => {
           Choose the cutest {name} photo you want to show to your friends
         </div>
       </div>
-      <div
-        className="form-img__wrapper form__wrapper form__button"
-        onChange={handleChange}
-      >
+      <div className="form-img__wrapper form__button" onChange={handleChange}>
         <input
           name="file"
           type="file"
