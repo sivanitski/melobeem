@@ -45,7 +45,8 @@ module API
       end
 
       def current
-        entry = ::Entries::WithRankQuery.new.call(competition.id).find_by!(user: current_user)
+        entry_competition = current_user.entries.order(created_at: :desc).first&.competition || competition
+        entry = ::Entries::WithRankQuery.new.call(entry_competition.id).find_by!(user: current_user)
         respond_with entry, serializer: ::Entries::CurrentSerializer
       end
 

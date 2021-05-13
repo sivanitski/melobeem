@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe API::V1::EntriesController do
-  let(:competition) { create(:competition) }
+  let!(:competition) { create(:competition) }
   let(:user) { create(:user) }
   let(:entry) { create(:entry, competition: competition, user: user) }
   let(:prize) { create :prize, entry: entry }
@@ -116,20 +116,53 @@ RSpec.describe API::V1::EntriesController do
     end
   end
 
-  describe 'GET /current' do
-    let!(:entry) { create(:entry, competition: competition, user: user) }
+  describe 'GET #current' do
+    context 'when user has entry in current competition' do
+      let!(:entry) { create(:entry, competition: competition, user: user) }
 
-    before do
-      sign_in user
-      get :current, format: :json
+      before do
+        sign_in user
+        get :current, format: :json
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it { expect(response).to match_response_schema('entries/current') }
+
+      it 'returns current entry ID within current competition' do
+        expect(JSON.parse(response.body)['entry']['id']).to eq entry.id
+      end
+
+      it 'returns true in the field current_competition of entry' do
+        expect(JSON.parse(response.body)['entry']['current_competition']).to eq true
+      end
     end
 
-    it { expect(response.status).to eq 200 }
+    context 'when user has entry from finished competition' do
+      let(:finished_competition) { create :competition, :finished }
 
-    it { expect(response).to match_response_schema('entries/current') }
+      before do
+        entry.update!(competition: finished_competition)
+        sign_in user
+        get :current, format: :json
+      end
 
-    it 'returns current entry ID within current competition' do
-      expect(JSON.parse(response.body)['entry']['id']).to eq entry.id
+      it { expect(response.status).to eq 200 }
+
+      it { expect(response).to match_response_schema('entries/current') }
+
+      it 'returns false in the field current_competition of entry' do
+        expect(JSON.parse(response.body)['entry']['current_competition']).to eq false
+      end
+    end
+
+    context 'when user does not have any entries' do
+      before do
+        sign_in user
+        get :current, format: :json
+      end
+
+      it { expect(response.status).to eq 404 }
     end
   end
 
