@@ -306,6 +306,10 @@ RSpec.describe API::V1::EntriesController do
       it 'returns message with remaining time' do
         expect(JSON.parse(response.body)['message']).to eq (prize_time.created_at + 24.hours).to_i
       end
+
+      it 'returns prize time value' do
+        expect(JSON.parse(response.body)['value']).to eq entry.prize_times.take.value
+      end
     end
 
     context 'when prize time was not found' do
