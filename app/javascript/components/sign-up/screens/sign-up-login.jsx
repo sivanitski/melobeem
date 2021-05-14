@@ -1,9 +1,7 @@
-import "./style.less";
-
 import propTypes from "prop-types";
 import React from "react";
 
-import { FacebookLogin } from "../facebook-login";
+import { FacebookLogin } from "../../facebook-login";
 
 const SignUpLogin = ({ imagePreviewUrl, handleLoginWhileSignUp }) => {
   return (

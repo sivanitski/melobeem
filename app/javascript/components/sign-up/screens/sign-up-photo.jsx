@@ -1,10 +1,8 @@
-import "./style.less";
-
 import propTypes from "prop-types";
 import React from "react";
 
-import signUpImg from "../../images/sign-up.png";
-import signUpImg2x from "../../images/sign-up@2x.png";
+import signUpImg from "../../../images/sign-up.png";
+import signUpImg2x from "../../../images/sign-up@2x.png";
 
 const SignUpPhoto = ({ handleChange, name }) => {
   return (

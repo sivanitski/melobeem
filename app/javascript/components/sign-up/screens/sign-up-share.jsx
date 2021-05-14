@@ -1,10 +1,8 @@
-import "./style.less";
-
 import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { FacebookShare } from "../facebook-share";
+import { FacebookShare } from "../../facebook-share";
 
 const SignUpShare = ({ imagePreviewUrl, childId }) => {
   return (

@@ -1,13 +1,16 @@
+import "./style.less";
+
 import React, { useContext, useEffect, useState } from "react";
 
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { Footer } from "../footer";
-import { SignUpLogin } from "../sign-up-login";
-import { SignUpName } from "../sign-up-name";
-import { SignUpPhoto } from "../sign-up-photo";
-import { SignUpShare } from "../sign-up-share";
+import SignUpDouble from "./screens/sign-up-double";
+import SignUpLogin from "./screens/sign-up-login";
+import SignUpName from "./screens/sign-up-name";
+import SignUpPhoto from "./screens/sign-up-photo";
+import SignUpShare from "./screens/sign-up-share";
 
 const SignUp = () => {
   const [step, setStep] = useState(1);
@@ -75,7 +78,16 @@ const SignUp = () => {
       setCurrentChild(entry);
       setStep(4);
     } catch (e) {
-      console.error("error");
+      if (e.response.status === 422) {
+        const {
+          data: { entry },
+        } = await api.get("/entries/current");
+        setCurrentChild(entry);
+        setStep(5);
+      } else {
+        console.error("error");
+        alert("Something went wrong, please try again");
+      }
     }
   };
 
@@ -103,6 +115,13 @@ const SignUp = () => {
       case 4:
         return (
           <SignUpShare
+            imagePreviewUrl={photo.imagePreviewUrl}
+            childId={currentChild.id}
+          />
+        );
+      case 5:
+        return (
+          <SignUpDouble
             imagePreviewUrl={photo.imagePreviewUrl}
             childId={currentChild.id}
           />

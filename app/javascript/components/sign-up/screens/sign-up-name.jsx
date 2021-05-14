@@ -1,11 +1,9 @@
-import "./style.less";
-
 import classNames from "classnames";
 import propTypes from "prop-types";
 import React, { useContext } from "react";
 import { Redirect } from "react-router";
 
-import ChildContext from "../../helpers/child-context";
+import ChildContext from "../../../helpers/child-context";
 
 const SignUpName = ({
   name,
