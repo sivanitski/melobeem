@@ -28,10 +28,25 @@ module API
         render json: current_user.votes.where(created_at: Date.current.all_day).empty?, adapter: nil, status: :ok
       end
 
+      def take_additional_prize
+        prize = entry.competition_additional_prize
+
+        if prize.zero?
+          render json: { prize: nil }, status: :ok
+        else
+          current_user.increment!(:premium_spins, prize) # rubocop:disable Rails/SkipsModelValidations
+          render json: { prize: prize }, adapter: nil, status: :ok
+        end
+      end
+
       private
 
       def user
         @user ||= User.find(params[:id])
+      end
+
+      def entry
+        @entry ||= current_user.entries.find(params[:entry_id])
       end
     end
   end

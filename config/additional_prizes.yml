@@ -1,0 +1,8 @@
+!ruby/range 1..1: 10
+!ruby/range 2..2: 8
+!ruby/range 3..3: 7
+!ruby/range 4..4: 6
+!ruby/range 5..5: 5
+!ruby/range 6..19: 4
+!ruby/range 20..39: 3
+!ruby/range 40..100: 2

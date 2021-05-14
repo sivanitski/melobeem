@@ -61,7 +61,7 @@ RSpec.describe API::V1::UsersController do
     before { sign_in user }
 
     context 'when user does not have any votes for today' do
-      before { get :show_share_modal, params: { id: user.id }, format: :json }
+      before { get :show_share_modal, format: :json }
 
       it 'returns true' do
         expect(JSON.parse(response.body)).to eq true
@@ -73,7 +73,7 @@ RSpec.describe API::V1::UsersController do
     context 'when user has votes for today' do
       before do
         create :vote, user: user
-        get :show_share_modal, params: { id: user.id }, format: :json
+        get :show_share_modal, format: :json
       end
 
       it 'returns false' do
@@ -81,6 +81,30 @@ RSpec.describe API::V1::UsersController do
       end
 
       it { expect(response.status).to eq 200 }
+    end
+  end
+
+  describe 'PUT #take_additional_prize' do
+    before { sign_in user }
+
+    context 'when user entry has additional prize' do
+      let!(:entry) { create :entry, user: user, competition: competition, competition_additional_prize: 10 }
+
+      it 'increments premium spins value of user' do
+        expect do
+          put :take_additional_prize, params: { entry_id: entry.id }, format: :json
+        end.to change(user, :premium_spins).by(10)
+      end
+    end
+
+    context 'when user does not have any entries with additional prizes' do
+      let!(:entry) { create :entry, user: user, competition: competition }
+
+      it 'not changes premium spins value of user' do
+        expect do
+          put :take_additional_prize, params: { entry_id: entry.id }, format: :json
+        end.not_to change(user, :premium_spins)
+      end
     end
   end
 end

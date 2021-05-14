@@ -10,6 +10,7 @@ class FinishCompetitionWorker
 
       Competitions::RewardWinners.new(competition).call
       Competitions::Finish.new.call(competition)
+      Competitions::RewardWithAdditionalPrizes.new(competition).call
       Competitions::StartNext.new.call
     end
   end

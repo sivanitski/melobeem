@@ -17,6 +17,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       post '/check_votes_payment', to: 'webhooks#check_votes_payment'
       post '/check_spins_payment', to: 'webhooks#check_spins_payment'
+      put '/users/:entry_id/take_additional_prize', to: 'users#take_additional_prize'
 
       resources :charges, only: [] do
         collection do
@@ -58,6 +59,7 @@ Rails.application.routes.draw do
           delete :deactivate
           get :previous_entries
         end
+
         collection do
           resources :entries, only: %i[edit update destroy], module: :users
           get :current

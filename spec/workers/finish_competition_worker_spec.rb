@@ -2,7 +2,7 @@ require 'rails_helper'
 require 'sidekiq/testing'
 
 RSpec.describe FinishCompetitionWorker, type: :worker do
-  let!(:competition) { create :competition }
+  before { create :competition }
 
   it { is_expected.to be_processed_in :default }
   it { is_expected.to be_retryable 1 }
@@ -17,12 +17,5 @@ RSpec.describe FinishCompetitionWorker, type: :worker do
     expect do
       described_class.perform_async
     end.to change(described_class.jobs, :size).by(1)
-  end
-
-  it 'changes competition status from started to finished' do
-    expect do
-      described_class.new.perform
-      competition.reload
-    end.to change(competition.reload, :status).from('started').to('finished')
   end
 end
