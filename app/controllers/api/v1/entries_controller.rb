@@ -22,7 +22,8 @@ module API
         entry = competition.entries.new(entries_params.merge(user: current_user))
 
         if entry.save
-          render json: entry, serializer: ::Entries::ShowSerializer
+          entry = ::Entries::WithRankQuery.new.call(competition.id).find_by!(user: current_user)
+          render json: entry, serializer: ::Entries::RankedSerializer
         else
           render_fail_response(entry.errors)
         end

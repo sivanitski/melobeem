@@ -43,6 +43,13 @@
   margin-bottom: 40px;
 }
 
+.entry__setting {
+  position: absolute;
+  top: 5px;
+  right: 15px;
+  cursor: pointer;
+}
+
 .entry-voters {
   height: 40px;
   display: flex;
@@ -116,4 +123,30 @@
     border-radius: 50%;
     object-fit: cover;
   }
+}
+
+.entry-setting__list {
+  width: 250px;
+  position: absolute;
+  top: 36px;
+  right: 12px;
+  background: rgba(249, 249, 249, 0.78);
+  border-radius: 12px;
+}
+
+.entry-setting__item {
+  padding-left: 16px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+}
+
+.entry-setting__item:not(:last-child) {
+  border-bottom: 1px solid rgba(17, 17, 17, 0.3);
+}
+
+.entry-setting__img {
+  margin-left: auto;
+  margin-right: 16px;
+  margin-top: -3px;
 }

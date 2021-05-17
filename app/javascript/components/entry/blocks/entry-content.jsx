@@ -1,19 +1,45 @@
 import propTypes from "prop-types";
-import React from "react";
+import React, { useContext, useState } from "react";
 
 import defaultProptypes from "../../../default-proptypes";
+import UserContext from "../../../helpers/user-context";
+import DotsIcon from "../../../images/dots-settings-icon.svg";
 import CertificateIcon from "../../../images/icon-certificate.svg";
 import ShareImage from "../../../images/share.svg";
 import { FacebookShare } from "../../facebook-share";
 import EntryVoters from "./main-voters";
 import Parent from "./parent";
 import PreviousCompetitionInfo from "./previous-competion-info";
+import EntrySetting from "./setting";
 import VoteButton from "./vote-button";
 
 const EntryContent = ({ child, voters }) => {
+  const { user } = useContext(UserContext);
+  const [isSettingOpen, setIsSettingOpen] = useState(false);
+
+  const toggleSettingOpen = () => {
+    setIsSettingOpen(!isSettingOpen);
+  };
+
+  const renderChildMenu = () => {
+    if (user?.id === child.userId) {
+      return (
+        <>
+          <DotsIcon className="entry__setting" onClick={toggleSettingOpen} />
+
+          {isSettingOpen && <EntrySetting childId={child.id} />}
+        </>
+      );
+    }
+
+    return null;
+  };
+
   return (
     <div className="entry">
       <div className="entry__img">
+        {renderChildMenu()}
+
         <img src={child.imageUrl} />
 
         {child.currentCompetition ? (

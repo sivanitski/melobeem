@@ -8,6 +8,7 @@ import {
 
 import UserContext from "../../helpers/user-context";
 import { CompetitorsSearch } from "../competitors-search";
+import { Delete } from "../delete";
 import { Entry } from "../entry";
 import { Leaderboard } from "../leaderboard";
 import { LeaderboardInfo } from "../leaderboard-info";
@@ -72,6 +73,9 @@ const Routes = () => {
         </Route>
         <Route exact path={"/sign-up"}>
           <SignUp />
+        </Route>
+        <Route exact path={"/delete"}>
+          <Delete />
         </Route>
       </Switch>
     </Router>
