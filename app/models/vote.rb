@@ -31,7 +31,7 @@ class Vote < ApplicationRecord
     last_prize = entry.prizes.order(level: :desc).limit(1).first
     last_prize_level = last_prize&.level.to_i + 1
 
-    [*last_prize_level..current_level].each do |level|
+    [*last_prize_level...current_level].each do |level|
       next if level == NON_PRIZE_LEVEL
 
       prize = make_prize(level: level)

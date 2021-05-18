@@ -29,11 +29,11 @@ RSpec.describe Vote, type: :model do
 
     context 'when checks that creates level prize and sends notification about complete level' do
       it 'changes prizes count' do
-        expect { vote.apply! }.to change(Prize, :count).from(0).to(108)
+        expect { vote.apply! }.to change(Prize, :count).from(0).to(107)
       end
 
       it 'changes notifications count' do
-        expect { vote.apply! }.to change(Notification, :count).from(0).to(108)
+        expect { vote.apply! }.to change(Notification, :count).from(0).to(107)
       end
     end
   end
