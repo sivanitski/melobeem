@@ -95,6 +95,12 @@ RSpec.describe API::V1::UsersController do
           put :take_additional_prize, params: { entry_id: entry.id }, format: :json
         end.to change(user, :premium_spins).by(10)
       end
+
+      it 'changes notifications count' do
+        expect do
+          put :take_additional_prize, params: { entry_id: entry.id }, format: :json
+        end.to change(user.notifications, :count).from(0).to(1)
+      end
     end
 
     context 'when user does not have any entries with additional prizes' do
@@ -104,6 +110,12 @@ RSpec.describe API::V1::UsersController do
         expect do
           put :take_additional_prize, params: { entry_id: entry.id }, format: :json
         end.not_to change(user, :premium_spins)
+      end
+
+      it 'not changes notifications count' do
+        expect do
+          put :take_additional_prize, params: { entry_id: entry.id }, format: :json
+        end.not_to change(user.notifications, :count)
       end
     end
   end
