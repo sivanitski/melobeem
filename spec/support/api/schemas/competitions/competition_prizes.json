@@ -1,0 +1,33 @@
+{
+  "type": "object",
+  "required": [
+    "money_prizes",
+    "not_money_prizes"
+  ],
+  "properties": {
+    "money_prizes": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "not_money_prizes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "prize",
+          "range"
+        ],
+        "properties": {
+          "prize": {
+            "type": "integer"
+          },
+          "range": {
+            "type": "array"
+          }
+        }
+      }
+    }
+  }
+}

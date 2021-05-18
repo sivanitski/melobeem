@@ -1,7 +1,7 @@
 module Entries
   class RankedSerializer < Entries::BaseSerializer
     attributes :id, :name, :image_url, :total_votes, :rank, :username, :level, :user_id, :avatar_url,
-               :current_competition, :competition_money_prize
+               :current_competition, :competition_money_prize, :competition_additional_prize
 
     def avatar_url
       image_path(object.user.avatar)

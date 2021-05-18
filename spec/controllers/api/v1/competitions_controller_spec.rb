@@ -31,4 +31,14 @@ RSpec.describe API::V1::CompetitionsController do
 
     it { expect(response).to match_response_schema('competitions/previous_winners') }
   end
+
+  describe 'GET #competition_prizes' do
+    before { get :competition_prizes, format: :json }
+
+    it 'returns 200 status' do
+      expect(response).to have_http_status(:ok)
+    end
+
+    it { expect(response).to match_response_schema('competitions/competition_prizes') }
+  end
 end
