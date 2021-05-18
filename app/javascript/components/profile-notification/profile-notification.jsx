@@ -12,7 +12,7 @@ import GoBack from "../../images/go-back.svg";
 import { Error } from "../error";
 import { Footer } from "../footer";
 import { Loading } from "../loading";
-import { ProfileNotificationItem } from "../profile-notification-item";
+import ProfileNotificationItem from "./blocks/profile-notification-item";
 
 const ProfileNotification = () => {
   const { user } = useContext(UserContext);

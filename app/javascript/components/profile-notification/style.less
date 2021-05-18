@@ -44,10 +44,40 @@
 
 .notification-item__text {
   white-space: break-word;
+  margin-right: 10px;
 }
 
 .notification__date {
   font-weight: bold;
   margin-top: 21px;
   margin-bottom: 21px;
+}
+
+.notification__day {
+  display: flex;
+  align-items: center;
+  height: 56px;
+}
+
+.notification__like {
+  padding: 4px 10px;
+  margin-left: auto;
+  min-width: 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  svg {
+    transform: scale(1.1);
+    margin-right: 5px;
+  }
+
+  &--by-day {
+    border: 1px solid #ff7098;
+    border-radius: 17px;
+  }
+}
+
+.notification-img__spinner {
+  margin-left: -4px;
 }
