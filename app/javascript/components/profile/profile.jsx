@@ -6,7 +6,6 @@ import React, { useContext, useEffect } from "react";
 import { withRouter } from "react-router";
 
 import { api } from "../../api";
-import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { BackButton } from "../back-button";
 import { Error } from "../error";
@@ -23,7 +22,6 @@ const Profile = ({
   history,
 }) => {
   const { user } = useContext(UserContext);
-  const { currentChild } = useContext(ChildContext);
 
   const getProfile = () => {
     return api.get(`/users/${id}`);
@@ -49,7 +47,7 @@ const Profile = ({
       <div className="profile">
         {user?.id === data.id ? (
           <>
-            <ProfileHeader user={user} childName={currentChild?.name} />
+            <ProfileHeader user={user} childName={data.currentBabyName} />
             <ProfileNav userId={user.id} />
           </>
         ) : (
@@ -58,6 +56,7 @@ const Profile = ({
             <ProfileHeader
               requestProfile={requestProfile}
               user={data}
+              childName={data.currentBabyName}
               isAnotherUser
             />
             <ProfileChildren userId={data.id} />
