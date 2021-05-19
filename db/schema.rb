@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_11_144041) do
+ActiveRecord::Schema.define(version: 2021_05_19_084746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 2021_05_11_144041) do
     t.datetime "updated_at", precision: 6, null: false
     t.enum "status", default: "started", null: false, enum_name: "competition_status"
     t.integer "revenue", default: 0, null: false
+    t.integer "money_prizes_final_sum", default: 0, null: false
     t.index ["starts_at"], name: "index_competitions_on_starts_at", unique: true
   end
 

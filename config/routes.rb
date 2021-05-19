@@ -73,6 +73,9 @@ Rails.application.routes.draw do
           get :previous_winners
           get :competition_prizes
         end
+        member do
+          get :previous_awarded
+        end
       end
 
       resources :notifications, only: :index do

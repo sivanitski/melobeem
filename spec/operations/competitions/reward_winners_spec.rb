@@ -15,6 +15,10 @@ RSpec.describe Competitions::RewardWinners do
     let!(:third_place_entry) { create :entry, user: users[2], total_votes: 20, competition: competition }
     let!(:fourth_place_entry) { create :entry, user: users[3], total_votes: 10, competition: competition }
 
+    it 'changes money_prizes_final_sum of the competition' do
+      expect { subject }.to change(competition, :money_prizes_final_sum).from(0).to(prize_in_dollars + 3000 + 1500)
+    end
+
     context 'when the prizewinners have a different number of votes' do
       it 'changes field competition_money_prize for the first winner' do
         expect do

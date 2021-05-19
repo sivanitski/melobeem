@@ -41,4 +41,18 @@ RSpec.describe API::V1::CompetitionsController do
 
     it { expect(response).to match_response_schema('competitions/competition_prizes') }
   end
+
+  describe 'GET #previous_awarded' do
+    let(:competition) { create :competition }
+
+    before do
+      create :entry, competition: competition, final_rank: 1
+      create :entry, competition: competition, final_rank: 2
+      get :previous_awarded, params: { id: competition.id }, format: :json
+    end
+
+    it { expect(response.status).to eq 200 }
+
+    it { expect(response).to match_response_schema('competitions/previous_awarded') }
+  end
 end

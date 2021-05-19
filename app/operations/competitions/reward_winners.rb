@@ -9,10 +9,11 @@ module Competitions
       @competition = competition
     end
 
-    def call # rubocop:disable Metrics/AbcSize
+    def call # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
       PRIZE_PLACES.each_with_index do |place, index|
         prizewinners = participants.select { |participant| participant.rank == place }
         prizes = calculate_prizes
+        competition.update!(money_prizes_final_sum: prizes.sum)
         break if prizewinners.empty?
 
         case prizewinners.size
