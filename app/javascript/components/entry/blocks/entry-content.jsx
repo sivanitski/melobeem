@@ -7,6 +7,7 @@ import DotsIcon from "../../../images/dots-settings-icon.svg";
 import CertificateIcon from "../../../images/icon-certificate.svg";
 import ShareImage from "../../../images/share.svg";
 import { FacebookShare } from "../../facebook-share";
+import FbComment from "./fb-comments";
 import EntryVoters from "./main-voters";
 import Parent from "./parent";
 import PreviousCompetitionInfo from "./previous-competion-info";
@@ -71,6 +72,8 @@ const EntryContent = ({ child, voters }) => {
         avatarUrl={child.avatarUrl}
         username={child.username}
       />
+
+      <FbComment childId={child.id} />
     </div>
   );
 };
