@@ -34,10 +34,7 @@ module API
         if prize.zero?
           render json: { prize: nil }, status: :ok
         else
-          ActiveRecord::Base.transaction do
-            Notifications::PrizeForCompetition.new(prize: prize, entry: entry).call
-            current_user.increment!(:premium_spins, prize) # rubocop:disable Rails/SkipsModelValidations
-          end
+          ::Users::TakePrizeAndSendNotification.new.call(prize: prize, entry: entry)
           render json: { prize: prize }, adapter: nil, status: :ok
         end
       end
