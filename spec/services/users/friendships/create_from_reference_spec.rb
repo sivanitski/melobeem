@@ -25,7 +25,7 @@ RSpec.describe Users::Friendships::CreateFromReference do
 
       context 'when user already is friend' do
         it 'will add friend' do
-          referrer.friends << user
+          user.friends << referrer
 
           expect { subject.call }.to raise_error(ActiveRecord::RecordInvalid)
         end

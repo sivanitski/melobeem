@@ -19,10 +19,10 @@ module Users
       private
 
       def make_friendship_both_ways
-        referrer.external_friends << user
+        user.external_friends << referrer
 
-        user.friendships.create(
-          friend: referrer,
+        referrer.friendships.create(
+          friend: user,
           invitation_prize: current_prize,
           source_type: :external
         )
@@ -37,7 +37,7 @@ module Users
       end
 
       def friends_count
-        @friends_count ||= user.external_friends.size
+        @friends_count ||= referrer.external_friends.size
       end
     end
   end

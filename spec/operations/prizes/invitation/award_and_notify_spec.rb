@@ -15,7 +15,7 @@ describe Prizes::Invitation::AwardAndNotify do
     end
 
     context 'when user have current entry' do
-      before { create(:entry, user: user) }
+      before { create(:entry, user: referrer) }
 
       context 'when it was first invite' do
         it 'create vote' do
@@ -30,7 +30,7 @@ describe Prizes::Invitation::AwardAndNotify do
         it 'add 5 votes into entry' do
           subject
 
-          expect(user.entries.first.reload.total_votes).to eq(5)
+          expect(referrer.entries.first.reload.total_votes).to eq(5)
         end
       end
     end

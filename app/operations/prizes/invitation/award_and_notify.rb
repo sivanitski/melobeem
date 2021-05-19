@@ -22,7 +22,7 @@ module Prizes
       private
 
       def current_entry
-        user.entries.where(competition: Competition.current!).first
+        referrer.entries.where(competition: Competition.current!).first
       rescue ActiveRecord::RecordNotFound
         nil
       end
@@ -32,16 +32,16 @@ module Prizes
           @vote = Vote.create!(
             value: prize,
             entry_id: current_entry.id,
-            user: user,
+            user: referrer,
             source_type: :invitation,
-            invited_user_id: referrer.id
+            invited_user_id: user.id
           )
           vote.apply!
         end
       end
 
       def notify_user
-        Notifications::Invitation.new(vote: vote, referrer: referrer).call
+        Notifications::Invitation.new(vote: vote, referrer: user).call
       end
     end
   end
