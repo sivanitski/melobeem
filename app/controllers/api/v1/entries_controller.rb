@@ -35,7 +35,7 @@ module API
         if users.any?
           render json: users, each_serializer: ::Entries::LatestVotersSerializer
         else
-          render json: { message: 'No voted' }, status: :not_found
+          render json: { data: nil }, adapter: nil, status: :ok
         end
       end
 
@@ -47,8 +47,13 @@ module API
 
       def current
         entry_competition = current_user.entries.order(created_at: :desc).first&.competition || competition
-        entry = ::Entries::WithRankQuery.new.call(entry_competition.id).find_by!(user: current_user)
-        respond_with entry, serializer: ::Entries::CurrentSerializer
+        entry = ::Entries::WithRankQuery.new.call(entry_competition.id).find_by(user: current_user)
+
+        if entry
+          respond_with entry, serializer: ::Entries::CurrentSerializer
+        else
+          render json: { data: nil }, adapter: nil, status: :ok
+        end
       end
 
       def search
@@ -64,7 +69,7 @@ module API
         if voters.any?
           render json: voters, each_serializer: ::Entries::VotersByDaySerializer
         else
-          render json: { message: 'No voted' }, status: :not_found
+          render json: { data: nil }, adapter: nil, status: :ok
         end
       end
 

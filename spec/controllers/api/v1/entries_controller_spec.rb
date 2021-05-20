@@ -75,12 +75,12 @@ RSpec.describe API::V1::EntriesController do
     context 'when voters are absent' do
       before { get :latest_voters, params: { competition_id: competition.id, id: entry.id }, format: :json }
 
-      it 'returns 404 status' do
-        expect(response).to have_http_status(:not_found)
+      it 'returns 200 status' do
+        expect(response).to have_http_status(:ok)
       end
 
-      it 'returns No voted message' do
-        expect(JSON.parse(response.body)['message']).to eq 'No voted'
+      it 'returns nil in data' do
+        expect(JSON.parse(response.body)['data']).to eq nil
       end
     end
   end
@@ -162,7 +162,11 @@ RSpec.describe API::V1::EntriesController do
         get :current, format: :json
       end
 
-      it { expect(response.status).to eq 404 }
+      it { expect(response.status).to eq 200 }
+
+      it 'returns nil in data' do
+        expect(JSON.parse(response.body)['data']).to eq nil
+      end
     end
   end
 
@@ -210,10 +214,10 @@ RSpec.describe API::V1::EntriesController do
     before { sign_in(user) }
 
     context 'when have no votes' do
-      it 'returns status :not_found' do
+      it 'returns status :ok' do
         get :voters_by_day, params: { id: entry.id }, format: :json
 
-        expect(response).to have_http_status :not_found
+        expect(response).to have_http_status :ok
       end
     end
 
@@ -230,10 +234,10 @@ RSpec.describe API::V1::EntriesController do
       end
 
       context 'when page params present' do
-        it 'returns no voted' do
+        it 'returns nil in data' do
           get :voters_by_day, params: { id: entry.id, page: 3, per: 1 }
 
-          expect(JSON.parse(response.body)['message']).to eq('No voted')
+          expect(JSON.parse(response.body)['data']).to eq nil
         end
       end
     end
