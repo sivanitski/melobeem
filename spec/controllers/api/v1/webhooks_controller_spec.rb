@@ -55,6 +55,14 @@ RSpec.describe API::V1::WebhooksController, type: :request do
           end.to change(Vote, :count).by(1)
         end
 
+        it 'create new vote with shop source type' do
+          stripe_signature = generate_stripe_signature(params.to_json)
+          headers = { 'Stripe-Signature' => stripe_signature }
+          post '/api/v1/check_votes_payment', params: params.to_json, headers: headers
+
+          expect(Vote.first.source_type).to eq('shop')
+        end
+
         it 'enrolls vote with value from transaction value' do
           expect(transaction.value).to eq(entry.votes.first.value)
         end

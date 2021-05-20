@@ -5,14 +5,13 @@ RSpec.describe Vote, type: :model do
   it { is_expected.to belong_to :user }
 
   it do
-    expect(subject).to define_enum_for(:source_type).with_values(user: 'user',
-                                                                 spinner: 'spinner',
-                                                                 bonus: 'bonus',
-                                                                 invitation: 'invitation')
+    expect(subject).to define_enum_for(:source_type).with_values(user: 'user', spinner: 'spinner',
+                                                                 bonus: 'bonus', invitation: 'invitation',
+                                                                 shop: 'shop')
                                                     .backed_by_column_of_type(:enum)
   end
 
-  it { is_expected.to allow_values(:user, :spinner, :bonus, :invitation).for(:source_type) }
+  it { is_expected.to allow_values(:user, :spinner, :bonus, :invitation, :shop).for(:source_type) }
   it { is_expected.to validate_presence_of(:value) }
 
   describe '#apply!' do

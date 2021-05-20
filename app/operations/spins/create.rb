@@ -38,7 +38,7 @@ module Spins
     def apply_spin(user)
       entry = Competition.current!.entries.find_by(user: user)
       spin = Spin.new(user: user, value: spin_value(user), paid: can_paid_spin?(user))
-      vote = Vote.new(user: user, value: spin.value, entry: entry)
+      vote = Vote.new(user: user, value: spin.value, entry: entry, source_type: 'spinner')
 
       ActiveRecord::Base.transaction do
         spin.save!

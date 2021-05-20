@@ -37,7 +37,7 @@ module Votes
 
     def build_vote(transaction)
       entry_id, user_id, value = transaction
-      Vote.new(entry_id: entry_id, user_id: user_id, value: value)
+      Vote.new(entry_id: entry_id, user_id: user_id, value: value, source_type: 'shop')
     end
   end
 end

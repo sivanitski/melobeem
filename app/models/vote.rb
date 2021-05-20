@@ -1,7 +1,7 @@
 class Vote < ApplicationRecord
   NON_PRIZE_LEVEL = 1
 
-  enum source_type: { user: 'user', spinner: 'spinner', bonus: 'bonus', invitation: 'invitation' }
+  enum source_type: { user: 'user', spinner: 'spinner', bonus: 'bonus', invitation: 'invitation', shop: 'shop' }
 
   belongs_to :entry
   belongs_to :user

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_115729) do
+ActiveRecord::Schema.define(version: 2021_05_19_123415) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -49,6 +49,7 @@ ActiveRecord::Schema.define(version: 2021_05_19_115729) do
     "spinner",
     "bonus",
     "invitation",
+    "shop",
   ], force: :cascade
 
   create_table "active_admin_comments", force: :cascade do |t|

@@ -15,6 +15,10 @@ RSpec.describe API::V1::SpinsController do
       it { expect(response.status).to eq 201 }
 
       it { expect(JSON.parse(response.body)['value']).to eq Spin.first.value }
+
+      it 'create vote with spinner source type' do
+        expect(Vote.first.source_type).to eq('spinner')
+      end
     end
 
     context 'when result is failed' do
