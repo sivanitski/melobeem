@@ -11,7 +11,7 @@ class Entry < ApplicationRecord
   validates :name, presence: true
   validates :level, presence: true
   validates :user_id, uniqueness: { scope: :competition_id }
-  validates :image, content_type: %w[image/png image/jpg image/jpeg image/gif],
+  validates :image, content_type: %w[image/png image/jpg image/jpeg image/gif image/webp],
                     size: { less_than: 10.megabytes }
 
   scope :active, -> { where(deactivated: false) }
