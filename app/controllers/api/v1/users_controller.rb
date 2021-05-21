@@ -8,7 +8,7 @@ module API
       end
 
       def entries
-        render json: user.entries, each_serializer: ::Users::EntriesSerializer
+        render json: user.entries.order(created_at: :desc), each_serializer: ::Users::EntriesSerializer
       end
 
       def current
