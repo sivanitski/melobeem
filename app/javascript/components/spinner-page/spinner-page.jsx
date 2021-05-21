@@ -14,7 +14,7 @@ import Spinner from "./screens/spinner";
 const SpinnerPage = () => {
   const { currentChild, setCurrentChild } = useContext(ChildContext);
 
-  if (!currentChild) {
+  if (!currentChild?.currentCompetition) {
     return <Redirect to="/" />;
   }
 

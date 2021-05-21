@@ -10,6 +10,7 @@ import UserContext from "../../helpers/user-context";
 import { CompetitorsSearch } from "../competitors-search";
 import { Delete } from "../delete";
 import { Entry } from "../entry";
+import { EntryTakePrize } from "../entry-prize";
 import { Leaderboard } from "../leaderboard";
 import { LeaderboardInfo } from "../leaderboard-info";
 import { LeaderboardWinners } from "../leaderboard-winners";
@@ -52,6 +53,9 @@ const Routes = () => {
         </Route>
         <Route exact path={"/entry/:id/voters"}>
           <Voters />
+        </Route>
+        <Route exact path={"/entry/:id/prize"}>
+          <EntryTakePrize />
         </Route>
         <Route exact path={"/profile"}>
           <ProfileRoute />

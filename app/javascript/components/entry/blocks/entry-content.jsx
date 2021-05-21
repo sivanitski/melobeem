@@ -6,11 +6,11 @@ import { api } from "../../../api";
 import defaultProptypes from "../../../default-proptypes";
 import ChildContext from "../../../helpers/child-context";
 import UserContext from "../../../helpers/user-context";
-import DotsIcon from "../../../images/dots-settings-icon.svg";
 import CertificateIcon from "../../../images/icon-certificate.svg";
 import ShareImage from "../../../images/share.svg";
 import { FacebookShare } from "../../facebook-share";
 import { Timer } from "../../timer";
+import CompetitionPrize from "./competition-prize";
 import FbComment from "./fb-comments";
 import EntryVoters from "./main-voters";
 import Parent from "./parent";
@@ -44,24 +44,18 @@ const EntryContent = ({ child, voters }) => {
     setIsSettingOpen(!isSettingOpen);
   };
 
-  const renderChildMenu = () => {
-    if (user?.id === child.userId) {
-      return (
-        <>
-          <DotsIcon className="entry__setting" onClick={toggleSettingOpen} />
-
-          {isSettingOpen && <EntrySetting childId={child.id} />}
-        </>
-      );
-    }
-
-    return null;
-  };
+  const isUsersChild = child.userId === user.id;
 
   return (
     <div className="entry">
       <div className="entry__img">
-        {renderChildMenu()}
+        {isUsersChild && (
+          <EntrySetting
+            childId={child.id}
+            isSettingOpen={isSettingOpen}
+            toggleSettingOpen={toggleSettingOpen}
+          />
+        )}
 
         <img src={child.imageUrl} />
 
@@ -90,11 +84,20 @@ const EntryContent = ({ child, voters }) => {
           )}
         </>
       ) : (
-        <PreviousCompetitionInfo
-          competitionMoneyPrize={child.competitionMoneyPrize}
-          totalVotes={child.totalVotes}
-          userId={child.userId}
-        />
+        <>
+          <PreviousCompetitionInfo
+            competitionMoneyPrize={child.competitionMoneyPrize}
+            totalVotes={child.totalVotes}
+          />
+          {isUsersChild && (
+            <CompetitionPrize
+              moneyPrize={child.competitionMoneyPrize}
+              spinPrize={child.competitionAdditionalPrize}
+              isSpinPrizeSpent={child.spentCompetitionAdditionalPrize}
+              childId={child.id}
+            />
+          )}
+        </>
       )}
 
       {voters && <EntryVoters childId={child.id} voters={voters} />}

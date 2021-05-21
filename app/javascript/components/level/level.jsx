@@ -20,7 +20,7 @@ const LEVEL_TEXT_INFO =
 const Level = () => {
   const { currentChild } = useContext(ChildContext);
 
-  if (!currentChild) {
+  if (!currentChild?.currentCompetition) {
     return <Redirect to="/" />;
   }
 

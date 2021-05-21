@@ -1,20 +1,10 @@
 import propTypes from "prop-types";
-import React, { useContext } from "react";
-import { Link } from "react-router-dom";
+import React from "react";
 
-import ChildContext from "../../../helpers/child-context";
-import UserContext from "../../../helpers/user-context";
 import PrizeIcon from "../../../images/first-prize-icon.svg";
 import IconHeart from "../../../images/icon-heart.svg";
 
-const PreviousCompetitionInfo = ({
-  competitionMoneyPrize,
-  totalVotes,
-  userId,
-}) => {
-  const { currentChild } = useContext(ChildContext);
-  const { user } = useContext(UserContext);
-
+const PreviousCompetitionInfo = ({ competitionMoneyPrize, totalVotes }) => {
   return (
     <>
       {competitionMoneyPrize > 0 && (
@@ -27,12 +17,6 @@ const PreviousCompetitionInfo = ({
           {totalVotes} Votes
         </span>
       </div>
-
-      {!currentChild && user?.id === userId && (
-        <Link to="/sign-up" className="entry-previous__enter">
-          Enter again
-        </Link>
-      )}
     </>
   );
 };
@@ -40,7 +24,6 @@ const PreviousCompetitionInfo = ({
 PreviousCompetitionInfo.propTypes = {
   competitionMoneyPrize: propTypes.number.isRequired,
   totalVotes: propTypes.number.isRequired,
-  userId: propTypes.number.isRequired,
 };
 
 export default PreviousCompetitionInfo;
