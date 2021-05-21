@@ -14,7 +14,7 @@ import PrizeTimeBlueImage from "../../../images/prize-time-blue.svg";
 import PrizeTimeGreenImage from "../../../images/prize-time-green.svg";
 import PrizeTimeYellowImage from "../../../images/prize-time-yellow.svg";
 
-const definePrizeImage = (currentPrize) => {
+export const definePrizeImage = (currentPrize) => {
   switch (currentPrize.sourceType) {
     case "min":
       if (currentPrize.value === 10) {

@@ -12,7 +12,7 @@ import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
 import { Loading } from "../loading";
 import { Payment } from "../payment";
-import { VoteList } from "./vote-list";
+import VoteList from "./blocks/vote-list";
 import { VotePopup } from "./vote-popup";
 
 const Vote = ({

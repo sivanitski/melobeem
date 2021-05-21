@@ -42,10 +42,7 @@ const SpinnerTitle = ({ spinnerType, spinnerAmount }) => {
       </div>
 
       {!timeLoading && !spinnerType && (
-        <Timer
-          timeLeftInSeconds={timeFreeSpin}
-          handleFreeVoteClick={() => {}}
-        />
+        <Timer timeLeftInSeconds={timeFreeSpin} type="spinner" />
       )}
 
       {isInfoOpen && (
