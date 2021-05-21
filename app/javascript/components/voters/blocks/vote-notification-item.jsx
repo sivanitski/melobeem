@@ -1,10 +1,13 @@
 import propTypes from "prop-types";
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
+import UserContext from "../../../helpers/user-context";
 import Notification from "./notification";
 
 const VoteNotificationItem = ({ notification }) => {
+  const { user } = useContext(UserContext);
+
   switch (notification.sourceType) {
     case "user":
       return (
@@ -37,6 +40,19 @@ const VoteNotificationItem = ({ notification }) => {
             image={notification.invitedUserAvatarUrl}
             voteAmount={notification.voteAmount}
             text={`You invited ${notification.invitedUserName}`}
+          />
+        </Link>
+      );
+    case "shop":
+      const text = `${
+        user?.id === notification.userId ? "You" : `${notification.userName}`
+      } bought ${notification.voteAmount} votes`;
+      return (
+        <Link to={`/profile/${notification.userId}`}>
+          <Notification
+            voteAmount={notification.voteAmount}
+            text={text}
+            type={notification.sourceType}
           />
         </Link>
       );
