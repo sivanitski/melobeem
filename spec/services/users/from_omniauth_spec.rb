@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe Users::FromOmniauth do
+  let(:remote_ip) { '::1' }
   let(:facebook_hash) do
     OmniAuth::AuthHash.new({
                              'provider' => 'facebook',
@@ -16,7 +17,7 @@ RSpec.describe Users::FromOmniauth do
   end
 
   describe '#call' do
-    subject(:user_from_oauth) { described_class.new(auth: facebook_hash).call }
+    subject(:user_from_oauth) { described_class.new(auth: facebook_hash, remote_ip: remote_ip).call }
 
     context 'when deactivated user registers again' do
       before { create :user, :deactivated, provider: 'facebook', uid: '123545' }

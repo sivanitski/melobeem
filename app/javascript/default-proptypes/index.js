@@ -6,7 +6,7 @@ const defaultProptypes = {
     name: propTypes.string.isRequired,
     imageUrl: propTypes.string.isRequired,
     totalVotes: propTypes.number.isRequired,
-    username: propTypes.string.isRequired,
+    username: propTypes.string,
     rank: propTypes.number.isRequired,
     level: propTypes.number.isRequired,
   }).isRequired,

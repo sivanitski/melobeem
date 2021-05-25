@@ -7,4 +7,8 @@ class BaseSerializer < ActiveModel::Serializer
 
     Imgproxy.url_for(ENV['DEFAULT_IMAGE_PATH'])
   end
+
+  def current_country
+    instance_options[:country]
+  end
 end

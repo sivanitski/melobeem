@@ -5,7 +5,7 @@
     "entry": {
       "type": "object",
       "required": ["id", "name", "image_url", "total_votes", "rank", "username", "level", "user_id", "avatar_url",
-      "competition_money_prize", "current_competition", "competition_additional_prize", "spent_competition_additional_prize"],
+      "competition_money_prize_cents", "competition_money_currency","current_competition", "competition_additional_prize", "spent_competition_additional_prize"],
       "properties": {
         "id": {"type": "integer"},
         "name": {"type": "string"},
@@ -16,7 +16,8 @@
         "level": {"type": "integer"},
         "user_id": {"type": "integer"},
         "avatar_url": {"type": "string"},
-        "competition_money_prize": {"type": "integer"},
+        "competition_money_prize_cents": {"type": "integer"},
+        "competition_money_currency": {"type": "string"},
         "competition_additional_prize": {"type": "integer"},
         "current_competition": {"type": "boolean"},
         "spent_competition_additional_prize": {"type": "boolean"}

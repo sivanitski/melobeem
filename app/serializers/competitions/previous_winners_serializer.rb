@@ -1,6 +1,7 @@
 module Competitions
   class PreviousWinnersSerializer < BaseSerializer
-    attributes :id, :title, :prize_cents, :starts_at, :entries_count, :winner_id, :winner_total_votes, :winner_image_url
+    attributes :id, :title, :prize_cents, :prize_currency, :starts_at, :entries_count,
+               :winner_id, :winner_total_votes, :winner_image_url
 
     def id
       object.competition_id
@@ -11,7 +12,14 @@ module Competitions
     end
 
     def prize_cents
-      object.competition_prize_cents
+      return 0 if object.competition_prize_cents.zero?
+
+      money = Money.new(object.competition_prize_cents, 'USD')
+      money.exchange_to(current_country.currency_code).cents
+    end
+
+    def prize_currency
+      current_country.currency.code
     end
 
     def starts_at

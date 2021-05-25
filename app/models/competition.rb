@@ -1,6 +1,8 @@
 class Competition < ApplicationRecord
   enum status: { started: 'started', finished: 'finished' }
 
+  monetize :prize_cents, as: :prize, with_currency: :prize_currency
+
   has_many :entries, dependent: :destroy
   has_many :purchase_transactions, dependent: :destroy
 

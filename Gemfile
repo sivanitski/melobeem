@@ -55,6 +55,10 @@ gem 'omniauth-facebook'
 gem 'sidekiq'
 gem 'sidekiq-scheduler'
 
+# geoip
+gem 'countries'
+gem 'maxmind-geoip2', '~> 0.5.0'
+
 # admin
 gem 'activeadmin'
 gem 'activeadmin-searchable_select'
@@ -67,9 +71,11 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.2'
 end
 
-# payments
+# payments and money
+gem 'app_store_pricing_matrix'
 gem 'money', '~> 6.7', '>= 6.7.1'
 gem 'money-open-exchange-rates', '~> 1.4', require: 'money/bank/open_exchange_rates_bank'
+gem 'money-rails'
 gem 'stripe'
 
 group :development do

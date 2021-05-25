@@ -4,6 +4,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import defaultProptypes from "../../default-proptypes";
+import { formatMoneyWithCurrency } from "../../helpers/utils";
 import IconGift from "../../images/icon-gift.svg";
 
 const WinnerItem = ({ winner }) => {
@@ -26,7 +27,11 @@ const WinnerItem = ({ winner }) => {
             <div className="competitors-item__place text-small text-grey">
               <IconGift />
               <div className="text-smaller text-pink">
-                won £{winner.prizeCents}
+                won{" "}
+                {formatMoneyWithCurrency(
+                  winner.prizeCents,
+                  winner.prizeCurrency
+                )}
               </div>
             </div>
           </div>

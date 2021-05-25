@@ -2,18 +2,21 @@ module Competitions
   class PrizesQuery
     REVENUE_PRIZE_PART = 0.015
 
-    attr_reader :competition
+    attr_reader :competition, :country
 
-    def initialize(competition)
+    def initialize(competition:, country:)
       @competition = competition
+      @country = country
     end
 
     def call
       money_prizes = calculate_money_prizes
       {
-        money_prizes: [{ first_prize: money_prizes.first },
-                       { second_prize: money_prizes.second },
-                       { third_prize: money_prizes.last }],
+        money_prizes: [
+          { prize: money_prizes.first, currency: country.currency.symbol, place: 1 },
+          { prize: money_prizes.second, currency: country.currency.symbol, place: 2 },
+          { prize: money_prizes.last, currency: country.currency.symbol, place: 3 }
+        ],
         not_money_prizes: not_money_prizes
       }
     end
@@ -21,19 +24,17 @@ module Competitions
     private
 
     def calculate_money_prizes
-      revenue_in_dollars = (competition.revenue * pound_dollar_rate).round
-      first_prize = (competition.prize_cents + revenue_in_dollars * REVENUE_PRIZE_PART).to_i
-      money_prizes = []
+      revenue = (competition.revenue * currency_rate).round
+
+      first_prize = (competition.prize_cents + revenue * REVENUE_PRIZE_PART).to_i
+
       second_prize, third_prize = MONEY_PRIZES.detect { |k, _v| k.include? first_prize }&.last
 
-      money_prizes.push(first_prize, second_prize, third_prize)
-
-      money_prizes
+      [first_prize, second_prize, third_prize]
     end
 
-    def pound_dollar_rate
-      OXR.update_rates
-      OXR.get_rate('GBP', 'USD')
+    def currency_rate
+      Money.default_bank.get_rate('USD', country.currency_code)
     end
 
     def not_money_prizes

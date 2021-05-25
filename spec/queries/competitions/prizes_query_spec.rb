@@ -3,16 +3,17 @@ require 'rails_helper'
 RSpec.describe Competitions::PrizesQuery do
   let(:competition) { create :competition }
   let(:rates_exchange) { Psych.load_file('spec/fixtures/currency_rates.json') }
-  let(:revenue_percent_in_dollars) { (competition.revenue * 0.015 / rates_exchange['rates']['GBP']).floor }
-  let!(:prize_in_dollars) { (revenue_percent_in_dollars + competition.prize_cents) }
+  let(:revenue_percent_in_pounds) { (competition.revenue * 0.015 * rates_exchange['rates']['USD']).floor }
+  let!(:prize_in_pounds) { (revenue_percent_in_pounds + competition.prize_cents) }
+  let(:country) { ISO3166::Country.new('US') }
 
   describe '#call' do
-    subject { described_class.new(competition).call }
+    subject { described_class.new(competition: competition, country: country).call }
 
     it 'returns main prizes' do
-      expect(subject[:money_prizes].first[:first_prize]).to eq prize_in_dollars
-      expect(subject[:money_prizes].second[:second_prize]).to eq 3000
-      expect(subject[:money_prizes].last[:third_prize]).to eq 1500
+      expect(subject[:money_prizes].first[:prize]).to eq prize_in_pounds
+      expect(subject[:money_prizes].second[:prize]).to eq 3000
+      expect(subject[:money_prizes].last[:prize]).to eq 1500
     end
 
     it 'returns not_money_prizes keys equal to ADDITIONAL_PRIZES keys' do

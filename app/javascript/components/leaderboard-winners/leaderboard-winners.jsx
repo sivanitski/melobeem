@@ -29,7 +29,7 @@ const LeaderboardWinners = () => {
     <>
       <div className="winners">
         <h1 className="headline--small setting__title">Previous winners</h1>
-        <Link to="/" className="go-back">
+        <Link to="/competition-info" className="go-back">
           <GoBack />
         </Link>
         <CompetitorsList

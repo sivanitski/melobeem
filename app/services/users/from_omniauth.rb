@@ -2,10 +2,11 @@ require 'open-uri'
 
 module Users
   class FromOmniauth
-    attr_accessor :auth
+    attr_accessor :auth, :remote_ip
 
-    def initialize(auth:)
+    def initialize(auth:, remote_ip:)
       @auth = auth
+      @remote_ip = remote_ip
     end
 
     def call # rubocop:disable Metrics/AbcSize
@@ -14,6 +15,7 @@ module Users
         user.password = generate_password
         user.name = auth.info.name
         user.avatar = image_file
+        user.country = geo_ip_country
       end
     end
 
@@ -35,6 +37,12 @@ module Users
 
     def generate_password
       Devise.friendly_token[0, 20]
+    end
+
+    def geo_ip_country
+      $geoip.country(remote_ip)&.country&.iso_code # rubocop:disable Style/GlobalVars
+    rescue MaxMind::GeoIP2::AddressNotFoundError, IPAddr::AddressFamilyError
+      nil
     end
   end
 end

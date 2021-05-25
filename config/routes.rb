@@ -86,6 +86,8 @@ Rails.application.routes.draw do
         get :check_presence, on: :collection
         get :time_to_free_spin, on: :collection
       end
+
+      resources :products, only: :index
     end
   end
 

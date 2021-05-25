@@ -3,7 +3,7 @@ module Users
     include API::CsrfCookie
 
     def facebook
-      @user = Users::FromOmniauth.new(auth: auth).call
+      @user = Users::FromOmniauth.new(auth: auth, remote_ip: remote_ip).call
 
       if @user.persisted?
         check_reference
@@ -19,6 +19,10 @@ module Users
 
     def auth
       request.env['omniauth.auth']
+    end
+
+    def remote_ip
+      request.remote_ip
     end
 
     def check_reference

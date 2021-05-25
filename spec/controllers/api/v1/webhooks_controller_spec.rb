@@ -5,6 +5,8 @@ RSpec.describe API::V1::WebhooksController, type: :request do
   include StripeHelper
 
   let(:stripe_helper) { StripeMock.create_test_helper }
+  let(:product_spinner) { create :product_spinner }
+  let(:product_votes) { create :product_votes }
   let(:params) do
     {
       data: {
@@ -37,7 +39,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
 
     context 'when transaction was found' do
       context 'when vote.value were enrolled' do
-        let!(:transaction) { create :purchase_transaction, entry: entry, product_type: :vote }
+        let!(:transaction) { create :purchase_transaction, entry: entry, product_type: :vote, product: product_votes }
 
         before do
           stripe_signature = generate_stripe_signature(params.to_json)
@@ -73,7 +75,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
       end
 
       context 'when votes where bought' do
-        let!(:transaction) { create :purchase_transaction, entry: entry }
+        let!(:transaction) { create :purchase_transaction, entry: entry, product: product_votes }
 
         it 'increments revenue of current competition' do
           expect do
@@ -100,7 +102,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
 
     context 'when transaction was found' do
       context 'when vote.value were enrolled' do
-        let!(:transaction) { create :purchase_transaction, product_type: :spin }
+        let!(:transaction) { create :purchase_transaction, product_type: :spin, product: product_spinner }
 
         before do
           transaction.user.update!(premium_spins: 5)
@@ -117,7 +119,7 @@ RSpec.describe API::V1::WebhooksController, type: :request do
       end
 
       context 'when spins where bought' do
-        let!(:transaction) { create :purchase_transaction, entry: entry }
+        let!(:transaction) { create :purchase_transaction, entry: entry, product: product_spinner }
 
         it 'increments revenue of current competition' do
           expect do

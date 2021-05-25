@@ -35,7 +35,7 @@ module Competitions
     end
 
     def calculate_prizes
-      revenue_in_dollars = (competition.revenue * pound_to_dollar_rate).round
+      revenue_in_dollars = competition.revenue.round
       first_prize = (competition.prize_cents + revenue_in_dollars * REVENUE_CASHBACK_PERCENT).to_i
       money_prizes = []
       second_prize, third_prize = MONEY_PRIZES.detect { |k, _v| k.include? first_prize }&.last
@@ -43,11 +43,6 @@ module Competitions
       money_prizes.push(first_prize, second_prize, third_prize)
 
       money_prizes
-    end
-
-    def pound_to_dollar_rate
-      OXR.update_rates
-      OXR.get_rate('GBP', 'USD')
     end
   end
 end

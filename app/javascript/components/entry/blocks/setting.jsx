@@ -43,7 +43,7 @@ const EntrySetting = ({ childId, isSettingOpen, toggleSettingOpen }) => {
 EntrySetting.propTypes = {
   childId: propTypes.number.isRequired,
   isSettingOpen: propTypes.bool.isRequired,
-  toggleSettingOpen: propTypes.bool.isRequired,
+  toggleSettingOpen: propTypes.func.isRequired,
 };
 
 export default EntrySetting;

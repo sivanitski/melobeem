@@ -4,9 +4,9 @@ import propTypes from "prop-types";
 import React from "react";
 
 import { calcDaysLeft } from "../../helpers/date";
-import { roundToHundredths } from "../../helpers/utils";
+import { formatMoneyWithCurrency } from "../../helpers/utils";
 
-const CompetitionInfo = ({ timeLeft, prize }) => {
+const CompetitionInfo = ({ timeLeft, prize, prizeCurrency }) => {
   return (
     <div className="competition-info">
       <div className="competition-info__item">
@@ -18,7 +18,7 @@ const CompetitionInfo = ({ timeLeft, prize }) => {
       <div className="competition-info__item">
         <div className="competition-info__item__title text-grey">Prize</div>
         <div className="competition-info__item__title headline--medium text-pink">
-          £{roundToHundredths(prize)}
+          {formatMoneyWithCurrency(prize, prizeCurrency)}
         </div>
       </div>
     </div>
@@ -28,6 +28,7 @@ const CompetitionInfo = ({ timeLeft, prize }) => {
 CompetitionInfo.propTypes = {
   timeLeft: propTypes.string.isRequired,
   prize: propTypes.number.isRequired,
+  prizeCurrency: propTypes.string.isRequired,
 };
 
 export default CompetitionInfo;

@@ -82,6 +82,7 @@ const Leaderboard = () => {
       <CompetitionInfo
         timeLeft={competitionData.endsAt}
         prize={competitionData.prizeCents}
+        prizeCurrency={competitionData.prizeCurrency}
       />
       <Competitors competitors={childrenData} />
       <Footer active="leaderboard" />

@@ -1,30 +1,41 @@
+import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React from "react";
 
+import { api } from "../../../api";
 import SpinnerOrange from "../../../images/spinner-orange-small.svg";
 import SpinnerPurple from "../../../images/spinner-purple-small.svg";
+import { Loading } from "../../loading";
 import SpinnerTitle from "./spinner-title";
-const spinOptions = [
-  { price: "6", amount: "5" },
-  { price: "9", amount: "10" },
-];
 
 const SpinnerList = ({ handlePriceClick }) => {
+  const getSpinOptions = () => {
+    return api.get("/products", { params: { product_type: "spinner" } });
+  };
+
+  const { data: spinOptions, loading } = useRequest(getSpinOptions, {
+    formatResult: (res) => res.data.products,
+  });
+
+  if (loading) {
+    return <Loading />;
+  }
+
   return (
     <div className="spinner">
       <SpinnerTitle />
       <div className="spinner-list">
         {spinOptions.map((spinOption, index) => (
-          <div className="spinner-item" key={spinOption.amount}>
+          <div className="spinner-item" key={spinOption.id}>
             <div className="spinner-item__img">
               {index % 2 ? <SpinnerOrange /> : <SpinnerPurple />}
             </div>
-            <div className="spinner-item__text">{spinOption.amount} Spins</div>
+            <div className="spinner-item__text">{spinOption.title}</div>
             <div
               className="button spinner-item__button"
               onClick={() => handlePriceClick(spinOption)}
             >
-              £{spinOption.price}
+              {spinOption.price}
             </div>
           </div>
         ))}

@@ -6,7 +6,7 @@ RSpec.describe Competitions::RewardWinners do
   let(:competition) { create :competition }
   let(:users) { create_list :user, 4 }
   let(:rates_exchange) { Psych.load_file('spec/fixtures/currency_rates.json') }
-  let(:revenue_percent_in_dollars) { (competition.revenue * 0.015 / rates_exchange['rates']['GBP']).floor }
+  let(:revenue_percent_in_dollars) { competition.revenue * 0.015 }
   let(:prize_in_dollars) { (revenue_percent_in_dollars + competition.prize_cents) }
 
   describe '#call' do
@@ -88,11 +88,11 @@ RSpec.describe Competitions::RewardWinners do
           first_place_entry.reload
           second_place_entry.reload
           third_place_entry.reload
-        end.to change(first_place_entry.reload, :competition_money_prize).from(0).to(5527)
-                                                                         .and change(second_place_entry.reload, :competition_money_prize).from(0).to(5527)
+        end.to change(first_place_entry.reload, :competition_money_prize).from(0).to(5333)
+                                                                         .and change(second_place_entry.reload, :competition_money_prize).from(0).to(5333)
                                                                                                                                          .and change(
                                                                                                                                            second_place_entry.reload, :competition_money_prize # rubocop:disable Layout/LineLength
-                                                                                                                                         ).from(0).to(5527)
+                                                                                                                                         ).from(0).to(5333)
       end
     end
   end

@@ -1,5 +1,6 @@
 import "./style.less";
 
+import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
 import { withRouter } from "react-router";
@@ -10,19 +11,13 @@ import UserContext from "../../../helpers/user-context";
 import HeartVote from "../../../images/heart-vote.svg";
 import TimeMessage from "../../entry/blocks/time-fast-message";
 import { InfoBlock } from "../../info-block";
+import { Loading } from "../../loading";
 import { Timer } from "../../timer";
 import TimeMenu from "./time-menu";
 
 const TIME_TITLE_INFO = "What is Time prize?";
 const TIME_TEXT_INFO =
   "Free votes on this entry can now happen more frequently. Instead of 40 minutes it’s now every 30 minutes! (lasts 24h)";
-
-// These options will be taken from the backend later
-const voteOptions = [
-  { price: "10", amount: "10" },
-  { price: "20", amount: "20" },
-  { price: "50", amount: "50" },
-];
 
 const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
   const { user } = useContext(UserContext);
@@ -38,6 +33,14 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
     }
   }, []);
 
+  const getVoteOptions = () => {
+    return api.get("/products", { params: { product_type: "vote" } });
+  };
+
+  const { data: voteOptions, loading } = useRequest(getVoteOptions, {
+    formatResult: (res) => res.data.products,
+  });
+
   const handleFreeVoteClick = async () => {
     await api.post(`/entries/${childId}/votes/create_free`, {
       entryId: childId,
@@ -50,6 +53,10 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
   const handlePaidClick = (clickedVoteOption) => {
     handlePriceClick(clickedVoteOption);
   };
+
+  if (loading) {
+    return <Loading />;
+  }
 
   return (
     <div className="vote">
@@ -86,16 +93,16 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
       )}
 
       {voteOptions.map((voteOption) => (
-        <div className="vote-item" key={voteOption.amount}>
+        <div className="vote-item" key={voteOption.value}>
           <div className="vote-item__img">
             <HeartVote className="vote-item__img--small" />
           </div>
-          <div className="vote-item__text">{voteOption.amount} Votes</div>
+          <div className="vote-item__text">{voteOption.title}</div>
           <div
             className="vote-item__button"
             onClick={() => handlePaidClick(voteOption)}
           >
-            £ {voteOption.price}
+            {voteOption.price}
           </div>
         </div>
       ))}

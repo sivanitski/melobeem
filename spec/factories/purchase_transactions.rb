@@ -9,5 +9,6 @@ FactoryBot.define do
     user
     entry
     competition
+    product
   end
 end

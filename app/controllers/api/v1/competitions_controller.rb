@@ -4,7 +4,7 @@ module API
       skip_before_action :authenticate_user!, only: %i[current previous_winners competition_prizes previous_awarded]
 
       def current
-        render json: competition, serializer: Competitions::CurrentSerializer
+        render json: competition, serializer: Competitions::CurrentSerializer, country: country
       end
 
       def previous_winners
@@ -15,7 +15,9 @@ module API
       end
 
       def competition_prizes
-        render json: Competitions::PrizesQuery.new(competition).call, serializer: nil, status: :ok
+        render json: Competitions::PrizesQuery.new(
+          competition: competition, country: country
+        ).call, status: :ok
       end
 
       def previous_awarded

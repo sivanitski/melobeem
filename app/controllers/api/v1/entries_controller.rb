@@ -15,7 +15,7 @@ module API
       def show
         entry_competition = Entry.find(params[:id]).competition
         entry = ::Entries::WithRankQuery.new.call(entry_competition.id).find(params[:id])
-        respond_with entry, serializer: ::Entries::RankedSerializer
+        respond_with entry, serializer: ::Entries::RankedSerializer, country: country
       end
 
       def create

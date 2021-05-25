@@ -1,10 +1,10 @@
+import currency from "currency.js";
+
 export const filterCompetitors = (childName, children) => {
   return children.filter((child) =>
     child.name.toLowerCase().includes(childName.toLowerCase())
   );
 };
-
-export const roundToHundredths = (number) => Math.round(number * 100) / 100;
 
 export const getLoginPayload = (data) => {
   const parts = data.tokenDetail.signedRequest.split(".");
@@ -24,4 +24,18 @@ export const makePluralForm = (string, condition) => {
   }
 
   return string;
+};
+
+export const formatMoneyWithCurrency = (
+  prize,
+  currencyValue,
+  fromCents = true
+) => {
+  return currency(prize, {
+    fromCents,
+    precision: 2,
+    pattern: `!#`,
+    symbol: currencyValue,
+    separator: ",",
+  }).format();
 };

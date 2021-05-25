@@ -7,7 +7,9 @@ const NoSpinner = () => {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [activeOption, setActiveOption] = useState({
     price: null,
-    amount: null,
+    value: null,
+    title: null,
+    id: null,
   });
 
   const handlePriceClick = (option) => {
@@ -25,8 +27,10 @@ const NoSpinner = () => {
       <Payment
         activeType="spinner"
         activePrice={activeOption.price}
-        activeAmount={activeOption.amount}
+        activeAmount={activeOption.value}
         handlePaymentClose={handlePaymentClose}
+        activeTitle={activeOption.title}
+        activeId={activeOption.id}
       />
     );
   }

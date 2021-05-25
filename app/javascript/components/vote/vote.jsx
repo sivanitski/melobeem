@@ -30,7 +30,9 @@ const Vote = ({
   }
   const [activeOption, setActiveOption] = useState({
     price: null,
-    amount: null,
+    value: null,
+    title: null,
+    id: null,
   });
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
 
@@ -124,7 +126,8 @@ const Vote = ({
         <Payment
           activeType="vote"
           activePrice={activeOption.price}
-          activeAmount={activeOption.amount}
+          activeTitle={activeOption.title}
+          activeId={activeOption.id}
           handlePaymentSucceedClose={handlePaymentSucceedClose}
           handlePaymentClose={handlePaymentClose}
           childId={child.id}

@@ -20,6 +20,8 @@ import SpinnerPurple from "../../images/spinner-purple-small.svg";
 const Payment = ({
   activeType,
   activePrice,
+  activeTitle,
+  activeId,
   activeAmount,
   handlePaymentSucceedClose,
   handlePaymentClose,
@@ -42,12 +44,12 @@ const Payment = ({
       if (activeType === "vote") {
         res = await api.post(`/charges/buy_votes`, {
           entryId: childId,
-          voteValue: activeAmount,
           userId: userId,
+          productId: activeId,
         });
       } else {
         res = await api.post(`charges/buy_spins`, {
-          value: activeAmount,
+          productId: activeId,
         });
       }
       setClientSecret(res.data.clientSecret);
@@ -137,9 +139,7 @@ const Payment = ({
         <ButtonClose />
       </div>
       {renderImage()}
-      <div className="vote-payment__product">
-        {activeAmount} {activeType === "vote" ? "votes" : "spinners"}
-      </div>
+      <div className="vote-payment__product">{activeTitle}</div>
       <form onSubmit={handleSubmit} className="vote-payment__form">
         <div className="vote-payment__card">
           <label htmlFor="cardNumber" className="vote-payment__text">
@@ -195,7 +195,7 @@ const Payment = ({
           disabled={!stripe}
           className="button vote-payment__button"
         >
-          Pay £ {activePrice}
+          Pay {activePrice}
         </button>
       </form>
     </div>
@@ -205,11 +205,13 @@ const Payment = ({
 Payment.propTypes = {
   activeType: propTypes.string.isRequired,
   activePrice: propTypes.string.isRequired,
-  activeAmount: propTypes.string.isRequired,
+  activeAmount: propTypes.number,
   handlePaymentClose: propTypes.func.isRequired,
   handlePaymentSucceedClose: propTypes.func,
   childId: propTypes.number,
   userId: propTypes.number,
+  activeTitle: propTypes.string.isRequired,
+  activeId: propTypes.number.isRequired,
 };
 
 export default Payment;

@@ -4,12 +4,13 @@
   "properties": {
     "competition": {
       "type": "object",
-      "required": ["id", "ends_at", "prize_cents", "created_at"],
+      "required": ["id", "ends_at", "prize_cents", "created_at", "prize_currency"],
       "properties": {
         "id": {"type": "integer"},
         "ends_at": {"type": "timestamp"},
         "prize_cents": {"type": "integer"},
-        "created_at": {"type": "timestamp"}
+        "created_at": {"type": "timestamp"},
+        "prize_currency": {"type": "string"}
       }
     }
   }

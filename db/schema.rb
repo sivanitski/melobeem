@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_19_123415) do
+ActiveRecord::Schema.define(version: 2021_05_21_062532) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -42,6 +42,11 @@ ActiveRecord::Schema.define(version: 2021_05_19_123415) do
   create_enum :product_type, [
     "vote",
     "spin",
+  ], force: :cascade
+
+  create_enum :products_product_type, [
+    "vote",
+    "spinner",
   ], force: :cascade
 
   create_enum :vote_source_type, [
@@ -104,6 +109,7 @@ ActiveRecord::Schema.define(version: 2021_05_19_123415) do
     t.enum "status", default: "started", null: false, enum_name: "competition_status"
     t.integer "revenue", default: 0, null: false
     t.integer "money_prizes_final_sum", default: 0, null: false
+    t.string "prize_currency", default: "USD"
     t.index ["starts_at"], name: "index_competitions_on_starts_at", unique: true
   end
 
@@ -166,6 +172,16 @@ ActiveRecord::Schema.define(version: 2021_05_19_123415) do
     t.check_constraint "value = ANY (ARRAY[1, 5, 10, 20, 30])"
   end
 
+  create_table "products", force: :cascade do |t|
+    t.integer "tier_id", null: false
+    t.string "title"
+    t.text "description"
+    t.integer "value"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.enum "product_type", default: "vote", enum_name: "products_product_type"
+  end
+
   create_table "purchase_transactions", force: :cascade do |t|
     t.string "intent_id"
     t.integer "amount"
@@ -177,8 +193,9 @@ ActiveRecord::Schema.define(version: 2021_05_19_123415) do
     t.bigint "entry_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "competition_id"
     t.enum "product_type", enum_name: "product_type"
+    t.bigint "competition_id"
+    t.bigint "product_id"
     t.index ["competition_id"], name: "index_purchase_transactions_on_competition_id"
     t.index ["entry_id"], name: "index_purchase_transactions_on_entry_id"
     t.index ["user_id"], name: "index_purchase_transactions_on_user_id"
@@ -212,9 +229,12 @@ ActiveRecord::Schema.define(version: 2021_05_19_123415) do
     t.boolean "deactivated", default: false, null: false
     t.integer "premium_spins", default: 0, null: false
     t.boolean "admin", default: false
+    t.string "stripe_customer_id"
+    t.string "country"
     t.index ["email"], name: "index_users_on_email"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, where: "(deactivated IS FALSE)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["stripe_customer_id"], name: "index_users_on_stripe_customer_id"
   end
 
   create_table "votes", force: :cascade do |t|

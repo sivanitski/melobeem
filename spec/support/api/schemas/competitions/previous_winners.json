@@ -6,7 +6,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "winner_id", "title", "winner_image_url", "starts_at", "entries_count", "prize_cents", "winner_total_votes"],
+        "required": ["id", "winner_id", "title", "winner_image_url", "starts_at", "entries_count", "prize_cents", "winner_total_votes", "prize_currency"],
         "properties": {
           "id": {"type": "integer"},
           "winner_id": {"type": "integer"},
@@ -15,6 +15,7 @@
           "starts_at": {"type": "timestamp"},
           "entries_count": {"type": "integer"},
           "prize_cents": {"type": "integer"},
+          "prize_currency": {"type": "string"},
           "winner_total_votes": {"type": "integer"}
         }
       }
