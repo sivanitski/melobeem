@@ -16,7 +16,7 @@ module Entries
           .where(votes: { entry_id: entry.id })
           .where('votes.created_at::date = ?::date', date)
           .group('votes.source_type, votes.user_id, users.id, votes.invited_user_id, invited_users_votes.name, votes.created_at::date')
-          .order('vote_date DESC')
+          .order('max(votes.created_at) DESC')
           .page(page)
           .per(per)
           .preload(user: { avatar_attachment: :blob }, invited_user: { avatar_attachment: :blob })
