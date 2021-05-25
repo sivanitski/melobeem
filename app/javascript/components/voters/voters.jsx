@@ -46,7 +46,7 @@ const Voters = ({
         <GoBack />
       </Link>
 
-      {child.userId === user.id ? (
+      {child.userId === user?.id ? (
         <VotersStatistic id={id} />
       ) : (
         <LastTenVoters id={id} />

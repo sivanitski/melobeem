@@ -25,7 +25,7 @@ const EntryContent = ({ child, voters }) => {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
 
   useEffect(() => {
-    if (currentChild.id === child.id) {
+    if (currentChild?.id === child.id) {
       api.get(`/entries/${currentChild.id}/prize_time`).then((res) => {
         setPrizeTime(res?.data?.value);
       });
@@ -44,7 +44,7 @@ const EntryContent = ({ child, voters }) => {
     setIsSettingOpen(!isSettingOpen);
   };
 
-  const isUsersChild = child.userId === user.id;
+  const isUsersChild = child.userId === user?.id;
 
   return (
     <div className="entry">
