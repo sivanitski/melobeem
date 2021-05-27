@@ -1,12 +1,12 @@
 module Entries
   class SearchEntriesQuery
+    attr_accessor :competition
+
     def call(search_line)
       return Entry.none if search_line.empty?
 
-      Entry.active.with_attached_image
-           .preload(:user)
-           .where(competition: Competition.current!)
-           .where("name like '#{search_line}%' OR lower(name) like '#{search_line}%'")
+      ::Entries::WithRankQuery.new.call(Competition.current!.id)
+                              .where("name like '#{search_line}%' OR lower(name) like '#{search_line}%'")
     end
   end
 end

@@ -6,14 +6,15 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "image_url", "total_votes", "username", "level"],
+        "required": ["id", "name", "image_url", "total_votes", "username", "level", "rank"],
         "properties": {
           "id": {"type": "integer"},
           "name": {"type": "string"},
           "image_url": {"type": "string"},
           "total_votes": {"type": "integer"},
           "username": {"type": "string"},
-          "level": {"type": "integer"}
+          "level": {"type": "integer"},
+          "rank": {"type": "integer"}
         }
       }
     },
