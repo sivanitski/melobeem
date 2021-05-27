@@ -11,11 +11,13 @@ const VoteNotificationItem = ({ notification }) => {
   switch (notification.sourceType) {
     case "user":
       return (
-        <Notification
-          image={notification.avatarUrl}
-          voteAmount={notification.voteAmount}
-          text={notification.userName}
-        />
+        <Link to={`/profile/${notification.userId}`}>
+          <Notification
+            image={notification.avatarUrl}
+            voteAmount={notification.voteAmount}
+            text={notification.userName}
+          />
+        </Link>
       );
     case "spinner":
       return (
