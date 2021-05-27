@@ -11,6 +11,8 @@
         "type": "object"
       }
     },
+    "prize_summary_amount": {"type": "integer"},
+    "prize_currency": {"type": "string"},
     "not_money_prizes": {
       "type": "array",
       "items": {

@@ -2,7 +2,7 @@ module Competitions
   class PrizesQuery
     REVENUE_PRIZE_PART = 0.015
 
-    attr_reader :competition, :country
+    attr_reader :competition, :country, :money_prizes
 
     def initialize(competition:, country:)
       @competition = competition
@@ -10,18 +10,29 @@ module Competitions
     end
 
     def call
-      money_prizes = calculate_money_prizes
+      calculate_money_prizes
+
+      prizes_object
+    end
+
+    private
+
+    def prizes_object
       {
-        money_prizes: [
-          { prize: money_prizes.first, currency: country.currency.symbol, place: 1 },
-          { prize: money_prizes.second, currency: country.currency.symbol, place: 2 },
-          { prize: money_prizes.last, currency: country.currency.symbol, place: 3 }
-        ],
+        money_prizes: money_prizes_array,
+        prize_summary_amount: money_prizes.sum,
+        prize_currency: country.currency.symbol,
         not_money_prizes: not_money_prizes
       }
     end
 
-    private
+    def money_prizes_array
+      [
+        { prize: money_prizes.first, currency: country.currency.symbol, place: 1 },
+        { prize: money_prizes.second, currency: country.currency.symbol, place: 2 },
+        { prize: money_prizes.last, currency: country.currency.symbol, place: 3 }
+      ]
+    end
 
     def calculate_money_prizes
       revenue = (competition.revenue * currency_rate).round
@@ -30,7 +41,7 @@ module Competitions
 
       second_prize, third_prize = MONEY_PRIZES.detect { |k, _v| k.include? first_prize }&.last
 
-      [first_prize, second_prize, third_prize]
+      @money_prizes = [first_prize, second_prize, third_prize]
     end
 
     def currency_rate

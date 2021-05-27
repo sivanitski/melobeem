@@ -3,11 +3,11 @@ module Competitions
     attributes :id, :ends_at, :prize_cents, :created_at, :prize_currency
 
     def prize_cents
-      object.prize.exchange_to(current_country.currency_code).cents
+      instance_options[:prize_summary]
     end
 
     def prize_currency
-      current_country.currency.code
+      instance_options[:prize_currency]
     end
   end
 end
