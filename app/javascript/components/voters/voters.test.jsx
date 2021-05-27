@@ -1,5 +1,3 @@
-import { useRequest } from "ahooks";
-import { mount } from "enzyme";
 import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import renderer from "react-test-renderer";
@@ -23,17 +21,6 @@ describe("Components", () => {
         .toJSON();
 
       expect(component).toMatchSnapshot();
-    });
-
-    it("should render Loading state", () => {
-      beforeEach(() => useRequest.mockReturnValue({ loading: true }));
-      const component = mount(
-        <Router>
-          <Voters match={mockMatch} />
-        </Router>
-      );
-
-      expect(component.exists(".loading")).toBeTruthy();
     });
   });
 });

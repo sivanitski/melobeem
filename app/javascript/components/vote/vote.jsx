@@ -8,9 +8,9 @@ import { Redirect, withRouter } from "react-router";
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
+import Loader from "../animation/loader";
 import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
-import { Loading } from "../loading";
 import { Payment } from "../payment";
 import VoteList from "./blocks/vote-list";
 import { VotePopup } from "./vote-popup";
@@ -75,7 +75,7 @@ const Vote = ({
     return <Error />;
   }
   if (loading || timeLoading || isPopupLoading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   const handlePriceClick = (option) => {

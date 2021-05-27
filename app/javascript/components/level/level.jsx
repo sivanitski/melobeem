@@ -7,10 +7,10 @@ import { Redirect } from "react-router";
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import InfoImage from "../../images/info-sign.svg";
+import Loader from "../animation/loader";
 import { Footer } from "../footer";
 import { InfoBlock } from "../info-block";
 import { LevelSwiperMenu } from "../level-swiper-menu";
-import { Loading } from "../loading";
 import LevelContent from "./screens/level-content";
 
 const LEVEL_TITLE_INFO = "What are Levels?";
@@ -41,7 +41,7 @@ const Level = () => {
   };
 
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (

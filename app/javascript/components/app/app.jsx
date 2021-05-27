@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
-import { Loading } from "../loading";
+import Loader from "../animation/loader";
 import { Routes } from "../routes";
 
 const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
@@ -56,7 +56,7 @@ const App = () => {
   };
 
   if (userLoading || childLoading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (

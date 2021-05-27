@@ -2,8 +2,15 @@
 
 exports[`Components Voters should render Vote component 1`] = `
 <div
-  className="loading"
+  className="animation animation--loader"
 >
-  Loading...
+  <div
+    style={
+      Object {
+        "height": 300,
+        "width": 300,
+      }
+    }
+  />
 </div>
 `;

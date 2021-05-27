@@ -5,13 +5,13 @@ import { useLocation } from "react-router-dom";
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
+import Loader from "../animation/loader";
 import { CompetitionInfo } from "../competition-info";
 import { Competitors } from "../competitors";
 import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderLogin } from "../header-login";
 import { HeaderNotLogin } from "../header-not-login";
-import { Loading } from "../loading";
 
 const Leaderboard = () => {
   const { user } = useContext(UserContext);
@@ -66,7 +66,7 @@ const Leaderboard = () => {
     return <Error />;
   }
   if (competitionLoading || childrenLoading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (

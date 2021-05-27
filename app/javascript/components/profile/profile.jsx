@@ -7,10 +7,10 @@ import { withRouter } from "react-router";
 
 import { api } from "../../api";
 import UserContext from "../../helpers/user-context";
+import Loader from "../animation/loader";
 import { BackButton } from "../back-button";
 import { Error } from "../error";
 import { Footer } from "../footer";
-import { Loading } from "../loading";
 import { ProfileChildren } from "../profile-children";
 import { ProfileHeader } from "../profile-header";
 import { ProfileNav } from "../profile-nav";
@@ -39,7 +39,7 @@ const Profile = ({
     return <Error />;
   }
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (

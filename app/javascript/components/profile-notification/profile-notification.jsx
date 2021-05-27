@@ -9,9 +9,9 @@ import { api } from "../../api";
 import { formatDateNotification } from "../../helpers/date";
 import UserContext from "../../helpers/user-context";
 import GoBack from "../../images/go-back.svg";
+import Loader from "../animation/loader";
 import { Error } from "../error";
 import { Footer } from "../footer";
-import { Loading } from "../loading";
 import ProfileNotificationItem from "./blocks/profile-notification-item";
 
 const ProfileNotification = () => {
@@ -33,7 +33,7 @@ const ProfileNotification = () => {
     return <Error />;
   }
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   const notificationGropedByDate = groupBy(notifications, "createdAtDate");

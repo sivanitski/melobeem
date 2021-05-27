@@ -5,7 +5,7 @@ import React from "react";
 import { api } from "../../../api";
 import SpinnerOrange from "../../../images/spinner-orange-small.svg";
 import SpinnerPurple from "../../../images/spinner-purple-small.svg";
-import { Loading } from "../../loading";
+import Loader from "../../animation/loader";
 import SpinnerTitle from "./spinner-title";
 
 const SpinnerList = ({ handlePriceClick }) => {
@@ -18,7 +18,7 @@ const SpinnerList = ({ handlePriceClick }) => {
   });
 
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (

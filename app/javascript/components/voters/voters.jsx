@@ -9,8 +9,8 @@ import { Link } from "react-router-dom";
 import { api } from "../../api";
 import UserContext from "../../helpers/user-context";
 import GoBack from "../../images/go-back.svg";
+import Loader from "../animation/loader";
 import { Error } from "../error";
-import { Loading } from "../loading";
 import LastTenVoters from "./screens/last-ten-voters";
 import VotersStatistic from "./screens/voters-statistic";
 
@@ -37,7 +37,7 @@ const Voters = ({
   }
 
   if (childLoading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (

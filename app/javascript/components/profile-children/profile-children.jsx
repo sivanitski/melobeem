@@ -3,8 +3,8 @@ import propTypes from "prop-types";
 import React from "react";
 
 import { api } from "../../api";
+import Loader from "../animation/loader";
 import { Error } from "../error";
-import { Loading } from "../loading";
 import { ProfileChildrenItem } from "../profile-children-item";
 
 const ProfileChildren = ({ userId }) => {
@@ -20,7 +20,7 @@ const ProfileChildren = ({ userId }) => {
     return <Error />;
   }
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (

@@ -4,10 +4,10 @@ import { Redirect } from "react-router";
 
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
+import Loader from "../animation/loader";
 import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderUser } from "../header-user";
-import { Loading } from "../loading";
 import NoSpinner from "./screens/no-spinner";
 import Spinner from "./screens/spinner";
 
@@ -39,7 +39,7 @@ const SpinnerPage = () => {
     }
 
     if (loading) {
-      return <Loading />;
+      return <Loader />;
     }
 
     if (data.type) {

@@ -4,8 +4,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { api } from "../../../api";
+import Loader from "../../animation/loader";
 import { Error } from "../../error";
-import { Loading } from "../../loading";
 
 const LastTenVoters = ({ id }) => {
   const getVoters = () => {
@@ -21,7 +21,7 @@ const LastTenVoters = ({ id }) => {
   }
 
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (

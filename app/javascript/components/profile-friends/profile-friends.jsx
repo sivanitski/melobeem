@@ -13,8 +13,8 @@ import { api } from "../../api";
 import imageAvatar from "../../images/avatar.png";
 import IconHeart from "../../images/icon-heart.svg";
 import InfoImage from "../../images/info-sign.svg";
+import Loader from "../animation/loader";
 import { InfoBlock } from "../info-block";
-import { Loading } from "../loading";
 
 const PROFILE_TITLE_INFO = "Better together!";
 const PROFILE_TEXT_INFO =
@@ -33,7 +33,7 @@ const ProfileFriends = ({ userId }) => {
   });
 
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   let { internal: friendsMelobeem = [], external: friendsFb = [] } = groupBy(

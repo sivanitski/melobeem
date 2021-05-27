@@ -4,10 +4,10 @@ import { Link } from "react-router-dom";
 
 import { api } from "../../api";
 import GoBack from "../../images/go-back.svg";
+import Loader from "../animation/loader";
 import { CompetitorsList } from "../competitors-list";
 import { Error } from "../error";
 import { Footer } from "../footer";
-import { Loading } from "../loading";
 
 const LeaderboardWinners = () => {
   const getWinners = () => {
@@ -22,7 +22,7 @@ const LeaderboardWinners = () => {
     return <Error />;
   }
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   return (

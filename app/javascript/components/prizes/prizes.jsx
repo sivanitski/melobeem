@@ -10,9 +10,9 @@ import { formatMoneyWithCurrency, makePluralForm } from "../../helpers/utils";
 import PrizeIcon from "../../images/first-prize-icon.svg";
 import GoBack from "../../images/go-back.svg";
 import IconCrown from "../../images/icon-crown.svg";
+import Loader from "../animation/loader";
 import { Error } from "../error";
 import { Footer } from "../footer";
-import { Loading } from "../loading";
 
 const Prizes = () => {
   const getPrizes = () => {
@@ -27,7 +27,7 @@ const Prizes = () => {
     return <Error />;
   }
   if (loading) {
-    return <Loading />;
+    return <Loader />;
   }
 
   const calculateTotalMoneyPrize = () => {
