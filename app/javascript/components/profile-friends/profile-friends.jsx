@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import { api } from "../../api";
-import imageAvatar from "../../images/avatar.png";
+import ImageAvatar from "../../images/avatar.svg";
 import IconHeart from "../../images/icon-heart.svg";
 import InfoImage from "../../images/info-sign.svg";
 import Loader from "../animation/loader";
@@ -87,7 +87,7 @@ const ProfileFriends = ({ userId }) => {
         <SwiperSlide className="fb-friend__slide">
           <div className="fb-friend__item">
             <div className="fb-friend__img">
-              <img src={imageAvatar} />
+              <ImageAvatar />
             </div>
             <ShareButton
               href={`https://${currentHost}/?ref=${userId}`}

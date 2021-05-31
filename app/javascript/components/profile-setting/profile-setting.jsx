@@ -7,7 +7,6 @@ import { api, userAPI } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import RightArrow from "../../images/arrow-right.svg";
-import imageAvatar from "../../images/avatar.png";
 import GoBack from "../../images/go-back.svg";
 import { Footer } from "../footer";
 
@@ -54,7 +53,7 @@ const ProfileSetting = () => {
 
         <Link to="/profile" className="setting__user">
           <div className="setting__avatar">
-            <img src={user.avatarUrl || imageAvatar} />
+            <img src={user.avatarUrl} />
           </div>
           <div className="setting__name text-black headline">{user.name}</div>
           <RightArrow className="setting__right-arrow" />

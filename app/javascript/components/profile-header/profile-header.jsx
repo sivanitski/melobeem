@@ -3,7 +3,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 import { api } from "../../api";
-import imageAvatar from "../../images/avatar.png";
 import NotificationImage from "../../images/notification.svg";
 import SettingImage from "../../images/setting.svg";
 
@@ -34,10 +33,7 @@ const ProfileHeader = ({ user, childName, isAnotherUser, requestProfile }) => {
       )}
 
       <div>
-        <img
-          className="profile-header__img"
-          src={user.avatarUrl || imageAvatar}
-        />
+        <img className="profile-header__img" src={user.avatarUrl} />
       </div>
       <div className="profile-header__main">
         <div className="profile-header__name headline--medium">{user.name}</div>
