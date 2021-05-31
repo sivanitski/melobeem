@@ -10,7 +10,10 @@ const createAPI = (isUser) => {
     axios.create({
       baseURL: isUser ? `/users` : `/api/v1`,
       timeout: 1000 * 5,
-    })
+    }),
+    {
+      preservedKeys: ["g-recaptcha-response-data"],
+    }
   );
 
   const onSuccess = (response) => {

@@ -22,7 +22,7 @@ const Vote = ({
 }) => {
   const [isPopupShown, setIsPopupShown] = useState(false);
   const [isAnimation, setIsAnimation] = useState(false);
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
 
   if (!user) {
@@ -106,6 +106,11 @@ const Vote = ({
     if (isPopup) {
       setTimeout(() => setIsPopupShown(true), 3000);
     }
+
+    const {
+      data: { user },
+    } = api.get("/users/current");
+    setUser(user);
   };
 
   const handlePaymentSucceedClose = async () => {

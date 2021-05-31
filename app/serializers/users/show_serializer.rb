@@ -3,6 +3,7 @@ module Users
     attributes :id, :name, :avatar_url, :current_baby_name
     attribute :friends_with_current_user?, if: :friends_with_current_user?
     attribute :friendship_source_type,     if: :friends_with_current_user?
+    attribute :captcha_verified,           if: :current_user?
 
     def friends_with_current_user?
       return false unless current_user
@@ -18,6 +19,10 @@ module Users
       object.entries.where(competition: Competition.current!).first&.name
     rescue ActiveRecord::RecordNotFound
       nil
+    end
+
+    def current_user?
+      current_user.eql?(object)
     end
 
     private

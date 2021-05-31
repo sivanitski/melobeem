@@ -3,6 +3,7 @@ import "./style.less";
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
+import { useGoogleReCaptcha } from "react-google-recaptcha-v3";
 import { withRouter } from "react-router";
 
 import { api } from "../../../api";
@@ -20,16 +21,28 @@ const TIME_TEXT_INFO =
   "Free votes on this entry can now happen more frequently. Instead of 40 minutes it’s now every 30 minutes! (lasts 24h)";
 
 const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
+  const { executeRecaptcha } = useGoogleReCaptcha();
+  const [token, setToken] = useState(null);
   const { user } = useContext(UserContext);
   const { currentChild } = useContext(ChildContext);
   const [prizeTime, setPrizeTime] = useState(null);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
 
   useEffect(() => {
-    if (currentChild.id === childId) {
+    async function loadToken() {
+      const recaptchaToken = await executeRecaptcha("create_free");
+
+      setToken(recaptchaToken);
+    }
+
+    if (currentChild?.id === childId) {
       api.get(`/entries/${childId}/prize_time`).then((res) => {
         setPrizeTime(res?.data);
       });
+    }
+
+    if (!user?.captchaVerified) {
+      loadToken();
     }
   }, []);
 
@@ -46,6 +59,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
       entryId: childId,
       value: 1,
       userId: user.id,
+      "g-recaptcha-response-data": token,
     });
     updateData();
   };
