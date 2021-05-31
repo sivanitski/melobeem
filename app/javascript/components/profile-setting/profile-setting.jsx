@@ -1,9 +1,10 @@
 import "./style.less";
 
 import React, { useContext } from "react";
+import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
-import { api, userAPI } from "../../api";
+import { userAPI } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import RightArrow from "../../images/arrow-right.svg";
@@ -13,6 +14,7 @@ import { Footer } from "../footer";
 const ProfileSetting = () => {
   const { user, setUser } = useContext(UserContext);
   const { setCurrentChild } = useContext(ChildContext);
+  const history = useHistory();
 
   const clearContext = () => {
     setUser(null);
@@ -25,9 +27,7 @@ const ProfileSetting = () => {
   };
 
   const handleDelete = async () => {
-    // Here firstly will be alert confirmation on the next task and after api call for deleting
-    await api.delete(`users/${user.id}/deactivate`);
-    clearContext();
+    history.push("/delete", { id: user.id, type: "user" });
   };
 
   const PAGES = {

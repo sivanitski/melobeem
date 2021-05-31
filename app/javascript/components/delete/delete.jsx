@@ -25,17 +25,28 @@ const Delete = ({ location: { state } }) => {
   };
 
   const handleKeepClick = () => {
-    history.push(`entry/${state.id}`);
+    if (state.type === "child") {
+      history.push(`entry/${state.id}`);
+    } else {
+      history.push(`/profile/${state.id}`);
+    }
   };
 
   const handleDelete = async () => {
-    const res = await api.delete(`/users/entries/${state.id}`);
-    if (res) {
-      if (currentChild.id === state.id) {
-        setCurrentChild(null);
-      }
-      history.push("/sign-up");
+    if (state.type !== "child") {
+      history.push("/delete/confirm", { id: state.id });
+      return;
     }
+
+    const res = await api.delete(`/users/entries/${state.id}`);
+    if (!res) {
+      return;
+    }
+
+    if (currentChild.id === state.id) {
+      setCurrentChild(null);
+    }
+    history.push("/sign-up");
   };
 
   if (!state) {
@@ -55,7 +66,7 @@ const Delete = ({ location: { state } }) => {
         </div>
         <div className="delete__buttons">
           <button
-            className="delete__button-reject"
+            className="delete__button delete__button--reject"
             type="button"
             onClick={handleKeepClick}
           >
@@ -63,7 +74,7 @@ const Delete = ({ location: { state } }) => {
           </button>
 
           <button
-            className="delete__button-confirm"
+            className="delete__button delete__button--confirm"
             type="button"
             onClick={handleDelete}
           >

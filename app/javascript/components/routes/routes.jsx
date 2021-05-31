@@ -9,6 +9,7 @@ import {
 import UserContext from "../../helpers/user-context";
 import { CompetitorsSearch } from "../competitors-search";
 import { Delete } from "../delete";
+import DeleteConfirm from "../delete/screens/delete-confirm";
 import { Entry } from "../entry";
 import { EntryTakePrize } from "../entry-prize";
 import { Leaderboard } from "../leaderboard";
@@ -80,6 +81,9 @@ const Routes = () => {
         </Route>
         <Route exact path={"/delete"}>
           <Delete />
+        </Route>
+        <Route exact path={"/delete/confirm"}>
+          <DeleteConfirm />
         </Route>
       </Switch>
     </Router>

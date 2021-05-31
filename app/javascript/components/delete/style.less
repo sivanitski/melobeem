@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  position: relative;
 }
 
 .delete__title {
@@ -20,6 +21,11 @@
   color: #979797;
   margin: auto;
   width: 65%;
+
+  &--long {
+    width: 74%;
+    margin-bottom: 25px;
+  }
 }
 
 .delete__snail__icon {
@@ -30,23 +36,33 @@
   display: flex;
   width: 100%;
   justify-content: center;
+  margin-bottom: 15px;
+
+  &--bottom {
+    position: fixed;
+    bottom: 100px;
+  }
 }
 
-.delete__button-reject {
-  color: white;
-  background: #47d580;
+.delete__button {
   border-radius: 30px;
-  font-weight: 500;
-  padding: 15px;
-  margin-right: 8px;
-}
-
-.delete__button-confirm {
-  border: 1px solid #a3a3a3;
-  box-sizing: border-box;
-  border-radius: 30px;
-  color: #a3a3a3;
-  padding: 15px;
   font-weight: 500;
   margin-left: 8px;
+  padding: 13px 30px;
+  box-sizing: border-box;
+  color: white;
+
+  &--reject {
+    background: #47d580;
+    border-radius: 30px;
+  }
+
+  &--confirm {
+    border: 1px solid #a3a3a3;
+    color: #a3a3a3;
+  }
+
+  &--deactivate {
+    background: #ff274e;
+  }
 }
