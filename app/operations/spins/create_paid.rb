@@ -1,38 +1,26 @@
 module Spins
   class CreatePaid
-    WH_SECRET = ENV.fetch('STRIPE_ENDPOINT_SECRET_SPIN') { raise 'NO STRIPE TOKEN, CANNOT START APPLICATION' }
+    def call(transaction:, amount_received:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+      if amount_received.present?
+        transaction.update!(amount_received: amount_received)
+        Competition.current!.increment_revenue!(transaction)
+      end
 
-    def call(payload:, sig_header:) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-      intent = fetch_event(payload: payload, sig_header: sig_header)
-      transaction = find_transaction(intent.id)
       user = transaction.user
+
+      return Success.new(user.premium_spins) if transaction.reload.done?
+
       user.premium_spins += transaction.value
 
       ActiveRecord::Base.transaction do
-        transaction.update!(amount_received: intent.amount_received, status: :done)
+        transaction.update!(status: :done)
         user.save!
         Notifications::BuySpins.new(transaction).call
-        Competition.current!.increment_revenue!(transaction)
       end
 
       Success.new(user.premium_spins)
     rescue ActiveRecord::ActiveRecordError => e
       Failure.new(e.message)
-    end
-
-    private
-
-    def fetch_event(payload:, sig_header:)
-      event = Stripe::Webhook.construct_event(payload, sig_header, WH_SECRET)
-
-      case event['type']
-      when 'payment_intent.succeeded'
-        event['data']['object']
-      end
-    end
-
-    def find_transaction(intent_id)
-      PurchaseTransaction.find_by!(intent_id: intent_id, product_type: :spin)
     end
   end
 end

@@ -30,10 +30,11 @@ const Payment = ({
 }) => {
   const stripe = useStripe();
   const elements = useElements();
-  const [succeeded, setSucceeded] = useState(false);
-  const [processing, setProcessing] = useState("");
-  const [clientSecret, setClientSecret] = useState("");
-  const [errorMessage, setErrorMessage] = useState(null);
+  const [stripeVariables, setStipeVariables] = useState({
+    clientSecret: null,
+    purchaseTransactionId: null,
+  });
+  const [message, setMessage] = useState(null);
   const [value, { onChange: onChangePostal }] = useEventTarget({
     initialValue: "",
   });
@@ -52,7 +53,10 @@ const Payment = ({
           productId: activeId,
         });
       }
-      setClientSecret(res.data.clientSecret);
+      setStipeVariables({
+        purchaseTransactionId: res.data.purchaseTransactionId,
+        clientSecret: res.data.clientSecret,
+      });
     }
 
     makeChargeIntent();
@@ -60,7 +64,7 @@ const Payment = ({
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
-    setProcessing(true);
+    setMessage("Process is running");
 
     if (!stripe || !elements) {
       return;
@@ -68,32 +72,36 @@ const Payment = ({
 
     const cardElement = elements.getElement(CardNumberElement);
 
-    const payload = await stripe.confirmCardPayment(clientSecret, {
-      payment_method: {
-        card: cardElement,
-        billing_details: {
-          address: {
-            postal_code: value,
+    const payload = await stripe.confirmCardPayment(
+      stripeVariables.clientSecret,
+      {
+        payment_method: {
+          card: cardElement,
+          billing_details: {
+            address: {
+              postal_code: value,
+            },
           },
         },
-      },
-    });
+      }
+    );
 
     if (payload.error) {
       console.error("[error]", payload.error);
-      setErrorMessage(payload.error.message);
-      setProcessing(false);
+      setMessage(payload.error.message);
     } else {
-      setErrorMessage(null);
-      setProcessing(false);
-      setSucceeded(true);
+      try {
+        await api.post("/charges/payment_success", {
+          purchaseTransactionId: stripeVariables.purchaseTransactionId,
+        });
 
-      if (activeType === "vote") {
-        setErrorMessage("Please, wait till this window closes");
-        // We dont have websockets now to get the call from back
-        setTimeout(handlePaymentSucceedClose, 5000);
-      } else {
+        if (activeType === "vote") {
+          handlePaymentSucceedClose();
+        }
         handlePaymentClose();
+        setMessage("Operation succeeded. Please, wait till this window closes");
+      } catch (e) {
+        setMessage("Something went wrong, please try again");
       }
     }
   };
@@ -186,9 +194,7 @@ const Payment = ({
           </div>
         </div>
 
-        {errorMessage && <div className="error">{errorMessage}</div>}
-        {succeeded && <div>Operation succeeded</div>}
-        {processing && <div>Process is running</div>}
+        {message && <div className="error">{message}</div>}
 
         <button
           type="submit"

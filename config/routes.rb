@@ -15,14 +15,14 @@ Rails.application.routes.draw do
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
-      post '/check_votes_payment', to: 'webhooks#check_votes_payment'
-      post '/check_spins_payment', to: 'webhooks#check_spins_payment'
+      post '/check_payment', to: 'webhooks#check_payment'
       put '/users/:entry_id/take_additional_prize', to: 'users#take_additional_prize'
 
       resources :charges, only: [] do
         collection do
           post :buy_votes
           post :buy_spins
+          post :payment_success
         end
       end
 

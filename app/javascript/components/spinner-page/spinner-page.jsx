@@ -22,9 +22,12 @@ const SpinnerPage = () => {
     return api.get(`/spins/check_presence`);
   };
 
-  const { data, error, loading } = useRequest(getSpinnersInfo, {
-    formatResult: (res) => res.data,
-  });
+  const { data, error, loading, run: requestSpinnerInfo } = useRequest(
+    getSpinnersInfo,
+    {
+      formatResult: (res) => res.data,
+    }
+  );
 
   const updateCurrentChild = async () => {
     const {
@@ -60,7 +63,7 @@ const SpinnerPage = () => {
       );
     }
 
-    return <NoSpinner />;
+    return <NoSpinner requestSpinnerInfo={requestSpinnerInfo} />;
   };
 
   return (

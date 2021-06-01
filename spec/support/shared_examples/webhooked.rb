@@ -1,10 +1,10 @@
 shared_examples_for 'Webhook failed' do
-  it 'returns 422 status' do
-    expect(response).to have_http_status(:unprocessable_entity)
+  it 'returns 404 status' do
+    expect(response).to have_http_status(:not_found)
   end
 
   it 'returns message about missing transaction' do
-    expect(JSON.parse(response.body)['message']).to eq("Couldn't find PurchaseTransaction")
+    expect(JSON.parse(response.body)['error']).to eq("Couldn't find PurchaseTransaction record!")
   end
 end
 

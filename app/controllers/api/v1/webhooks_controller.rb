@@ -7,19 +7,11 @@ module API
       rescue_from JSON::ParserError, with: :invalid_payload
       rescue_from Stripe::SignatureVerificationError, with: :invalid_signature
 
-      def check_votes_payment
-        result = Votes::CreatePaid.new.call(payload: payload, sig_header: sig_header)
+      def check_payment
+        intent = fetch_event
+        transaction = find_transaction(intent.id)
 
-        case result
-        when Success
-          render json: result.value, status: :created
-        else
-          render json: { message: result.error }, status: :unprocessable_entity
-        end
-      end
-
-      def check_spins_payment
-        result = Spins::CreatePaid.new.call(payload: payload, sig_header: sig_header)
+        result = Buy::CompletePurchase.new(transaction: transaction, amount_received: intent.amount_received).call
 
         case result
         when Success
@@ -31,8 +23,23 @@ module API
 
       private
 
+      def find_transaction(intent_id)
+        PurchaseTransaction.find_by!(intent_id: intent_id)
+      end
+
       def payload
         @payload ||= request.body.read
+      end
+
+      def fetch_event
+        secret = ENV.fetch('STRIPE_ENDPOINT_SECRET') { raise 'NO STRIPE TOKEN, CANNOT START APPLICATION' }
+
+        event = Stripe::Webhook.construct_event(payload, sig_header, secret)
+
+        case event['type']
+        when 'payment_intent.succeeded'
+          event['data']['object']
+        end
       end
 
       def sig_header

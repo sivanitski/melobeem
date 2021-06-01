@@ -16,16 +16,17 @@ module Spins
 
       raise(Stripe::CardError.new(intent.error.message, intent, http_status: 500)) if intent.try(:id).blank?
 
-      create_transaction(intent)
-      { client_secret: intent.client_secret, id: intent['id'] }.to_json
+      transaction = create_transaction(intent)
+
+      { client_secret: intent.client_secret, id: intent['id'], purchase_transaction_id: transaction.id }.to_json
     end
 
     def create_transaction(intent) # rubocop:disable Metrics/AbcSize
-      PurchaseTransaction.create!(intent_id: intent.id, amount: intent.amount, amount_received: intent.amount_capturable,
-                                  status: :process, full_info: intent.to_json, value: intent.metadata[:value].to_i,
-                                  user_id: intent.metadata[:user_id].to_i, entry_id: intent.metadata[:entry_id].to_i,
-                                  product_id: intent.metadata[:product_id].to_i, product_type: :spin,
-                                  competition: Competition.current!)
+      PurchaseTransaction.find_or_create_by!(intent_id: intent.id, amount: intent.amount, amount_received: intent.amount_capturable,
+                                             status: :process, full_info: intent.to_json, value: intent.metadata[:value].to_i,
+                                             user_id: intent.metadata[:user_id].to_i, entry_id: intent.metadata[:entry_id].to_i,
+                                             product_id: intent.metadata[:product_id].to_i, product_type: :spin,
+                                             competition: Competition.current!)
     end
   end
 end

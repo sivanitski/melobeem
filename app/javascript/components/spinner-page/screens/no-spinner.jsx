@@ -1,9 +1,10 @@
+import propTypes from "prop-types";
 import React, { useState } from "react";
 
 import { Payment } from "../../payment";
 import SpinnerList from "../blocks/spinner-list";
 
-const NoSpinner = () => {
+const NoSpinner = ({ requestSpinnerInfo }) => {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [activeOption, setActiveOption] = useState({
     price: null,
@@ -20,6 +21,7 @@ const NoSpinner = () => {
   const handlePaymentClose = () => {
     setIsPaymentOpen(false);
     setActiveOption(null);
+    requestSpinnerInfo();
   };
 
   if (isPaymentOpen) {
@@ -36,6 +38,10 @@ const NoSpinner = () => {
   }
 
   return <SpinnerList handlePriceClick={handlePriceClick} />;
+};
+
+NoSpinner.propTypes = {
+  requestSpinnerInfo: propTypes.func.isRequired,
 };
 
 export default NoSpinner;
