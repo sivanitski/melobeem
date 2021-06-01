@@ -5,13 +5,13 @@ import groupBy from "lodash.groupby";
 import React, { useContext } from "react";
 import { Link, Redirect } from "react-router-dom";
 
-import { api } from "../../api";
-import { formatDateNotification } from "../../helpers/date";
-import UserContext from "../../helpers/user-context";
-import GoBack from "../../images/go-back.svg";
-import Loader from "../animation/loader";
-import { Error } from "../error";
-import { Footer } from "../footer";
+import { api } from "../../../api";
+import { formatDateNotification } from "../../../helpers/date";
+import UserContext from "../../../helpers/user-context";
+import GoBack from "../../../images/go-back.svg";
+import Loader from "../../animation/loader";
+import { Error } from "../../error";
+import { Footer } from "../../footer";
 import ProfileNotificationItem from "./blocks/profile-notification-item";
 
 const ProfileNotification = () => {

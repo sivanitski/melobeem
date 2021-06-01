@@ -2,13 +2,11 @@ import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import imageChild from "../../images/header-left@2x.png";
-
 const ProfileChildrenItem = ({ child }) => {
   return (
     <Link to={`/entry/${child.id}`} className="profile-children__item">
       <div className="profile-children__img">
-        <img src={child.imageUrl || imageChild} />
+        <img src={child.imageUrl} />
       </div>
       <span className="text-grey">{child.current ? "Now" : "Previous"}</span>
     </Link>

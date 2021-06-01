@@ -1,4 +1,3 @@
-import "./style.less";
 import "swiper/swiper.less";
 
 import { useRequest } from "ahooks";
@@ -9,12 +8,12 @@ import { ShareButton } from "react-facebook";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import { api } from "../../api";
-import ImageAvatar from "../../images/avatar.svg";
-import IconHeart from "../../images/icon-heart.svg";
-import InfoImage from "../../images/info-sign.svg";
-import Loader from "../animation/loader";
-import { InfoBlock } from "../info-block";
+import { api } from "../../../api";
+import ImageAvatar from "../../../images/avatar.svg";
+import IconHeart from "../../../images/icon-heart.svg";
+import InfoImage from "../../../images/info-sign.svg";
+import Loader from "../../animation/loader";
+import { InfoBlock } from "../../info-block";
 
 const PROFILE_TITLE_INFO = "Better together!";
 const PROFILE_TEXT_INFO =

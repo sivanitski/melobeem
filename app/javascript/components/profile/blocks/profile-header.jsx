@@ -2,9 +2,9 @@ import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { api } from "../../api";
-import NotificationImage from "../../images/notification.svg";
-import SettingImage from "../../images/setting.svg";
+import { api } from "../../../api";
+import NotificationImage from "../../../images/notification.svg";
+import SettingImage from "../../../images/setting.svg";
 
 const ProfileHeader = ({ user, childName, isAnotherUser, requestProfile }) => {
   const handleAddFriend = async () => {

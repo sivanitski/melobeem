@@ -4,12 +4,12 @@ import React, { useContext } from "react";
 import { useHistory } from "react-router";
 import { Link } from "react-router-dom";
 
-import { userAPI } from "../../api";
-import ChildContext from "../../helpers/child-context";
-import UserContext from "../../helpers/user-context";
-import RightArrow from "../../images/arrow-right.svg";
-import GoBack from "../../images/go-back.svg";
-import { Footer } from "../footer";
+import { userAPI } from "../../../api";
+import ChildContext from "../../../helpers/child-context";
+import UserContext from "../../../helpers/user-context";
+import RightArrow from "../../../images/arrow-right.svg";
+import GoBack from "../../../images/go-back.svg";
+import { Footer } from "../../footer";
 
 const ProfileSetting = () => {
   const { user, setUser } = useContext(UserContext);

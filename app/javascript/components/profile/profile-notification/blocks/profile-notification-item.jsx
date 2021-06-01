@@ -2,8 +2,8 @@ import propTypes from "prop-types";
 import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
-import ChildContext from "../../../helpers/child-context";
-import { definePrizeTitle } from "../../level/screens/prize-parameters";
+import ChildContext from "../../../../helpers/child-context";
+import { definePrizeTitle } from "../../../level/screens/prize-parameters";
 import Notification from "./notification";
 
 const ProfileNotificationItem = ({ notification }) => {

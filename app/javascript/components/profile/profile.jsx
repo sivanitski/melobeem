@@ -11,9 +11,9 @@ import Loader from "../animation/loader";
 import { BackButton } from "../back-button";
 import { Error } from "../error";
 import { Footer } from "../footer";
-import { ProfileChildren } from "../profile-children";
-import { ProfileHeader } from "../profile-header";
-import { ProfileNav } from "../profile-nav";
+import ProfileChildren from "./blocks/profile-children";
+import ProfileHeader from "./blocks/profile-header";
+import ProfileNav from "./blocks/profile-nav";
 
 const Profile = ({
   match: {
