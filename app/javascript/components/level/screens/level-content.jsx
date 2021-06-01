@@ -45,7 +45,7 @@ const LevelContent = ({ activeLevel }) => {
     return <LevelWithPrize prize={data} />;
   };
 
-  if (activeLevel === currentChild.level) {
+  if (activeLevel === currentChild?.level) {
     const animationLevel = getAnimationLevel(
       currentChild.totalVotes,
       currentChild.level

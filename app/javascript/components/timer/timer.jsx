@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import propTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
 
 import {
   formatTimeInHoursMinutesAndSeconds,
@@ -9,7 +8,7 @@ import {
 } from "../../helpers/date";
 import TimerField from "./timer-field";
 
-const Timer = ({ timeLeftInSeconds, handleFreeVoteClick, type, id }) => {
+const Timer = ({ timeLeftInSeconds, handleFieldClick, type }) => {
   const timeLeftInMiliseconds = 1000 * timeLeftInSeconds;
   const [timeLeft, setTimeLeft] = useState(timeLeftInMiliseconds);
 
@@ -36,7 +35,7 @@ const Timer = ({ timeLeftInSeconds, handleFreeVoteClick, type, id }) => {
 
   if (type === "entry") {
     return (
-      <Link to={`/entry/${id}/vote`} className={buttonClasses}>
+      <div className={buttonClasses} onClick={handleFieldClick}>
         <TimerField
           text={
             timeLeft > 0
@@ -44,7 +43,7 @@ const Timer = ({ timeLeftInSeconds, handleFreeVoteClick, type, id }) => {
               : "Vote"
           }
         />
-      </Link>
+      </div>
     );
   }
 
@@ -78,8 +77,7 @@ const Timer = ({ timeLeftInSeconds, handleFreeVoteClick, type, id }) => {
 
 Timer.propTypes = {
   timeLeftInSeconds: propTypes.number,
-  handleFreeVoteClick: propTypes.func,
-  id: propTypes.number,
+  handleFieldClick: propTypes.func,
   type: propTypes.string.isRequired,
 };
 

@@ -60,7 +60,7 @@ const LevelSwiperMenu = ({
 };
 
 LevelSwiperMenu.propTypes = {
-  handleSlideCLick: propTypes.func.isRequired,
+  handleSlideCLick: propTypes.func,
   activeLevel: propTypes.number.isRequired,
   maxLevel: propTypes.number.isRequired,
   lockerAmount: propTypes.number.isRequired,

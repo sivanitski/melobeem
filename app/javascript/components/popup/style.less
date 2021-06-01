@@ -8,6 +8,7 @@
   bottom: 0;
   margin: auto;
   background-color: rgba(116, 116, 116, 0.8);
+  z-index: 1;
 }
 
 .popup__inner {
@@ -31,11 +32,11 @@
   margin-bottom: 16px;
   display: flex;
   justify-content: center;
-  background: url("../../../images/decorations.png") no-repeat;
+  background: url("../../images/decorations.png") no-repeat;
   background-position: center;
 
   @media (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
-    background: url("../../../images/decorations@2x.png") no-repeat;
+    background: url("../../images/decorations@2x.png") no-repeat;
     background-position: center;
     background-size: contain;
   }
@@ -61,8 +62,7 @@
   cursor: pointer;
 }
 
-.popup__share {
-  color: #ca91fc;
+.popup__title {
   margin-bottom: 15px;
 }
 
@@ -78,7 +78,6 @@
   justify-content: center;
   display: flex;
   align-items: center;
-  background: #ca91fc;
   font-size: 16px;
   color: white;
   border-radius: 30px;

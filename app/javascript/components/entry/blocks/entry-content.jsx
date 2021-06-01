@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
+import { useHistory } from "react-router";
 
 import { api } from "../../../api";
 import defaultProptypes from "../../../default-proptypes";
@@ -9,6 +10,7 @@ import UserContext from "../../../helpers/user-context";
 import CertificateIcon from "../../../images/icon-certificate.svg";
 import ShareImage from "../../../images/share.svg";
 import { FacebookShare } from "../../facebook-share";
+import { Popup } from "../../popup";
 import { Timer } from "../../timer";
 import CompetitionPrize from "./competition-prize";
 import FbComment from "./fb-comments";
@@ -23,6 +25,8 @@ const EntryContent = ({ child, voters }) => {
   const [prizeTime, setPrizeTime] = useState(null);
   const { currentChild } = useContext(ChildContext);
   const [isSettingOpen, setIsSettingOpen] = useState(false);
+  const [isPopupShown, setIsPopupShown] = useState(false);
+  const history = useHistory();
 
   useEffect(() => {
     if (currentChild?.id === child.id) {
@@ -42,6 +46,14 @@ const EntryContent = ({ child, voters }) => {
 
   const toggleSettingOpen = () => {
     setIsSettingOpen(!isSettingOpen);
+  };
+
+  const handleVotersClick = () => {
+    if (!user) {
+      setIsPopupShown(true);
+    } else {
+      history.push(`/entry/${childId}/voters`);
+    }
   };
 
   const isUsersChild = child.userId === user?.id;
@@ -77,9 +89,9 @@ const EntryContent = ({ child, voters }) => {
 
           {loading ? null : (
             <Timer
-              id={child.id}
               type="entry"
               timeLeftInSeconds={timeFreeVote}
+              handleFieldClick={handleVotersClick}
             />
           )}
         </>
@@ -109,6 +121,14 @@ const EntryContent = ({ child, voters }) => {
       />
 
       <FbComment childId={child.id} />
+
+      {isPopupShown && (
+        <Popup
+          handlePopupClose={() => setIsPopupShown(false)}
+          image={child.imageUrl}
+          type="login-to-vote"
+        />
+      )}
     </div>
   );
 };

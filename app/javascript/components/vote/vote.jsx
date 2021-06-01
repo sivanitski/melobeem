@@ -12,8 +12,8 @@ import Loader from "../animation/loader";
 import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
 import { Payment } from "../payment";
+import { Popup } from "../popup";
 import VoteList from "./blocks/vote-list";
-import { VotePopup } from "./vote-popup";
 
 const Vote = ({
   match: {
@@ -28,6 +28,7 @@ const Vote = ({
   if (!user) {
     return <Redirect to={`/entry/${id}`} />;
   }
+
   const [activeOption, setActiveOption] = useState({
     price: null,
     value: null,
@@ -148,11 +149,12 @@ const Vote = ({
       )}
 
       {isPopupShown && (
-        <VotePopup
+        <Popup
           handlePopupClose={handlePopupClose}
-          childId={child.id}
-          childName={child.name}
-          childImage={child.imageUrl}
+          linkId={child.id}
+          name={child.name}
+          image={child.imageUrl}
+          type="vote"
         />
       )}
     </>

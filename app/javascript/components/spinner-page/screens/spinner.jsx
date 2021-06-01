@@ -99,7 +99,7 @@ Spinner.propTypes = {
     type: propTypes.string.isRequired,
     count: propTypes.number,
   }),
-  updateCurrentChild: propTypes.func.isRequired,
+  updateCurrentChild: propTypes.func,
 };
 
 export default Spinner;

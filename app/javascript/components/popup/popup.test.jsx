@@ -1,14 +1,19 @@
 import { shallow } from "enzyme";
 import React from "react";
 
-import VotePopup from "./vote-popup";
+import Popup from "./popup";
 
 describe("Components", () => {
-  describe("VotePopup", () => {
+  describe("Popup", () => {
     it("should render VotePopup component", () => {
       const mockCallBack = jest.fn();
       const component = shallow(
-        <VotePopup handlePopupClose={mockCallBack} childId={1} />
+        <Popup
+          handlePopupClose={mockCallBack}
+          linkId={1}
+          type="vote"
+          name="test"
+        />
       );
 
       expect(component).toMatchSnapshot();
@@ -17,7 +22,12 @@ describe("Components", () => {
     it("should call onClick method", () => {
       const mockCallBack = jest.fn();
       const component = shallow(
-        <VotePopup handlePopupClose={mockCallBack} childId={1} />
+        <Popup
+          handlePopupClose={mockCallBack}
+          linkId={1}
+          type="vote"
+          name="test"
+        />
       );
       expect(mockCallBack.mock.calls.length).toBe(0);
       component.find(".popup__close").simulate("click");

@@ -100,7 +100,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
           <div className="vote-item__text">1 Vote</div>
           <Timer
             timeLeftInSeconds={timeFreeVote}
-            handleFreeVoteClick={handleFreeVoteClick}
+            handleFieldClick={handleFreeVoteClick}
             type="votes"
           />
         </div>
