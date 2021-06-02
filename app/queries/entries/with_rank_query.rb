@@ -1,11 +1,15 @@
 module Entries
   class WithRankQuery
-    def call(competition_id)
-      Entry.active.with_attached_image
-           .preload(:user)
-           .select('*')
-           .joins(entry_ranking(competition_id))
-           .order(:rank, :id)
+    def call(competition_id, level = nil)
+      entries = Entry.active.with_attached_image
+                     .preload(:user)
+                     .select('*')
+                     .joins(entry_ranking(competition_id))
+                     .order(:rank, :id)
+
+      return entries if level.blank?
+
+      entries.where(level: level)
     end
 
     private

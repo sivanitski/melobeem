@@ -7,7 +7,7 @@ module API
 
       def index
         respond_with_item_list(
-          ::Entries::WithRankQuery.new.call(competition.id),
+          ::Entries::WithRankQuery.new.call(competition.id, params[:level]),
           ::Entries::RankedSerializer
         )
       end

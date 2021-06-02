@@ -7,17 +7,31 @@ RSpec.describe API::V1::EntriesController do
   let(:prize) { create :prize, entry: entry }
 
   describe 'GET /index' do
-    before do
-      create(:entry, competition: competition, user: user)
+    context 'when level was not delivered' do
+      before do
+        create(:entry, competition: competition, user: user)
 
-      get :index, params: { competition_id: competition.id }, format: :json
+        get :index, params: { competition_id: competition.id }, format: :json
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it { expect(JSON.parse(response.body)['meta']['total_count']).to eq 1 }
+
+      it { expect(response).to match_response_schema('entries/index') }
     end
 
-    it { expect(response.status).to eq 200 }
+    context 'when level parameter was delivered' do
+      it 'return only first level' do
+        create(:entry, competition: competition, user: create(:user), level: 2)
+        create(:entry, competition: competition, user: create(:user), level: 1)
 
-    it { expect(JSON.parse(response.body)['meta']['total_count']).to eq 1 }
+        get :index, params: { competition_id: competition.id, level: 2 }, format: :json
 
-    it { expect(response).to match_response_schema('entries/index') }
+        expect(JSON.parse(response.body)['meta']['total_count']).to eq 1
+        expect(JSON.parse(response.body)['entries'].first['level']).to eq 2
+      end
+    end
   end
 
   describe 'POST /create' do
