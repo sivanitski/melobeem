@@ -8,6 +8,8 @@ class Entry < ApplicationRecord
   belongs_to :user
   has_one_attached :image, dependent: :destroy
 
+  before_validation :allowed_to_change_image?, if: proc { |record| record.attachment_changes.any? }
+
   validates :name, presence: true
   validates :level, presence: true
   validates :user_id, uniqueness: { scope: :competition_id }
@@ -21,5 +23,13 @@ class Entry < ApplicationRecord
     return if current_level.eql?(level)
 
     update!(level: current_level)
+  end
+
+  private
+
+  def allowed_to_change_image?
+    return if total_votes.to_i.zero?
+
+    errors.add(:image, 'can be changed before first vote')
   end
 end

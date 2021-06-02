@@ -28,6 +28,24 @@ RSpec.describe Entry, type: :model do
     end
   end
 
+  context 'when entry already have votes' do
+    it 'rise an error' do
+      entry = create(:entry, user: user, competition: competition, total_votes: 1)
+      file = File.open(Rails.root.join('spec/fixtures/user_image.png'))
+      image_object = { io: file, filename: 'user_image.png' }
+
+      expect { entry.update!(image: image_object) }.to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Image can be changed before first vote')
+    end
+
+    it 'update image' do
+      entry = create(:entry, user: user, competition: competition, total_votes: 0)
+      file = File.open(Rails.root.join('spec/fixtures/user_image.png'))
+      image_object = { io: file, filename: 'user_image.png' }
+
+      expect(entry.update!(image: image_object)).to be_truthy
+    end
+  end
+
   describe '#update_level!' do
     context 'when updates level of entry' do
       before do
