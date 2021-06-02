@@ -43,5 +43,23 @@ RSpec.describe Users::Deactivate do
         entry.reload
       end.to change(entry, :total_votes).from(500).to 0
     end
+
+    it 'remove free votes' do
+      create_list(:vote, 5, entry: entry, user: user, source_type: :user)
+      create_list(:vote, 1, entry: entry, user: user, source_type: :shop)
+
+      expect { subject }.to change(Vote, :count).from(6).to 1
+    end
+
+    it 'update voted entry total_votes' do
+      entry2 = create :entry, total_votes: 10
+
+      create_list(:vote, 5, entry: entry2, user: user, source_type: :user, value: 1)
+      create_list(:vote, 1, entry: entry2, user: user, source_type: :shop, value: 1)
+
+      subject
+
+      expect(entry2.reload.total_votes).to eq(5)
+    end
   end
 end
