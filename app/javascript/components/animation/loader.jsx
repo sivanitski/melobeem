@@ -10,7 +10,7 @@ export default function Loader() {
         loop
         animationData={loader}
         play
-        style={{ width: 300, height: 300 }}
+        style={{ width: 120, height: 120 }}
       />
     </div>
   );

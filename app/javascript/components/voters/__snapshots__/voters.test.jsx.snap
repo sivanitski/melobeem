@@ -7,8 +7,8 @@ exports[`Components Voters should render Vote component 1`] = `
   <div
     style={
       Object {
-        "height": 300,
-        "width": 300,
+        "height": 120,
+        "width": 120,
       }
     }
   />
