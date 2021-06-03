@@ -1,6 +1,8 @@
 import "./style.less";
 
+import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
+import { useHistory, withRouter } from "react-router";
 
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
@@ -12,10 +14,11 @@ import SignUpName from "./screens/sign-up-name";
 import SignUpPhoto from "./screens/sign-up-photo";
 import SignUpShare from "./screens/sign-up-share";
 
-const SignUp = () => {
-  const [step, setStep] = useState(1);
+const SignUp = ({ location: { state } }) => {
+  const history = useHistory();
+  const [step, setStep] = useState(state?.step || 1);
   const [name, setName] = useState(``);
-  const [isDisabled, setIsDisabled] = useState(true);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isFormNotEmpty, setIsFormNotEmpty] = useState(false);
   const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
   const { user } = useContext(UserContext);
@@ -33,15 +36,14 @@ const SignUp = () => {
       setIsFormNotEmpty(false);
     }
 
-    value.length >= 2 ? setIsDisabled(false) : setIsDisabled(true);
+    value.length >= 2 ? setIsButtonDisabled(false) : setIsButtonDisabled(true);
     setName(value);
   };
 
   useEffect(() => {
     if (photo.file) {
-      if (!user) {
+      if (!user || state?.id) {
         goNext();
-        setStep(3);
       } else {
         handlePostData();
       }
@@ -91,16 +93,28 @@ const SignUp = () => {
     }
   };
 
+  const handlePhotoSave = async () => {
+    const data = new FormData();
+    data.append(`entry[image]`, photo.file);
+
+    const {
+      data: { entry },
+    } = await api.put(`/users/entries/${state.id}`, data);
+    setCurrentChild(entry);
+    history.push(`/entry/${state.id}`);
+  };
+
   const renderSignScreen = (idStep) => {
     switch (idStep) {
       case 1:
         return (
           <SignUpName
-            email={name}
+            name={name}
             handleChange={handleChangeName}
             goNext={goNext}
-            isButtonDisabled={isDisabled}
+            isButtonDisabled={isButtonDisabled}
             isFormNotEmpty={isFormNotEmpty}
+            childId={state?.id}
           />
         );
       case 2:
@@ -110,6 +124,8 @@ const SignUp = () => {
           <SignUpLogin
             imagePreviewUrl={photo.imagePreviewUrl}
             handleLoginWhileSignUp={handleLoginWhileSignUp}
+            childId={state?.id}
+            handlePhotoSave={handlePhotoSave}
           />
         );
       case 4:
@@ -140,4 +156,13 @@ const SignUp = () => {
   );
 };
 
-export default SignUp;
+SignUp.propTypes = {
+  location: propTypes.shape({
+    state: propTypes.shape({
+      id: propTypes.string,
+      step: propTypes.number,
+    }),
+  }),
+};
+
+export default withRouter(SignUp);

@@ -67,7 +67,7 @@ const Timer = ({ timeLeftInSeconds, handleFieldClick, type }) => {
         text={
           timeLeft > 0 ? `${formatTimeInMinutesAndSeconds(timeLeft)}` : "Free"
         }
-        handleClick={timeLeft > 0 ? () => {} : handleFreeVoteClick}
+        handleClick={timeLeft > 0 ? () => {} : handleFieldClick}
       />
     );
   }

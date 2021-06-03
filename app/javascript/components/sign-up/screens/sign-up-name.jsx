@@ -1,8 +1,9 @@
 import classNames from "classnames";
 import propTypes from "prop-types";
 import React, { useContext } from "react";
-import { Redirect } from "react-router";
+import { useHistory, withRouter } from "react-router";
 
+import { api } from "../../../api";
 import ChildContext from "../../../helpers/child-context";
 
 const SignUpName = ({
@@ -11,14 +12,24 @@ const SignUpName = ({
   goNext,
   isButtonDisabled,
   isFormNotEmpty,
+  childId,
 }) => {
-  const { currentChild } = useContext(ChildContext);
+  const history = useHistory();
+  const { setCurrentChild } = useContext(ChildContext);
 
-  if (currentChild?.currentCompetition) {
-    return <Redirect to={`/entry/${currentChild.id}`} />;
-  }
+  const handleClick = async () => {
+    if (childId) {
+      const {
+        data: { entry },
+      } = await api.put(`/users/entries/${childId}`, {
+        entry: {
+          name,
+        },
+      });
+      setCurrentChild(entry);
+      history.push(`/entry/${childId}`);
+    }
 
-  const handleClick = () => {
     if (!isButtonDisabled) {
       goNext();
     }
@@ -53,7 +64,7 @@ const SignUpName = ({
         disabled={isButtonDisabled}
         onClick={handleClick}
       >
-        Next
+        {childId ? "Save" : "Next"}
       </button>
     </div>
   );
@@ -63,8 +74,9 @@ SignUpName.propTypes = {
   name: propTypes.string,
   handleChange: propTypes.func.isRequired,
   goNext: propTypes.func.isRequired,
-  isButtonDisabled: propTypes.bool.isRequireds,
+  isButtonDisabled: propTypes.bool.isRequired,
   isFormNotEmpty: propTypes.bool.isRequired,
+  childId: propTypes.string,
 };
 
-export default SignUpName;
+export default withRouter(SignUpName);

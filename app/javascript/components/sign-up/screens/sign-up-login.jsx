@@ -3,7 +3,12 @@ import React from "react";
 
 import { FacebookLogin } from "../../facebook-login";
 
-const SignUpLogin = ({ imagePreviewUrl, handleLoginWhileSignUp }) => {
+const SignUpLogin = ({
+  imagePreviewUrl,
+  handleLoginWhileSignUp,
+  childId,
+  handlePhotoSave,
+}) => {
   return (
     <div className="form-preview">
       <div className="form__progress progress">
@@ -14,14 +19,25 @@ const SignUpLogin = ({ imagePreviewUrl, handleLoginWhileSignUp }) => {
       <div className="form-preview__img">
         <img src={imagePreviewUrl} />
       </div>
-      <div className="form-preview__title headline--medium">
-        You’re almost there !
-      </div>
-      <FacebookLogin
-        title="Continue via Facebook"
-        classes="form__button form-preview__button"
-        handleLoginWhileSignUp={handleLoginWhileSignUp}
-      />
+      {childId ? (
+        <button
+          className="button form__button form__button--save"
+          onClick={handlePhotoSave}
+        >
+          Save
+        </button>
+      ) : (
+        <>
+          <div className="form-preview__title headline--medium">
+            You’re almost there !
+          </div>
+          <FacebookLogin
+            title="Continue via Facebook"
+            classes="form__button form-preview__button"
+            handleLoginWhileSignUp={handleLoginWhileSignUp}
+          />
+        </>
+      )}
     </div>
   );
 };
@@ -29,6 +45,8 @@ const SignUpLogin = ({ imagePreviewUrl, handleLoginWhileSignUp }) => {
 SignUpLogin.propTypes = {
   imagePreviewUrl: propTypes.string.isRequired,
   handleLoginWhileSignUp: propTypes.func.isRequired,
+  childId: propTypes.string,
+  handlePhotoSave: propTypes.func.isRequired,
 };
 
 export default SignUpLogin;

@@ -43,6 +43,9 @@
 }
 
 .entry__setting {
+  padding: 8px;
+  border-radius: 50%;
+  background: rgba(222, 227, 228, 0.3);
   position: absolute;
   top: 5px;
   right: 15px;
@@ -181,4 +184,57 @@
   span {
     margin-right: 5px;
   }
+}
+
+.edit-entry {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-entry__img {
+  width: 176px;
+  height: 112px;
+  margin-top: 32px;
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: center;
+  background: url("../../images/decorations.png") no-repeat;
+  background-size: contain;
+  background-position: center;
+
+  @media (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
+    background: url("../../images/decorations@2x.png") no-repeat;
+    background-size: contain;
+    background-position: center;
+  }
+
+  img {
+    width: 112px;
+    height: 112px;
+    border-radius: 50%;
+  }
+}
+
+.edit-entry__name {
+  margin-bottom: 5px;
+}
+
+.edit-entry__text {
+  max-width: 363px;
+  margin-bottom: 50px;
+  text-align: center;
+}
+
+.edit-entry__buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.edit-entry__button {
+  width: 333px;
+  max-width: calc(100% - 32px);
+  margin-bottom: 32px;
 }

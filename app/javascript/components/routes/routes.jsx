@@ -11,6 +11,7 @@ import { CompetitorsSearch } from "../competitors-search";
 import { Delete } from "../delete";
 import DeleteConfirm from "../delete/screens/delete-confirm";
 import { Entry } from "../entry";
+import EditEntry from "../entry/blocks/entry-edit";
 import { EntryTakePrize } from "../entry-prize";
 import { Leaderboard } from "../leaderboard";
 import { LeaderboardInfo } from "../leaderboard-info";
@@ -61,6 +62,9 @@ const Routes = () => {
         </Route>
         <Route exact path={"/profile/:id/next-competition"}>
           <NextCompetitionLocked />
+        </Route>
+        <Route exact path={"/entry/:id/edit"}>
+          <EditEntry />
         </Route>
         <Route exact path={"/profile"}>
           <ProfileRoute />
