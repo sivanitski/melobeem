@@ -32,7 +32,7 @@ const ProfileChildren = ({ userId }) => {
         <ProfileChildrenItem key={children[0].id} child={children[0]} />
       )}
 
-      {user.id === userId && <ProfileLocker />}
+      {user.id === userId && <ProfileLocker userId={userId} />}
 
       {children.length > 1 &&
         children

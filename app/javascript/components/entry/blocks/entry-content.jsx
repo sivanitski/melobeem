@@ -52,7 +52,7 @@ const EntryContent = ({ child, voters }) => {
     if (!user) {
       setIsPopupShown(true);
     } else {
-      history.push(`/entry/${childId}/voters`);
+      history.push(`/entry/${child.id}/vote`);
     }
   };
 
@@ -64,6 +64,7 @@ const EntryContent = ({ child, voters }) => {
         {isUsersChild && (
           <EntrySetting
             childId={child.id}
+            isCurrenCompetition={child.currentCompetition}
             isSettingOpen={isSettingOpen}
             toggleSettingOpen={toggleSettingOpen}
           />

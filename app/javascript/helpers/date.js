@@ -27,6 +27,9 @@ export const formatTimeInHoursMinutesAndSeconds = (time) =>
 export const formatTimeDayAndMonth = (time) =>
   format(new Date(time), "do MMMM");
 
+export const formatTimeDayMonthYear = (time) =>
+  format(new Date(time), "dd.MM.yyyy");
+
 export const formatMonthAndDay = (time) => format(new Date(time), "MMMM dd");
 
 export const formatDateNotification = (time) => {
