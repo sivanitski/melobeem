@@ -5,7 +5,7 @@ import propTypes from "prop-types";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import LockerImage from "../../images/locker.svg";
+import LockerImage from "../../images/locker-small.svg";
 
 const LevelSwiperMenu = ({
   activeLevel,
