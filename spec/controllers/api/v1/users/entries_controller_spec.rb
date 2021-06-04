@@ -20,7 +20,7 @@ RSpec.describe API::V1::Users::EntriesController do
 
     it { expect(response.status).to eq 200 }
 
-    it { expect(response).to match_response_schema('entries/show') }
+    it { expect(response).to match_response_schema('entries/ranked') }
   end
 
   describe 'DELETE #destroy' do

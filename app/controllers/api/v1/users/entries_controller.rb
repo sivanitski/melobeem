@@ -9,10 +9,10 @@ module API
         end
 
         def update
-          entry = current_user.entries.find(params[:id])
+          entry = ::Entries::WithRankQuery.new.call(Competition.current!.id).find_by!(id: params[:id], user_id: current_user.id)
 
           if entry.update(entries_params)
-            render json: entry, serializer: ::Entries::ShowSerializer
+            render json: entry, serializer: ::Entries::RankedSerializer, country: country
           else
             render_fail_response(entry.errors)
           end
