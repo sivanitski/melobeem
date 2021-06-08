@@ -16,7 +16,7 @@ describe Prizes::Take do
       end
 
       it 'changes entry level' do
-        expect { subject }.to change(prize.entry, :level).from(1).to(4)
+        expect { subject }.to change(prize.entry, :level).from(1).to(2)
       end
 
       it 'updates prize spent status' do

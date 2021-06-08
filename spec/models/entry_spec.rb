@@ -3,7 +3,7 @@ require 'rails_helper'
 RSpec.describe Entry, type: :model do
   let(:competition) { create(:competition) }
   let(:user) { create(:user) }
-  let(:entry) { create(:entry, total_votes: 30_001, user: user, competition: competition) }
+  let(:entry) { create(:entry, total_votes: 70_001, user: user, competition: competition) }
 
   it { is_expected.to have_many(:votes).dependent(:destroy) }
   it { is_expected.to have_many(:purchase_transactions).dependent(:destroy) }
@@ -54,7 +54,7 @@ RSpec.describe Entry, type: :model do
       end
 
       it 'updates level of given entry' do
-        expect(entry.level).to eq 3
+        expect(entry.level).to eq 2
       end
     end
 
@@ -68,7 +68,7 @@ RSpec.describe Entry, type: :model do
 
     it 'LEVELS_BY_VOTES constant values include all numbers from 0 to 30_000' do
       all_values = LEVELS.values.each_with_object([]) { |value, arr| arr << value.to_a }.flatten
-      expect(all_values - (0..30_000).to_a).to eq []
+      expect(all_values - (0..69_000).to_a).to eq []
     end
 
     it 'LEVELS_BY_VOTES constant keys include all numbers from 1 to 124' do

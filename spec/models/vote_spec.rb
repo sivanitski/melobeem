@@ -23,16 +23,16 @@ RSpec.describe Vote, type: :model do
     end
 
     it 'updates calculated entry level' do
-      expect { vote.apply! }.to change(entry, :level).from(1).to(109)
+      expect { vote.apply! }.to change(entry, :level).from(1).to(49)
     end
 
     context 'when checks that creates level prize and sends notification about complete level' do
       it 'changes prizes count' do
-        expect { vote.apply! }.to change(Prize, :count).from(0).to(107)
+        expect { vote.apply! }.to change(Prize, :count).from(0).to(47)
       end
 
       it 'changes notifications count' do
-        expect { vote.apply! }.to change(Notification, :count).from(0).to(107)
+        expect { vote.apply! }.to change(Notification, :count).from(0).to(47)
       end
     end
   end
