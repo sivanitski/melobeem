@@ -1,32 +1,77 @@
 import "swiper/swiper.less";
 import "./style.less";
 
-import propTypes from "prop-types";
+import { useRequest } from "ahooks";
 import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 
-import defaultProptypes from "../../default-proptypes";
+import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
-import { defineLevels, filterChildrenByLevel } from "../../helpers/level";
 import InfoIcon from "../../images/info-sign.svg";
 import SearchIcon from "../../images/search-icon.svg";
+import Loader from "../animation/loader";
 import { CompetitorsList } from "../competitors-list";
 import { CompetitorsSwiperMenu } from "../competitors-swiper-menu";
 
-const Competitors = ({ competitors }) => {
-  let { maxLevel, minLevel } = defineLevels(competitors);
+const Competitors = ({}) => {
   const { currentChild } = useContext(ChildContext);
-
-  if (currentChild?.level) {
-    minLevel = currentChild.level;
-  }
-
-  const [shownCompetitors, setShownCompetitors] = useState(
-    filterChildrenByLevel(competitors, minLevel, maxLevel)
+  const [children, setChildren] = useState([]);
+  const [page, setPage] = useState(1);
+  const [isMoreChildren, setIsMoreChildren] = useState(true);
+  const [level, setLevel] = useState(
+    currentChild?.level ? currentChild.level : 1
   );
 
+  const getEntries = async (
+    currentPage = page,
+    currentLevel = level,
+    isChangeLevel
+  ) => {
+    const {
+      data: { entries },
+    } = await api.get("/entries", {
+      params: {
+        per: 20,
+        page: currentPage,
+        level: currentLevel,
+      },
+    });
+    if (isChangeLevel) {
+      setChildren(entries);
+    } else {
+      setChildren(children.concat(entries));
+    }
+    if (entries.length === 0) {
+      setIsMoreChildren(false);
+    }
+    return children.concat(entries);
+  };
+
+  const { loading: childrenLoading } = useRequest(getEntries, {
+    formatResult: (res) => res.data.entries,
+  });
+
+  const getMaxLevel = () => {
+    return api.get("/entries/max_level_entry");
+  };
+
+  const { data: maxLevel, loading } = useRequest(getMaxLevel, {
+    formatResult: (res) => res.data,
+  });
+
+  if (loading || childrenLoading) {
+    return <Loader />;
+  }
+
   const onSliderClick = (index) => {
-    setShownCompetitors(filterChildrenByLevel(competitors, index, maxLevel));
+    setLevel(index);
+    setPage(1);
+    getEntries(1, index, true);
+  };
+
+  const fetchData = async () => {
+    getEntries(page + 1);
+    setPage(page + 1);
   };
 
   return (
@@ -51,18 +96,18 @@ const Competitors = ({ competitors }) => {
       <CompetitorsSwiperMenu
         onSliderClick={onSliderClick}
         maxLevel={maxLevel}
-        minLevel={minLevel}
+        minLevel={level}
       />
+
       <CompetitorsList
-        competitors={shownCompetitors}
+        childrenAtLevel={children}
+        fetchData={fetchData}
+        isMoreChildren={isMoreChildren}
         messageNoChildren="There’s no one on this level right now."
+        messageSeenAllChildren="Yay! You've seen all children on this level!"
       />
     </div>
   );
-};
-
-Competitors.propTypes = {
-  competitors: propTypes.arrayOf(defaultProptypes.CHILD).isRequired,
 };
 
 export default Competitors;

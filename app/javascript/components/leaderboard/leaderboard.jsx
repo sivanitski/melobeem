@@ -22,13 +22,6 @@ const Leaderboard = () => {
   const getCompetition = () => {
     return api.get(`/competitions/current`);
   };
-  const getEntries = () => {
-    return api.get("/entries", {
-      params: {
-        per: 50,
-      },
-    });
-  };
 
   const getCurrentEntryWhenUserLogin = async () => {
     const {
@@ -36,14 +29,6 @@ const Leaderboard = () => {
     } = await api.get("/entries/current");
     setCurrentChild(entry);
   };
-
-  const {
-    data: childrenData,
-    error: childrenError,
-    loading: childrenLoading,
-  } = useRequest(getEntries, {
-    formatResult: (res) => res.data.entries,
-  });
 
   const {
     data: competitionData,
@@ -62,10 +47,10 @@ const Leaderboard = () => {
     }
   }, [location.search]);
 
-  if (competitionError || childrenError) {
+  if (competitionError) {
     return <Error />;
   }
-  if (competitionLoading || childrenLoading) {
+  if (competitionLoading) {
     return <Loader />;
   }
 
@@ -84,7 +69,7 @@ const Leaderboard = () => {
         prize={competitionData.prizeCents}
         prizeCurrency={competitionData.prizeCurrency}
       />
-      <Competitors competitors={childrenData} />
+      <Competitors />
       <Footer active="leaderboard" />
     </>
   );

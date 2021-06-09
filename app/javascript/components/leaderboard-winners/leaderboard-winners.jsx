@@ -1,26 +1,44 @@
 import { useRequest } from "ahooks";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import { api } from "../../api";
 import GoBack from "../../images/go-back.svg";
 import Loader from "../animation/loader";
 import { CompetitorsList } from "../competitors-list";
-import { Error } from "../error";
 import { Footer } from "../footer";
 
 const LeaderboardWinners = () => {
-  const getWinners = () => {
-    return api.get(`/competitions/previous_winners`);
+  const [winners, setWinners] = useState([]);
+  const [isMoreChildren, setIsMoreChildren] = useState(true);
+  const [page, setPage] = useState(1);
+
+  const getWinners = async (currentPage = page) => {
+    const {
+      data: { entries },
+    } = await api.get(`/competitions/previous_winners`, {
+      params: {
+        per: 20,
+        page: currentPage,
+      },
+    });
+
+    setWinners(winners.concat(entries));
+    if (entries.length === 0) {
+      setIsMoreChildren(false);
+    }
+    return winners.concat(entries);
   };
 
-  const { data: winners, error, loading } = useRequest(getWinners, {
+  const fetchData = async () => {
+    getWinners(page + 1);
+    setPage(page + 1);
+  };
+
+  const { loading } = useRequest(getWinners, {
     formatResult: (res) => res.data.entries,
   });
 
-  if (error) {
-    return <Error />;
-  }
   if (loading) {
     return <Loader />;
   }
@@ -33,8 +51,11 @@ const LeaderboardWinners = () => {
           <GoBack />
         </Link>
         <CompetitorsList
-          competitors={winners}
+          childrenAtLevel={winners}
           messageNoChildren="There’s no previous competitions yet"
+          messageSeenAllChildren="You have seen all previous winners"
+          fetchData={fetchData}
+          isMoreChildren={isMoreChildren}
         />
       </div>
 

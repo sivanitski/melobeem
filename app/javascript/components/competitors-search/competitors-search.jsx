@@ -12,19 +12,42 @@ import { Footer } from "../footer";
 const CompetitorsSearch = () => {
   const [searchString, setSearchString] = useState("");
   const [isVisible, setIsVisible] = useState(false);
-  const [competitors, setCompetitors] = useState([]);
+  const [children, setChildren] = useState([]);
+  const [isMoreChildren, setIsMoreChildren] = useState(true);
+  const [page, setPage] = useState(1);
 
   const debouncedValue = useDebounce(searchString, 500);
   const history = useHistory();
 
   useEffect(() => {
-    api.get(`/entries/search?q=${debouncedValue}`).then((res) => {
-      setCompetitors(res.data.entries);
-    });
+    getMatchedChildren();
   }, [debouncedValue]);
+
+  const getMatchedChildren = async (currentPage = page) => {
+    const {
+      data: { entries },
+    } = await api.get(`/entries/search?q=${debouncedValue}`, {
+      params: {
+        per: 20,
+        page: currentPage,
+      },
+    });
+    setChildren(children.concat(entries));
+    if (entries.length === 0) {
+      setIsMoreChildren(false);
+    }
+    return children.concat(entries);
+  };
+
+  const fetchData = async () => {
+    getMatchedChildren(page + 1);
+    setPage(page + 1);
+  };
 
   const onSearchFilledChange = (evt) => {
     setSearchString(evt.currentTarget.value);
+    setPage(1);
+    setChildren([]);
     if (evt.currentTarget.value.length > 0) {
       setIsVisible(true);
     } else {
@@ -34,6 +57,7 @@ const CompetitorsSearch = () => {
 
   const handleResetClick = () => {
     setSearchString("");
+    setChildren([]);
     history.push("/");
   };
 
@@ -61,8 +85,11 @@ const CompetitorsSearch = () => {
 
         {isVisible && (
           <CompetitorsList
-            competitors={competitors}
+            childrenAtLevel={children}
             messageNoChildren="There is no baby with this name"
+            messageSeenAllChildren="You have seen all matched children"
+            fetchData={fetchData}
+            isMoreChildren={isMoreChildren}
           />
         )}
       </div>
