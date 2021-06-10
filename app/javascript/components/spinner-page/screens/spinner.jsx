@@ -15,7 +15,7 @@ import SpinnerPointer from "../../../images/stopper.svg";
 import SpinnerImageColor from "../blocks/spinner-image";
 import SpinnerTitle from "../blocks/spinner-title";
 
-const Spinner = ({ spinnerData, updateCurrentChild }) => {
+const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
   const spinnerElement = useRef(null);
   const [isAnimationPlay, setIsAnimationPlay] = useState(false);
   const [spinnerAnimation, setSpinnerAnimation] = useState(null);
@@ -67,6 +67,7 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
     setSpinnerAnimation(null);
 
     setTimeout(updateCurrentChild, animationParams.secondAnimationTime);
+    setTimeout(updateUser, animationParams.secondAnimationTime);
   };
 
   return (
@@ -100,6 +101,7 @@ Spinner.propTypes = {
     count: propTypes.number,
   }),
   updateCurrentChild: propTypes.func,
+  updateUser: propTypes.func,
 };
 
 export default Spinner;

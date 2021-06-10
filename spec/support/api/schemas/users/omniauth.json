@@ -4,13 +4,14 @@
   "properties": {
     "user": {
       "type": "object",
-      "required": ["id", "name", "avatar_url", "current_baby_name", "captcha_verified"],
+      "required": ["id", "name", "avatar_url", "current_baby_name", "captcha_verified", "any_spins"],
       "properties": {
         "id": {"type": "integer"},
         "name": {"type": "string"},
         "avatar_url" : {"type": "string"},
         "current_baby_name" : {"type": "nullable"},
-        "captcha_verified" : {"type":  "boolean"}
+        "captcha_verified" : {"type":  "boolean"},
+        "any_spins" : {"type":  "boolean"}
       }
     }
   }

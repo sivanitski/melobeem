@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { Payment } from "../../payment";
 import SpinnerList from "../blocks/spinner-list";
 
-const NoSpinner = ({ requestSpinnerInfo }) => {
+const NoSpinner = ({ requestSpinnerInfo, updateUser }) => {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
   const [activeOption, setActiveOption] = useState({
     price: null,
@@ -21,6 +21,7 @@ const NoSpinner = ({ requestSpinnerInfo }) => {
   const handlePaymentClose = () => {
     setIsPaymentOpen(false);
     setActiveOption(null);
+    updateUser();
     requestSpinnerInfo();
   };
 
@@ -42,6 +43,7 @@ const NoSpinner = ({ requestSpinnerInfo }) => {
 
 NoSpinner.propTypes = {
   requestSpinnerInfo: propTypes.func.isRequired,
+  updateUser: propTypes.func,
 };
 
 export default NoSpinner;

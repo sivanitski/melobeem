@@ -14,7 +14,7 @@ import NoSpinner from "./screens/no-spinner";
 import Spinner from "./screens/spinner";
 
 const SpinnerPage = () => {
-  const { user } = useContext(UserContext);
+  const { user, setUser } = useContext(UserContext);
   const history = useHistory();
   const { currentChild, setCurrentChild } = useContext(ChildContext);
 
@@ -28,6 +28,16 @@ const SpinnerPage = () => {
       formatResult: (res) => res.data,
     }
   );
+
+  const updateUser = async () => {
+    const {
+      data: { user: updatedUser },
+    } = await api.get("users/current");
+    setUser((user) => ({
+      ...user,
+      anySpins: updatedUser.anySpins,
+    }));
+  };
 
   const updateCurrentChild = async () => {
     const {
@@ -59,11 +69,20 @@ const SpinnerPage = () => {
 
     if (data.type) {
       return (
-        <Spinner spinnerData={data} updateCurrentChild={updateCurrentChild} />
+        <Spinner
+          spinnerData={data}
+          updateCurrentChild={updateCurrentChild}
+          updateUser={updateUser}
+        />
       );
     }
 
-    return <NoSpinner requestSpinnerInfo={requestSpinnerInfo} />;
+    return (
+      <NoSpinner
+        requestSpinnerInfo={requestSpinnerInfo}
+        updateUser={updateUser}
+      />
+    );
   };
 
   return (

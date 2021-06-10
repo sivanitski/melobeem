@@ -10,7 +10,7 @@
   border-top: 1px solid #fdd8e2;
 }
 
-.footer__item {
+.footer-item {
   width: calc((100% - 72px) / 4);
   font-weight: 500;
   font-size: 10px;
@@ -44,10 +44,25 @@
   }
 }
 
-.footer__item:hover {
+.footer-item:hover {
   color: #ff7098;
 
   svg {
     fill: #ff7098;
   }
+}
+
+.footer-item__dot {
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: red;
+  border-radius: 50%;
+  top: 4px;
+  left: 1px;
+}
+
+.footer-item__wrapper {
+  display: inline-block;
+  position: relative;
 }

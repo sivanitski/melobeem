@@ -5,6 +5,7 @@ import React, { useContext } from "react";
 import { Link } from "react-router-dom";
 
 import ChildContext from "../../helpers/child-context";
+import UserContext from "../../helpers/user-context";
 import IconButton from "../../images/button.svg";
 import IconLeaderboard from "../../images/icon-leaderboard.svg";
 import IconLevels from "../../images/icon-levels.svg";
@@ -13,6 +14,7 @@ import IconSpinner from "../../images/icon-spinner.svg";
 
 const Footer = ({ isEnterButtonSmall, active }) => {
   const { currentChild } = useContext(ChildContext);
+  const { user } = useContext(UserContext);
 
   const renderCentralButton = (child) => {
     if (child) {
@@ -37,34 +39,37 @@ const Footer = ({ isEnterButtonSmall, active }) => {
 
   return (
     <div className="footer">
-      <Link to="/" className="footer__item">
+      <Link to="/" className="footer-item">
         <IconLeaderboard
           className={`svg-beige ${active === "leaderboard" && "svg-pink"}`}
         />
-        <div className="footer__item__title">Leaderboard</div>
+        <div className="footer-item__title">Leaderboard</div>
       </Link>
 
-      <Link to="/spinner" className="footer__item">
-        <IconSpinner
-          className={`svg-beige ${active === "spinner" && "svg-pink"}`}
-        />
-        <div className="footer__item__title">Spinner</div>
+      <Link to="/spinner" className="footer-item">
+        <div className="footer-item__wrapper">
+          {user && user.anySpins && <div className="footer-item__dot"></div>}
+          <IconSpinner
+            className={`svg-beige ${active === "spinner" && "svg-pink"}`}
+          />
+        </div>
+        <div className="footer-item__title">Spinner</div>
       </Link>
 
       {renderCentralButton(currentChild)}
 
-      <Link to="/level" className="footer__item">
+      <Link to="/level" className="footer-item">
         <IconLevels
           className={`svg-beige ${active === "levels" && "svg-pink"}`}
         />
-        <div className="footer__item__title">Levels</div>
+        <div className="footer-item__title">Levels</div>
       </Link>
 
-      <Link to="/profile" className="footer__item">
+      <Link to="/profile" className="footer-item">
         <IconProfile
           className={`svg-beige ${active === "profile" && "svg-pink"}`}
         />
-        <div className="footer__item__title">Profile</div>
+        <div className="footer-item__title">Profile</div>
       </Link>
     </div>
   );

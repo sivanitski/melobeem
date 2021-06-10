@@ -4,6 +4,7 @@ module Users
     attribute :friends_with_current_user?, if: :friends_with_current_user?
     attribute :friendship_source_type,     if: :friends_with_current_user?
     attribute :captcha_verified,           if: :current_user?
+    attribute :any_spins,                  if: :current_user?
 
     def friends_with_current_user?
       return false unless current_user
@@ -23,6 +24,12 @@ module Users
 
     def current_user?
       current_user.eql?(object)
+    end
+
+    def any_spins
+      return true if object.premium_spins.positive?
+
+      current_user.spins.free.where(created_at: Date.current.all_day).empty?
     end
 
     private
