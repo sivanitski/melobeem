@@ -47,9 +47,7 @@ const Competitors = ({}) => {
     return children.concat(entries);
   };
 
-  const { loading: childrenLoading } = useRequest(getEntries, {
-    formatResult: (res) => res.data.entries,
-  });
+  const { loading: childrenLoading } = useRequest(getEntries);
 
   const getMaxLevel = () => {
     return api.get("/entries/max_level_entry");
