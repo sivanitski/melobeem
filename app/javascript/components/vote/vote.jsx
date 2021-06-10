@@ -2,17 +2,17 @@ import "./style.less";
 
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Redirect, withRouter } from "react-router";
 
 import { api } from "../../api";
-import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import Loader from "../animation/loader";
 import { Error } from "../error";
 import { HeaderUserWithChild } from "../header-user-with-child";
 import { Payment } from "../payment";
 import { Popup } from "../popup";
+import AnimationAfterPurchase from "./blocks/animation";
 import VoteList from "./blocks/vote-list";
 
 const Vote = ({
@@ -21,9 +21,7 @@ const Vote = ({
   },
 }) => {
   const [isPopupShown, setIsPopupShown] = useState(false);
-  const [isAnimation, setIsAnimation] = useState(false);
-  const { user, setUser } = useContext(UserContext);
-  const { currentChild, setCurrentChild } = useContext(ChildContext);
+  const { user } = useContext(UserContext);
 
   if (!user) {
     return <Redirect to={`/entry/${id}`} />;
@@ -35,7 +33,19 @@ const Vote = ({
     title: null,
     id: null,
   });
-  const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState("vote");
+
+  const [animationParams, setAnimationParams] = useState({
+    isAnimationPlay: false,
+    votesStart: 0,
+    votesEnd: 0,
+    rankStart: 0,
+    rankEnd: 0,
+  });
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [currentPage]);
 
   const getCurrentCompetitor = () => {
     return api.get(`/entries/${id}`);
@@ -81,12 +91,11 @@ const Vote = ({
 
   const handlePriceClick = (option) => {
     setActiveOption(option);
-    setIsPaymentOpen(true);
+    setCurrentPage("payment");
   };
 
   const handlePaymentClose = () => {
-    setIsPaymentOpen(false);
-    setActiveOption(null);
+    setCurrentPage("vote");
   };
 
   const handlePopupClose = () => {
@@ -95,28 +104,30 @@ const Vote = ({
 
   const updateStateAfterVote = async () => {
     requestChild();
-    setIsAnimation(true);
-
-    if (currentChild?.id === Number(id)) {
-      const {
-        data: { entry },
-      } = await api.get("/entries/current");
-      setCurrentChild(entry);
-    }
 
     if (isPopup) {
       setTimeout(() => setIsPopupShown(true), 3000);
     }
-
-    const {
-      data: { user },
-    } = api.get("/users/current");
-    setUser(user);
   };
 
   const handlePaymentSucceedClose = async () => {
-    handlePaymentClose();
-    updateStateAfterVote();
+    setCurrentPage("animation");
+
+    setAnimationParams((animationParams) => ({
+      ...animationParams,
+      votesStart: child.totalVotes,
+      rankStart: child.rank,
+    }));
+    const {
+      data: { entry },
+    } = await api.get(`/entries/${id}`);
+
+    setAnimationParams((animationParams) => ({
+      ...animationParams,
+      isAnimationPlay: true,
+      votesEnd: entry.totalVotes,
+      rankEnd: entry.rank,
+    }));
   };
 
   const updateData = async () => {
@@ -124,11 +135,20 @@ const Vote = ({
     updateStateAfterVote();
   };
 
-  return (
-    <>
-      <HeaderUserWithChild child={child} isAnimation={isAnimation} />
+  const renderVoteScreen = () => {
+    if (currentPage === "vote") {
+      return (
+        <VoteList
+          childId={child.id}
+          timeFreeVote={timeFreeVote}
+          handlePriceClick={handlePriceClick}
+          updateData={updateData}
+        />
+      );
+    }
 
-      {isPaymentOpen ? (
+    if (currentPage === "payment") {
+      return (
         <Payment
           activeType="vote"
           activePrice={activeOption.price}
@@ -139,14 +159,21 @@ const Vote = ({
           childId={child.id}
           userId={user.id}
         />
-      ) : (
-        <VoteList
-          childId={child.id}
-          timeFreeVote={timeFreeVote}
-          handlePriceClick={handlePriceClick}
-          updateData={updateData}
-        />
-      )}
+      );
+    }
+
+    if (currentPage === "animation") {
+      return <AnimationAfterPurchase value={activeOption.value} />;
+    }
+
+    return null;
+  };
+
+  return (
+    <>
+      <HeaderUserWithChild child={child} animationParams={animationParams} />
+
+      {renderVoteScreen()}
 
       {isPopupShown && (
         <Popup

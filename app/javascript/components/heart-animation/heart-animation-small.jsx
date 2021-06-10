@@ -14,20 +14,24 @@ const HeartAnimationSmall = ({ animationLevel }) => {
         <linearGradient id="bottom-to-top" x2="0%" y2="100%">
           <stop offset="0" stopColor="#fff">
             <animate
-              dur="2s"
+              dur="3s"
               attributeName="offset"
               fill="freeze"
               from="1"
               to={`${animationLevel}`}
+              calcMode="linear"
+              keySplines="0,0,1,1"
             />
           </stop>
           <stop offset="0" stopColor="#FF7098">
             <animate
-              dur="2s"
+              dur="3s"
               attributeName="offset"
               fill="freeze"
               from="0"
               to={`${animationLevel}`}
+              calcMode="linear"
+              keySplines="0,0,1,1"
             />
           </stop>
         </linearGradient>

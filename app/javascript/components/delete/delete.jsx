@@ -43,7 +43,7 @@ const Delete = ({ location: { state } }) => {
       return;
     }
 
-    if (currentChild.id === state.id) {
+    if (currentChild?.id === state.id) {
       setCurrentChild(null);
     }
     history.push("/sign-up");

@@ -34,7 +34,7 @@ const EditEntry = ({
     return <Loader />;
   }
 
-  if (currentChild.id !== child.id || !child.currentCompetition) {
+  if (currentChild?.id !== child.id || !child.currentCompetition) {
     return <Redirect to={`/entry/${id}`} />;
   }
 

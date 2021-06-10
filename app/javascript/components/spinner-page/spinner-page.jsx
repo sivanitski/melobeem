@@ -1,5 +1,5 @@
 import { useRequest } from "ahooks";
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
 import { api } from "../../api";
@@ -17,6 +17,24 @@ const SpinnerPage = () => {
   const { user, setUser } = useContext(UserContext);
   const history = useHistory();
   const { currentChild, setCurrentChild } = useContext(ChildContext);
+  const [animationParams, setAnimationParams] = useState({
+    isAnimationPlay: false,
+    votesStart: 0,
+    votesEnd: 0,
+    rankStart: 0,
+    rankEnd: 0,
+  });
+
+  useEffect(() => {
+    async function loadCurrentChild() {
+      const {
+        data: { entry },
+      } = await api.get("/entries/current");
+      setCurrentChild(entry);
+    }
+
+    loadCurrentChild();
+  }, []);
 
   const getSpinnersInfo = () => {
     return api.get(`/spins/check_presence`);
@@ -40,10 +58,23 @@ const SpinnerPage = () => {
   };
 
   const updateCurrentChild = async () => {
+    setAnimationParams((animationParams) => ({
+      ...animationParams,
+      votesStart: currentChild.totalVotes,
+      rankStart: currentChild.rank,
+    }));
     const {
       data: { entry },
     } = await api.get("/entries/current");
-    setCurrentChild(entry);
+
+    setAnimationParams((animationParams) => ({
+      ...animationParams,
+      isAnimationPlay: true,
+      votesEnd: entry.totalVotes,
+      rankEnd: entry.rank,
+    }));
+
+    setTimeout(() => setCurrentChild(entry), 3000);
   };
 
   const popupType = !user ? "spinner-not-login" : "spinner-not-entered";
@@ -87,7 +118,7 @@ const SpinnerPage = () => {
 
   return (
     <>
-      <HeaderUser child={currentChild} />
+      <HeaderUser child={currentChild} animationParams={animationParams} />
 
       {renderSpinnerScreen()}
 

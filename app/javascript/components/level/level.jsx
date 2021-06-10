@@ -1,7 +1,7 @@
 import "./style.less";
 
 import { useRequest } from "ahooks";
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
 import { api } from "../../api";
@@ -22,7 +22,18 @@ const LEVEL_TEXT_INFO =
 const Level = () => {
   const history = useHistory();
   const { user } = useContext(UserContext);
-  const { currentChild } = useContext(ChildContext);
+  const { currentChild, setCurrentChild } = useContext(ChildContext);
+
+  useEffect(() => {
+    async function loadCurrentChild() {
+      const {
+        data: { entry },
+      } = await api.get("/entries/current");
+      setCurrentChild(entry);
+    }
+
+    loadCurrentChild();
+  }, []);
 
   const getMaxLevel = () => {
     return api.get("/entries/max_level_entry");
