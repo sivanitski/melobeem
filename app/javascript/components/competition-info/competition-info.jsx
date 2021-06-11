@@ -2,11 +2,14 @@ import "./style.less";
 
 import propTypes from "prop-types";
 import React from "react";
+import { useHistory } from "react-router";
 
 import { calcDaysLeft } from "../../helpers/date";
 import { formatMoneyWithCurrency } from "../../helpers/utils";
 
 const CompetitionInfo = ({ timeLeft, prize, prizeCurrency }) => {
+  const history = useHistory();
+
   return (
     <div className="competition-info">
       <div className="competition-info__item">
@@ -15,7 +18,10 @@ const CompetitionInfo = ({ timeLeft, prize, prizeCurrency }) => {
           {calcDaysLeft(timeLeft)}
         </div>
       </div>
-      <div className="competition-info__item">
+      <div
+        className="competition-info__item"
+        onClick={() => history.push("/competition-info/prizes")}
+      >
         <div className="competition-info__item__title text-grey">Prize</div>
         <div className="competition-info__item__title headline--medium text-pink">
           {formatMoneyWithCurrency(prize, prizeCurrency)}
