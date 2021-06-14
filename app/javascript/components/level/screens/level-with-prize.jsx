@@ -5,9 +5,11 @@ import { useHistory } from "react-router";
 
 import { api } from "../../../api";
 import ChildContext from "../../../helpers/child-context";
+import UserContext from "../../../helpers/user-context";
 import { defineColorClass, definePrizeParameters } from "./prize-parameters";
 
 const LevelWithPrize = ({ prize }) => {
+  const { setUser } = useContext(UserContext);
   const [prizeTime, setPrizeTime] = useState(null);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
   const history = useHistory();
@@ -23,6 +25,16 @@ const LevelWithPrize = ({ prize }) => {
   const prizeParams = definePrizeParameters(prize, prizeTime);
 
   const isTimePrizeActivated = prize.sourceType === "min" && prizeTime;
+
+  const updateUser = async () => {
+    const {
+      data: { user: updatedUser },
+    } = await api.get("users/current");
+    setUser((user) => ({
+      ...user,
+      anySpins: updatedUser.anySpins,
+    }));
+  };
 
   const handleTakePrize = async () => {
     if (isTimePrizeActivated) {
@@ -41,6 +53,7 @@ const LevelWithPrize = ({ prize }) => {
     }
 
     if (prize.sourceType === "spin") {
+      updateUser();
       history.push("/spinner");
     } else {
       history.push(`/entry/${currentChild.id}`);
