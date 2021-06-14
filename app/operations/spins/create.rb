@@ -1,7 +1,7 @@
 module Spins
   class Create
     VALUES_FREE = [1, 3, 2, 0, 1, 4, 1, 2].freeze
-    VALUES_PAID = [1, 3, 2, 4, 1, 4, 1, 2].freeze
+    VALUES_PAID = [10, 19, 20, 30, 40, 34, 10, 12].freeze
 
     def initialize(user)
       @user = user
