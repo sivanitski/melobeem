@@ -53,7 +53,7 @@ const Timer = ({ timeLeftInSeconds, handleFieldClick, type }) => {
         classes={buttonClasses}
         text={
           timeLeft > 0
-            ? `${formatTimeInHoursMinutesAndSeconds(timeLeft)}`
+            ? `Free spin in ${formatTimeInHoursMinutesAndSeconds(timeLeft)}`
             : null
         }
       />

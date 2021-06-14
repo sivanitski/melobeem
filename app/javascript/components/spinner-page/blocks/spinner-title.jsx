@@ -29,19 +29,35 @@ const SpinnerTitle = ({ spinnerType, spinnerAmount }) => {
     }
   );
 
+  const isPremiumShop = !spinnerType;
+
   return (
     <>
       <div className="spinner__title headline--medium">
-        {spinnerType === "premium"
+        {isPremiumShop
+          ? "Premium Spins"
+          : spinnerType === "premium"
           ? `${makePluralForm(`${spinnerAmount} spin`, spinnerAmount)}`
           : "Daily Spinner"}
-
-        <div className="spinner__info" onClick={() => setIsInfoOpen(true)}>
-          <InfoImage />
-        </div>
+        {isPremiumShop ? (
+          <div>
+            <div className="spinner-shop__info">
+              1 spin = 10x daily spin value
+            </div>
+            <div className="spinner-shop__timer">
+              {!timeLoading && !spinnerType && (
+                <Timer timeLeftInSeconds={timeFreeSpin} type="spinner" />
+              )}
+            </div>
+          </div>
+        ) : (
+          <div className="spinner__info" onClick={() => setIsInfoOpen(true)}>
+            <InfoImage />
+          </div>
+        )}
       </div>
 
-      {!timeLoading && !spinnerType && (
+      {!timeLoading && !spinnerType && !isPremiumShop && (
         <Timer timeLeftInSeconds={timeFreeSpin} type="spinner" />
       )}
 
