@@ -17,7 +17,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Build Image
-        run: docker build -t ${{ env.PROJECT_NAMESPACE }}:${{ github.sha }} . --build-arg FACEBOOK_APP_ID=${{ secrets.FACEBOOK_APP_ID }} --build-arg OPENEXCHANGE_APPID=${{ secrets.OPENEXCHANGE_APPID }} --build-arg STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }}
+        run: docker build -t ${{ env.PROJECT_NAMESPACE }}:${{ github.sha }} . --build-arg FACEBOOK_APP_ID=${{ secrets.FACEBOOK_APP_ID }} --build-arg OPENEXCHANGE_APPID=${{ secrets.OPENEXCHANGE_APPID }} --build-arg STRIPE_PUBLISHABLE_KEY=${{ secrets.STRIPE_PUBLISHABLE_KEY }} --build-arg RECAPTCHA_PUBLIC_KEY=${{ secrets.RECAPTCHA_PUBLIC_KEY }} --build-arg RECAPTCHA_SECRET_KEY=${{ secrets.RECAPTCHA_SECRET_KEY }}
 
       - name: Push to ECR
         id: ecr
