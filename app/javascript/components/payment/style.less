@@ -9,6 +9,20 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  padding: 0 15px;
+
+  label {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 22px;
+    letter-spacing: 0.15px;
+    color: #484848;
+    margin-bottom: 14px;
+  }
+
+  hr {
+    border: 1px solid #f2f2f2;
+  }
 }
 
 .vote-payment__form {
@@ -43,11 +57,10 @@
 .vote-payment__options {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 20px;
 }
 
 .vote-payment__item {
-  border-bottom: 1px solid #747474;
+  border-bottom: 1px solid #f2f2f2;
   margin-bottom: 10px;
   min-width: 65px;
   max-width: 75px;
@@ -58,7 +71,8 @@
 }
 
 .vote-payment__form-field {
-  margin-bottom: 10px;
+  margin-bottom: 5px;
+  margin-top: 4px;
 }
 
 .vote-payment__button {
@@ -69,4 +83,69 @@
   border: none;
   font-size: 15px;
   width: 75px;
+}
+
+.payment-payment_request_container {
+  width: 100%;
+  max-width: 300px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+
+  .payment-delimiter-text-container {
+    margin-top: 20px;
+
+    p {
+      font-size: 14px;
+      line-height: 0;
+      color: #909090;
+      width: 100%;
+      text-align: center;
+      border-bottom: 1px solid #909090;
+      margin: 10px 0 20px;
+
+      span {
+        background: #fff;
+        padding: 0 10px;
+      }
+    }
+  }
+}
+
+.error {
+  font-size: 12px;
+  line-height: 18px;
+  letter-spacing: 0.4px;
+  color: #f00;
+  margin-bottom: 5px;
+}
+
+.vote-payment__user_details {
+  padding-bottom: 10px;
+
+  .vote-payment__item-full-width {
+    width: 100%;
+    display: inline-block;
+
+    input {
+      display: block;
+      width: 100%;
+      padding: 10px;
+    }
+
+    .vote-payment__form-field--cardholder {
+      border: 1px solid #a3a3a3;
+      box-sizing: border-box;
+      border-radius: 6px;
+    }
+
+    .vote-payment__form-field--email {
+      border: 1px solid #a3a3a3;
+      box-sizing: border-box;
+      border-radius: 6px;
+    }
+  }
+}
+
+.vote-payment__button-disabled {
+  background: #6b6b6b;
 }
