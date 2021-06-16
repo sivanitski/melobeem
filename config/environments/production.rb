@@ -98,7 +98,7 @@ Rails.application.configure do
   config.active_record.dump_schema_after_migration = false
 
   Rails.application.routes.default_url_options[:protocol] = 'https'
-  Rails.application.routes.default_url_options[:host] = 'kindergizer.com'
+  Rails.application.routes.default_url_options[:host] = 'melobeem.com'
   # Rails.application.routes.default_url_options[:port] = 3000
 
   # Inserts middleware to perform automatic connection switching.
