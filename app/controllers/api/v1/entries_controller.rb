@@ -81,6 +81,10 @@ module API
         end
       end
 
+      def prizes
+        render json: entry.prizes, each_serializer: ::Entries::PrizeByLevelSerializer
+      end
+
       def take_prize
         result = Prizes::Take.new(prize).call
         render json: result, adapter: nil, status: :ok

@@ -23,6 +23,7 @@ const Level = () => {
   const history = useHistory();
   const { user } = useContext(UserContext);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
+  const [prizes, setPrizes] = useState(null);
 
   useEffect(() => {
     async function loadCurrentChild() {
@@ -30,6 +31,13 @@ const Level = () => {
         data: { entry },
       } = await api.get("/entries/current");
       setCurrentChild(entry);
+
+      if (entry) {
+        const {
+          data: { prizes: prisezData },
+        } = await api.get(`/entries/${entry.id}/prizes`);
+        setPrizes(prisezData);
+      }
     }
 
     loadCurrentChild();
@@ -67,15 +75,23 @@ const Level = () => {
       </div>
     );
   }
-
   if (loading) {
     return <Loader />;
   }
+
+  const calculateNotSpentPrizes = () => {
+    if (!prizes) return null;
+
+    return prizes.filter((prize) => prize.spent === false);
+  };
+
+  const notSpentPrizes = calculateNotSpentPrizes();
 
   return (
     <>
       <div className="level">
         <LevelSwiperMenu
+          notSpentPrizes={notSpentPrizes}
           handleSlideCLick={handleSlideCLick}
           maxLevel={currentChild.level}
           activeLevel={activeLevel}

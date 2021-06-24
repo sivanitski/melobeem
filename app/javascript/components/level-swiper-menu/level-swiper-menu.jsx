@@ -5,15 +5,23 @@ import propTypes from "prop-types";
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 
+import PrizeImage from "../../images/gift-level.svg";
 import LockerImage from "../../images/locker-small.svg";
 
 const LevelSwiperMenu = ({
+  notSpentPrizes,
   activeLevel,
   handleSlideCLick,
   maxLevel,
   lockerAmount,
   initialSlide,
 }) => {
+  const checkPrizeOnlevel = (level) => {
+    if (!notSpentPrizes) return null;
+
+    return notSpentPrizes.find((prize) => prize.level === level);
+  };
+
   const renderSlides = () => {
     let slides = [];
 
@@ -22,13 +30,14 @@ const LevelSwiperMenu = ({
         active: activeLevel === level,
         "text-pink": !(activeLevel === level),
       });
+
       slides.push(
         <SwiperSlide
           className={sliderClass}
           key={level}
           onClick={handleSlideCLick(level)}
         >
-          {level}
+          {checkPrizeOnlevel(level) ? <PrizeImage /> : level}
         </SwiperSlide>
       );
     }
@@ -60,6 +69,16 @@ const LevelSwiperMenu = ({
 };
 
 LevelSwiperMenu.propTypes = {
+  notSpentPrizes: propTypes.arrayOf(
+    propTypes.shape({
+      entryId: propTypes.number,
+      id: propTypes.number,
+      level: propTypes.number,
+      sourceType: propTypes.string,
+      spent: propTypes.bool,
+      value: propTypes.number,
+    })
+  ),
   handleSlideCLick: propTypes.func,
   activeLevel: propTypes.number.isRequired,
   maxLevel: propTypes.number.isRequired,

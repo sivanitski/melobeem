@@ -298,6 +298,27 @@ RSpec.describe API::V1::EntriesController do
     end
   end
 
+  describe 'GET #prizes' do
+    before { sign_in user }
+
+    context 'when no prizes' do
+      before { get :prizes, params: { id: entry.id }, format: :json }
+
+      it { expect(response.status).to eq 200 }
+    end
+
+    context 'when there is prizes' do
+      before do
+        prize.update!(spent: true)
+        get :prizes, params: { id: entry.id }, format: :json
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it { expect(response).to match_response_schema('entries/prizes') }
+    end
+  end
+
   describe 'PUT #take_prize' do
     before do
       sign_in user

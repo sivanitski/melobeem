@@ -39,6 +39,7 @@ Rails.application.routes.draw do
           get :latest_voters
           get :ranking_details
           get :prize_by_level
+          get :prizes
           get :prize_time
           put :take_prize
         end

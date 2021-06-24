@@ -1,0 +1,18 @@
+{
+  "type": "object",
+  "required": ["prizes"],
+  "properties": {
+    "prizes": {
+      "type": "array",
+      "required": ["id", "level", "entry_id", "spent", "source_type", "value"],
+      "properties": {
+        "id": {"type": "integer"},
+        "level": {"type": "integer"},
+        "entry_id": {"type": "integer"},
+        "spent": {"type": "boolean"},
+        "source_type": {"type": "string"},
+        "value": {"type": "integer"}
+      }
+    }
+  }
+}
