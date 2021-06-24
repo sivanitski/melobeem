@@ -2,7 +2,7 @@ import propTypes from "prop-types";
 import React from "react";
 
 import PaymentAnimation from "../../animation/payment-success";
-import { Count } from "../../count";
+import { CountAnimation } from "../../count-animation";
 
 const AnimationAfterPurchase = ({ value }) => {
   return (
@@ -10,7 +10,7 @@ const AnimationAfterPurchase = ({ value }) => {
       <PaymentAnimation />
       <div className="vote-animation__text headline--medium">
         <div className="vote-animation__title text-pink">
-          <Count numberStart={value} numberEnd={0} isDecrease duration={2} />
+          <CountAnimation numberStart={value} numberEnd={0} isDecrease />
         </div>
         <div className="vote-animation__subtitle text-grey">votes</div>
       </div>

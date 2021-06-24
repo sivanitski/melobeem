@@ -1,18 +1,14 @@
 import propTypes from "prop-types";
 import React from "react";
 
-import { Count } from "../count";
+import { CountAnimation } from "../count-animation";
 
 const HeaderUserItem = ({ title, value, isAnimationPlay, ...countProps }) => {
   return (
     <div className="header-user__item">
       <div className="header-user__item__text text-tiny text-grey">{title}</div>
       <div className="header-user__item__number headline--medium text-pink">
-        {isAnimationPlay ? (
-          <Count duration={2} {...{ ...countProps }} />
-        ) : (
-          value
-        )}
+        {isAnimationPlay ? <CountAnimation {...{ ...countProps }} /> : value}
       </div>
     </div>
   );

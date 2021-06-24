@@ -26,7 +26,7 @@ const HeaderUserWithChild = ({ child, animationParams }) => {
       return animationParams.votesStart;
     }
 
-    return child.votesEnd;
+    return animationParams.votesEnd;
   };
 
   const calculateChildRank = () => {
