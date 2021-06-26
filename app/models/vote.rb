@@ -12,8 +12,8 @@ class Vote < ApplicationRecord
 
   def apply!
     entry.increment!(:total_votes, value) # rubocop:disable Rails/SkipsModelValidations
-    entry.update_level!
-    create_prizes(entry.level)
+
+    create_prizes(entry.level) if entry.update_level!
   end
 
   private
