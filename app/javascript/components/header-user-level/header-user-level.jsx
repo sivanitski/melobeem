@@ -15,7 +15,7 @@ const HeaderUserLevel = ({
   const animationLevel = getAnimationLevel(totalVotes, level);
 
   if (isAnimation) {
-    setTimeout(() => setAnimationStep(animationStep + 1), 2000);
+    setTimeout(() => setAnimationStep(animationStep + 1), 3000);
   }
 
   return (

@@ -41,6 +41,7 @@ const Vote = ({
     votesEnd: 0,
     rankStart: 0,
     rankEnd: 0,
+    level: 0,
   });
 
   useEffect(() => {
@@ -127,6 +128,7 @@ const Vote = ({
       isAnimationPlay: true,
       votesEnd: entry.totalVotes,
       rankEnd: entry.rank,
+      level: entry.level,
     }));
   };
 

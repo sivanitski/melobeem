@@ -34,7 +34,7 @@ const TimeMenu = ({ time, value, handleInfoOpen }) => {
 };
 
 TimeMenu.propTypes = {
-  time: propTypes.string.isRequired,
+  time: propTypes.number.isRequired,
   value: propTypes.number.isRequired,
   handleInfoOpen: propTypes.func.isRequired,
 };

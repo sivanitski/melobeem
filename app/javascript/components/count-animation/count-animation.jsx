@@ -15,7 +15,7 @@ const CountAnimation = ({
   if (isDecrease) {
     [numberStart, numberEnd] = [numberEnd, numberStart];
   }
-  const duration = (numberEnd - numberStart) * 100;
+  const duration = 3000;
 
   useEffect(() => {
     playAnimation();
@@ -41,10 +41,29 @@ const CountAnimation = ({
   const renderNumber = () => {
     let allNumbers = [];
 
-    for (let i = numberStart; i < numberEnd + 1; i++) {
+    if (numberEnd === numberStart) {
+      return <span className="count__item">{numberEnd}</span>;
+    }
+
+    let i = numberStart;
+    const increasingNumber =
+      numberEnd - numberStart > 10
+        ? Math.trunc((numberEnd - numberStart) / 10)
+        : 1;
+
+    while (i <= numberEnd) {
       allNumbers.push(
         <span className="count__item" key={`count-item-${i}`}>
           {i}
+        </span>
+      );
+      i += increasingNumber;
+    }
+
+    if (i !== numberEnd) {
+      allNumbers.push(
+        <span className="count__item" key={`count-item-${i}`}>
+          {numberEnd}
         </span>
       );
     }
