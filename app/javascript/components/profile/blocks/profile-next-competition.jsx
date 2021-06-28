@@ -5,8 +5,9 @@ import { Redirect, withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
 import { api } from "../../../api";
-import { formatTimeDayMonthYear } from "../../../helpers/date";
+import { calcDaysLeft } from "../../../helpers/date";
 import UserContext from "../../../helpers/user-context";
+import { makePluralForm } from "../../../helpers/utils";
 import GoBack from "../../../images/go-back.svg";
 import LockerImg from "../../../images/locker.svg";
 import Loader from "../../animation/loader";
@@ -52,13 +53,14 @@ const NextCompetitionLocked = ({
           </div>
         </div>
         <div className="next-competition__title headline--medium">
-          Unlock next competition
+          Competition locked
         </div>
         <div className="next-competition__text text-grey">
-          Each new competition unlocks a prize! More competition more prize!
+          Each new competition unlocks a secret prize!
         </div>
         <div className="next-competition__text text-grey">
-          Next compeition on {formatTimeDayMonthYear(data.endsAt)}
+          The next competition launches in {calcDaysLeft(data.endsAt)}{" "}
+          {makePluralForm("day", calcDaysLeft(data.endsAt))}
         </div>
 
         <button
