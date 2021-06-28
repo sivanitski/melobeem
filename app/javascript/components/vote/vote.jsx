@@ -96,6 +96,7 @@ const Vote = ({
   };
 
   const handlePaymentClose = () => {
+    requestTimeFreeVote();
     setCurrentPage("vote");
   };
 
