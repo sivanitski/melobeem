@@ -24,7 +24,7 @@ describe Prizes::Invitation::AwardAndNotify do
 
         it 'create notification' do
           # level notification also created 1 level
-          expect { subject }.to change(Notification, :count).by(1)
+          expect { subject }.to change(Notification, :count).by(2)
         end
 
         it 'add 5 votes into entry' do

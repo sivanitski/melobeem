@@ -1,6 +1,4 @@
 class Vote < ApplicationRecord
-  NON_PRIZE_LEVEL = 1
-
   enum source_type: { user: 'user', spinner: 'spinner', bonus: 'bonus', invitation: 'invitation', shop: 'shop' }
 
   belongs_to :entry
@@ -32,8 +30,6 @@ class Vote < ApplicationRecord
     last_prize_level = last_prize&.level.to_i + 1
 
     [*last_prize_level...current_level].each do |level|
-      next if level == NON_PRIZE_LEVEL
-
       prize = make_prize(level: level)
 
       send_notification(prize: prize, level: level)

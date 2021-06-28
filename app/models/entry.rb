@@ -19,8 +19,9 @@ class Entry < ApplicationRecord
   scope :active, -> { where(deactivated: false) }
 
   def update_level!
-    current_level = LEVELS.detect { |_k, v| v.include? total_votes }&.first || LEVELS.keys.last
-    return false if current_level.eql?(level)
+    current_level = LEVELS.detect { |_k, v| v.include? total_votes }&.first
+    current_level = LEVELS.keys.last if current_level.blank? && total_votes > LEVELS.values.first.first
+    return false if current_level.blank? || current_level.eql?(level)
 
     update!(level: current_level)
   end
