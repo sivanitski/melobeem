@@ -37,6 +37,7 @@ const Level = () => {
           data: { prizes: prisezData },
         } = await api.get(`/entries/${entry.id}/prizes`);
         setPrizes(prisezData);
+        setActiveLevel(entry.level);
       }
     }
 

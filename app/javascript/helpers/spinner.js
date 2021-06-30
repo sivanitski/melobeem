@@ -10,11 +10,19 @@ export const calculateAnimationAngle = (result) => {
       return HALF_SECTOR_ANGLE + SECTOR_ANGLE * 5;
     case 1:
       return HALF_SECTOR_ANGLE;
+    case 10:
+      return HALF_SECTOR_ANGLE;
     case 2:
+      return HALF_SECTOR_ANGLE + SECTOR_ANGLE;
+    case 20:
       return HALF_SECTOR_ANGLE + SECTOR_ANGLE;
     case 3:
       return HALF_SECTOR_ANGLE + 7 * SECTOR_ANGLE;
+    case 30:
+      return HALF_SECTOR_ANGLE + 7 * SECTOR_ANGLE;
     case 4:
+      return HALF_SECTOR_ANGLE + 3 * SECTOR_ANGLE;
+    case 40:
       return HALF_SECTOR_ANGLE + 3 * SECTOR_ANGLE;
   }
 };
