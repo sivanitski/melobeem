@@ -3,6 +3,7 @@ class Product < ApplicationRecord
 
   enum product_type: { vote: 'vote', spinner: 'spinner' }
 
+  has_one_attached :image, dependent: :destroy
   has_many :purchase_transactions, dependent: :nullify
 
   validates :tier_id, :title, :value, presence: true

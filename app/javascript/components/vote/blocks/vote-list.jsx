@@ -93,7 +93,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
         />
       ) : (
         <div className="vote-item">
-          <div className="vote-item__img">
+          <div className="vote-item__img-container">
             <HeartVote className="vote-item__img--free" />
           </div>
 
@@ -108,8 +108,8 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
 
       {voteOptions.map((voteOption) => (
         <div className="vote-item" key={voteOption.value}>
-          <div className="vote-item__img">
-            <HeartVote className="vote-item__img--small" />
+          <div className="vote-item__img-container">
+            <img src={voteOption.imageUrl} className="vote-item__img" />
           </div>
           <div className="vote-item__text">{voteOption.title}</div>
           <div
