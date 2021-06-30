@@ -35,8 +35,8 @@ const HeaderNotLogin = ({ getCurrentEntry }) => {
           <LogoText />
         </div>
         <div className="header-not-login__text text-grey">
-          Think you have The Cutest Baby Photo? Enter Melobeem and have a chance
-          <br /> to be the next big winner
+          Melobeem is a free photo contest for Babies up to 4 years!
+          <br /> Enter and vote to win prizes each month!
         </div>
       </div>
       <div className="header-not-login__buttons">
