@@ -3,7 +3,7 @@ import "./style.less";
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useEffect } from "react";
-import { withRouter } from "react-router";
+import { useHistory, withRouter } from "react-router";
 
 import { api } from "../../api";
 import Loader from "../animation/loader";
@@ -17,8 +17,17 @@ const Entry = ({
     params: { id },
   },
 }) => {
+  const history = useHistory();
+
   const getChild = () => {
-    return api.get(`/entries/${id}`);
+    return api
+      .get(`/entries/${id}`)
+      .then((response) => {
+        return response;
+      })
+      .catch(() => {
+        history.push("/");
+      });
   };
 
   const {
