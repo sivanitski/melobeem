@@ -274,7 +274,7 @@ Devise.setup do |config|
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
 
   scope = %w[public_profile email].join(',')
-  info_fields = %w[email first_name last_name timezone verified].join(',')
+  info_fields = %w[email first_name last_name].join(',')
 
   config.omniauth :facebook, ENV['FACEBOOK_APP_ID'], ENV['FACEBOOK_APP_SECRET'],
                   secure_image_url: true,
