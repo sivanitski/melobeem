@@ -8,7 +8,7 @@ import SpinnerPurple from "../../../images/spinner-purple-small.svg";
 import Loader from "../../animation/loader";
 import SpinnerTitle from "./spinner-title";
 
-const SpinnerList = ({ handlePriceClick }) => {
+const SpinnerList = ({ handlePriceClick, withAnimation }) => {
   const getSpinOptions = () => {
     return api.get("/products", { params: { product_type: "spinner" } });
   };
@@ -17,35 +17,45 @@ const SpinnerList = ({ handlePriceClick }) => {
     formatResult: (res) => res.data.products,
   });
 
-  if (loading) {
+  if (loading && !withAnimation) {
     return <Loader />;
   }
 
-  return (
-    <div className="spinner">
-      <SpinnerTitle />
-      <div className="spinner-list">
-        {spinOptions.map((spinOption, index) => (
-          <div className="spinner-item" key={spinOption.id}>
-            <div className="spinner-item__img">
-              {index % 2 ? <SpinnerOrange /> : <SpinnerPurple />}
-            </div>
-            <div className="spinner-item__text">{spinOption.title}</div>
+  if (loading) {
+    return "";
+  } else {
+    return (
+      <div className="spinner">
+        <SpinnerTitle />
+        <div className="spinner-list">
+          {spinOptions.map((spinOption, index) => (
             <div
-              className="button spinner-item__button"
-              onClick={() => handlePriceClick(spinOption)}
+              className={`spinner-item ${
+                withAnimation ? `spinner-zoom-in-product-${index}` : ""
+              }`}
+              key={spinOption.id}
             >
-              {spinOption.price}
+              <div className="spinner-item__img">
+                {index % 2 ? <SpinnerOrange /> : <SpinnerPurple />}
+              </div>
+              <div className="spinner-item__text">{spinOption.title}</div>
+              <div
+                className="button spinner-item__button"
+                onClick={() => handlePriceClick(spinOption)}
+              >
+                {spinOption.price}
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 };
 
 SpinnerList.propTypes = {
   handlePriceClick: propTypes.func.isRequired,
+  withAnimation: propTypes.bool,
 };
 
 export default SpinnerList;

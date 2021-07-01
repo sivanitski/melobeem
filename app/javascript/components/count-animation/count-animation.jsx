@@ -33,6 +33,9 @@ const CountAnimation = ({
 
     setTimeout(() => {
       if (animationStep) {
+        if (animationStep === 3) {
+          setAnimationStep(0);
+        }
         setAnimationStep(animationStep + 1);
       }
     }, duration);

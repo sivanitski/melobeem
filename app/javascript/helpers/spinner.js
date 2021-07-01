@@ -1,8 +1,9 @@
 export const SECTOR_ANGLE = 45;
 export const HALF_SECTOR_ANGLE = 22.5;
 export const FULL_ROUND = 360;
-export const FIRST_ANIMATION_TIME = 1000;
+export const FIRST_ANIMATION_TIME = 3000;
 export const FIRST_ANIMATION_SPEED = FULL_ROUND / FIRST_ANIMATION_TIME;
+export const SECTOR_TIME = FIRST_ANIMATION_TIME / 8;
 
 export const calculateAnimationAngle = (result) => {
   switch (result) {
@@ -32,7 +33,7 @@ export const calcSecondAnimationParameters = (currentTime, prizeAmount) => {
     Math.floor(currentTime / FIRST_ANIMATION_TIME) + 1;
   const anglePrize = calculateAnimationAngle(prizeAmount);
 
-  const endAngle = fullRoundsAfterFirstAnimation * FULL_ROUND + anglePrize;
+  const endAngle = FULL_ROUND + anglePrize;
   const currentAngle = currentTime * FIRST_ANIMATION_SPEED;
   const secondAnimationTime = (endAngle - currentAngle) / FIRST_ANIMATION_SPEED;
 
@@ -40,5 +41,7 @@ export const calcSecondAnimationParameters = (currentTime, prizeAmount) => {
     endAngle,
     currentAngle,
     secondAnimationTime,
+    fullRoundsAfterFirstAnimation,
+    prizeAmount,
   };
 };

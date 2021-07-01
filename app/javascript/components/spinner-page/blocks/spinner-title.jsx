@@ -33,7 +33,11 @@ const SpinnerTitle = ({ spinnerType, spinnerAmount }) => {
 
   return (
     <>
-      <div className="spinner__title headline--medium">
+      <div
+        className={`spinner__title headline--medium ${
+          isPremiumShop ? "spinner-shop__premium" : ""
+        }`}
+      >
         {isPremiumShop
           ? "Premium Spins"
           : spinnerType === "premium"

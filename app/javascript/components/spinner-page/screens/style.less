@@ -1,4 +1,4 @@
-.spinner {
+.spinner__svg.spinner {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -15,11 +15,8 @@
 
 .spinner__info {
   position: absolute;
-  left: 150px;
-  top: -3px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  right: 47px;
+  top: 0;
   width: 30px;
   height: 30px;
   border-radius: 50%;
@@ -31,13 +28,17 @@
   }
 }
 
+.spinner-shop__premium {
+  min-height: 100px;
+}
+
 .spinner__image {
   position: relative;
 }
 
 .spinner__pointer {
   position: absolute;
-  top: -5px;
+  top: -3px;
   left: calc(50% - 10px);
   z-index: 1;
 }
@@ -104,4 +105,151 @@
   letter-spacing: 0.25px;
   color: #747474;
   margin-top: 6px;
+}
+
+.spinner__svg {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  width: 298px;
+  height: 298px;
+  transform-origin: 149px 149px 0;
+}
+
+.parent_spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  height: 340px;
+}
+
+.spinner-done-animation {
+  position: absolute;
+  z-index: 9;
+  height: 100%;
+  width: 100%;
+
+  svg {
+    height: unset !important;
+    position: absolute;
+    width: 385px !important;
+  }
+
+  .spinner-winning-amount {
+    position: absolute;
+    top: calc(50% - 22px);
+    left: calc(50% - 20px);
+    color: white;
+    width: 40px;
+    text-align: center;
+  }
+}
+
+.spinner-zoom-out {
+  animation: spinner-zoom-out 500ms ease-out;
+}
+
+@keyframes spinner-zoom-out {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  100% {
+    transform: scale(0, 0);
+  }
+}
+
+.spinner-zoom-in-first {
+  animation: spinner-zoom-in 1s ease-out;
+}
+
+@keyframes spinner-zoom-in {
+  0% {
+    transform: scale(0, 0);
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.spinner-zoom-in-product-0 {
+  animation: spinner-zoom-in-product 2s ease-out;
+}
+
+.spinner-zoom-in-product-1 {
+  transform: scale(0, 0);
+  animation: spinner-zoom-in-product 2s 500ms ease-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes spinner-zoom-in-product {
+  0% {
+    transform: scale(0, 0);
+  }
+
+  50% {
+    transform: scale(1, 1);
+  }
+
+  60% {
+    transform: scale(0.95, 0.95);
+  }
+
+  70% {
+    transform: scale(1.05, 1.05);
+  }
+
+  80% {
+    transform: scale(0.95, 0.95);
+  }
+
+  90% {
+    transform: scale(1.05, 1.05);
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.spinner__pointer-animation {
+  transform-origin: 10px 10px 0;
+  animation: spinner__pointer-animation 540ms ease-out infinite;
+}
+
+@keyframes spinner__pointer-animation {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  40% {
+    transform: rotateZ(-35deg);
+  }
+
+  100% {
+    transform: rotateZ(0deg);
+  }
+}
+
+.spinner__pointer-animation-slow {
+  transform-origin: 10px 10px 0;
+  animation: spinner__pointer-animation 700ms ease-out infinite;
+}
+
+@keyframes spinner__pointer-animation-slow {
+  0% {
+    transform: rotateZ(0deg);
+  }
+
+  40% {
+    transform: rotateZ(-20deg);
+  }
+
+  100% {
+    transform: rotateZ(0deg);
+  }
 }

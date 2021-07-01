@@ -1,9 +1,10 @@
 import propTypes from "prop-types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 import { getAnimationLevel, getVoteValueFromLevel } from "../../helpers/level";
 import { HeartAnimationSmall } from "../heart-animation";
 import HeartLevel from "../heart-animation/heart-level";
+import LevelUpAnimation from "../heart-animation/level-up-animation";
 
 const HeaderUserLevel = ({
   level,
@@ -13,10 +14,23 @@ const HeaderUserLevel = ({
   setAnimationStep,
 }) => {
   const animationLevel = getAnimationLevel(totalVotes, level);
+  const [isLevelUpdated, setIsLevelUpdated] = useState(false);
+  const [previousLevel, setPreviousLevel] = useState(false);
 
   if (isAnimation) {
     setTimeout(() => setAnimationStep(animationStep + 1), 3000);
   }
+
+  useEffect(() => {
+    if (previousLevel) {
+      if (level > previousLevel) {
+        setIsLevelUpdated(true);
+        setPreviousLevel(level);
+      }
+    } else {
+      setPreviousLevel(level);
+    }
+  }, [level]);
 
   return (
     <div className="half-circle header-user__level">
@@ -28,6 +42,7 @@ const HeaderUserLevel = ({
       ) : (
         <HeartLevel animationLevel={animationLevel} />
       )}
+      {isLevelUpdated && <LevelUpAnimation />}
     </div>
   );
 };
