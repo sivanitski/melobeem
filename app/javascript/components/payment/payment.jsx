@@ -243,6 +243,7 @@ const Payment = ({
 
     if (payload.error) {
       console.error("[error]", payload.error);
+      setMessage(payload.error.message);
       setPaymentButtonDisabled(false);
     } else {
       try {
