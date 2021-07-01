@@ -203,7 +203,6 @@ const Payment = ({
   };
 
   const handleChangeCardHolder = (evt) => {
-    debugger;
     setCardHolder(evt.target.value);
     validateCardHolder(evt.target.value);
   };
@@ -401,7 +400,7 @@ const Payment = ({
                 type="text"
                 value={cardHolder}
                 className="vote-payment__form-field--cardholder vote-payment__form-field"
-                onChange={() => handleChangeCardHolder}
+                onChange={(evt) => handleChangeCardHolder(evt)}
               />
               <span className="text-red text-tiny vote-payment__validation">
                 {cardHolderError}
