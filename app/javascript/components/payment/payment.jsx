@@ -41,18 +41,20 @@ const Payment = ({
     productTitle: null,
   });
   const [message, setMessage] = useState(null);
-  const [postalCode, { onChange: onChangePostal }] = useEventTarget({
-    initialValue: "",
-  });
-  const [cardHolder, { onChange: onChangeCardHolder }] = useEventTarget({
-    initialValue: "",
-  });
-  const [email, { onChange: onChangeEmail }] = useEventTarget({
-    initialValue: "",
-  });
   const [paymentRequest, setPaymentRequest] = useState(null);
   const [requestButtonLoading, setRequestButtonLoading] = useState(true);
   const [paymentButtonDisabled, setPaymentButtonDisabled] = useState(false);
+  const [cardError, setCardError] = useState(null);
+  const [expiryError, setExpiryError] = useState(null);
+  const [emailError, setEmailError] = useState(null);
+  const [cvcError, setCvcError] = useState(null);
+  const [cardHolderError, setCardHolderError] = useState(null);
+
+  const [postalCode, { onChange: onChangePostal }] = useEventTarget({
+    initialValue: "",
+  });
+  const [cardHolder, setCardHolder] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     async function makeChargeIntent() {
@@ -94,7 +96,6 @@ const Payment = ({
         requestPayerEmail: true,
       });
 
-      // Check the availability of the Payment Request API.
       pr.canMakePayment().then((result) => {
         if (result) {
           setPaymentRequest(pr);
@@ -154,6 +155,59 @@ const Payment = ({
     }
   };
 
+  const handleCardChange = (evt) => {
+    if (evt.error) {
+      setCardError("Your card number is invalid");
+    } else {
+      setCardError(null);
+    }
+  };
+
+  const handleExpiryChange = (evt) => {
+    if (evt.error) {
+      setExpiryError("Invalid date");
+    } else {
+      setExpiryError(null);
+    }
+  };
+
+  const handleCvcChange = (evt) => {
+    if (evt.error) {
+      setCvcError("Invalid CVC");
+    } else {
+      setCvcError(null);
+    }
+  };
+
+  const EMAIL_VALIDATION = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+  const validateEmail = (value) => {
+    if (!EMAIL_VALIDATION.test(value)) {
+      setEmailError("Enter valid email address");
+    } else {
+      setEmailError(null);
+    }
+  };
+
+  const handleChangeEmail = (evt) => {
+    setEmail(evt.target.value);
+    validateEmail(evt.target.value);
+  };
+
+  const validateCardHolder = (value) => {
+    if (value.length < 3) {
+      setCardHolderError("Invalid name on card");
+    } else {
+      setCardHolderError(null);
+    }
+  };
+
+  const handleChangeCardHolder = (evt) => {
+    debugger;
+    setCardHolder(evt.target.value);
+    validateCardHolder(evt.target.value);
+  };
+
   const handleSubmit = async (evt) => {
     evt.preventDefault();
     setPaymentButtonDisabled(true);
@@ -163,7 +217,9 @@ const Payment = ({
       return;
     }
 
-    if (!checkCustomFieldsValid()) {
+    validateEmail(email);
+    validateCardHolder(cardHolder);
+    if (emailError || expiryError || cardError || cvcError || cardHolderError) {
       setPaymentButtonDisabled(false);
       return;
     }
@@ -188,7 +244,6 @@ const Payment = ({
 
     if (payload.error) {
       console.error("[error]", payload.error);
-      setMessage(payload.error.message);
       setPaymentButtonDisabled(false);
     } else {
       try {
@@ -212,6 +267,24 @@ const Payment = ({
   };
 
   const ELEMENT_OPTIONS = {
+    placeholder: "",
+    style: {
+      base: {
+        iconColor: "black",
+        color: "black",
+        fontWeight: 500,
+        fontFamily: "Roboto, Open Sans, Segoe UI, sans-serif",
+        fontSize: "16px",
+        lineHeight: "22px",
+        fontSmoothing: "antialiased",
+        ":-webkit-autofill": {
+          color: "#767676",
+        },
+      },
+    },
+  };
+
+  const EXPIRY_OPTIONS = {
     style: {
       base: {
         iconColor: "black",
@@ -228,30 +301,7 @@ const Payment = ({
           color: "#767676",
         },
       },
-      invalid: {
-        iconColor: "tomato",
-        color: "tomato",
-      },
     },
-  };
-
-  const checkCustomFieldsValid = () => {
-    if (postalCode === "") {
-      setMessage("Enter valid postcode");
-      return false;
-    }
-
-    if (cardHolder === "" || cardHolder.length < 3) {
-      setMessage("Enter valid name on card");
-      return false;
-    }
-
-    if (email === "" || email.length < 5) {
-      setMessage("Enter valid email address");
-      return false;
-    }
-
-    return true;
   };
 
   const renderImage = () => {
@@ -266,8 +316,6 @@ const Payment = ({
     return <SpinnerPurple className="vote-payment__img" />;
   };
 
-  // console.log('requestButtonLoading', requestButtonLoading)
-
   if (requestButtonLoading) {
     return <Loader />;
   } else {
@@ -279,17 +327,16 @@ const Payment = ({
         {renderImage()}
         <div className="vote-payment__product">{activeTitle}</div>
         {paymentRequest && (
-          <div className="payment-payment_request_container">
+          <div className="payment__option-container">
             <PaymentRequestButtonElement options={{ paymentRequest }} />
-            <div className="payment-delimiter-text-container">
-              <p>
-                <span>Or pay with card</span>
-              </p>
+
+            <div className="payment-delimiter-text-container payment__text-option">
+              <span>Or pay with card</span>
             </div>
           </div>
         )}
         <form onSubmit={handleSubmit} className="vote-payment__form">
-          <div className="vote-payment__card">
+          <div className="vote-payment__card vote-payment__item">
             <label htmlFor="cardNumber" className="vote-payment__text">
               Card Number
             </label>
@@ -297,37 +344,48 @@ const Payment = ({
               id="cardNumber"
               options={ELEMENT_OPTIONS}
               className="vote-payment__form-field--card-number vote-payment__form-field"
+              onChange={(evt) => handleCardChange(evt)}
             />
-            <hr></hr>
+            <span className="text-red text-tiny vote-payment__validation">
+              {cardError}
+            </span>
           </div>
           <div className="vote-payment__options">
-            <div className="vote-payment__item">
+            <div className="vote-payment__item vote-payment__item--small">
               <label htmlFor="expiry" className="vote-payment__text">
                 Expiry
               </label>
               <CardExpiryElement
                 id="expiry"
-                options={ELEMENT_OPTIONS}
-                className="vote-payment__form-field--card-expire vote-payment__form-field"
+                options={EXPIRY_OPTIONS}
+                className="vote-payment__form-field--card-expire  vote-payment__form-field"
+                onChange={(evt) => handleExpiryChange(evt)}
               />
+              <span className="text-red text-tiny vote-payment__validation">
+                {expiryError}
+              </span>
             </div>
-            <div className="vote-payment__item">
+            <div className="vote-payment__item vote-payment__item--small">
               <label htmlFor="cvc" className="vote-payment__text">
-                CVV
+                CVC
               </label>
               <CardCvcElement
                 id="cvc"
                 options={ELEMENT_OPTIONS}
                 className="vote-payment__form-field--card-cvc vote-payment__form-field"
+                onChange={(evt) => handleCvcChange(evt)}
+                placeholder={null}
               />
+              <span className="text-red text-tiny vote-payment__validation">
+                {cvcError}
+              </span>
             </div>
-            <div className="vote-payment__item">
+            <div className="vote-payment__item vote-payment__item--small">
               <label htmlFor="postal" className="vote-payment__text">
                 Postcode
               </label>
               <input
                 type="number"
-                placeholder="12345"
                 value={postalCode}
                 className="vote-payment__form-field--postcode vote-payment__form-field"
                 onChange={onChangePostal}
@@ -335,29 +393,33 @@ const Payment = ({
             </div>
           </div>
           <div className="vote-payment__user_details">
-            <div className="vote-payment__item-full-width">
+            <div className="vote-payment__item-full-width vote-payment__item">
               <label htmlFor="cardHolder" className="vote-payment__text">
                 Name on card
               </label>
               <input
                 type="text"
-                placeholder="John Doe"
                 value={cardHolder}
                 className="vote-payment__form-field--cardholder vote-payment__form-field"
-                onChange={onChangeCardHolder}
+                onChange={() => handleChangeCardHolder}
               />
+              <span className="text-red text-tiny vote-payment__validation">
+                {cardHolderError}
+              </span>
             </div>
-            <div className="vote-payment__item-full-width">
+            <div className="vote-payment__item-full-width vote-payment__item">
               <label htmlFor="email" className="vote-payment__text">
                 Email
               </label>
               <input
                 type="email"
-                placeholder="email@example.com"
                 value={email}
                 className="vote-payment__form-field--email vote-payment__form-field"
-                onChange={onChangeEmail}
+                onChange={(evt) => handleChangeEmail(evt)}
               />
+              <span className="text-red text-tiny vote-payment__validation">
+                {emailError}
+              </span>
             </div>
           </div>
 
