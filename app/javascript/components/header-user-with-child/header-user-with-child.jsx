@@ -2,15 +2,21 @@ import "./style.less";
 
 import propTypes from "prop-types";
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { useHistory } from "react-router";
 
 import defaultProptypes from "../../default-proptypes";
 import GoBack from "../../images/go-back.svg";
 import { HeaderUserItem } from "../header-user-item";
 import { HeaderUserLevel } from "../header-user-level";
 
-const HeaderUserWithChild = ({ child, animationParams }) => {
+const HeaderUserWithChild = ({
+  child,
+  animationParams,
+  isGoToVoteList,
+  handleGoToVoteOptions,
+}) => {
   const [animationStep, setAnimationStep] = useState(0);
+  const history = useHistory();
   useEffect(() => {
     if (animationParams.isAnimationPlay) {
       setAnimationStep(1);
@@ -41,11 +47,19 @@ const HeaderUserWithChild = ({ child, animationParams }) => {
     return animationParams.rankEnd;
   };
 
+  const handleGoBackClick = () => {
+    if (isGoToVoteList) {
+      handleGoToVoteOptions();
+    } else {
+      history.push(`/entry/${child.id}`);
+    }
+  };
+
   return (
     <div className="header-user header-user--with-info">
-      <Link to={`/entry/${child.id}`} className="go-back">
+      <div onClick={handleGoBackClick} className="go-back">
         <GoBack />
-      </Link>
+      </div>
       <div className="header-user__list header-user__list--shadow">
         <HeaderUserItem
           title="Votes"
@@ -101,6 +115,8 @@ HeaderUserWithChild.propTypes = {
     rankEnd: propTypes.number,
     level: propTypes.number,
   }),
+  isGoToVoteList: propTypes.bool,
+  handleGoToVoteOptions: propTypes.func,
 };
 
 export default HeaderUserWithChild;

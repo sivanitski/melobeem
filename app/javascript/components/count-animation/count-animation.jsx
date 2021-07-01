@@ -15,7 +15,8 @@ const CountAnimation = ({
   if (isDecrease) {
     [numberStart, numberEnd] = [numberEnd, numberStart];
   }
-  const duration = 3000;
+  const range = numberEnd - numberStart;
+  const duration = range > 5 ? 3000 : 1000;
 
   useEffect(() => {
     playAnimation();
@@ -50,11 +51,9 @@ const CountAnimation = ({
 
     let i = numberStart;
     const increasingNumber =
-      numberEnd - numberStart > 10
-        ? Math.trunc((numberEnd - numberStart) / 10)
-        : 1;
+      range > 10 ? Math.trunc((numberEnd - numberStart) / 10) : 1;
 
-    while (i <= numberEnd) {
+    while (i < numberEnd) {
       allNumbers.push(
         <span className="count__item" key={`count-item-${i}`}>
           {i}
@@ -63,13 +62,11 @@ const CountAnimation = ({
       i += increasingNumber;
     }
 
-    if (i !== numberEnd) {
-      allNumbers.push(
-        <span className="count__item" key={`count-item-${i}`}>
-          {numberEnd}
-        </span>
-      );
-    }
+    allNumbers.push(
+      <span className="count__item" key={`count-item-${i}`}>
+        {numberEnd}
+      </span>
+    );
 
     return <>{allNumbers}</>;
   };

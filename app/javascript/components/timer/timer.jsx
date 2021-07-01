@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import propTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 
 import {
   formatTimeInHoursMinutesAndSeconds,
@@ -9,8 +9,14 @@ import {
 import TimerField from "./timer-field";
 
 const Timer = ({ timeLeftInSeconds, handleFieldClick, type }) => {
-  const timeLeftInMiliseconds = 1000 * timeLeftInSeconds;
+  const timeLeftInMiliseconds = useMemo(() => 1000 * timeLeftInSeconds, [
+    timeLeftInSeconds,
+  ]);
   const [timeLeft, setTimeLeft] = useState(timeLeftInMiliseconds);
+
+  useEffect(() => {
+    setTimeLeft(timeLeftInSeconds * 1000);
+  }, [timeLeftInSeconds]);
 
   useEffect(() => {
     if (timeLeft <= 0) {
@@ -65,7 +71,9 @@ const Timer = ({ timeLeftInSeconds, handleFieldClick, type }) => {
       <TimerField
         classes={buttonClasses}
         text={
-          timeLeft > 0 ? `${formatTimeInMinutesAndSeconds(timeLeft)}` : "Free"
+          timeLeftInMiliseconds > 0
+            ? `${formatTimeInMinutesAndSeconds(timeLeft)}`
+            : "Free"
         }
         handleClick={timeLeft > 0 ? () => {} : handleFieldClick}
       />
