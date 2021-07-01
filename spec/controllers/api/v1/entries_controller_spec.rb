@@ -34,6 +34,44 @@ RSpec.describe API::V1::EntriesController do
     end
   end
 
+  describe 'GET /new' do
+    context 'when not logged in' do
+      before do
+        get :new, format: :json
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it { expect(JSON.parse(response.body)['entry']).to be_nil }
+    end
+
+    context 'when logged in' do
+      before do
+        sign_in(user)
+        create(:entry, competition: competition, user: user)
+        get :new, format: :json
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it { expect(JSON.parse(response.body)['entry']).not_to be_nil }
+
+      it { expect(response).to match_response_schema('entries/new') }
+    end
+
+    context 'when entry was not found' do
+      before do
+        sign_in(user)
+
+        get :new, format: :json
+      end
+
+      it { expect(response.status).to eq 200 }
+
+      it { expect(JSON.parse(response.body)['entry']).to be_nil }
+    end
+  end
+
   describe 'POST /create' do
     before do
       sign_in(user)

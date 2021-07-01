@@ -17,12 +17,12 @@ import SignUpShare from "./screens/sign-up-share";
 const SignUp = ({ location: { state } }) => {
   const history = useHistory();
   const [step, setStep] = useState(state?.step || 1);
-  const [name, setName] = useState(``);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isFormNotEmpty, setIsFormNotEmpty] = useState(false);
   const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
   const { user } = useContext(UserContext);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
+  const [name, setName] = useState(state?.name || "");
 
   const goNext = () => {
     setStep(step + 1);
@@ -161,6 +161,7 @@ SignUp.propTypes = {
     state: propTypes.shape({
       id: propTypes.string,
       step: propTypes.number,
+      name: propTypes.string,
     }),
   }),
 };

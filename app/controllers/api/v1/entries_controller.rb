@@ -1,7 +1,7 @@
 module API
   module V1
     class EntriesController < API::V1::ApplicationController
-      NO_LOGIN_ACTIONS = %i[index show latest_voters total_votes_by_date search voters_by_day ranking_details max_level_entry].freeze
+      NO_LOGIN_ACTIONS = %i[index show new latest_voters total_votes_by_date search voters_by_day ranking_details max_level_entry].freeze
 
       skip_before_action :authenticate_user!, only: NO_LOGIN_ACTIONS
 
@@ -10,6 +10,16 @@ module API
           ::Entries::WithRankQuery.new.call(competition.id, params[:level]),
           ::Entries::RankedSerializer
         )
+      end
+
+      def new
+        return render json: { entry: nil } if current_user.blank?
+
+        entry = current_user.entries.order(created_at: :desc).first
+
+        return render json: { entry: nil } if entry.blank?
+
+        respond_with entry, serializer: ::Entries::NewSerializer
       end
 
       def show

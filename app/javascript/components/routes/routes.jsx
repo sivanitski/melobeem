@@ -19,7 +19,7 @@ import { LeaderboardWinners } from "../leaderboard-winners";
 import { Level } from "../level";
 import { Prizes } from "../prizes";
 import { Profile } from "../profile";
-import NextCompetitionLocked from "../profile/blocks/profile-next-competition";
+import NextCompetition from "../profile/blocks/profile-next-competition";
 import { ProfileNotification } from "../profile/profile-notification";
 import { ProfileRoute } from "../profile/profile-route";
 import { ProfileSetting } from "../profile/profile-setting";
@@ -60,8 +60,8 @@ const Routes = () => {
         <Route exact path={"/entry/:id/prize"}>
           <EntryTakePrize />
         </Route>
-        <Route exact path={"/profile/:id/next-competition"}>
-          <NextCompetitionLocked />
+        <Route exact path={"/next-competition"}>
+          <NextCompetition />
         </Route>
         <Route exact path={"/entry/:id/edit"}>
           <EditEntry />

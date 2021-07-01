@@ -26,7 +26,7 @@ Rails.application.routes.draw do
         end
       end
 
-      resources :entries, only: %i[index create show] do
+      resources :entries, only: %i[index create show new] do
         collection do
           get :current
           get :search

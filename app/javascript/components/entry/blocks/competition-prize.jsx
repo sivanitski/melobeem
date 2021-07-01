@@ -46,7 +46,7 @@ const CompetitionPrize = ({
 
   if (!currentChild?.currentCompetition) {
     return (
-      <Link className="entry-previous__enter" to="/sign-up">
+      <Link className="entry-previous__enter" to="/next-competition">
         Enter again
       </Link>
     );
