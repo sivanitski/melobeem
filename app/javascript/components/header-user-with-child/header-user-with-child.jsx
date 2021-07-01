@@ -71,7 +71,10 @@ const HeaderUserWithChild = ({
           setAnimationStep={setAnimationStep}
         />
         <div className="header-user__item header-user__item--user">
-          <div className="header-user__img">
+          <div
+            className="header-user__img"
+            onClick={() => history.push(`/entry/${child.id}`)}
+          >
             <img src={child.imageUrl} />
           </div>
           <div className="header-user__name">{child.name}</div>
