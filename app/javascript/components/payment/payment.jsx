@@ -129,10 +129,10 @@ const Payment = ({
               console.error("[error]", error);
               setMessage(error.message);
             } else {
-              paymentSucceeded();
+              await paymentSucceeded();
             }
           } else {
-            paymentSucceeded();
+            await paymentSucceeded();
           }
         }
       });

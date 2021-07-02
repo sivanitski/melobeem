@@ -115,6 +115,7 @@
   width: 298px;
   height: 298px;
   transform-origin: 149px 149px 0;
+  -webkit-transform: translate3d(0, 0, 0);
 }
 
 .parent_spinner-container {
@@ -237,7 +238,7 @@
 
 .spinner__pointer-animation-slow {
   transform-origin: 10px 10px 0;
-  animation: spinner__pointer-animation 700ms ease-out infinite;
+  animation: spinner__pointer-animation 900ms ease-out infinite;
 }
 
 @keyframes spinner__pointer-animation-slow {
@@ -246,7 +247,7 @@
   }
 
   40% {
-    transform: rotateZ(-20deg);
+    transform: rotateZ(-10deg);
   }
 
   100% {

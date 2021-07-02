@@ -1,16 +1,12 @@
 import "./style.less";
 
 import { useRequest } from "ahooks";
+import { gsap } from "gsap";
 import propTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 
 import { api } from "../../../api";
-import {
-  calcSecondAnimationParameters,
-  FIRST_ANIMATION_SPEED,
-  FIRST_ANIMATION_TIME,
-  FULL_ROUND,
-} from "../../../helpers/spinner";
+import { calculateAnimationAngle, FULL_ROUND } from "../../../helpers/spinner";
 import SpinnerStopImage from "../../../images/spinner-stop.svg";
 import SpinnerPointer from "../../../images/stopper.svg";
 import SpinnerPrizeAnimation from "../../animation/spinner-prize-animation";
@@ -29,23 +25,29 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
   const [needToShowShop, setNeedToShowShop] = useState(false);
   const [slowDownStopper, setSlowDownStopper] = useState(false);
   const [currentSpinner, setCurrentSpinner] = useState(spinnerData);
+  const [zoomOutSpinner, setZoomOutSpinner] = useState(false);
   const [storedAngle, setStoredAngle] = useState(0);
 
   const startAnimation = () => {
-    const animation = spinnerElement.current.animate(
-      [
-        { transform: `rotate(${storedAngle}deg)` },
-        { transform: `rotate(${storedAngle + FULL_ROUND}deg)` },
-      ],
+    if (spinnerAnimation && spinnerAnimation.paused()) {
+      spinnerAnimation.invalidate();
+    }
+
+    const animation = gsap.fromTo(
+      spinnerElement.current,
       {
-        duration: FIRST_ANIMATION_TIME,
-        iterations: Infinity,
-        fill: "forwards",
-        easing: "linear",
+        rotation: storedAngle,
+      },
+      {
+        rotation: storedAngle + FULL_ROUND,
+        duration: 3,
+        repeat: Infinity,
+        ease: "linear",
       }
     );
-    setIsAnimationPlay(true);
+
     setSpinnerAnimation(animation);
+    setIsAnimationPlay(true);
     setIsSpinnerDone(false);
   };
 
@@ -55,24 +57,6 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     }
   }, [needToShowShop]);
 
-  const getCorrectAngle = (angle) => {
-    let countFullRounds = Math.floor(angle / FULL_ROUND);
-    let fullAngle = FULL_ROUND * countFullRounds;
-    return angle - fullAngle;
-  };
-
-  const getCorrectEndAngle = (endAngle, realAngle) => {
-    let countFullRounds = Math.floor(storedAngle / FULL_ROUND) + 1;
-    let fullAngle = FULL_ROUND * countFullRounds;
-    let fullCountedAngle = endAngle + fullAngle;
-
-    while (fullCountedAngle - realAngle > FULL_ROUND) {
-      fullCountedAngle = fullCountedAngle - FULL_ROUND;
-    }
-
-    return fullCountedAngle;
-  };
-
   const beginToStopAnimation = async () => {
     if (!spinnerAnimation) {
       return;
@@ -80,78 +64,47 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
 
     const res = await api.post("/spins");
 
-    const animationParams = calcSecondAnimationParameters(
-      spinnerAnimation.currentTime,
-      res.data.value
-    );
+    const endAngle = calculateAnimationAngle(res.data.value);
 
-    spinnerAnimation.pause();
-
+    setStoredAngle(endAngle);
     setSlowDownStopper(true);
 
-    if (animationParams.endAngle > FULL_ROUND) {
-      animationParams.endAngle = animationParams.endAngle - FULL_ROUND;
+    let stopAngle = endAngle + FULL_ROUND;
+    let timeMultiplier = 1;
+
+    if (stopAngle < storedAngle + FULL_ROUND) {
+      stopAngle = stopAngle + FULL_ROUND;
+      timeMultiplier = 2;
     }
 
-    let realAngleCount =
-      animationParams.fullRoundsAfterFirstAnimation * FULL_ROUND +
-      animationParams.endAngle;
+    gsap.to(spinnerElement.current, {
+      rotate: stopAngle,
+      duration: 4 * timeMultiplier,
+      repeat: 0,
+      ease: "linear",
+      onComplete: () => {
+        finalAnimation(res.data.value);
+      },
+    });
+  };
 
-    let toAngle = realAngleCount;
+  const finalAnimation = (prizeAmount) => {
+    spinnerAnimation.pause();
 
-    let angleDiff =
-      getCorrectEndAngle(toAngle, realAngleCount) -
-      animationParams.currentAngle;
-
-    let timeToEnd =
-      FIRST_ANIMATION_SPEED *
-      (angleDiff + getCorrectAngle(toAngle, realAngleCount)) *
-      100;
-
-    setStoredAngle(getCorrectAngle(toAngle, realAngleCount));
-
-    spinnerElement.current.animate(
-      [
-        {
-          transform: `rotate(${animationParams.currentAngle + storedAngle}deg)`,
-        },
-        {
-          transform: `rotate(${getCorrectEndAngle(
-            toAngle,
-            realAngleCount
-          )}deg)`,
-        },
-      ],
-      {
-        fill: "forwards",
-        duration: timeToEnd,
-        iterations: 1,
-        easing: "linear",
-      }
-    );
     if (amount) {
-      setTimeout(() => {
-        setAmount(amount - 1);
-      }, timeToEnd);
+      setAmount(amount - 1);
     }
 
-    setSpinnerAnimation(null);
     setIsAnimationPlay(false);
 
-    setTimeout(() => {
-      setIsSpinnerDone(true);
-      setSlowDownStopper(false);
-    }, timeToEnd);
+    setIsSpinnerDone(true);
+    setSlowDownStopper(false);
 
-    setTimeout(() => {
-      setWinningAmount(res.data.value);
-    }, timeToEnd + 600);
+    setWinningAmount(prizeAmount);
 
-    const timeToResetNumbers = timeToEnd + 2400;
+    updateCurrentChild();
 
-    setTimeout(updateCurrentChild, timeToEnd + 600);
-
-    setTimeout(updateUser, timeToResetNumbers);
+    updateUser();
   };
 
   const getSpinnersInfo = () => {
@@ -164,6 +117,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
 
   useEffect(() => {
     if (data && data.count > 0) {
+      setZoomOutSpinner(false);
       setCurrentSpinner(data);
       setAmount(data.count);
       setIsSpinnerDone(false);
@@ -177,11 +131,12 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     if (isSpinnerDone && !animationCompleted) {
       setTimeout(() => {
         setAnimationCompleted(true);
-      }, 2800);
+      }, 2700);
     }
 
     if (animationCompleted) {
       if (amount === 0 || !amount) {
+        setZoomOutSpinner(true);
         setTimeout(() => {
           setNeedToShowShop(true);
         }, 200);
@@ -189,6 +144,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
         setAnimationCompleted(null);
         setWinningAmount(false);
         setIsSpinnerDone(false);
+        setZoomOutSpinner(false);
         startAnimation();
       }
     }
@@ -201,7 +157,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
       withAnimation={true}
     />
   ) : (
-    <div className={`spinner ${animationCompleted ? "spinner-zoom-out" : " "}`}>
+    <div className={`spinner ${zoomOutSpinner ? "spinner-zoom-out" : " "}`}>
       <SpinnerTitle spinnerType={currentSpinner.type} spinnerAmount={amount} />
 
       <div className="spinner__image">
