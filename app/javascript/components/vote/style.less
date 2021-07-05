@@ -1,3 +1,93 @@
+@keyframes animanion-vote-button {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 7px 8px 0 0 #f6eaee;
+  }
+
+  33% {
+    -webkit-transform: scale(0.97);
+    transform: scale(0.97);
+    box-shadow: 2px 2px 0 0 #f6eaee;
+  }
+
+  66% {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    box-shadow: 7px 8px 0 0 #f6eaee;
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 7px 8px 0 0 #f6eaee;
+  }
+}
+
+@-webkit-keyframes animanion-vote-button {
+  0% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 7px 8px 0 0 #f6eaee;
+  }
+
+  33% {
+    -webkit-transform: scale(0.97);
+    transform: scale(0.97);
+    box-shadow: 2px 2px 0 0 #f6eaee;
+  }
+
+  66% {
+    -webkit-transform: scale(1.05);
+    transform: scale(1.05);
+    box-shadow: 7px 8px 0 0 #f6eaee;
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    box-shadow: 7px 8px 0 0 #f6eaee;
+  }
+}
+
+@-webkit-keyframes fly-heart {
+  0% {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  70% {
+    -webkit-transform: translate(calc(50vw - 80px), -50px);
+    transform: translate(calc(50vw - 80px), -50px);
+  }
+
+  100% {
+    -webkit-transform: translate(calc(50vw - 60px), -100px);
+    transform: translate(calc(50vw - 60px), -100px);
+    opacity: 0.2;
+  }
+}
+
+@keyframes fly-heart {
+  0% {
+    -webkit-transform: translate(0, 0);
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+
+  70% {
+    -webkit-transform: translate(calc(50vw - 80px), -50px);
+    transform: translate(calc(50vw - 80px), -50px);
+  }
+
+  100% {
+    -webkit-transform: translate(calc(50vw - 60px), -100px);
+    transform: translate(calc(50vw - 60px), -100px);
+    opacity: 0.2;
+  }
+}
+
 .vote {
   margin: 13px 16px;
   display: flex;
@@ -65,4 +155,14 @@
 
 .grecaptcha-badge {
   display: none;
+}
+
+.vote-item--animation {
+  animation: animanion-vote-button 1s;
+  -webkit-animation: animanion-vote-button 1s;
+}
+
+svg.vote-item__img--animation.vote-item__img--free {
+  -webkit-animation: fly-heart 1s ease-out;
+  animation: fly-heart 1s ease-out;
 }

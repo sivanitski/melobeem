@@ -27,6 +27,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
   const { currentChild } = useContext(ChildContext);
   const [prizeTime, setPrizeTime] = useState(null);
   const [isInfoOpen, setIsInfoOpen] = useState(false);
+  const [isVoteItemAnimation, setIsVoteItemAnimation] = useState(false);
 
   useEffect(() => {
     async function loadToken() {
@@ -55,6 +56,10 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
   });
 
   const handleFreeVoteClick = async () => {
+    if (timeFreeVote === 0) {
+      setIsVoteItemAnimation(true);
+    }
+
     await api.post(`/entries/${childId}/votes/create_free`, {
       entryId: childId,
       value: 1,
@@ -92,9 +97,17 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
           handleInfoClose={() => setIsInfoOpen(false)}
         />
       ) : (
-        <div className="vote-item">
+        <div
+          className={`vote-item ${
+            isVoteItemAnimation && "vote-item--animation"
+          }`}
+        >
           <div className="vote-item__img-container">
-            <HeartVote className="vote-item__img--free" />
+            <HeartVote
+              className={`vote-item__img--free ${
+                isVoteItemAnimation && "vote-item__img--animation"
+              }`}
+            />
           </div>
 
           <div className="vote-item__text">1 Vote</div>
