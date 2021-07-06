@@ -3,7 +3,6 @@ import React, { useContext, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
 import { api } from "../../api";
-import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import Loader from "../animation/loader";
 import { CompetitionInfo } from "../competition-info";
@@ -15,19 +14,11 @@ import { HeaderNotLogin } from "../header-not-login";
 
 const Leaderboard = () => {
   const { user } = useContext(UserContext);
-  const { setCurrentChild } = useContext(ChildContext);
 
   const location = useLocation();
 
   const getCompetition = () => {
     return api.get(`/competitions/current`);
-  };
-
-  const getCurrentEntryWhenUserLogin = async () => {
-    const {
-      data: { entry },
-    } = await api.get("/entries/current");
-    setCurrentChild(entry);
   };
 
   const {
@@ -62,7 +53,7 @@ const Leaderboard = () => {
           createdAt={competitionData.createdAt}
         />
       ) : (
-        <HeaderNotLogin getCurrentEntry={getCurrentEntryWhenUserLogin} />
+        <HeaderNotLogin />
       )}
       <CompetitionInfo
         timeLeft={competitionData.endsAt}

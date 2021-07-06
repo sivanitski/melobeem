@@ -128,6 +128,7 @@ const EntryContent = ({ child, voters }) => {
           handlePopupClose={() => setIsPopupShown(false)}
           image={child.imageUrl}
           type="login-to-vote"
+          linkId={child.id}
         />
       )}
     </div>

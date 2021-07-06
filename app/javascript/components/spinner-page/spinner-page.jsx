@@ -15,6 +15,7 @@ import Spinner from "./screens/spinner";
 
 const SpinnerPage = () => {
   const { user, setUser } = useContext(UserContext);
+  const [isPopupShown, setIsPopupShown] = useState(false);
   const history = useHistory();
   const { currentChild, setCurrentChild } = useContext(ChildContext);
   const [animationParams, setAnimationParams] = useState({
@@ -83,11 +84,13 @@ const SpinnerPage = () => {
 
   if (!currentChild?.currentCompetition) {
     return (
-      <>
+      <div className="no-entered" onClick={() => setIsPopupShown(true)}>
         <Spinner spinnerData={{ type: "free" }} />
-        <Popup handlePopupClose={() => history.push("/")} type={popupType} />
+        {isPopupShown && (
+          <Popup handlePopupClose={() => history.push("/")} type={popupType} />
+        )}
         <Footer active="spinner" />
-      </>
+      </div>
     );
   }
 

@@ -21,6 +21,7 @@ const LEVEL_TEXT_INFO =
 
 const Level = () => {
   const history = useHistory();
+  const [isPopupShown, setIsPopupShown] = useState(false);
   const { user } = useContext(UserContext);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
   const [prizes, setPrizes] = useState(null);
@@ -64,14 +65,21 @@ const Level = () => {
 
   if (!currentChild?.currentCompetition) {
     return (
-      <div className="level">
+      <div className="level" onClick={() => setIsPopupShown(true)}>
         <LevelSwiperMenu
           maxLevel={0}
           activeLevel={0}
           lockerAmount={20}
           initialSlide={0}
         />
-        <Popup handlePopupClose={() => history.push("/")} type={popupType} />
+        {isPopupShown && (
+          <Popup handlePopupClose={() => history.push("/")} type={popupType} />
+        )}
+        <div className="level__wrapper">
+          <div className="level__title headline--medium">Level 1</div>
+          <LevelContent activeLevel={1} />
+        </div>
+
         <Footer active="levels" />
       </div>
     );

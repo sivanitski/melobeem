@@ -14,6 +14,17 @@ const PopupButton = ({ type, linkId }) => {
     );
   }
 
+  if (type === "login-to-vote") {
+    return (
+      <FacebookLogin
+        title="Log in with Facebook"
+        classes="popup__button button--facebook"
+        linkId={linkId}
+        type={type}
+      />
+    );
+  }
+
   if (type.includes("login")) {
     return (
       <FacebookLogin
