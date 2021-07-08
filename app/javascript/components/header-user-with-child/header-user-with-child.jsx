@@ -12,6 +12,8 @@ import { HeaderUserLevel } from "../header-user-level";
 const HeaderUserWithChild = ({
   child,
   animationParams,
+  isGoToVoteList,
+  handleGoToVoteOptions,
   handleAnimationEnd,
 }) => {
   const [animationStep, setAnimationStep] = useState(0);
@@ -120,6 +122,8 @@ HeaderUserWithChild.propTypes = {
   }),
 
   handleAnimationEnd: propTypes.func,
+  isGoToVoteList: propTypes.bool,
+  handleGoToVoteOptions: propTypes.func,
 };
 
 export default HeaderUserWithChild;
