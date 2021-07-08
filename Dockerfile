@@ -105,4 +105,4 @@ EXPOSE 3000
 RUN date -u > BUILD_TIME
 
 # Start up
-CMD ["tail -f /dev/null"]
+CMD ["tail", "/dev/null"]
