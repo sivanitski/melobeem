@@ -70,6 +70,9 @@ RUN yarn install --check-files
 # Add the Rails app
 ADD . /app
 
+# migrate
+RUN RAILS_ENV=production bundle exec rake db:migrate
+
 # Precompile assets
 RUN RAILS_ENV=production bundle exec rake webpacker:compile
 
