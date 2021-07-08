@@ -22,7 +22,7 @@ const HeaderUserItem = ({
     <div className="header-user__item">
       <div className="header-user__item__text text-tiny text-grey">{title}</div>
       <div className="header-user__item__number headline--medium text-pink">
-        {isAnimationPlay ? (
+        {isAnimationPlay && numberStart !== numberEnd ? (
           <CountAnimation
             animationStep={animationStep}
             numberStart={numberStart}
