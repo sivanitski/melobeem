@@ -3,12 +3,33 @@ import React from "react";
 
 import { CountAnimation } from "../count-animation";
 
-const HeaderUserItem = ({ title, value, isAnimationPlay, ...countProps }) => {
+const HeaderUserItem = ({
+  title,
+  value,
+  isAnimationPlay,
+  animationStep,
+  handleAnimationEnd,
+  numberStart,
+  numberEnd,
+  ...countProps
+}) => {
+  if (animationStep === 3 && handleAnimationEnd) {
+    const time = numberEnd - numberStart > 10 ? 3000 : 1500;
+    setTimeout(handleAnimationEnd, time);
+  }
+
   return (
     <div className="header-user__item">
       <div className="header-user__item__text text-tiny text-grey">{title}</div>
       <div className="header-user__item__number headline--medium text-pink">
-        {isAnimationPlay ? <CountAnimation {...{ ...countProps }} /> : value}
+        {isAnimationPlay && numberStart !== numberEnd ? (
+          <CountAnimation
+            animationStep={animationStep}
+            {...{ ...countProps }}
+          />
+        ) : (
+          value
+        )}
       </div>
     </div>
   );
@@ -23,6 +44,7 @@ HeaderUserItem.propTypes = {
   isDecrease: propTypes.bool,
   animationStep: propTypes.number,
   setAnimationStep: propTypes.func,
+  handleAnimationEnd: propTypes.func,
 };
 
 export default HeaderUserItem;

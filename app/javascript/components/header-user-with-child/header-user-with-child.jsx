@@ -12,19 +12,18 @@ import { HeaderUserLevel } from "../header-user-level";
 const HeaderUserWithChild = ({
   child,
   animationParams,
-  isGoToVoteList,
-  handleGoToVoteOptions,
+  handleAnimationEnd,
 }) => {
   const [animationStep, setAnimationStep] = useState(0);
   const history = useHistory();
   useEffect(() => {
-    if (animationParams.isAnimationPlay) {
+    if (animationParams?.isAnimationPlay) {
       setAnimationStep(1);
     }
-  }, [animationParams.isAnimationPlay]);
+  }, [animationParams?.isAnimationPlay]);
 
   const calculateChildTotalVotes = () => {
-    if (!animationParams.isAnimationPlay) {
+    if (!animationParams?.isAnimationPlay) {
       return child.totalVotes;
     }
 
@@ -36,7 +35,7 @@ const HeaderUserWithChild = ({
   };
 
   const calculateChildRank = () => {
-    if (!animationParams.isAnimationPlay) {
+    if (!animationParams?.isAnimationPlay) {
       return child.rank;
     }
 
@@ -88,14 +87,15 @@ const HeaderUserWithChild = ({
           isDecrease
           animationStep={animationStep}
           setAnimationStep={setAnimationStep}
+          handleAnimationEnd={handleAnimationEnd}
         />
       </div>
       <HeaderUserLevel
         level={
-          animationParams.isAnimationPlay ? animationParams.level : child.level
+          animationParams?.isAnimationPlay ? animationParams.level : child.level
         }
         totalVotes={
-          animationParams.isAnimationPlay
+          animationParams?.isAnimationPlay
             ? animationParams.votesEnd
             : child.totalVotes
         }
@@ -118,8 +118,8 @@ HeaderUserWithChild.propTypes = {
     rankEnd: propTypes.number,
     level: propTypes.number,
   }),
-  isGoToVoteList: propTypes.bool,
-  handleGoToVoteOptions: propTypes.func,
+
+  handleAnimationEnd: propTypes.func,
 };
 
 export default HeaderUserWithChild;

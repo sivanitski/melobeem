@@ -46,16 +46,40 @@ const LevelWithPrize = ({ prize }) => {
     });
 
     if (prize.sourceType === "vote") {
+      let animationParams = {
+        isAnimationPlay: false,
+        votesStart: currentChild.totalVotes,
+        votesEnd: 0,
+        rankStart: currentChild.rank,
+        rankEnd: 0,
+        level: 0,
+      };
+
       const {
         data: { entry },
       } = await api.get("/entries/current");
       setCurrentChild(entry);
+
+      animationParams.isAnimationPlay = true;
+      animationParams.votesEnd = entry.totalVotes;
+      animationParams.rankEnd = entry.rank;
+      animationParams.level = entry.level;
+
+      const value = animationParams.votesEnd - animationParams.votesStart;
+
+      history.push(`/entry/${currentChild.id}/vote-animation`, {
+        child: currentChild,
+        animationParams,
+        value,
+      });
     }
 
     if (prize.sourceType === "spin") {
       updateUser();
       history.push("/spinner");
-    } else {
+    }
+
+    if (prize.sourceType === "min") {
       history.push(`/entry/${currentChild.id}`);
     }
   };

@@ -180,6 +180,7 @@ const Vote = ({
         animationParams={animationParams}
         isGoToVoteList={currentPage !== "vote"}
         handleGoToVoteOptions={handleGoToVoteOptions}
+        handleAnimationEnd={() => setCurrentPage("vote")}
       />
 
       {renderVoteScreen()}
