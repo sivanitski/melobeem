@@ -52,7 +52,7 @@ const LevelWithPrize = ({ prize }) => {
         votesEnd: 0,
         rankStart: currentChild.rank,
         rankEnd: 0,
-        level: 0,
+        levelStart: currentChild.level,
       };
 
       const {
@@ -64,6 +64,7 @@ const LevelWithPrize = ({ prize }) => {
       animationParams.votesEnd = entry.totalVotes;
       animationParams.rankEnd = entry.rank;
       animationParams.level = entry.level;
+      animationParams.levelEnd = entry.level;
 
       const value = animationParams.votesEnd - animationParams.votesStart;
 

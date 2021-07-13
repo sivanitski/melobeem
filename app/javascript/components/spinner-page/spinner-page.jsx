@@ -24,7 +24,8 @@ const SpinnerPage = () => {
     votesEnd: 0,
     rankStart: 0,
     rankEnd: 0,
-    level: 0,
+    levelStart: 0,
+    levelEnd: 0,
   });
 
   useEffect(() => {
@@ -64,6 +65,7 @@ const SpinnerPage = () => {
       ...animationParams,
       votesStart: currentChild.totalVotes,
       rankStart: currentChild.rank,
+      levelStart: currentChild.level,
     }));
     const {
       data: { entry },
@@ -75,6 +77,7 @@ const SpinnerPage = () => {
       votesEnd: entry.totalVotes,
       rankEnd: entry.rank,
       level: entry.level,
+      levelEnd: entry.level,
     }));
 
     setTimeout(() => setCurrentChild(entry), 3000);

@@ -93,14 +93,18 @@ const HeaderUserWithChild = ({
         />
       </div>
       <HeaderUserLevel
-        level={
-          animationParams?.isAnimationPlay ? animationParams.level : child.level
-        }
-        totalVotes={
+        levelStart={animationParams?.levelStart}
+        levelEnd={
           animationParams?.isAnimationPlay
-            ? animationParams.votesEnd
+            ? animationParams?.levelEnd
+            : child.level
+        }
+        totalVotesEnd={
+          animationParams?.isAnimationPlay
+            ? animationParams?.votesEnd
             : child.totalVotes
         }
+        totalVotesStart={animationParams?.votesStart}
         isAnimation={animationStep === 1}
         animationStep={animationStep}
         setAnimationStep={setAnimationStep}
@@ -118,7 +122,8 @@ HeaderUserWithChild.propTypes = {
     votesEnd: propTypes.number,
     rankStart: propTypes.number,
     rankEnd: propTypes.number,
-    level: propTypes.number,
+    levelStart: propTypes.number,
+    levelEnd: propTypes.number,
   }),
 
   handleAnimationEnd: propTypes.func,

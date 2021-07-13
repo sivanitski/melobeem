@@ -1,55 +1,62 @@
 import propTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 
 import { getAnimationLevel, getVoteValueFromLevel } from "../../helpers/level";
 import { HeartAnimationSmall } from "../heart-animation";
+import HeartAnimationLevelUpdated from "../heart-animation/heart-animation-level-updated";
 import HeartLevel from "../heart-animation/heart-level";
 import LevelUpAnimation from "../heart-animation/level-up-animation";
 
 const HeaderUserLevel = ({
-  level,
-  totalVotes,
+  levelStart,
+  levelEnd,
+  totalVotesEnd,
+  totalVotesStart,
   isAnimation,
   animationStep,
   setAnimationStep,
 }) => {
-  const animationLevel = getAnimationLevel(totalVotes, level);
-  const [isLevelUpdated, setIsLevelUpdated] = useState(false);
-  const [previousLevel, setPreviousLevel] = useState(false);
-
   if (isAnimation) {
     setTimeout(() => setAnimationStep(animationStep + 1), 3000);
   }
 
-  useEffect(() => {
-    if (previousLevel) {
-      if (level > previousLevel) {
-        setIsLevelUpdated(true);
-        setPreviousLevel(level);
-      }
-    } else {
-      setPreviousLevel(level);
-    }
-  }, [level]);
+  const animationLevelStart = getAnimationLevel(totalVotesStart, levelStart);
+  const animationLevelEnd = getAnimationLevel(totalVotesEnd, levelEnd);
 
   return (
     <div className="half-circle header-user__level">
       <div className="header-user__text text-grey text-tiny">
-        Level {level} ({totalVotes}/{getVoteValueFromLevel(level + 1)})
+        Level {levelEnd} ({totalVotesEnd}/{getVoteValueFromLevel(levelEnd + 1)})
       </div>
+
       {isAnimation ? (
-        <HeartAnimationSmall animationLevel={animationLevel} />
+        levelEnd > levelStart ? (
+          <HeartAnimationLevelUpdated
+            animationLevelStart={animationLevelStart}
+            animationLevelEnd={animationLevelEnd}
+            levelStart={levelStart}
+            levelEnd={levelEnd}
+          />
+        ) : (
+          <HeartAnimationSmall
+            animationLevelStart={animationLevelStart}
+            animationLevelEnd={animationLevelEnd}
+          />
+        )
       ) : (
-        <HeartLevel animationLevel={animationLevel} />
+        <HeartLevel animationLevel={animationLevelEnd} />
       )}
-      {isLevelUpdated && <LevelUpAnimation />}
+
+      {isAnimation && levelEnd > levelStart && <LevelUpAnimation />}
     </div>
   );
 };
 
 HeaderUserLevel.propTypes = {
-  level: propTypes.number.isRequired,
-  totalVotes: propTypes.number.isRequired,
+  levelStart: propTypes.number,
+  levelEnd: propTypes.number.isRequired,
+  totalVotesEnd: propTypes.number.isRequired,
+  totalVotesStart: propTypes.number,
   isAnimation: propTypes.bool,
   setAnimationStep: propTypes.func,
   animationStep: propTypes.number,

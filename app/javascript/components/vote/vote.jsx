@@ -42,7 +42,8 @@ const Vote = ({
     votesEnd: 0,
     rankStart: 0,
     rankEnd: 0,
-    level: 0,
+    levelStart: 0,
+    levelEnd: 0,
   });
 
   useEffect(() => {
@@ -119,6 +120,7 @@ const Vote = ({
       ...animationParams,
       votesStart: child.totalVotes,
       rankStart: child.rank,
+      levelStart: child.level,
     }));
     const {
       data: { entry },
@@ -129,7 +131,7 @@ const Vote = ({
       isAnimationPlay: true,
       votesEnd: entry.totalVotes,
       rankEnd: entry.rank,
-      level: entry.level,
+      levelEnd: entry.level,
     }));
 
     updateTime();
