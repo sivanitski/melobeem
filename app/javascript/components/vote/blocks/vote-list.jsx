@@ -1,5 +1,3 @@
-import "./style.less";
-
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
@@ -9,6 +7,7 @@ import { withRouter } from "react-router";
 import { api } from "../../../api";
 import ChildContext from "../../../helpers/child-context";
 import UserContext from "../../../helpers/user-context";
+import HeartVoteFly from "../../../images/heart-free-vote-animation.svg";
 import HeartVote from "../../../images/heart-vote.svg";
 import Loader from "../../animation/loader";
 import TimeMessage from "../../entry/blocks/time-fast-message";
@@ -103,8 +102,9 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
           }`}
         >
           <div className="vote-item__img-container">
-            <HeartVote
-              className={`vote-item__img--free ${
+            <HeartVote className="vote-item__img--free" />
+            <HeartVoteFly
+              className={`vote-item__img--heart-animation ${
                 isVoteItemAnimation && "vote-item__img--animation"
               }`}
             />
