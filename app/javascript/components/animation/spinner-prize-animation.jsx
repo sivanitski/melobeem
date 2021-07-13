@@ -10,6 +10,7 @@ export default function SpinnerPrizeAnimation() {
         loop
         animationData={spinnerPrizeAnimationJson}
         play
+        speed={0.7}
         style={{
           height: 262,
           display: "flex",

@@ -27,6 +27,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
   const [currentSpinner, setCurrentSpinner] = useState(spinnerData);
   const [zoomOutSpinner, setZoomOutSpinner] = useState(false);
   const [storedAngle, setStoredAngle] = useState(0);
+  const [isFinalAnimationStarted, setIsFinalAnimationStarted] = useState(false);
 
   const startAnimation = () => {
     if (spinnerAnimation && spinnerAnimation.paused()) {
@@ -62,6 +63,12 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
       return;
     }
 
+    if (isFinalAnimationStarted) {
+      return;
+    }
+
+    setIsFinalAnimationStarted(true);
+
     const res = await api.post("/spins");
 
     const endAngle = calculateAnimationAngle(res.data.value);
@@ -70,16 +77,16 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     setSlowDownStopper(true);
 
     let stopAngle = endAngle + FULL_ROUND;
-    let timeMultiplier = 1;
 
     if (stopAngle < storedAngle + FULL_ROUND) {
       stopAngle = stopAngle + FULL_ROUND;
-      timeMultiplier = 2;
     }
+
+    let spinnerSpeed = (3 / 360) * stopAngle + 1;
 
     gsap.to(spinnerElement.current, {
       rotate: stopAngle,
-      duration: 4 * timeMultiplier,
+      duration: spinnerSpeed,
       repeat: 0,
       ease: "linear",
       onComplete: () => {
@@ -100,7 +107,9 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     setIsSpinnerDone(true);
     setSlowDownStopper(false);
 
-    setWinningAmount(prizeAmount);
+    setTimeout(() => {
+      setWinningAmount(prizeAmount);
+    }, 500);
 
     updateCurrentChild();
 
@@ -123,6 +132,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
       setIsSpinnerDone(false);
       setWinningAmount(false);
       setAnimationCompleted(false);
+      setIsFinalAnimationStarted(false);
       setNeedToShowShop(false);
     }
   }, [data]);
@@ -131,7 +141,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     if (isSpinnerDone && !animationCompleted) {
       setTimeout(() => {
         setAnimationCompleted(true);
-      }, 2700);
+      }, 6500);
     }
 
     if (animationCompleted) {
@@ -145,6 +155,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
         setWinningAmount(false);
         setIsSpinnerDone(false);
         setZoomOutSpinner(false);
+        setIsFinalAnimationStarted(false);
         startAnimation();
       }
     }

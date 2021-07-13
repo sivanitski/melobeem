@@ -47,6 +47,17 @@
   position: absolute;
   left: calc(50% - 33px);
   top: 131px;
+  outline: none;
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+
+  svg {
+    outline: none;
+  }
+}
+
+.spinner__button:active {
+  transform: translateY(5px);
 }
 
 .spinner-list {
