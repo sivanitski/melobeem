@@ -8,7 +8,7 @@ import ChildContext from "../../../helpers/child-context";
 import UserContext from "../../../helpers/user-context";
 import { defineColorClass, definePrizeParameters } from "./prize-parameters";
 
-const LevelWithPrize = ({ prize }) => {
+const LevelWithPrize = ({ prize, setAnimationParams }) => {
   const { setUser } = useContext(UserContext);
   const [prizeTime, setPrizeTime] = useState(null);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
@@ -46,33 +46,22 @@ const LevelWithPrize = ({ prize }) => {
     });
 
     if (prize.sourceType === "vote") {
-      let animationParams = {
-        isAnimationPlay: false,
-        votesStart: currentChild.totalVotes,
-        votesEnd: 0,
-        rankStart: currentChild.rank,
-        rankEnd: 0,
-        levelStart: currentChild.level,
-      };
-
       const {
         data: { entry },
       } = await api.get("/entries/current");
-      setCurrentChild(entry);
 
-      animationParams.isAnimationPlay = true;
-      animationParams.votesEnd = entry.totalVotes;
-      animationParams.rankEnd = entry.rank;
-      animationParams.level = entry.level;
-      animationParams.levelEnd = entry.level;
-
-      const value = animationParams.votesEnd - animationParams.votesStart;
-
-      history.push(`/entry/${currentChild.id}/vote-animation`, {
-        child: currentChild,
-        animationParams,
-        value,
+      setAnimationParams({
+        votesStart: currentChild.totalVotes,
+        rankStart: currentChild.rank,
+        levelStart: currentChild.level,
+        isAnimationPlay: true,
+        votesEnd: entry.totalVotes,
+        rankEnd: entry.rank,
+        levelEnd: entry.level,
+        value: entry.totalVotes - currentChild.totalVotes,
       });
+
+      setCurrentChild(entry);
     }
 
     if (prize.sourceType === "spin") {
@@ -123,6 +112,7 @@ LevelWithPrize.propTypes = {
     value: propTypes.number.isRequired,
     level: propTypes.number.isRequired,
   }),
+  setAnimationParams: propTypes.func,
 };
 
 export default LevelWithPrize;

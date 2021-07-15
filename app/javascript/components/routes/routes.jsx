@@ -26,7 +26,6 @@ import { ProfileSetting } from "../profile/profile-setting";
 import { SignUp } from "../sign-up";
 import { SpinnerPage } from "../spinner-page";
 import { Vote } from "../vote";
-import AnimationVote from "../vote/blocks/animation-vote";
 import { Voters } from "../voters";
 
 const Routes = () => {
@@ -66,9 +65,6 @@ const Routes = () => {
         </Route>
         <Route exact path={"/entry/:id/edit"}>
           <EditEntry />
-        </Route>
-        <Route exact path={"/entry/:id/vote-animation"}>
-          <AnimationVote />
         </Route>
         <Route exact path={"/profile"}>
           <ProfileRoute />

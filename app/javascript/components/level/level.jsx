@@ -13,6 +13,7 @@ import { Footer } from "../footer";
 import { InfoBlock } from "../info-block";
 import { LevelSwiperMenu } from "../level-swiper-menu";
 import { Popup } from "../popup";
+import AnimationVote from "../vote/blocks/animation-vote";
 import LevelContent from "./screens/level-content";
 
 const LEVEL_TITLE_INFO = "What are Levels?";
@@ -25,6 +26,16 @@ const Level = () => {
   const { user } = useContext(UserContext);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
   const [prizes, setPrizes] = useState(null);
+  const [animationParams, setAnimationParams] = useState({
+    isAnimationPlay: false,
+    votesStart: 0,
+    votesEnd: 0,
+    rankStart: 0,
+    rankEnd: 0,
+    levelStart: 0,
+    levelEnd: 0,
+    value: 0,
+  });
 
   useEffect(() => {
     async function loadCurrentChild() {
@@ -98,35 +109,51 @@ const Level = () => {
 
   return (
     <>
-      <div className="level">
-        <LevelSwiperMenu
-          notSpentPrizes={notSpentPrizes}
-          handleSlideCLick={handleSlideCLick}
-          maxLevel={currentChild.level}
-          activeLevel={activeLevel}
-          lockerAmount={maxLevel - currentChild.level + 1}
-          initialSlide={activeLevel - 4}
+      {animationParams.isAnimationPlay ? (
+        <AnimationVote
+          animationParams={animationParams}
+          child={currentChild}
+          setAnimationParams={setAnimationParams}
         />
-        <div className="level__wrapper">
-          <div className="level__title headline--medium">
-            Level {activeLevel}
-            <div className="level__info" onClick={() => setIsInfoOpen(true)}>
-              <InfoImage />
+      ) : (
+        <>
+          <div className="level">
+            <LevelSwiperMenu
+              notSpentPrizes={notSpentPrizes}
+              handleSlideCLick={handleSlideCLick}
+              maxLevel={currentChild.level}
+              activeLevel={activeLevel}
+              lockerAmount={maxLevel - currentChild.level + 1}
+              initialSlide={activeLevel - 4}
+            />
+            <div className="level__wrapper">
+              <div className="level__title headline--medium">
+                Level {activeLevel}
+                <div
+                  className="level__info"
+                  onClick={() => setIsInfoOpen(true)}
+                >
+                  <InfoImage />
+                </div>
+              </div>
+
+              {isInfoOpen && (
+                <InfoBlock
+                  title={LEVEL_TITLE_INFO}
+                  text={LEVEL_TEXT_INFO}
+                  handleInfoClose={() => setIsInfoOpen(false)}
+                />
+              )}
+
+              <LevelContent
+                setAnimationParams={setAnimationParams}
+                activeLevel={activeLevel}
+              />
             </div>
           </div>
-
-          {isInfoOpen && (
-            <InfoBlock
-              title={LEVEL_TITLE_INFO}
-              text={LEVEL_TEXT_INFO}
-              handleInfoClose={() => setIsInfoOpen(false)}
-            />
-          )}
-
-          <LevelContent activeLevel={activeLevel} />
-        </div>
-      </div>
-      <Footer active="levels" />
+          <Footer active="levels" />
+        </>
+      )}
     </>
   );
 };

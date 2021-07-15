@@ -11,7 +11,7 @@ import {
 import { HeartAnimationBig } from "../../heart-animation";
 import LevelWithPrize from "./level-with-prize";
 
-const LevelContent = ({ activeLevel }) => {
+const LevelContent = ({ activeLevel, setAnimationParams }) => {
   const { currentChild } = useContext(ChildContext);
   const getPrizeByLevel = () => {
     return api.get(`/entries/${currentChild.id}/prize_by_level`, {
@@ -42,7 +42,9 @@ const LevelContent = ({ activeLevel }) => {
       );
     }
 
-    return <LevelWithPrize prize={data} />;
+    return (
+      <LevelWithPrize setAnimationParams={setAnimationParams} prize={data} />
+    );
   };
 
   if (activeLevel === currentChild?.level) {
