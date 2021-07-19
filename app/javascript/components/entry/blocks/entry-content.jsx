@@ -9,7 +9,7 @@ import ChildContext from "../../../helpers/child-context";
 import UserContext from "../../../helpers/user-context";
 import CertificateIcon from "../../../images/icon-certificate.svg";
 import ShareImage from "../../../images/share.svg";
-import { FacebookShare } from "../../facebook-share";
+import { FacebookShare2 } from "../../facebook-share-2";
 import { Popup } from "../../popup";
 import { Timer } from "../../timer";
 import CompetitionPrize from "./competition-prize";
@@ -73,10 +73,21 @@ const EntryContent = ({ child, voters }) => {
         <img src={child.imageUrl} />
 
         {child.currentCompetition ? (
-          <FacebookShare childId={child.id} classes="entry__share">
+          <FacebookShare2
+            childId={child.id}
+            classes="entry__share"
+            childImg={child.imageUrl}
+          >
             <ShareImage />
-          </FacebookShare>
+          </FacebookShare2>
         ) : (
+          // <FacebookShare
+          //   childId={child.id}
+          //   classes="entry__share"
+          //   childImg={child.imageUrl}
+          // >
+          //   <ShareImage />
+          // </FacebookShare>
           <div className="entry__share">
             <CertificateIcon />
           </div>
