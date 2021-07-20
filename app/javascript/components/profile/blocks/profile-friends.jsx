@@ -17,7 +17,7 @@ import { InfoBlock } from "../../info-block";
 
 const PROFILE_TITLE_INFO = "Better together!";
 const PROFILE_TEXT_INFO =
-  "Invite your friends to Malobeem and get revarded. Revard will increase with every new friend enters the competition.";
+  "Invite your friends to Melobeem to earn rewards. Rewards will increase when each new friend enters the competition.";
 
 const ProfileFriends = ({ userId }) => {
   const [isInfoOpen, setIsInfoOpen] = useState(false);
