@@ -41,7 +41,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
       },
       {
         rotation: storedAngle + FULL_ROUND,
-        duration: 3,
+        duration: 2,
         repeat: Infinity,
         ease: "linear",
       }
@@ -78,17 +78,18 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
 
     let stopAngle = endAngle + FULL_ROUND;
 
+    let spinnerDuration = (2 / 360) * stopAngle;
+
     if (stopAngle < storedAngle + FULL_ROUND) {
       stopAngle = stopAngle + FULL_ROUND;
+      spinnerDuration += 2;
     }
-
-    let spinnerSpeed = (3 / 360) * stopAngle + 1;
 
     gsap.to(spinnerElement.current, {
       rotate: stopAngle,
-      duration: spinnerSpeed,
+      duration: spinnerDuration,
       repeat: 0,
-      ease: "linear",
+      ease: "ease-out",
       onComplete: () => {
         finalAnimation(res.data.value);
       },
@@ -168,14 +169,14 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
       withAnimation={true}
     />
   ) : (
-    <div className={`spinner ${zoomOutSpinner ? "spinner-zoom-out" : " "}`}>
+    <div className={`spinner ${zoomOutSpinner && "spinner-zoom-out"}`}>
       <SpinnerTitle spinnerType={currentSpinner.type} spinnerAmount={amount} />
 
       <div className="spinner__image">
         <SpinnerPointer
           className={`spinner__pointer ${
-            isAnimationPlay ? "spinner__pointer-animation" : ""
-          } ${slowDownStopper ? "spinner__pointer-animation-slow" : ""}`}
+            isAnimationPlay && "spinner__pointer-animation"
+          } ${slowDownStopper && "spinner__pointer-animation-slow"}`}
         />
         <div className="parent_spinner-container">
           <div ref={spinnerElement} className="spinner__svg">
@@ -188,19 +189,19 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
           {isSpinnerDone && (
             <div className="spinner-done-animation">
               <SpinnerPrizeAnimation />
-              {winningAmount || winningAmount === 0 ? (
+              {(winningAmount || winningAmount === 0) && (
                 <p className="spinner-winning-amount">+{winningAmount}</p>
-              ) : (
-                " "
               )}
             </div>
           )}
         </div>
 
-        {isSpinnerDone ? (
-          " "
-        ) : (
-          <div className="spinner__button">
+        {!isSpinnerDone && (
+          <div
+            className={`spinner__button ${
+              isFinalAnimationStarted && "spinner__button--pressed"
+            }`}
+          >
             <SpinnerStopImage onClick={beginToStopAnimation} />
           </div>
         )}

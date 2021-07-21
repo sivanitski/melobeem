@@ -10,14 +10,8 @@ export default function LevelUpAnimation() {
         loop={false}
         animationData={levelUpAnimationJson}
         play
-        style={{
-          height: 95,
-          width: 200,
-          display: "flex",
-          alignContent: "center",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        height={190}
+        width={400}
       />
     </div>
   );

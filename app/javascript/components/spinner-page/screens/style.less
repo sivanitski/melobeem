@@ -56,6 +56,10 @@
     outline: none;
     -webkit-tap-highlight-color: transparent;
   }
+
+  &--pressed {
+    transform: scale(0.8);
+  }
 }
 
 .spinner__button:active {
@@ -232,7 +236,7 @@
 
 .spinner__pointer-animation {
   transform-origin: 10px 10px 0;
-  animation: spinner__pointer-animation 540ms ease-out infinite;
+  animation: spinner__pointer-animation 500ms ease-out infinite;
 }
 
 @keyframes spinner__pointer-animation {
@@ -251,7 +255,7 @@
 
 .spinner__pointer-animation-slow {
   transform-origin: 10px 10px 0;
-  animation: spinner__pointer-animation 900ms ease-out infinite;
+  animation: spinner__pointer-animation 830ms ease-out infinite;
 }
 
 @keyframes spinner__pointer-animation-slow {
