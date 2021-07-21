@@ -23,6 +23,7 @@ const Vote = ({
   const [isPopupShown, setIsPopupShown] = useState(false);
   const { user } = useContext(UserContext);
   const [timeVote, setTimeVote] = useState(null);
+  const [isShowShareModal, setIsShowShareModal] = useState(false);
 
   if (!user) {
     return <Redirect to={`/entry/${id}`} />;
@@ -50,16 +51,18 @@ const Vote = ({
     window.scrollTo(0, 0);
   }, [currentPage]);
 
+  useEffect(() => {
+    api.get("/users/show_share_modal").then((res) => {
+      setIsShowShareModal(res?.data);
+    });
+  }, []);
+
   const getCurrentCompetitor = () => {
     return api.get(`/entries/${id}`);
   };
 
   const getFreeVoteTimer = () => {
     return api.get(`/entries/${id}/votes/expiration_time_for_free`);
-  };
-
-  const getIsShowPopup = () => {
-    return api.get("/users/show_share_modal");
   };
 
   const { data: child, error, loading } = useRequest(getCurrentCompetitor, {
@@ -74,17 +77,10 @@ const Vote = ({
     formatResult: (res) => res.data.ttlInSeconds,
   });
 
-  const { data: isPopup, loading: isPopupLoading } = useRequest(
-    getIsShowPopup,
-    {
-      formatResult: (res) => res.data,
-    }
-  );
-
   if (error || timeError) {
     return <Error />;
   }
-  if (loading || timeLoading || isPopupLoading) {
+  if (loading || timeLoading) {
     return <Loader />;
   }
 
@@ -136,8 +132,9 @@ const Vote = ({
 
     updateTime();
 
-    if (isPopup) {
-      setTimeout(() => setIsPopupShown(true), 3000);
+    if (isShowShareModal && !activeOption.value) {
+      setTimeout(() => setIsPopupShown(true), 5000);
+      setIsShowShareModal(false);
     }
   };
 
