@@ -8,16 +8,11 @@ const HeaderUserItem = ({
   value,
   isAnimationPlay,
   animationStep,
-  handleAnimationEnd,
   numberStart,
   numberEnd,
+  setAnimationStep,
   ...countProps
 }) => {
-  if (animationStep === 3 && handleAnimationEnd) {
-    const time = numberEnd - numberStart > 10 ? 3000 : 1500;
-    setTimeout(handleAnimationEnd, time);
-  }
-
   return (
     <div className="header-user__item">
       <div className="header-user__item__text text-tiny text-grey">{title}</div>
@@ -27,6 +22,7 @@ const HeaderUserItem = ({
             animationStep={animationStep}
             numberStart={numberStart}
             numberEnd={numberEnd}
+            setAnimationStep={setAnimationStep}
             {...{ ...countProps }}
           />
         ) : (

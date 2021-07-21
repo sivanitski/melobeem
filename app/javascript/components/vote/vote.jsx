@@ -141,6 +141,12 @@ const Vote = ({
     }
   };
 
+  const handleAnimationEnd = () => {
+    if (currentPage === "animation") {
+      setCurrentPage("vote");
+    }
+  };
+
   const renderVoteScreen = () => {
     if (currentPage === "vote") {
       return (
@@ -182,7 +188,7 @@ const Vote = ({
         animationParams={animationParams}
         isGoToVoteList={currentPage !== "vote"}
         handleGoToVoteOptions={handleGoToVoteOptions}
-        handleAnimationEnd={() => setCurrentPage("vote")}
+        handleAnimationEnd={handleAnimationEnd}
       />
 
       {renderVoteScreen()}

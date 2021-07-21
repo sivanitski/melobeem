@@ -9,6 +9,7 @@ const CountAnimation = ({
   isDecrease,
   animationStep,
   setAnimationStep,
+  handleAnimationEnd,
 }) => {
   const listElement = useRef(null);
 
@@ -36,6 +37,9 @@ const CountAnimation = ({
       if (animationStep) {
         if (animationStep === 3) {
           setAnimationStep(0);
+        }
+        if (handleAnimationEnd) {
+          handleAnimationEnd();
         }
         setAnimationStep(animationStep + 1);
       }
@@ -91,6 +95,7 @@ CountAnimation.propTypes = {
   isDecrease: propTypes.bool,
   animationStep: propTypes.number,
   setAnimationStep: propTypes.func,
+  handleAnimationEnd: propTypes.func,
 };
 
 export default CountAnimation;
