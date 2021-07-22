@@ -1,12 +1,14 @@
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useHistory } from "react-router";
 
 import { api } from "../../../api";
 import defaultProptypes from "../../../default-proptypes";
 import ChildContext from "../../../helpers/child-context";
 import UserContext from "../../../helpers/user-context";
+import { getSiteBaseUrl } from "../../../helpers/utils";
 import CertificateIcon from "../../../images/icon-certificate.svg";
 import ShareImage from "../../../images/share.svg";
 import { FacebookShare } from "../../facebook-share";
@@ -27,6 +29,7 @@ const EntryContent = ({ child, voters }) => {
   const [isSettingOpen, setIsSettingOpen] = useState(false);
   const [isPopupShown, setIsPopupShown] = useState(false);
   const history = useHistory();
+  const siteBaseUrl = getSiteBaseUrl();
 
   useEffect(() => {
     if (currentChild?.id === child.id) {
@@ -60,6 +63,11 @@ const EntryContent = ({ child, voters }) => {
 
   return (
     <div className="entry">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Melobeem</title>
+        <link rel="canonical" href={`${siteBaseUrl}/entry/${child?.id}`} />
+      </Helmet>
       <div className="entry__img">
         {isUsersChild && (
           <EntrySetting
