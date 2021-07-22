@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useHistory } from "react-router";
 
 import { api } from "../../../api";
@@ -60,6 +61,12 @@ const EntryContent = ({ child, voters }) => {
 
   return (
     <div className="entry">
+      <Helmet>
+        <meta charSet="utf-8" />
+        <title>Melobeem</title>
+        <link rel="canonical" href={`${siteBaseUrl}/entry/${child?.id}`} />
+        <meta property="og:image" content={child.imageUrl} />
+      </Helmet>
       <div className="entry__img">
         {isUsersChild && (
           <EntrySetting
