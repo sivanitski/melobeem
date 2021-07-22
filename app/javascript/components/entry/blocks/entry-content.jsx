@@ -62,11 +62,17 @@ const EntryContent = ({ child, voters }) => {
   return (
     <div className="entry">
       <Helmet>
-        <meta property="og:url" content={`${siteBaseUrl}/entry/${child?.id}`} />
+        <meta
+          property="og:url"
+          content={`https://melobeem.com/entry/${child?.id}`}
+        />
         <meta property="og:image" content={child.imageUrl} />
         <meta charSet="utf-8" />
         <title>Melobeem</title>
-        <link rel="canonical" href={`${siteBaseUrl}/entry/${child?.id}`} />
+        <link
+          rel="canonical"
+          href={`https://melobeem.com/entry/${child?.id}`}
+        />
       </Helmet>
       <div className="entry__img">
         {isUsersChild && (

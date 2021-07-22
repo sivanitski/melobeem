@@ -25,7 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <FacebookProvider appId={appId} version="v9.0" cookie={true}>
       <GoogleReCaptchaProvider reCaptchaKey={recaptchaKey}>
         <Helmet>
-          <meta property="og:url" content={siteBaseUrl} />
+          <meta property="og:url" content="https://melobeem.com" />
           <meta property="og:site_name" content="Melobeem" />
           <meta property="og:title" content="Melobeem" />
           <meta property="og:description" content="Programa de fiestas" />
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", () => {
             name="description"
             content=" Melobeem is a free photo contest for Babies up to 4 years!"
           />
-          <link rel="canonical" href={siteBaseUrl} />
+          <link rel="canonical" href="https://melobeem.com" />
         </Helmet>
         <App />
       </GoogleReCaptchaProvider>
