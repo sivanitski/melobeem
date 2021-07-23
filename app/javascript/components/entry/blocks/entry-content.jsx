@@ -1,7 +1,7 @@
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
-// import { Helmet } from "react-helmet";
+import { Helmet } from "react-helmet";
 import { useHistory } from "react-router";
 
 import { api } from "../../../api";
@@ -61,19 +61,18 @@ const EntryContent = ({ child, voters }) => {
 
   return (
     <div className="entry">
-      {/* <Helmet>
+      <Helmet>
         <meta
-          property="og:url"
-          content={`https://melobeem.com/entry/${child?.id}`}
+          name="title"
+          content={`Competition Melobeem -- ${child.name}`}
+          data-react-helmet="true"
         />
-        <meta property="og:image" content={child.imageUrl} />
-        <meta charSet="utf-8" />
-        <title>Melobeem</title>
-        <link
-          rel="canonical"
-          href={`https://melobeem.com/entry/${child?.id}`}
+        <meta
+          name="description"
+          content={`Vote for ${child.name} to make him closer to victory`}
+          data-react-helmet="true"
         />
-      </Helmet> */}
+      </Helmet>
       <div className="entry__img">
         {isUsersChild && (
           <EntrySetting
