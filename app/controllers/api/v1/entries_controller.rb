@@ -23,9 +23,15 @@ module API
       end
 
       def show
+
         entry_competition = Entry.find(params[:id]).competition
         entry = ::Entries::WithRankQuery.new.call(entry_competition.id).find(params[:id])
-        respond_with entry, serializer: ::Entries::RankedSerializer, country: country
+        @og_title = entry.name
+        if request.format&.symbol&.eql?(:json)
+          respond_with entry, serializer: ::Entries::RankedSerializer, country: country
+        else
+          render template: 'api/v1/entries/show', layout: 'application'
+        end
       end
 
       def create

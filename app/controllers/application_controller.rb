@@ -1,5 +1,9 @@
 class ApplicationController < ActionController::Base
-  def index; end
+  def index
+    p '>>>>', controller_name
+    p '>>>>', action_name
+    @og_title = "blablalba"
+  end
 
   private
 

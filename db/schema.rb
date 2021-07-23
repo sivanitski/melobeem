@@ -193,8 +193,8 @@ ActiveRecord::Schema.define(version: 2021_07_08_103235) do
     t.bigint "entry_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.enum "product_type", enum_name: "product_type"
     t.bigint "competition_id"
+    t.enum "product_type", enum_name: "product_type"
     t.bigint "product_id"
     t.index ["competition_id"], name: "index_purchase_transactions_on_competition_id"
     t.index ["entry_id"], name: "index_purchase_transactions_on_entry_id"
@@ -229,13 +229,11 @@ ActiveRecord::Schema.define(version: 2021_07_08_103235) do
     t.boolean "deactivated", default: false, null: false
     t.integer "premium_spins", default: 0, null: false
     t.boolean "admin", default: false
-    t.string "stripe_customer_id"
     t.string "country"
     t.boolean "captcha_verified", default: false
     t.index ["email"], name: "index_users_on_email"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, where: "(deactivated IS FALSE)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
-    t.index ["stripe_customer_id"], name: "index_users_on_stripe_customer_id"
   end
 
   create_table "votes", force: :cascade do |t|
