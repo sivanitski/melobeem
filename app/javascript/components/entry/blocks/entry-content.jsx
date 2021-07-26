@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
+import { Helmet } from "react-helmet";
 import { useHistory } from "react-router";
 
 import { api } from "../../../api";
@@ -60,6 +61,18 @@ const EntryContent = ({ child, voters }) => {
 
   return (
     <div className="entry">
+      <Helmet>
+        <meta
+          name="title"
+          content={`Competition Melobeem -- ${child.name}`}
+          data-react-helmet="true"
+        />
+        <meta
+          name="description"
+          content={`Vote for ${child.name} to make him closer to victory`}
+          data-react-helmet="true"
+        />
+      </Helmet>
       <div className="entry__img">
         {isUsersChild && (
           <EntrySetting

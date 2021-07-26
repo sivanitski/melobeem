@@ -1,6 +1,6 @@
 module API
   module V1
-    class EntriesController < API::V1::ApplicationController
+    class EntriesController < API::V1::ApplicationController # rubocop:disable Metrics/ClassLength
       NO_LOGIN_ACTIONS = %i[index show new latest_voters total_votes_by_date search voters_by_day ranking_details max_level_entry].freeze
 
       skip_before_action :authenticate_user!, only: NO_LOGIN_ACTIONS
@@ -22,10 +22,17 @@ module API
         respond_with entry, serializer: ::Entries::NewSerializer
       end
 
-      def show
+      def show # rubocop:disable Metrics/AbcSize
         entry_competition = Entry.find(params[:id]).competition
         entry = ::Entries::WithRankQuery.new.call(entry_competition.id).find(params[:id])
-        respond_with entry, serializer: ::Entries::RankedSerializer, country: country
+
+        setup_meta_tags(entry)
+
+        if request.format&.symbol.eql?(:json)
+          respond_with entry, serializer: ::Entries::RankedSerializer, country: country
+        else
+          render template: 'api/v1/entries/show', layout: 'application'
+        end
       end
 
       def create
@@ -124,6 +131,13 @@ module API
 
       def prize
         @prize ||= entry.prizes.find_by(level: params[:level])
+      end
+
+      def setup_meta_tags(entry)
+        @page_title = "Please support #{entry.name} in the #{Time.current.strftime('%B')} Competition! 😍️"
+        @page_description = 'Click here to go to melobeem.com and vote now! ❤'
+        @page_url = "https://melobeem.com/entry/#{entry.id}"
+        @page_image = entry.image.imgproxy_url
       end
     end
   end

@@ -13,6 +13,8 @@ Rails.application.routes.draw do
              },
              defaults: { format: :json }
 
+  get 'entry/:id', to: 'api/v1/entries#show'
+
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
       post '/check_payment', to: 'webhooks#check_payment'
