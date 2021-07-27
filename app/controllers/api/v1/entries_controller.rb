@@ -137,7 +137,7 @@ module API
         @page_title = "Please support #{entry.name} in the #{Time.current.strftime('%B')} Competition! 😍️"
         @page_description = 'Click here to go to melobeem.com and vote now! ❤'
         @page_url = "https://melobeem.com/entry/#{entry.id}"
-        @page_image = entry.image.imgproxy_url(ext: 'jpg')
+        @page_image = entry.image.service_url
       end
     end
   end
