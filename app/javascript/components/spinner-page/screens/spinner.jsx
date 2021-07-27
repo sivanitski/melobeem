@@ -1,6 +1,5 @@
 import "./style.less";
 
-import { useRequest } from "ahooks";
 import { gsap } from "gsap";
 import propTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
@@ -12,9 +11,8 @@ import SpinnerPointer from "../../../images/stopper.svg";
 import SpinnerPrizeAnimation from "../../animation/spinner-prize-animation";
 import SpinnerImageColor from "../blocks/spinner-image";
 import SpinnerTitle from "../blocks/spinner-title";
-import NoSpinner from "./no-spinner";
 
-const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
+const Spinner = ({ spinnerData, updateCurrentChild }) => {
   const spinnerElement = useRef(null);
   const [isAnimationPlay, setIsAnimationPlay] = useState(false);
   const [spinnerAnimation, setSpinnerAnimation] = useState(null);
@@ -22,9 +20,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
   const [isSpinnerDone, setIsSpinnerDone] = useState(false);
   const [winningAmount, setWinningAmount] = useState(false);
   const [animationCompleted, setAnimationCompleted] = useState(false);
-  const [needToShowShop, setNeedToShowShop] = useState(false);
   const [slowDownStopper, setSlowDownStopper] = useState(false);
-  const [currentSpinner, setCurrentSpinner] = useState(spinnerData);
   const [zoomOutSpinner, setZoomOutSpinner] = useState(false);
   const [storedAngle, setStoredAngle] = useState(0);
   const [isFinalAnimationStarted, setIsFinalAnimationStarted] = useState(false);
@@ -56,7 +52,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     if (spinnerElement.current) {
       startAnimation();
     }
-  }, [needToShowShop]);
+  }, []);
 
   const beginToStopAnimation = async () => {
     if (!spinnerAnimation) {
@@ -76,14 +72,9 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     setStoredAngle(endAngle);
     setSlowDownStopper(true);
 
-    let stopAngle = endAngle + FULL_ROUND;
+    let stopAngle = 2 * FULL_ROUND + endAngle;
 
-    let spinnerDuration = (2 / 360) * stopAngle;
-
-    if (stopAngle < storedAngle + FULL_ROUND) {
-      stopAngle = stopAngle + FULL_ROUND;
-      spinnerDuration += 2;
-    }
+    const spinnerDuration = (2 * 1.7 * (stopAngle - endAngle)) / 360;
 
     gsap.to(spinnerElement.current, {
       rotate: stopAngle,
@@ -92,6 +83,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
       ease: "ease-out",
       onComplete: () => {
         finalAnimation(res.data.value);
+        setTimeout(() => updateCurrentChild(amount - 1), 6000);
       },
     });
   };
@@ -111,32 +103,7 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     setTimeout(() => {
       setWinningAmount(prizeAmount);
     }, 500);
-
-    updateCurrentChild();
-
-    updateUser();
   };
-
-  const getSpinnersInfo = () => {
-    return api.get(`/spins/check_presence`);
-  };
-
-  const { data, run: requestSpinnerInfo } = useRequest(getSpinnersInfo, {
-    formatResult: (res) => res.data,
-  });
-
-  useEffect(() => {
-    if (data && data.count > 0) {
-      setZoomOutSpinner(false);
-      setCurrentSpinner(data);
-      setAmount(data.count);
-      setIsSpinnerDone(false);
-      setWinningAmount(false);
-      setAnimationCompleted(false);
-      setIsFinalAnimationStarted(false);
-      setNeedToShowShop(false);
-    }
-  }, [data]);
 
   useEffect(() => {
     if (isSpinnerDone && !animationCompleted) {
@@ -148,9 +115,6 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     if (animationCompleted) {
       if (amount === 0 || !amount) {
         setZoomOutSpinner(true);
-        setTimeout(() => {
-          setNeedToShowShop(true);
-        }, 200);
       } else {
         setAnimationCompleted(null);
         setWinningAmount(false);
@@ -162,15 +126,9 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
     }
   }, [isSpinnerDone, animationCompleted]);
 
-  return needToShowShop ? (
-    <NoSpinner
-      requestSpinnerInfo={requestSpinnerInfo}
-      updateUser={updateUser}
-      withAnimation={true}
-    />
-  ) : (
+  return (
     <div className={`spinner ${zoomOutSpinner && "spinner-zoom-out"}`}>
-      <SpinnerTitle spinnerType={currentSpinner.type} spinnerAmount={amount} />
+      <SpinnerTitle spinnerType={spinnerData.type} spinnerAmount={amount} />
 
       <div className="spinner__image">
         <SpinnerPointer
@@ -181,8 +139,8 @@ const Spinner = ({ spinnerData, updateCurrentChild, updateUser }) => {
         <div className="parent_spinner-container">
           <div ref={spinnerElement} className="spinner__svg">
             <SpinnerImageColor
-              spinnerType={currentSpinner.type}
-              spinnerAmount={currentSpinner.count}
+              spinnerType={spinnerData.type}
+              spinnerAmount={spinnerData.count}
             />
           </div>
 
@@ -216,7 +174,6 @@ Spinner.propTypes = {
     count: propTypes.number,
   }),
   updateCurrentChild: propTypes.func,
-  updateUser: propTypes.func,
 };
 
 export default Spinner;

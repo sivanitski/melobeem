@@ -10,8 +10,8 @@ export default function LevelUpAnimation() {
         loop={false}
         animationData={levelUpAnimationJson}
         play
-        height={190}
-        width={400}
+        height={238}
+        width={500}
       />
     </div>
   );

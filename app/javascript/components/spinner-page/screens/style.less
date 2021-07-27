@@ -195,12 +195,12 @@
 }
 
 .spinner-zoom-in-product-0 {
-  animation: spinner-zoom-in-product 2s ease-out;
+  animation: spinner-zoom-in-product 2s linear;
 }
 
 .spinner-zoom-in-product-1 {
   transform: scale(0, 0);
-  animation: spinner-zoom-in-product 2s 500ms ease-out;
+  animation: spinner-zoom-in-product 2s 500ms linear;
   animation-fill-mode: forwards;
 }
 
@@ -209,7 +209,7 @@
     transform: scale(0, 0);
   }
 
-  50% {
+  40% {
     transform: scale(1, 1);
   }
 
@@ -218,14 +218,10 @@
   }
 
   70% {
-    transform: scale(1.05, 1.05);
+    transform: scale(1, 1);
   }
 
   80% {
-    transform: scale(0.95, 0.95);
-  }
-
-  90% {
     transform: scale(1.05, 1.05);
   }
 

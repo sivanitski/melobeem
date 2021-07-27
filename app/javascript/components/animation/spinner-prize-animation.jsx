@@ -7,7 +7,6 @@ export default function SpinnerPrizeAnimation() {
   return (
     <div className="animation animation--spinner">
       <Lottie
-        loop
         animationData={spinnerPrizeAnimationJson}
         play
         speed={0.7}

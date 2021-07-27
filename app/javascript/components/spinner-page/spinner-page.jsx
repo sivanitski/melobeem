@@ -16,6 +16,7 @@ import Spinner from "./screens/spinner";
 const SpinnerPage = () => {
   const { user, setUser } = useContext(UserContext);
   const [isPopupShown, setIsPopupShown] = useState(false);
+
   const history = useHistory();
   const { currentChild, setCurrentChild } = useContext(ChildContext);
   const [animationParams, setAnimationParams] = useState({
@@ -60,7 +61,15 @@ const SpinnerPage = () => {
     }));
   };
 
-  const updateCurrentChild = async () => {
+  const handleAnimationEnd = (amount, child) => {
+    setCurrentChild(child);
+    if (amount === 0 || !amount) {
+      requestSpinnerInfo();
+    }
+    updateUser();
+  };
+
+  const updateCurrentChild = async (spinsAmount) => {
     setAnimationParams((animationParams) => ({
       ...animationParams,
       votesStart: currentChild.totalVotes,
@@ -78,9 +87,8 @@ const SpinnerPage = () => {
       rankEnd: entry.rank,
       level: entry.level,
       levelEnd: entry.level,
+      handleAnimationEnd: handleAnimationEnd(spinsAmount, entry),
     }));
-
-    setTimeout(() => setCurrentChild(entry), 3000);
   };
 
   const popupType = !user ? "spinner-not-login" : "spinner-not-entered";
@@ -108,11 +116,7 @@ const SpinnerPage = () => {
 
     if (data.type) {
       return (
-        <Spinner
-          spinnerData={data}
-          updateCurrentChild={updateCurrentChild}
-          updateUser={updateUser}
-        />
+        <Spinner spinnerData={data} updateCurrentChild={updateCurrentChild} />
       );
     }
 
@@ -120,13 +124,18 @@ const SpinnerPage = () => {
       <NoSpinner
         requestSpinnerInfo={requestSpinnerInfo}
         updateUser={updateUser}
+        withAnimation={true}
       />
     );
   };
 
   return (
     <>
-      <HeaderUser child={currentChild} animationParams={animationParams} />
+      <HeaderUser
+        child={currentChild}
+        animationParams={animationParams}
+        handleAnimationEnd={animationParams?.handleAnimationEnd}
+      />
 
       {renderSpinnerScreen()}
 

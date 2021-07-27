@@ -7,7 +7,7 @@ import defaultProptypes from "../../default-proptypes";
 import { HeaderUserItem } from "../header-user-item";
 import { HeaderUserLevel } from "../header-user-level";
 
-const HeaderUser = ({ child, animationParams }) => {
+const HeaderUser = ({ child, animationParams, handleAnimationEnd }) => {
   const [animationStep, setAnimationStep] = useState(0);
 
   useEffect(() => {
@@ -78,6 +78,7 @@ const HeaderUser = ({ child, animationParams }) => {
           isDecrease
           animationStep={animationStep}
           setAnimationStep={setAnimationStep}
+          handleAnimationEnd={handleAnimationEnd}
         />
       </div>
     </div>
@@ -95,6 +96,7 @@ HeaderUser.propTypes = {
     levelStart: propTypes.number,
     levelEnd: propTypes.number,
   }),
+  handleAnimationEnd: propTypes.func,
 };
 
 export default HeaderUser;

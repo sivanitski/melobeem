@@ -37,11 +37,13 @@ const CountAnimation = ({
       if (animationStep) {
         if (animationStep === 3) {
           setAnimationStep(0);
+
+          if (handleAnimationEnd) {
+            handleAnimationEnd();
+          }
+        } else {
+          setAnimationStep(animationStep + 1);
         }
-        if (handleAnimationEnd) {
-          handleAnimationEnd();
-        }
-        setAnimationStep(animationStep + 1);
       }
     }, duration);
   };
