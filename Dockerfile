@@ -48,7 +48,8 @@ RUN apk add --update --no-cache \
     git \
     nodejs \
     yarn \
-    tzdata
+    tzdata \
+    imagemagick
 
 WORKDIR /app
 
