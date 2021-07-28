@@ -38,6 +38,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'imgproxy'
 # active storage validations
 gem 'active_storage_validations', '~> 0.9.3'
+# image_processing
+gem 'image_processing', '~> 1.2'
 
 # environment variables
 gem 'dotenv-rails'
