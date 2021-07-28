@@ -49,7 +49,10 @@ RUN apk add --update --no-cache \
     nodejs \
     yarn \
     tzdata \
-    imagemagick
+    imagemagick \
+    imagemagick-dev \
+    libmagic \
+    file
 
 WORKDIR /app
 
@@ -82,7 +85,10 @@ FROM ruby:2.7.2-alpine
 RUN apk add --update --no-cache \
     postgresql-client \
     tzdata \
-    file
+    file \
+    imagemagick \
+    imagemagick-dev \
+    libmagic
 
 # Add user
 RUN addgroup -g 1000 -S app \
