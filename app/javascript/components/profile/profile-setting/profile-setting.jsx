@@ -31,10 +31,12 @@ const ProfileSetting = () => {
   };
 
   const PAGES = {
-    RULES: { NAME: "Rules", LINK: "" },
-    PRICACY: { NAME: "Privacy", LINK: "" },
-    TERMS: { NAME: "Terms & Conditions", LINK: "" },
-    HELP: { NAME: "Help", LINK: "" },
+    RULES: { NAME: "Rules", LINK: "/profile/setting/rules" },
+    PRICACY: { NAME: "Privacy", LINK: "/profile/setting/privacy" },
+    TERMS: {
+      NAME: "Terms & Conditions",
+      LINK: "/profile/setting/terms-and-conditions",
+    },
   };
 
   const DELETE_OPTIONS = {

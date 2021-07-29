@@ -23,6 +23,9 @@ import NextCompetition from "../profile/blocks/profile-next-competition";
 import { ProfileNotification } from "../profile/profile-notification";
 import { ProfileRoute } from "../profile/profile-route";
 import { ProfileSetting } from "../profile/profile-setting";
+import Privacy from "../profile/profile-setting/screens/privacy";
+import Rules from "../profile/profile-setting/screens/rules";
+import Terms from "../profile/profile-setting/screens/terms";
 import { SignUp } from "../sign-up";
 import { SpinnerPage } from "../spinner-page";
 import { Vote } from "../vote";
@@ -74,6 +77,15 @@ const Routes = () => {
         </Route>
         <Route exact path={"/profile/setting"}>
           {user ? <ProfileSetting /> : <Redirect to="/" />}
+        </Route>
+        <Route exact path={"/profile/setting/rules"}>
+          {user ? <Rules /> : <Redirect to="/" />}
+        </Route>
+        <Route exact path={"/profile/setting/privacy"}>
+          {user ? <Privacy /> : <Redirect to="/" />}
+        </Route>
+        <Route exact path={"/profile/setting/terms-and-conditions"}>
+          {user ? <Terms /> : <Redirect to="/" />}
         </Route>
         <Route exact path={"/profile/:id"}>
           <Profile />
