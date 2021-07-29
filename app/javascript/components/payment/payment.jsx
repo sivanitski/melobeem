@@ -10,11 +10,12 @@ import {
 } from "@stripe/react-stripe-js";
 import { useEventTarget } from "ahooks";
 import propTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 import { api } from "../../api";
 import ButtonClose from "../../images/close-icon.svg";
 import HeartImage from "../../images/heart-payment.svg";
+import LockerImage from "../../images/locker-payment.svg";
 import SpinnerOrange from "../../images/spinner-orange-small.svg";
 import SpinnerPurple from "../../images/spinner-purple-small.svg";
 import Loader from "../animation/loader";
@@ -179,6 +180,18 @@ const Payment = ({
     }
   };
 
+  const timeoutEMAILRef = useRef(null);
+  useEffect(() => {
+    if (timeoutEMAILRef.current !== null) {
+      clearTimeout(timeoutEMAILRef.current);
+    }
+
+    timeoutEMAILRef.current = setTimeout(() => {
+      timeoutEMAILRef.current = null;
+      email !== "" ? validateEmail(email) : null;
+    }, 500);
+  }, [email]);
+
   const EMAIL_VALIDATION = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const validateEmail = (value) => {
@@ -189,11 +202,6 @@ const Payment = ({
     }
   };
 
-  const handleChangeEmail = (evt) => {
-    setEmail(evt.target.value);
-    validateEmail(evt.target.value);
-  };
-
   const validateCardHolder = (value) => {
     if (value.length < 3) {
       setCardHolderError("Invalid name on card");
@@ -202,10 +210,17 @@ const Payment = ({
     }
   };
 
-  const handleChangeCardHolder = (evt) => {
-    setCardHolder(evt.target.value);
-    validateCardHolder(evt.target.value);
-  };
+  const timeoutCardHolderRef = useRef(null);
+  useEffect(() => {
+    if (timeoutCardHolderRef.current !== null) {
+      clearTimeout(timeoutCardHolderRef.current);
+    }
+
+    timeoutCardHolderRef.current = setTimeout(() => {
+      timeoutCardHolderRef.current = null;
+      cardHolder !== "" ? validateCardHolder(cardHolder) : null;
+    }, 500);
+  }, [cardHolder]);
 
   const handleSubmit = async (evt) => {
     evt.preventDefault();
@@ -337,8 +352,12 @@ const Payment = ({
         )}
         <form onSubmit={handleSubmit} className="vote-payment__form">
           <div className="vote-payment__card vote-payment__item">
-            <label htmlFor="cardNumber" className="vote-payment__text">
+            <label
+              htmlFor="cardNumber"
+              className="vote-payment__text vote-payment__text--card-number"
+            >
               Card Number
+              <LockerImage />
             </label>
             <CardNumberElement
               id="cardNumber"
@@ -351,7 +370,7 @@ const Payment = ({
             </span>
           </div>
           <div className="vote-payment__options">
-            <div className="vote-payment__item vote-payment__item--small">
+            <div className="vote-payment__item vote-payment__item--expiry">
               <label htmlFor="expiry" className="vote-payment__text">
                 Expiry
               </label>
@@ -365,7 +384,7 @@ const Payment = ({
                 {expiryError}
               </span>
             </div>
-            <div className="vote-payment__item vote-payment__item--small">
+            <div className="vote-payment__item vote-payment__item--cvc">
               <label htmlFor="cvc" className="vote-payment__text">
                 CVC
               </label>
@@ -380,13 +399,14 @@ const Payment = ({
                 {cvcError}
               </span>
             </div>
-            <div className="vote-payment__item vote-payment__item--small">
+            <div className="vote-payment__item vote-payment__item--postcode">
               <label htmlFor="postal" className="vote-payment__text">
                 Postcode
               </label>
               <input
-                type="number"
+                type="text"
                 value={postalCode}
+                maxLength={7}
                 className="vote-payment__form-field--postcode vote-payment__form-field"
                 onChange={onChangePostal}
               />
@@ -401,7 +421,7 @@ const Payment = ({
                 type="text"
                 value={cardHolder}
                 className="vote-payment__form-field--cardholder vote-payment__form-field"
-                onChange={(evt) => handleChangeCardHolder(evt)}
+                onChange={(evt) => setCardHolder(evt.target.value)}
               />
               <span className="text-red text-tiny vote-payment__validation">
                 {cardHolderError}
@@ -412,10 +432,11 @@ const Payment = ({
                 Email
               </label>
               <input
+                autoComplete="false"
                 type="email"
                 value={email}
                 className="vote-payment__form-field--email vote-payment__form-field"
-                onChange={(evt) => handleChangeEmail(evt)}
+                onChange={(evt) => setEmail(evt.target.value)}
               />
               <span className="text-red text-tiny vote-payment__validation">
                 {emailError}

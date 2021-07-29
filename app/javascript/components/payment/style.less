@@ -1,9 +1,10 @@
 .vote-payment {
-  width: calc(100% - 50px);
-  margin: auto;
-  border: 0.5px solid rgba(226, 215, 218, 0.3);
+  width: calc(100% - 40px);
+  margin-left: 12px;
+  margin-right: 28px;
+  border: 0.5px solid rgba(255, 112, 152, 0.3);
   box-sizing: border-box;
-  box-shadow: 7px 8px 0 0 #f6eaee;
+  box-shadow: 10px 13px 0 0 #f6eaee;
   border-radius: 30px;
   display: flex;
   flex-direction: column;
@@ -27,7 +28,7 @@
 .vote-payment__form {
   display: flex;
   flex-direction: column;
-  width: calc(100% - 20px);
+  width: calc(100% - 44px);
 }
 
 .vote-payment__close {
@@ -56,6 +57,7 @@
 .vote-payment__options {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 
 .vote-payment__item {
@@ -68,10 +70,6 @@
   bottom: -15px;
 }
 
-.vote-payment__item--small {
-  width: 77px;
-}
-
 .vote-payment__form-field {
   display: block;
   width: 100%;
@@ -82,18 +80,31 @@
   font-family: "Roboto", Arial, sans-serif;
   color: black;
   font-size: 16px;
-  box-sizing: border-box;
   border-radius: 6px;
-  padding: 10px;
+  padding: 13px 12px;
+  box-sizing: border-box;
+}
+
+.vote-payment__item--cvc {
+  width: 62px;
+}
+
+.vote-payment__item--expiry {
+  width: 79px;
+}
+
+.vote-payment__item--postcode {
+  width: 106px;
 }
 
 .vote-payment__button {
-  margin-bottom: 40px;
+  margin: auto;
+  margin-bottom: 44px;
+  width: calc(100% - 50px);
 }
 
 .vote-payment__form-field--postcode {
-  width: 77px;
-  padding: 5px;
+  padding: 0 12px;
 }
 
 .error {
@@ -117,6 +128,16 @@
   display: block;
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.vote-payment__text--card-number {
+  position: relative;
+
+  svg {
+    position: absolute;
+    right: -17px;
+    top: 2px;
+  }
 }
 
 .payment__text-option {
@@ -152,4 +173,22 @@
 .payment__text-option::after {
   margin-right: -100%;
   right: -14px;
+}
+
+@media screen and (max-width: 350px) {
+  .vote-payment__item--cvc {
+    width: 53px;
+  }
+
+  .vote-payment__item--expiry {
+    width: 71px;
+  }
+
+  .vote-payment__item--postcode {
+    width: 101px;
+  }
+
+  .vote-payment__form-field {
+    padding: 13px 8px;
+  }
 }
