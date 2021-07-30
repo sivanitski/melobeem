@@ -2,6 +2,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { useRequest } from "ahooks";
 import React, { useEffect, useState } from "react";
+import ReactPixel from "react-facebook-pixel";
 
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
@@ -58,6 +59,17 @@ const App = () => {
   if (userLoading || childLoading) {
     return <Loader />;
   }
+
+  // const advancedMatching = { em: 'some@email.com' }; // optional, more info: https://developers.facebook.com/docs/facebook-pixel/advanced/advanced-matching
+  const options = {
+    autoConfig: true, // set pixel's autoConfig. More info: https://developers.facebook.com/docs/facebook-pixel/advanced/
+    debug: false, // enable logs
+  };
+  ReactPixel.init(
+    201545765230454, //add  pizel perfect ID
+    // advancedMatching,
+    options
+  );
 
   return (
     <UserContext.Provider value={valueUser}>

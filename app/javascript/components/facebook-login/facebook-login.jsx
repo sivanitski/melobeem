@@ -1,6 +1,7 @@
 import propTypes from "prop-types";
 import React, { useContext } from "react";
 import { LoginButton } from "react-facebook";
+import ReactPixel from "react-facebook-pixel";
 import { useHistory } from "react-router";
 
 import { api, userAPI } from "../../api";
@@ -43,6 +44,9 @@ const FacebookLogin = ({
     if (type === "login-to-vote") {
       history.push(`/entry/${linkId}/vote`);
     }
+
+    dataLayer.push({ event: "user-login" });
+    ReactPixel.trackCustom("login", { id: res.data.user.id });
   };
 
   const handleError = (error) => {

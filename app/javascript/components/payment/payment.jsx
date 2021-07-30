@@ -11,6 +11,7 @@ import {
 import { useEventTarget } from "ahooks";
 import propTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
+import ReactPixel from "react-facebook-pixel";
 
 import { api } from "../../api";
 import ButtonClose from "../../images/close-icon.svg";
@@ -149,6 +150,18 @@ const Payment = ({
       if (activeType === "vote") {
         handlePaymentSucceedClose();
       }
+
+      dataLayer.push({
+        event: "purchase",
+        type: activeType,
+        title: activeTitle,
+      });
+      ReactPixel.track("Purchase", {
+        currency: stripeVariables.priceCurrency,
+        value: activePrice,
+        content_name: activeTitle,
+      });
+
       handlePaymentClose();
       setMessage("Operation succeeded. Please, wait till this window closes");
     } catch (e) {
