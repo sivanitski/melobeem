@@ -20,6 +20,7 @@ const SignUp = ({ location: { state } }) => {
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isFormNotEmpty, setIsFormNotEmpty] = useState(false);
   const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
+  const [imageTransformations, setImageTransformations] = useState({});
   const { user } = useContext(UserContext);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
   const [name, setName] = useState(state?.name || "");
@@ -48,7 +49,7 @@ const SignUp = ({ location: { state } }) => {
         handlePostData();
       }
     }
-  }, [photo]);
+  }, [imageTransformations]);
 
   const handleChangePhoto = (evt) => {
     let reader = new FileReader();
@@ -72,6 +73,7 @@ const SignUp = ({ location: { state } }) => {
     const data = new FormData();
     data.append(`entry[name]`, name);
     data.append(`entry[image]`, photo.file);
+    data.append(`entry[transformations]`, JSON.stringify(imageTransformations));
 
     try {
       const {
@@ -118,7 +120,14 @@ const SignUp = ({ location: { state } }) => {
           />
         );
       case 2:
-        return <SignUpPhoto handleChange={handleChangePhoto} name={name} />;
+        return (
+          <SignUpPhoto
+            handleChange={handleChangePhoto}
+            name={name}
+            photo={photo}
+            setImageTransformations={setImageTransformations}
+          />
+        );
       case 3:
         return (
           <SignUpLogin

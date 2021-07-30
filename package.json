@@ -35,6 +35,7 @@
     "prop-types": "^15.7.2",
     "react": "16.14.0",
     "react-dom": "16.14.0",
+    "react-easy-crop": "^3.5.2",
     "react-facebook": "^8.1.4",
     "react-facebook-pixel": "^1.0.4",
     "react-google-recaptcha-v3": "^1.9.4",

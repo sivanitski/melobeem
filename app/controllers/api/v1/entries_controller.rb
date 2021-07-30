@@ -122,7 +122,7 @@ module API
       private
 
       def entries_params
-        params.require(:entry).permit(:name, :image, :total_votes)
+        params.require(:entry).permit(:name, :image, :total_votes, :transformations)
       end
 
       def entry
