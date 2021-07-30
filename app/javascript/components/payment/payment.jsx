@@ -193,18 +193,6 @@ const Payment = ({
     }
   };
 
-  const timeoutEMAILRef = useRef(null);
-  useEffect(() => {
-    if (timeoutEMAILRef.current !== null) {
-      clearTimeout(timeoutEMAILRef.current);
-    }
-
-    timeoutEMAILRef.current = setTimeout(() => {
-      timeoutEMAILRef.current = null;
-      email !== "" ? validateEmail(email) : null;
-    }, 500);
-  }, [email]);
-
   const EMAIL_VALIDATION = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
   const validateEmail = (value) => {
