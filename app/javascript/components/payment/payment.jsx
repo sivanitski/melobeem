@@ -313,6 +313,7 @@ const Payment = ({
   };
 
   const EXPIRY_OPTIONS = {
+    placeholder: "MM/YY",
     style: {
       base: {
         iconColor: "black",
