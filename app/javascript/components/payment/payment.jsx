@@ -77,6 +77,8 @@ const Payment = ({
         event: "AddToCart",
         type: activeType,
         title: res.data.productTitle,
+        currency: res.data.priceCurrency,
+        value: res.data.priceCents,
       });
       ReactPixel.track("AddToCart", {
         currency: res.data.priceCurrency,
@@ -167,6 +169,8 @@ const Payment = ({
         event: "purchase",
         type: activeType,
         title: activeTitle,
+        currency: stripeVariables.priceCurrency,
+        value: activePrice,
       });
       ReactPixel.track("Purchase", {
         currency: stripeVariables.priceCurrency,
