@@ -78,11 +78,11 @@ const Payment = ({
         type: activeType,
         title: res.data.productTitle,
         currency: res.data.priceCurrency,
-        value: res.data.priceCents,
+        value: res.data.priceCents / 100,
       });
       ReactPixel.track("AddToCart", {
         currency: res.data.priceCurrency,
-        value: res.data.priceCents,
+        value: res.data.priceCents / 100,
         content_name: activeType,
       });
 
@@ -284,6 +284,19 @@ const Payment = ({
         });
 
         setMessage("Operation succeeded. Please, wait till this window closes");
+
+        dataLayer.push({
+          event: "purchase",
+          type: activeType,
+          title: activeTitle,
+          currency: stripeVariables.priceCurrency,
+          value: activePrice,
+        });
+        ReactPixel.track("Purchase", {
+          currency: stripeVariables.priceCurrency,
+          value: activePrice,
+          content_name: activeTitle,
+        });
 
         if (activeType === "vote") {
           handlePaymentSucceedClose();
