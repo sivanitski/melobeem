@@ -161,10 +161,6 @@ const Payment = ({
         purchaseTransactionId: stripeVariables.purchaseTransactionId,
       });
 
-      if (activeType === "vote") {
-        handlePaymentSucceedClose();
-      }
-
       dataLayer.push({
         event: "purchase",
         type: activeType,
@@ -177,6 +173,10 @@ const Payment = ({
         value: activePrice,
         content_name: activeTitle,
       });
+
+      if (activeType === "vote") {
+        handlePaymentSucceedClose();
+      }
 
       handlePaymentClose();
       setMessage("Operation succeeded. Please, wait till this window closes");
