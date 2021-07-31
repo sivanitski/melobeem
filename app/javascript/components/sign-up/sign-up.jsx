@@ -2,6 +2,7 @@ import "./style.less";
 
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
+import ReactPixel from "react-facebook-pixel";
 import { useHistory, withRouter } from "react-router";
 
 import { api } from "../../api";
@@ -79,6 +80,10 @@ const SignUp = ({ location: { state } }) => {
       const {
         data: { entry },
       } = await api.post(`/entries`, data);
+
+      dataLayer.push({ event: "CompleteRegistration" });
+      ReactPixel.track("CompleteRegistration");
+
       setCurrentChild(entry);
       setStep(4);
     } catch (e) {

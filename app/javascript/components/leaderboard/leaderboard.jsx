@@ -1,5 +1,6 @@
 import { useRequest } from "ahooks";
 import React, { useContext, useEffect } from "react";
+import ReactPixel from "react-facebook-pixel";
 import { useLocation } from "react-router-dom";
 
 import { api } from "../../api";
@@ -20,6 +21,9 @@ const Leaderboard = () => {
   const getCompetition = () => {
     return api.get(`/competitions/current`);
   };
+
+  dataLayer.push({ event: "leaderboard view" });
+  ReactPixel.trackCustom("leaderboard-view");
 
   const {
     data: competitionData,

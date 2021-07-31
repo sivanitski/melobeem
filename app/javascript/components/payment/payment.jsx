@@ -72,6 +72,18 @@ const Payment = ({
           productId: activeId,
         });
       }
+
+      dataLayer.push({
+        event: "AddToCart",
+        type: activeType,
+        title: res.data.productTitle,
+      });
+      ReactPixel.track("AddToCart", {
+        currency: res.data.priceCurrency,
+        value: res.data.priceCents,
+        content_name: activeType,
+      });
+
       setStipeVariables({
         purchaseTransactionId: res.data.purchaseTransactionId,
         clientSecret: res.data.clientSecret,
