@@ -166,11 +166,11 @@ const Payment = ({
         type: activeType,
         title: activeTitle,
         currency: stripeVariables.priceCurrency,
-        value: activePrice,
+        value: activePrice / 100,
       });
       ReactPixel.track("Purchase", {
         currency: stripeVariables.priceCurrency,
-        value: activePrice,
+        value: activePrice / 100,
         content_name: activeTitle,
       });
 
@@ -290,11 +290,11 @@ const Payment = ({
           type: activeType,
           title: activeTitle,
           currency: stripeVariables.priceCurrency,
-          value: activePrice,
+          value: activePrice / 100,
         });
         ReactPixel.track("Purchase", {
           currency: stripeVariables.priceCurrency,
-          value: activePrice,
+          value: activePrice / 100,
           content_name: activeTitle,
         });
 
