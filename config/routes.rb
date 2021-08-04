@@ -14,6 +14,9 @@ Rails.application.routes.draw do
              defaults: { format: :json }
 
   get 'entry/:id', to: 'api/v1/entries#show'
+  get 'privacy', to: 'static#privacy'
+  get 'terms_and_conditions', to: 'static#terms_and_conditions'
+  get 'rules', to: 'static#rules'
 
   namespace :api, defaults: { format: :json } do
     namespace :v1 do
