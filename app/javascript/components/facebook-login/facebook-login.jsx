@@ -54,8 +54,6 @@ const FacebookLogin = ({
   };
 
   const fbScope = "public_profile, email";
-  const fbFields =
-    "id, first_name, last_name, middle_name, name, picture, email";
 
   return (
     <LoginButton
@@ -63,7 +61,6 @@ const FacebookLogin = ({
       onError={handleError}
       reauthorize={true}
       scope={fbScope}
-      fields={fbFields}
     >
       <span className={`button button--facebook ${classes}`}>{title}</span>
     </LoginButton>
