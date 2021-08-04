@@ -11,7 +11,7 @@ const HeartAnimationLevelUpdated = ({
   levelStart,
   levelEnd,
 }) => {
-  const TOTAL_DURATION = 3;
+  const TOTAL_DURATION = 1;
   const levelDiff = levelEnd - levelStart;
   const stepDuration = TOTAL_DURATION / levelDiff;
 

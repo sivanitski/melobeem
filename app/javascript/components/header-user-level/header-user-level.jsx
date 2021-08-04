@@ -22,6 +22,8 @@ const HeaderUserLevel = ({
 
   const animationLevelStart = getAnimationLevel(totalVotesStart, levelStart);
   const animationLevelEnd = getAnimationLevel(totalVotesEnd, levelEnd);
+  let normalHeartLevel =
+    animationStep === 1 ? animationLevelStart : animationLevelEnd;
 
   return (
     <div className="half-circle header-user__level">
@@ -44,7 +46,7 @@ const HeaderUserLevel = ({
           />
         )
       ) : (
-        <HeartLevel animationLevel={animationLevelEnd} />
+        <HeartLevel animationLevel={normalHeartLevel} />
       )}
 
       {isAnimation && levelEnd > levelStart && <LevelUpAnimation />}

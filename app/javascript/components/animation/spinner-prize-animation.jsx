@@ -9,7 +9,7 @@ export default function SpinnerPrizeAnimation() {
       <Lottie
         animationData={spinnerPrizeAnimationJson}
         play
-        speed={0.7}
+        speed={0.6}
         style={{
           height: 262,
           display: "flex",

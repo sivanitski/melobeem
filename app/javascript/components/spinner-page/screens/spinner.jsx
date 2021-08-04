@@ -81,9 +81,10 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
       duration: spinnerDuration,
       repeat: 0,
       ease: "ease-out",
+      overwrite: true,
       onComplete: () => {
         finalAnimation(res.data.value);
-        setTimeout(() => updateCurrentChild(amount - 1), 6000);
+        setTimeout(() => updateCurrentChild(amount - 1), 2000);
       },
     });
   };
@@ -102,14 +103,14 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
 
     setTimeout(() => {
       setWinningAmount(prizeAmount);
-    }, 500);
+    }, 1000);
   };
 
   useEffect(() => {
     if (isSpinnerDone && !animationCompleted) {
       setTimeout(() => {
         setAnimationCompleted(true);
-      }, 6500);
+      }, 8500);
     }
 
     if (animationCompleted) {

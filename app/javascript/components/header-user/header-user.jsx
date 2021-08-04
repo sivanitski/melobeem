@@ -21,10 +21,6 @@ const HeaderUser = ({ child, animationParams, handleAnimationEnd }) => {
       return child.totalVotes;
     }
 
-    if (animationStep <= 2) {
-      return animationParams.votesStart;
-    }
-
     return animationParams.votesEnd;
   };
 
@@ -33,11 +29,23 @@ const HeaderUser = ({ child, animationParams, handleAnimationEnd }) => {
       return child.rank;
     }
 
-    if (animationStep <= 3) {
-      return animationParams.rankStart;
+    return animationParams.rankEnd;
+  };
+
+  const calculateLevelStart = () => {
+    if (!animationParams?.isAnimationPlay) {
+      return child.level;
     }
 
-    return animationParams.rankEnd;
+    return animationParams.levelStart;
+  };
+
+  const calculateTotalVotesStart = () => {
+    if (!animationParams?.isAnimationPlay) {
+      return child.totalVotes;
+    }
+
+    return animationParams.votesStart;
   };
 
   return (
@@ -46,14 +54,14 @@ const HeaderUser = ({ child, animationParams, handleAnimationEnd }) => {
         <HeaderUserItem
           title="Votes"
           value={calculateChildTotalVotes()}
-          isAnimationPlay={animationStep === 2}
+          isAnimationPlay={animationStep === 1}
           numberStart={animationParams?.votesStart}
           numberEnd={animationParams?.votesEnd}
           animationStep={animationStep}
           setAnimationStep={setAnimationStep}
         />
         <HeaderUserLevel
-          levelStart={animationParams?.levelStart}
+          levelStart={calculateLevelStart()}
           levelEnd={
             animationParams?.isAnimationPlay
               ? animationParams?.levelEnd
@@ -64,8 +72,8 @@ const HeaderUser = ({ child, animationParams, handleAnimationEnd }) => {
               ? animationParams?.votesEnd
               : child.totalVotes
           }
-          totalVotesStart={animationParams?.votesStart}
-          isAnimation={animationStep === 1}
+          totalVotesStart={calculateTotalVotesStart()}
+          isAnimation={animationStep === 2}
           animationStep={animationStep}
           setAnimationStep={setAnimationStep}
         />

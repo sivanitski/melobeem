@@ -75,6 +75,10 @@ const SpinnerPage = () => {
       votesStart: currentChild.totalVotes,
       rankStart: currentChild.rank,
       levelStart: currentChild.level,
+      level: currentChild.level,
+      rankEnd: currentChild.rank,
+      levelEnd: currentChild.level,
+      totalVotesEnd: currentChild.totalVotes,
     }));
     const {
       data: { entry },
@@ -84,11 +88,18 @@ const SpinnerPage = () => {
       ...animationParams,
       isAnimationPlay: true,
       votesEnd: entry.totalVotes,
-      rankEnd: entry.rank,
       level: entry.level,
       levelEnd: entry.level,
+      totalVotesEnd: entry.totalVotes,
       handleAnimationEnd: handleAnimationEnd(spinsAmount, entry),
     }));
+
+    setTimeout(() => {
+      setAnimationParams((animationParams) => ({
+        ...animationParams,
+        rankEnd: entry.rank,
+      }));
+    }, 7000);
   };
 
   const popupType = !user ? "spinner-not-login" : "spinner-not-entered";
