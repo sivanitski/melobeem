@@ -62,7 +62,7 @@ const SignUpPhoto = ({
               htmlFor="form-img__file"
               className="button form-img__file-button"
             >
-              Crop photo
+              Continue
             </label>
           </div>
         </div>
