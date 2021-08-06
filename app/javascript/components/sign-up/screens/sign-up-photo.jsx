@@ -5,11 +5,13 @@ import ReactPixel from "react-facebook-pixel";
 
 import signUpImg from "../../../images/sign-up.png";
 import signUpImg2x from "../../../images/sign-up@2x.png";
+import { FacebookLogin } from "../../facebook-login";
 
 const SignUpPhoto = ({
   handleChange,
   name,
   photo,
+  user,
   setImageTransformations,
 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -54,17 +56,27 @@ const SignUpPhoto = ({
             />
           </div>
 
-          <div
-            className="form-img__wrapper form__button"
-            onClick={SetupTransformations}
-          >
-            <label
-              htmlFor="form-img__file"
-              className="button form-img__file-button"
+          {user ? (
+            <div
+              className="form-img__wrapper form__button"
+              onClick={SetupTransformations}
             >
-              Continue
-            </label>
-          </div>
+              <label
+                htmlFor="form-img__file"
+                className="button form-img__file-button"
+              >
+                Continue
+              </label>
+            </div>
+          ) : (
+            <>
+              <FacebookLogin
+                title="Continue via Facebook"
+                classes="form__button form-preview__button"
+                handleLoginWhileSignUp={SetupTransformations}
+              />
+            </>
+          )}
         </div>
       ) : (
         <div>
@@ -107,6 +119,7 @@ SignUpPhoto.propTypes = {
   handleChange: propTypes.func.isRequired,
   name: propTypes.string.isRequired,
   photo: propTypes.object.isRequired,
+  user: propTypes.object,
   setImageTransformations: propTypes.func.isRequired,
 };
 

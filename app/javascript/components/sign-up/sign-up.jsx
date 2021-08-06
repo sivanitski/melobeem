@@ -130,6 +130,7 @@ const SignUp = ({ location: { state } }) => {
             handleChange={handleChangePhoto}
             name={name}
             photo={photo}
+            user={user}
             setImageTransformations={setImageTransformations}
           />
         );
