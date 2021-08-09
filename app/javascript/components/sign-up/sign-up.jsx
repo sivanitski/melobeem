@@ -4,7 +4,6 @@ import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
 import ReactPixel from "react-facebook-pixel";
 import { useHistory, withRouter } from "react-router";
-import { useLocation } from "react-router-dom";
 
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
@@ -18,49 +17,13 @@ import SignUpPhoto from "./screens/sign-up-photo";
 import SignUpShare from "./screens/sign-up-share";
 
 const SignUp = ({ location: { state } }) => {
-  const location = useLocation();
-  const urlParams = new URLSearchParams(location.search);
-  const notClearCache = urlParams.get("not_clean_cache");
-
-  const clearLocalStorage = () => {
-    localStorage.removeItem("step");
-    localStorage.removeItem("photoType");
-    localStorage.removeItem("photoName");
-    localStorage.removeItem("photoBlob");
-    localStorage.removeItem("name");
-    localStorage.removeItem("imageTransformations");
-  };
-
-  if (!notClearCache) {
-    clearLocalStorage();
-  }
-
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
-  const [step, setStep] = useState(
-    state?.step || localStorage.getItem("step") || 1
-  );
-  const [name, setName] = useState(
-    state?.name || localStorage.getItem("name") || ""
-  );
-  const [imageTransformations, setImageTransformations] = useState(
-    localStorage.getItem("imageTransformations") || {}
-  );
-
-  const getFileFromLocal = () => {
-    if (localStorage.getItem("photoBlob")) {
-      return {
-        file: localStorage.getItem("photoBlob"),
-        imagePreviewUrl: localStorage.getItem("photoBlob"),
-      };
-    }
-  };
-
-  const [photo, setPhoto] = useState(
-    getFileFromLocal() || { file: "", imagePreviewUrl: "" }
-  );
-
+  const [step, setStep] = useState(state?.step || 1);
+  const [name, setName] = useState(state?.name || "");
+  const [imageTransformations, setImageTransformations] = useState();
+  const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isFormNotEmpty, setIsFormNotEmpty] = useState(false);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
@@ -68,6 +31,45 @@ const SignUp = ({ location: { state } }) => {
   const goNext = () => {
     setStep(step + 1);
   };
+
+  const handlePutData = async () => {
+    setIsLoading(true);
+    const data = new FormData();
+    data.append(`entry[user_id]`, user.id);
+
+    try {
+      const {
+        data: { entry },
+      } = await api.put(`/entries/${localStorage.getItem("entry_id")}`, data);
+
+      localStorage.removeItem("entry_id");
+      dataLayer.push({ event: "CompleteRegistration" });
+      ReactPixel.track("CompleteRegistration");
+
+      setCurrentChild(entry);
+
+      setStep(4);
+
+      setIsLoading(false);
+    } catch (e) {
+      setIsLoading(false);
+      localStorage.removeItem("entry_id");
+      if (e.response.status === 422) {
+        const {
+          data: { entry },
+        } = await api.get("/entries/current");
+        setCurrentChild(entry);
+        setStep(5);
+      } else {
+        console.error("error");
+        alert("Something went wrong, please try again");
+      }
+    }
+  };
+
+  if (user && localStorage.getItem("entry_id") && !isLoading) {
+    handlePutData();
+  }
 
   const handleChangeName = (evt) => {
     const { value } = evt.target;
@@ -81,21 +83,9 @@ const SignUp = ({ location: { state } }) => {
     setName(value);
   };
 
-  const setLocalStorage = () => {
-    localStorage.setItem("step", 4);
-    localStorage.setItem("photoType", photo.file.type);
-    localStorage.setItem("photoName", photo.file.name);
-    localStorage.setItem("photoBlob", photo.imagePreviewUrl);
-    localStorage.setItem("name", name);
-  };
-
   useEffect(() => {
     if (photo.file) {
-      if (!user || state?.id) {
-        goNext();
-      } else {
-        handlePostData();
-      }
+      handlePostData();
     }
   }, [imageTransformations]);
 
@@ -108,15 +98,9 @@ const SignUp = ({ location: { state } }) => {
         file: file,
         imagePreviewUrl: reader.result,
       });
-
-      localStorage.setItem("photoBlob", reader.result);
     };
 
     reader.readAsDataURL(file);
-  };
-
-  const handleLoginWhileSignUp = () => {
-    handlePostData();
   };
 
   const handlePostData = async () => {
@@ -125,11 +109,8 @@ const SignUp = ({ location: { state } }) => {
     data.append(`entry[name]`, name);
     data.append(`entry[image]`, photo.file);
     data.append(`entry[transformations]`, JSON.stringify(imageTransformations));
-
-    if (localStorage.getItem("photoBlob")) {
-      data.append(`entry[image_is_blob]`, true);
-      data.append(`entry[image_type]`, localStorage.getItem("photoType"));
-      data.append(`entry[image_name]`, localStorage.getItem("photoName"));
+    if (user) {
+      data.append(`entry[user_id]`, user.id);
     }
 
     try {
@@ -137,14 +118,16 @@ const SignUp = ({ location: { state } }) => {
         data: { entry },
       } = await api.post(`/entries`, data);
 
-      dataLayer.push({ event: "CompleteRegistration" });
-      ReactPixel.track("CompleteRegistration");
-
-      setCurrentChild(entry);
-      setStep(4);
+      if (!user) {
+        localStorage.setItem("entry_id", entry.id);
+      } else {
+        setCurrentChild(entry);
+        dataLayer.push({ event: "CompleteRegistration" });
+        ReactPixel.track("CompleteRegistration");
+      }
 
       setIsLoading(false);
-      clearLocalStorage();
+      setStep(user ? 4 : step + 1);
     } catch (e) {
       setIsLoading(false);
       if (e.response.status === 422) {
@@ -191,7 +174,6 @@ const SignUp = ({ location: { state } }) => {
             name={name}
             photo={photo}
             user={user}
-            setLocalStorage={setLocalStorage}
             setImageTransformations={setImageTransformations}
           />
         );
@@ -199,7 +181,6 @@ const SignUp = ({ location: { state } }) => {
         return (
           <SignUpLogin
             imagePreviewUrl={photo.imagePreviewUrl}
-            handleLoginWhileSignUp={handleLoginWhileSignUp}
             childId={state?.id}
             handlePhotoSave={handlePhotoSave}
           />
@@ -207,7 +188,7 @@ const SignUp = ({ location: { state } }) => {
       case 4:
         return (
           <SignUpShare
-            imagePreviewUrl={photo.imagePreviewUrl}
+            imagePreviewUrl={currentChild.imageUrl}
             childId={currentChild.id}
           />
         );

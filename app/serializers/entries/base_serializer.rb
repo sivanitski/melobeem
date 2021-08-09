@@ -1,7 +1,7 @@
 module Entries
   class BaseSerializer < ::BaseSerializer
     def username
-      object.user.name
+      object.user.name if object.user.present?
     end
 
     def image_url

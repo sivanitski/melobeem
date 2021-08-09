@@ -5,7 +5,7 @@ module Entries
                :competition_additional_prize, :spent_competition_additional_prize
 
     def avatar_url
-      image_path(object.user.avatar)
+      image_path(object.user.avatar) if object.user.present?
     end
 
     def current_competition

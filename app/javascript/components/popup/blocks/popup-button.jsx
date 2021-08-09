@@ -19,9 +19,7 @@ const PopupButton = ({ type, linkId }) => {
       <FacebookLoginComponent
         title="Log in with Facebook"
         classes="popup__button button--facebook"
-        linkId={linkId}
         state={`/entry/${linkId}/vote`}
-        type={type}
       />
     );
   }

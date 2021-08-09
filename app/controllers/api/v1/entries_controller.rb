@@ -1,7 +1,7 @@
 module API
   module V1
     class EntriesController < API::V1::ApplicationController # rubocop:disable Metrics/ClassLength
-      NO_LOGIN_ACTIONS = %i[index show new latest_voters total_votes_by_date search voters_by_day ranking_details max_level_entry].freeze
+      NO_LOGIN_ACTIONS = %i[index create show new latest_voters total_votes_by_date search voters_by_day ranking_details max_level_entry].freeze
 
       skip_before_action :authenticate_user!, only: NO_LOGIN_ACTIONS
 
@@ -36,9 +36,20 @@ module API
       end
 
       def create
-        entry = competition.entries.new(entries_params.merge(user: current_user))
+        entry = competition.entries.new(entries_params)
 
         if entry.save
+          entry = ::Entries::WithRankQuery.new.call(competition.id).find_by!(id: entry.id)
+          render json: entry, serializer: ::Entries::RankedSerializer
+        else
+          render_fail_response(entry.errors)
+        end
+      end
+
+      def update
+        entry = Entry.find(params[:id])
+
+        if entry.update(update_params)
           entry = ::Entries::WithRankQuery.new.call(competition.id).find_by!(user: current_user)
           render json: entry, serializer: ::Entries::RankedSerializer
         else
@@ -121,31 +132,18 @@ module API
 
       private
 
-      def entries_params # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
-        if params.dig(:entry, :image_is_blob).present?
-          decoded_data = Base64.decode64(params[:entry][:image].split(',')[1])
-          params[:entry][:image] = {
-            io: StringIO.new(decoded_data),
-            filename: params[:entry][:image_name],
-            content_type: params[:entry][:image_type]
-          }
+      def entries_params
+        params.require(:entry).permit(
+          :name,
+          :user_id,
+          :image,
+          :total_votes,
+          :transformations
+        )
+      end
 
-          params[:entry][:transformations] = JSON.parse(params[:entry][:transformations])
-
-          params.require(:entry).permit(
-            :name,
-            :total_votes,
-            :transformations,
-            image: {}
-          )
-        else
-          params.require(:entry).permit(
-            :name,
-            :image,
-            :total_votes,
-            :transformations
-          )
-        end
+      def update_params
+        params.require(:entry).permit(:user_id)
       end
 
       def entry

@@ -11,7 +11,7 @@ RSpec.describe Entry, type: :model do
   it { is_expected.to have_many(:prizes).dependent(:destroy) }
   it { is_expected.to have_many(:prize_times).dependent(:destroy) }
   it { is_expected.to belong_to :competition }
-  it { is_expected.to belong_to :user }
+  it { is_expected.to belong_to(:user).required(false) }
 
   it { is_expected.to validate_presence_of(:name) }
   it { is_expected.to validate_presence_of(:level) }

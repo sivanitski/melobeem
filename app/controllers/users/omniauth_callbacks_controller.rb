@@ -31,7 +31,7 @@ module Users
       when 'login'
         redirect_to root_path
       when 'entry_create'
-        redirect_to '/sign-up?not_clean_cache=true'
+        redirect_to '/sign-up'
       else
         return redirect_to params[:state] if params[:state]&.include?('/entry/')
 

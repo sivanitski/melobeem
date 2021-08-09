@@ -5,28 +5,17 @@ import ReactPixel from "react-facebook-pixel";
 
 import signUpImg from "../../../images/sign-up.png";
 import signUpImg2x from "../../../images/sign-up@2x.png";
-import { FacebookLoginComponent } from "../../facebook-login";
 
 const SignUpPhoto = ({
   handleChange,
   name,
   photo,
-  user,
-  setLocalStorage,
   setImageTransformations,
 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaSaved, setCroppedAreaSaved] = useState({});
   const [isPhotoUploaded, setIsPhotoUploaded] = useState(false);
-
-  const SetupTransformationsWithStorage = () => {
-    localStorage.setItem(
-      "imageTransformations",
-      JSON.stringify(croppedAreaSaved)
-    );
-    setLocalStorage();
-  };
 
   const SetupTransformations = () => {
     setImageTransformations(croppedAreaSaved);
@@ -65,29 +54,17 @@ const SignUpPhoto = ({
             />
           </div>
 
-          {user ? (
-            <div
-              className="form-img__wrapper form__button"
-              onClick={SetupTransformations}
+          <div
+            className="form-img__wrapper form__button"
+            onClick={SetupTransformations}
+          >
+            <label
+              htmlFor="form-img__file"
+              className="button form-img__file-button"
             >
-              <label
-                htmlFor="form-img__file"
-                className="button form-img__file-button"
-              >
-                Continue
-              </label>
-            </div>
-          ) : (
-            <>
-              <FacebookLoginComponent
-                title="Continue via Facebook"
-                classes="form__button form-preview__button"
-                onClick={SetupTransformationsWithStorage}
-                state={"entry_create"}
-                handleLoginWhileSignUp={SetupTransformations}
-              />
-            </>
-          )}
+              Continue
+            </label>
+          </div>
         </div>
       ) : (
         <div>
@@ -130,8 +107,6 @@ SignUpPhoto.propTypes = {
   handleChange: propTypes.func.isRequired,
   name: propTypes.string.isRequired,
   photo: propTypes.object.isRequired,
-  user: propTypes.object,
-  setLocalStorage: propTypes.func.isRequired,
   setImageTransformations: propTypes.func.isRequired,
 };
 

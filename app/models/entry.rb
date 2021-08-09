@@ -5,14 +5,14 @@ class Entry < ApplicationRecord
   has_many :prizes, dependent: :destroy
   has_many :prize_times, dependent: :destroy
   belongs_to :competition
-  belongs_to :user
+  belongs_to :user, optional: true
   has_one_attached :image, dependent: :destroy
 
   before_validation :allowed_to_change_image?, if: proc { |record| record.attachment_changes.any? }
 
   validates :name, presence: true
   validates :level, presence: true
-  validates :user_id, uniqueness: { scope: :competition_id }
+  validates :user_id, uniqueness: { scope: :competition_id }, if: -> { user_id.present? }
   validates :image, content_type: %w[image/png image/jpg image/jpeg image/gif image/webp],
                     size: { less_than: 10.megabytes }
 

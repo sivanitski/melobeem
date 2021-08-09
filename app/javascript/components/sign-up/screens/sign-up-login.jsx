@@ -3,12 +3,7 @@ import React from "react";
 
 import { FacebookLoginComponent } from "../../facebook-login";
 
-const SignUpLogin = ({
-  imagePreviewUrl,
-  handleLoginWhileSignUp,
-  childId,
-  handlePhotoSave,
-}) => {
+const SignUpLogin = ({ imagePreviewUrl, childId, handlePhotoSave }) => {
   return (
     <div className="form-preview">
       <div className="form__progress progress">
@@ -34,7 +29,7 @@ const SignUpLogin = ({
           <FacebookLoginComponent
             title="Continue via Facebook"
             classes="form__button form-preview__button"
-            handleLoginWhileSignUp={handleLoginWhileSignUp}
+            state={"entry_create"}
           />
         </>
       )}
@@ -44,7 +39,6 @@ const SignUpLogin = ({
 
 SignUpLogin.propTypes = {
   imagePreviewUrl: propTypes.string.isRequired,
-  handleLoginWhileSignUp: propTypes.func.isRequired,
   childId: propTypes.string,
   handlePhotoSave: propTypes.func.isRequired,
 };
