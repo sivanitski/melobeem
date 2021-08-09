@@ -72,7 +72,6 @@ const FacebookLoginComponent = ({
       redirectUri={"https://melobeem.com/users/auth/facebook/callback"}
       cssClass={`button button--facebook ${classes}`}
       callback={handleResponse}
-      auth_type={"reauthenticate"}
       render={(renderProps) => (
         <button onClick={renderProps.onClick}>{title}</button>
       )}

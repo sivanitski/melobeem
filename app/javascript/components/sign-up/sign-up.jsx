@@ -8,6 +8,7 @@ import { useHistory, withRouter } from "react-router";
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
+import Loader from "../animation/loader";
 import { Footer } from "../footer";
 import SignUpDouble from "./screens/sign-up-double";
 import SignUpLogin from "./screens/sign-up-login";
@@ -17,6 +18,28 @@ import SignUpShare from "./screens/sign-up-share";
 
 const SignUp = ({ location: { state } }) => {
   const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
+
+  const clearLocalStorage = () => {
+    localStorage.removeItem("step");
+    localStorage.removeItem("regPhase");
+    localStorage.removeItem("photoType");
+    localStorage.removeItem("photoName");
+    localStorage.removeItem("photoBlob");
+    localStorage.removeItem("name");
+    localStorage.removeItem("imageTransformations");
+  };
+
+  if (localStorage.getItem("regPhase")) {
+    if (localStorage.getItem("regPhase") == 1) {
+      localStorage.setItem("regPhase", 2);
+    } else {
+      if (localStorage.getItem("regPhase") == 2) {
+        clearLocalStorage();
+      }
+    }
+  }
+
   const [step, setStep] = useState(
     state?.step || localStorage.getItem("step") || 1
   );
@@ -62,19 +85,11 @@ const SignUp = ({ location: { state } }) => {
 
   const setLocalStorage = () => {
     localStorage.setItem("step", 4);
+    localStorage.setItem("regPhase", 1);
     localStorage.setItem("photoType", photo.file.type);
     localStorage.setItem("photoName", photo.file.name);
     localStorage.setItem("photoBlob", photo.imagePreviewUrl);
     localStorage.setItem("name", name);
-  };
-
-  const clearLocalStorage = () => {
-    localStorage.removeItem("step");
-    localStorage.removeItem("photoType");
-    localStorage.removeItem("photoName");
-    localStorage.removeItem("photoBlob");
-    localStorage.removeItem("name");
-    localStorage.removeItem("imageTransformations");
   };
 
   useEffect(() => {
@@ -106,6 +121,7 @@ const SignUp = ({ location: { state } }) => {
   };
 
   const handlePostData = async () => {
+    setIsLoading(true);
     const data = new FormData();
     data.append(`entry[name]`, name);
     data.append(`entry[image]`, photo.file);
@@ -128,8 +144,10 @@ const SignUp = ({ location: { state } }) => {
       setCurrentChild(entry);
       setStep(4);
 
+      setIsLoading(false);
       clearLocalStorage();
     } catch (e) {
+      setIsLoading(false);
       if (e.response.status === 422) {
         const {
           data: { entry },
@@ -209,6 +227,7 @@ const SignUp = ({ location: { state } }) => {
 
   return (
     <>
+      {isLoading && <Loader />}
       {renderSignScreen(step)}
       <Footer isEnterButtonSmall={true} />
     </>

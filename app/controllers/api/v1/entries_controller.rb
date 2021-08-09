@@ -126,8 +126,11 @@ module API
           decoded_data = Base64.decode64(params[:entry][:image].split(',')[1])
           params[:entry][:image] = {
             io: StringIO.new(decoded_data),
-            filename: params[:entry][:image_name]
+            filename: params[:entry][:image_name],
+            content_type: params[:entry][:image_type]
           }
+
+          params[:entry][:transformations] = JSON.parse(params[:entry][:transformations])
 
           params.require(:entry).permit(
             :name,
