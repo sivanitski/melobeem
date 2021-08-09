@@ -7,7 +7,7 @@ export const filterCompetitors = (childName, children) => {
 };
 
 export const getLoginPayload = (data) => {
-  const parts = data.tokenDetail.signedRequest.split(".");
+  const parts = data.signedRequest.split(".");
   const payloadString = window.atob(parts[1]);
   const payload = JSON.parse(payloadString);
   return payload;

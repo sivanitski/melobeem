@@ -9,7 +9,8 @@ module Users
         check_reference
 
         sign_in @user, event: :authentication
-        render json: @user, serializer: Users::ShowSerializer
+
+        check_state
       else
         render json: { errors: @user.errors, auth: auth.except(:extra) }, status: :bad_request
       end
@@ -23,6 +24,19 @@ module Users
 
     def remote_ip
       request.remote_ip
+    end
+
+    def check_state
+      case params[:state]
+      when 'login'
+        redirect_to root_path
+      when 'entry_create'
+        redirect_to '/sign-up'
+      else
+        return redirect_to params[:state] if params[:state]&.include?('/entry/')
+
+        redirect_to root_path
+      end
     end
 
     def check_reference

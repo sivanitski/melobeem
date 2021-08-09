@@ -121,8 +121,28 @@ module API
 
       private
 
-      def entries_params
-        params.require(:entry).permit(:name, :image, :total_votes, :transformations)
+      def entries_params # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+        if params.dig(:entry, :image_is_blob).present?
+          decoded_data = Base64.decode64(params[:entry][:image].split(',')[1])
+          params[:entry][:image] = {
+            io: StringIO.new(decoded_data),
+            filename: params[:entry][:image_name]
+          }
+
+          params.require(:entry).permit(
+            :name,
+            :total_votes,
+            :transformations,
+            image: {}
+          )
+        else
+          params.require(:entry).permit(
+            :name,
+            :image,
+            :total_votes,
+            :transformations
+          )
+        end
       end
 
       def entry

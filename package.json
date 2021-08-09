@@ -37,6 +37,7 @@
     "react-dom": "16.14.0",
     "react-easy-crop": "^3.5.2",
     "react-facebook": "^8.1.4",
+    "react-facebook-login": "^4.1.1",
     "react-facebook-pixel": "^1.0.4",
     "react-google-recaptcha-v3": "^1.9.4",
     "react-gsap": "^3.2.1",

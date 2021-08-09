@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import React, { useContext } from "react";
-import { LoginButton } from "react-facebook";
+import FacebookLogin from "react-facebook-login";
 import ReactPixel from "react-facebook-pixel";
 import { useHistory } from "react-router";
 
@@ -9,11 +9,13 @@ import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import { getLoginPayload } from "../../helpers/utils";
 
-const FacebookLogin = ({
+const FacebookLoginComponent = ({
   title,
   classes,
   handleLoginWhileSignUp,
   type,
+  onClick,
+  state,
   linkId,
 }) => {
   const history = useHistory();
@@ -56,23 +58,36 @@ const FacebookLogin = ({
   const fbScope = "public_profile, email";
 
   return (
-    <LoginButton
-      onCompleted={handleResponse}
-      onError={handleError}
-      reauthorize={true}
+    <FacebookLogin
+      appId={process.env.FACEBOOK_APP_ID}
+      autoLoad={true}
       scope={fbScope}
-    >
-      <span className={`button button--facebook ${classes}`}>{title}</span>
-    </LoginButton>
+      cookie={true}
+      xfbml={true}
+      isMobile={true}
+      disableMobileRedirect={false}
+      onFailure={handleError}
+      onClick={onClick}
+      state={state}
+      redirectUri={"https://melobeem.com/users/auth/facebook/callback"}
+      cssClass={`button button--facebook ${classes}`}
+      callback={handleResponse}
+      auth_type={"reauthenticate"}
+      render={(renderProps) => (
+        <button onClick={renderProps.onClick}>{title}</button>
+      )}
+    />
   );
 };
 
-FacebookLogin.propTypes = {
+FacebookLoginComponent.propTypes = {
   title: propTypes.string.isRequired,
   classes: propTypes.string.isRequired,
   handleLoginWhileSignUp: propTypes.func,
   type: propTypes.string,
   linkId: propTypes.number,
+  onClick: propTypes.func,
+  state: propTypes.string.isRequired,
 };
 
-export default FacebookLogin;
+export default FacebookLoginComponent;

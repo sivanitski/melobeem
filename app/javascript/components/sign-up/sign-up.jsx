@@ -17,14 +17,32 @@ import SignUpShare from "./screens/sign-up-share";
 
 const SignUp = ({ location: { state } }) => {
   const history = useHistory();
-  const [step, setStep] = useState(state?.step || 1);
+  const [step, setStep] = useState(
+    state?.step || localStorage.getItem("step") || 1
+  );
+
+  const getFileFromLocal = () => {
+    if (localStorage.getItem("photoBlob")) {
+      return {
+        file: localStorage.getItem("photoBlob"),
+        imagePreviewUrl: localStorage.getItem("photoBlob"),
+      };
+    }
+  };
+
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isFormNotEmpty, setIsFormNotEmpty] = useState(false);
-  const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
-  const [imageTransformations, setImageTransformations] = useState({});
+  const [photo, setPhoto] = useState(
+    getFileFromLocal() || { file: "", imagePreviewUrl: "" }
+  );
+  const [imageTransformations, setImageTransformations] = useState(
+    localStorage.getItem("imageTransformations") || {}
+  );
   const { user } = useContext(UserContext);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
-  const [name, setName] = useState(state?.name || "");
+  const [name, setName] = useState(
+    state?.name || localStorage.getItem("name") || ""
+  );
 
   const goNext = () => {
     setStep(step + 1);
@@ -40,6 +58,23 @@ const SignUp = ({ location: { state } }) => {
 
     value.length >= 2 ? setIsButtonDisabled(false) : setIsButtonDisabled(true);
     setName(value);
+  };
+
+  const setLocalStorage = () => {
+    localStorage.setItem("step", 4);
+    localStorage.setItem("photoType", photo.file.type);
+    localStorage.setItem("photoName", photo.file.name);
+    localStorage.setItem("photoBlob", photo.imagePreviewUrl);
+    localStorage.setItem("name", name);
+  };
+
+  const clearLocalStorage = () => {
+    localStorage.removeItem("step");
+    localStorage.removeItem("photoType");
+    localStorage.removeItem("photoName");
+    localStorage.removeItem("photoBlob");
+    localStorage.removeItem("name");
+    localStorage.removeItem("imageTransformations");
   };
 
   useEffect(() => {
@@ -76,6 +111,12 @@ const SignUp = ({ location: { state } }) => {
     data.append(`entry[image]`, photo.file);
     data.append(`entry[transformations]`, JSON.stringify(imageTransformations));
 
+    if (localStorage.getItem("photoBlob")) {
+      data.append(`entry[image_is_blob]`, true);
+      data.append(`entry[image_type]`, localStorage.getItem("photoType"));
+      data.append(`entry[image_name]`, localStorage.getItem("photoName"));
+    }
+
     try {
       const {
         data: { entry },
@@ -86,6 +127,8 @@ const SignUp = ({ location: { state } }) => {
 
       setCurrentChild(entry);
       setStep(4);
+
+      clearLocalStorage();
     } catch (e) {
       if (e.response.status === 422) {
         const {
@@ -131,6 +174,7 @@ const SignUp = ({ location: { state } }) => {
             name={name}
             photo={photo}
             user={user}
+            setLocalStorage={setLocalStorage}
             setImageTransformations={setImageTransformations}
           />
         );

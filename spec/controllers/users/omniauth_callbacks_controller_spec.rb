@@ -22,11 +22,9 @@ RSpec.describe Users::OmniauthCallbacksController, type: :controller do
     end
 
     context 'with a new facebook user' do
-      before { get :facebook }
+      subject { get :facebook }
 
-      it { expect(response).to match_response_schema('users/omniauth') }
-
-      it { expect(JSON.parse(response.body)['user']['name']).to eq('Alberto Pellizzon') }
+      it { expect(subject).to redirect_to(root_path) }
     end
   end
 end

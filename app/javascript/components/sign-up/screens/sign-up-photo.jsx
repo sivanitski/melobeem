@@ -5,19 +5,28 @@ import ReactPixel from "react-facebook-pixel";
 
 import signUpImg from "../../../images/sign-up.png";
 import signUpImg2x from "../../../images/sign-up@2x.png";
-import { FacebookLogin } from "../../facebook-login";
+import { FacebookLoginComponent } from "../../facebook-login";
 
 const SignUpPhoto = ({
   handleChange,
   name,
   photo,
   user,
+  setLocalStorage,
   setImageTransformations,
 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
   const [zoom, setZoom] = useState(1);
   const [croppedAreaSaved, setCroppedAreaSaved] = useState({});
   const [isPhotoUploaded, setIsPhotoUploaded] = useState(false);
+
+  const SetupTransformationsWithStorage = () => {
+    localStorage.setItem(
+      "imageTransformations",
+      JSON.stringify(croppedAreaSaved)
+    );
+    setLocalStorage();
+  };
 
   const SetupTransformations = () => {
     setImageTransformations(croppedAreaSaved);
@@ -70,9 +79,11 @@ const SignUpPhoto = ({
             </div>
           ) : (
             <>
-              <FacebookLogin
+              <FacebookLoginComponent
                 title="Continue via Facebook"
                 classes="form__button form-preview__button"
+                onClick={SetupTransformationsWithStorage}
+                state={"entry_create"}
                 handleLoginWhileSignUp={SetupTransformations}
               />
             </>
@@ -120,6 +131,7 @@ SignUpPhoto.propTypes = {
   name: propTypes.string.isRequired,
   photo: propTypes.object.isRequired,
   user: propTypes.object,
+  setLocalStorage: propTypes.func.isRequired,
   setImageTransformations: propTypes.func.isRequired,
 };
 

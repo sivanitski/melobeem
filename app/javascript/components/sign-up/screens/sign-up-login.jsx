@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import React from "react";
 
-import { FacebookLogin } from "../../facebook-login";
+import { FacebookLoginComponent } from "../../facebook-login";
 
 const SignUpLogin = ({
   imagePreviewUrl,
@@ -31,7 +31,7 @@ const SignUpLogin = ({
           <div className="form-preview__title headline--medium">
             You’re almost there !
           </div>
-          <FacebookLogin
+          <FacebookLoginComponent
             title="Continue via Facebook"
             classes="form__button form-preview__button"
             handleLoginWhileSignUp={handleLoginWhileSignUp}

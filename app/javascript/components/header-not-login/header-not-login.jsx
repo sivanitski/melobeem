@@ -9,7 +9,7 @@ import headerRight from "../../images/header-right.png";
 import headerRight2x from "../../images/header-right@2x.png";
 import LogoIcon from "../../images/logo-icon.svg";
 import LogoText from "../../images/logo-text.svg";
-import { FacebookLogin } from "../facebook-login";
+import { FacebookLoginComponent } from "../facebook-login";
 
 const HeaderNotLogin = () => {
   return (
@@ -43,8 +43,9 @@ const HeaderNotLogin = () => {
           Enter competition
         </Link>
 
-        <FacebookLogin
+        <FacebookLoginComponent
           title="Login with Facebook"
+          state={"login"}
           classes="header-not-login__button"
         />
       </div>

@@ -1,1 +1,1 @@
-export { default as FacebookLogin } from "./facebook-login";
+export { default as FacebookLoginComponent } from "./facebook-login";

@@ -2,7 +2,7 @@ import propTypes from "prop-types";
 import React from "react";
 import { Link } from "react-router-dom";
 
-import { FacebookLogin } from "../../facebook-login";
+import { FacebookLoginComponent } from "../../facebook-login";
 import { FacebookShare } from "../../facebook-share";
 
 const PopupButton = ({ type, linkId }) => {
@@ -16,10 +16,11 @@ const PopupButton = ({ type, linkId }) => {
 
   if (type === "login-to-vote") {
     return (
-      <FacebookLogin
+      <FacebookLoginComponent
         title="Log in with Facebook"
         classes="popup__button button--facebook"
         linkId={linkId}
+        state={`/entry/${linkId}/vote`}
         type={type}
       />
     );
@@ -27,9 +28,10 @@ const PopupButton = ({ type, linkId }) => {
 
   if (type.includes("login")) {
     return (
-      <FacebookLogin
+      <FacebookLoginComponent
         title="Log in with Facebook"
         classes="popup__button button--facebook"
+        state={"login"}
       />
     );
   }
