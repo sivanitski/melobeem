@@ -4,6 +4,7 @@ import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
 import ReactPixel from "react-facebook-pixel";
 import { useHistory, withRouter } from "react-router";
+import { useLocation } from "react-router-dom";
 
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
@@ -17,12 +18,12 @@ import SignUpPhoto from "./screens/sign-up-photo";
 import SignUpShare from "./screens/sign-up-share";
 
 const SignUp = ({ location: { state } }) => {
-  const history = useHistory();
-  const [isLoading, setIsLoading] = useState(false);
+  const location = useLocation();
+  const urlParams = new URLSearchParams(location.search);
+  const notClearCache = urlParams.get("not_clean_cache");
 
   const clearLocalStorage = () => {
     localStorage.removeItem("step");
-    localStorage.removeItem("regPhase");
     localStorage.removeItem("photoType");
     localStorage.removeItem("photoName");
     localStorage.removeItem("photoBlob");
@@ -30,18 +31,21 @@ const SignUp = ({ location: { state } }) => {
     localStorage.removeItem("imageTransformations");
   };
 
-  if (localStorage.getItem("regPhase")) {
-    if (localStorage.getItem("regPhase") == 1) {
-      localStorage.setItem("regPhase", 2);
-    } else {
-      if (localStorage.getItem("regPhase") == 2) {
-        clearLocalStorage();
-      }
-    }
+  if (!notClearCache) {
+    clearLocalStorage();
   }
 
+  const history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
+  const { user } = useContext(UserContext);
   const [step, setStep] = useState(
     state?.step || localStorage.getItem("step") || 1
+  );
+  const [name, setName] = useState(
+    state?.name || localStorage.getItem("name") || ""
+  );
+  const [imageTransformations, setImageTransformations] = useState(
+    localStorage.getItem("imageTransformations") || {}
   );
 
   const getFileFromLocal = () => {
@@ -53,19 +57,13 @@ const SignUp = ({ location: { state } }) => {
     }
   };
 
-  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
-  const [isFormNotEmpty, setIsFormNotEmpty] = useState(false);
   const [photo, setPhoto] = useState(
     getFileFromLocal() || { file: "", imagePreviewUrl: "" }
   );
-  const [imageTransformations, setImageTransformations] = useState(
-    localStorage.getItem("imageTransformations") || {}
-  );
-  const { user } = useContext(UserContext);
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const [isFormNotEmpty, setIsFormNotEmpty] = useState(false);
   const { currentChild, setCurrentChild } = useContext(ChildContext);
-  const [name, setName] = useState(
-    state?.name || localStorage.getItem("name") || ""
-  );
 
   const goNext = () => {
     setStep(step + 1);
@@ -85,7 +83,6 @@ const SignUp = ({ location: { state } }) => {
 
   const setLocalStorage = () => {
     localStorage.setItem("step", 4);
-    localStorage.setItem("regPhase", 1);
     localStorage.setItem("photoType", photo.file.type);
     localStorage.setItem("photoName", photo.file.name);
     localStorage.setItem("photoBlob", photo.imagePreviewUrl);
