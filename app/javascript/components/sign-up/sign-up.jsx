@@ -108,6 +108,8 @@ const SignUp = ({ location: { state } }) => {
         file: file,
         imagePreviewUrl: reader.result,
       });
+
+      localStorage.setItem("photoBlob", reader.result);
     };
 
     reader.readAsDataURL(file);
