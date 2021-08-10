@@ -120,6 +120,7 @@ const SignUp = ({ location: { state } }) => {
 
       if (!user) {
         localStorage.setItem("entry_id", entry.id);
+        localStorage.setItem("photo_preview", entry.imageUrl);
       } else {
         setCurrentChild(entry);
         dataLayer.push({ event: "CompleteRegistration" });
@@ -180,7 +181,7 @@ const SignUp = ({ location: { state } }) => {
       case 3:
         return (
           <SignUpLogin
-            imagePreviewUrl={photo.imagePreviewUrl}
+            imagePreviewUrl={localStorage.getItem("photo_preview")}
             childId={state?.id}
             handlePhotoSave={handlePhotoSave}
           />
