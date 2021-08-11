@@ -8,7 +8,7 @@ import { FacebookShare } from "../../facebook-share";
 const PopupButton = ({ type, linkId }) => {
   if (type === "vote") {
     return (
-      <FacebookShare id={linkId} classes="popup__button background-purple">
+      <FacebookShare childId={linkId} classes="popup__button background-purple">
         Share on Facebook
       </FacebookShare>
     );
