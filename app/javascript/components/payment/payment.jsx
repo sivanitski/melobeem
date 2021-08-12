@@ -176,10 +176,9 @@ const Payment = ({
 
       if (activeType === "vote") {
         handlePaymentSucceedClose();
+      } else {
+        handlePaymentClose();
       }
-
-      handlePaymentClose();
-      setMessage("Operation succeeded. Please, wait till this window closes");
     } catch (e) {
       setMessage("Something went wrong, please try again");
     }
