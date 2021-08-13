@@ -27,9 +27,10 @@ const SignUpPhoto = ({
 
   useEffect(() => {
     if (photo.file) {
-      setIsPhotoUploaded(true);
       dataLayer.push({ event: "add-photo" });
       ReactPixel.trackCustom("add-photo");
+      setImageTransformations({});
+      setIsPhotoUploaded(false);
     }
   }, [photo]);
 
