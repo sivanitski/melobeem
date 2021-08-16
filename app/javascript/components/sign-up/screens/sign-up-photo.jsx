@@ -1,6 +1,5 @@
 import propTypes from "prop-types";
 import React, { useEffect } from "react";
-import ReactPixel from "react-facebook-pixel";
 
 import signUpImg from "../../../images/sign-up.png";
 import signUpImg2x from "../../../images/sign-up@2x.png";
@@ -13,8 +12,6 @@ const SignUpPhoto = ({
 }) => {
   useEffect(() => {
     if (photo.file) {
-      dataLayer.push({ event: "add-photo" });
-      ReactPixel.trackCustom("add-photo");
       setImageTransformations({});
     }
   }, [photo]);

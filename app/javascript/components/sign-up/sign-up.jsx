@@ -118,6 +118,9 @@ const SignUp = ({ location: { state } }) => {
         data: { entry },
       } = await api.post(`/entries`, data);
 
+      dataLayer.push({ event: "add-photo" });
+      ReactPixel.trackCustom("add-photo");
+
       if (!user) {
         localStorage.setItem("entry_id", entry.id);
         localStorage.setItem("photo_preview", entry.imageUrl);
