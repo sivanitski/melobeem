@@ -9,7 +9,7 @@ const createAPI = (isUser) => {
   const api = applyCaseMiddleware(
     axios.create({
       baseURL: isUser ? `/users` : `/api/v1`,
-      timeout: 1000 * 120,
+      timeout: 1000 * 60,
     }),
     {
       preservedKeys: ["g-recaptcha-response-data"],
