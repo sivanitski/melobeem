@@ -24,6 +24,7 @@ const Vote = ({
   const { user } = useContext(UserContext);
   const [timeVote, setTimeVote] = useState(null);
   const [isShowShareModal, setIsShowShareModal] = useState(false);
+  const [animationStep, setAnimationStep] = useState(0);
 
   if (!user) {
     return <Redirect to={`/entry/${id}`} />;
@@ -90,11 +91,15 @@ const Vote = ({
   };
 
   const updateTime = async () => {
-    const {
-      data: { ttlInSeconds },
-    } = await api.get(`/entries/${id}/votes/expiration_time_for_free`);
+    try {
+      const {
+        data: { ttlInSeconds },
+      } = await api.get(`/entries/${id}/votes/expiration_time_for_free`);
 
-    setTimeVote(ttlInSeconds);
+      setTimeVote(ttlInSeconds);
+    } catch (e) {
+      setTimeVote(null);
+    }
   };
 
   const handleGoToVoteOptions = async () => {
@@ -108,19 +113,28 @@ const Vote = ({
   };
 
   const handleVoteSucceed = async () => {
-    if (activeOption?.value) {
-      setCurrentPage("animation");
-    }
-
     setAnimationParams((animationParams) => ({
       ...animationParams,
       votesStart: child.totalVotes,
       rankStart: child.rank,
       levelStart: child.level,
+      level: child.level,
+      rankEnd: child.rank,
+      levelEnd: child.level,
+      totalVotesEnd: child.totalVotes,
     }));
+
     const {
       data: { entry },
     } = await api.get(`/entries/${id}`);
+
+    child.totalVotes = entry.totalVotes;
+    child.level = entry.level;
+    child.rank = entry.rank;
+
+    if (activeOption?.value) {
+      setCurrentPage("animation");
+    }
 
     setAnimationParams((animationParams) => ({
       ...animationParams,
@@ -128,6 +142,7 @@ const Vote = ({
       votesEnd: entry.totalVotes,
       rankEnd: entry.rank,
       levelEnd: entry.level,
+      totalVotesEnd: entry.totalVotes,
     }));
 
     updateTime();
@@ -140,6 +155,18 @@ const Vote = ({
 
   const handleAnimationEnd = () => {
     if (currentPage === "animation") {
+      setAnimationParams((animationParams) => ({
+        ...animationParams,
+        isAnimationPlay: false,
+        votesStart: child.totalVotes,
+        rankStart: child.rank,
+        levelStart: child.level,
+        level: child.level,
+        rankEnd: child.rank,
+        levelEnd: child.level,
+        totalVotesEnd: child.totalVotes,
+      }));
+      setAnimationStep(0);
       setCurrentPage("vote");
     }
   };
@@ -186,6 +213,8 @@ const Vote = ({
         isGoToVoteList={currentPage !== "vote"}
         handleGoToVoteOptions={handleGoToVoteOptions}
         handleAnimationEnd={handleAnimationEnd}
+        animationStep={animationStep}
+        setAnimationStep={setAnimationStep}
       />
 
       {renderVoteScreen()}

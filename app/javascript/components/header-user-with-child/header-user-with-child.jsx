@@ -1,7 +1,7 @@
 import "./style.less";
 
 import propTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useHistory } from "react-router";
 
 import defaultProptypes from "../../default-proptypes";
@@ -15,8 +15,9 @@ const HeaderUserWithChild = ({
   isGoToVoteList,
   handleGoToVoteOptions,
   handleAnimationEnd,
+  animationStep,
+  setAnimationStep,
 }) => {
-  const [animationStep, setAnimationStep] = useState(0);
   const history = useHistory();
   useEffect(() => {
     if (animationParams?.isAnimationPlay) {
@@ -29,7 +30,7 @@ const HeaderUserWithChild = ({
       return child.totalVotes;
     }
 
-    if (animationStep <= 2) {
+    if (animationStep <= 1) {
       return animationParams.votesStart;
     }
 
@@ -65,7 +66,7 @@ const HeaderUserWithChild = ({
         <HeaderUserItem
           title="Votes"
           value={calculateChildTotalVotes()}
-          isAnimationPlay={animationStep === 2}
+          isAnimationPlay={animationStep === 1}
           numberStart={animationParams?.votesStart}
           numberEnd={animationParams?.votesEnd}
           animationStep={animationStep}
@@ -105,7 +106,7 @@ const HeaderUserWithChild = ({
             : child.totalVotes
         }
         totalVotesStart={animationParams?.votesStart}
-        isAnimation={animationStep === 1}
+        isAnimation={animationStep === 2}
         animationStep={animationStep}
         setAnimationStep={setAnimationStep}
       />
@@ -129,6 +130,8 @@ HeaderUserWithChild.propTypes = {
   handleAnimationEnd: propTypes.func,
   isGoToVoteList: propTypes.bool,
   handleGoToVoteOptions: propTypes.func,
+  animationStep: propTypes.number,
+  setAnimationStep: propTypes.func,
 };
 
 export default HeaderUserWithChild;

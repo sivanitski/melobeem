@@ -11,8 +11,14 @@ const HeaderUserItem = ({
   numberStart,
   numberEnd,
   setAnimationStep,
+  handleAnimationEnd,
   ...countProps
 }) => {
+  if (isAnimationPlay && numberStart === numberEnd && title === "Rank") {
+    if (handleAnimationEnd) {
+      handleAnimationEnd();
+    }
+  }
   return (
     <div className="header-user__item">
       <div className="header-user__item__text text-tiny text-grey">{title}</div>
@@ -23,6 +29,7 @@ const HeaderUserItem = ({
             numberStart={numberStart}
             numberEnd={numberEnd}
             setAnimationStep={setAnimationStep}
+            handleAnimationEnd={handleAnimationEnd}
             {...{ ...countProps }}
           />
         ) : (
