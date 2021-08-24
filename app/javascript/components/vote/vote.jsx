@@ -128,29 +128,31 @@ const Vote = ({
       data: { entry },
     } = await api.get(`/entries/${id}`);
 
-    child.totalVotes = entry.totalVotes;
-    child.level = entry.level;
-    child.rank = entry.rank;
+    setTimeout(() => {
+      child.totalVotes = entry.totalVotes;
+      child.level = entry.level;
+      child.rank = entry.rank;
 
-    if (activeOption?.value) {
-      setCurrentPage("animation");
-    }
+      if (activeOption?.value) {
+        setCurrentPage("animation");
+      }
 
-    setAnimationParams((animationParams) => ({
-      ...animationParams,
-      isAnimationPlay: true,
-      votesEnd: entry.totalVotes,
-      rankEnd: entry.rank,
-      levelEnd: entry.level,
-      totalVotesEnd: entry.totalVotes,
-    }));
+      setAnimationParams((animationParams) => ({
+        ...animationParams,
+        isAnimationPlay: true,
+        votesEnd: entry.totalVotes,
+        rankEnd: entry.rank,
+        levelEnd: entry.level,
+        totalVotesEnd: entry.totalVotes,
+      }));
 
-    updateTime();
+      updateTime();
 
-    if (isShowShareModal && !activeOption.value) {
-      setTimeout(() => setIsPopupShown(true), 5000);
-      setIsShowShareModal(false);
-    }
+      if (isShowShareModal && !activeOption.value) {
+        setTimeout(() => setIsPopupShown(true), 5000);
+        setIsShowShareModal(false);
+      }
+    }, 200);
   };
 
   const handleAnimationEnd = () => {
@@ -215,6 +217,7 @@ const Vote = ({
         handleAnimationEnd={handleAnimationEnd}
         animationStep={animationStep}
         setAnimationStep={setAnimationStep}
+        levelUpWrapperClass={"vote-level-up"}
       />
 
       {renderVoteScreen()}

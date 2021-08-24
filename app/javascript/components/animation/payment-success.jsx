@@ -3,7 +3,7 @@ import "./style.less";
 import React from "react";
 import Lottie from "react-lottie-player";
 
-import paymentSuccess from "../../images/payment-success.json";
+import paymentSuccess from "../../images/hearts-up-after-payment.json";
 
 export default function PaymentAnimation() {
   return (

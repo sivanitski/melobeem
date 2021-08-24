@@ -17,6 +17,7 @@ const HeaderUserWithChild = ({
   handleAnimationEnd,
   animationStep,
   setAnimationStep,
+  levelUpWrapperClass,
 }) => {
   const history = useHistory();
   useEffect(() => {
@@ -109,6 +110,7 @@ const HeaderUserWithChild = ({
         isAnimation={animationStep === 2}
         animationStep={animationStep}
         setAnimationStep={setAnimationStep}
+        levelUpWrapperClass={levelUpWrapperClass}
       />
     </div>
   );
@@ -132,6 +134,7 @@ HeaderUserWithChild.propTypes = {
   handleGoToVoteOptions: propTypes.func,
   animationStep: propTypes.number,
   setAnimationStep: propTypes.func,
+  levelUpWrapperClass: propTypes.string,
 };
 
 export default HeaderUserWithChild;

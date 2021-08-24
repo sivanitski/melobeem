@@ -7,7 +7,7 @@ export default function LevelUpAnimation() {
   return (
     <div className="animation animation--level-up">
       <Lottie
-        loop={false}
+        loop={true}
         animationData={levelUpAnimationJson}
         play
         height={238}

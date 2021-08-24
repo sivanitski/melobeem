@@ -15,6 +15,7 @@ const HeaderUserLevel = ({
   isAnimation,
   animationStep,
   setAnimationStep,
+  levelUpWrapperClass,
 }) => {
   if (isAnimation) {
     setTimeout(() => setAnimationStep(animationStep + 1), 3000);
@@ -49,7 +50,15 @@ const HeaderUserLevel = ({
         <HeartLevel animationLevel={normalHeartLevel} />
       )}
 
-      {isAnimation && levelEnd > levelStart && <LevelUpAnimation />}
+      {isAnimation &&
+        levelEnd > levelStart &&
+        (levelUpWrapperClass ? (
+          <div className={levelUpWrapperClass}>
+            <LevelUpAnimation />
+          </div>
+        ) : (
+          <LevelUpAnimation />
+        ))}
     </div>
   );
 };
@@ -62,6 +71,7 @@ HeaderUserLevel.propTypes = {
   isAnimation: propTypes.bool,
   setAnimationStep: propTypes.func,
   animationStep: propTypes.number,
+  levelUpWrapperClass: propTypes.string,
 };
 
 export default HeaderUserLevel;
