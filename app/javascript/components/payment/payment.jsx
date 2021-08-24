@@ -175,7 +175,9 @@ const Payment = ({
       });
 
       if (activeType === "vote") {
-        handlePaymentSucceedClose();
+        setTimeout(() => {
+          handlePaymentSucceedClose();
+        }, 1000);
       } else {
         handlePaymentClose();
       }
