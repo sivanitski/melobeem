@@ -20,7 +20,7 @@ avatars = Pathname.glob('db/fixtures/user_avatars/*')
 end
 
 User.limit(20).find_each.with_index do |user, i|
-  avatar = avatars[i]
+  avatar = avatars.sample
   user.avatar.attach(io: avatar.open, filename: avatar.basename)
 end
 
@@ -36,7 +36,7 @@ User.all.find_each do |user|
 end
 
 Entry.all.find_each do |entry|
-  image = images[entry.id - 1]
+  image = images.sample
   entry.image.attach(io: image.open, filename: image.basename)
 end
 

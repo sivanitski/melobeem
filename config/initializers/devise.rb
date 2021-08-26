@@ -280,7 +280,7 @@ Devise.setup do |config|
                   secure_image_url: true,
                   image_size: :large,
                   provider_ignores_state: true,
-                  callback_url: 'https://melobeem.com/users/auth/facebook/callback',
+                  callback_url: ENV['FACEBOOK_CALLBACK_DOMAIN'] || 'https://melobeem.com/users/auth/facebook/callback',
                   scope: scope,
                   info_fields: info_fields
 

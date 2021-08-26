@@ -21,7 +21,10 @@ const FacebookLoginComponent = ({ title, classes, onClick, state }) => {
       onFailure={handleError}
       onClick={onClick}
       state={state}
-      redirectUri={"https://melobeem.com/users/auth/facebook/callback"}
+      redirectUri={
+        process.env.FACEBOOK_CALLBACK_DOMAIN ||
+        "https://melobeem.com/users/auth/facebook/callback"
+      }
       cssClass={`button button--facebook ${classes}`}
       textButton={title}
     />

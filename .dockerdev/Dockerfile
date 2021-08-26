@@ -24,7 +24,7 @@ COPY .dockerdev/Aptfile /tmp/Aptfile
 RUN apt-get update -qq && DEBIAN_FRONTEND=noninteractive apt-get -yq dist-upgrade && \
   DEBIAN_FRONTEND=noninteractive apt-get install -yq --no-install-recommends \
     build-essential \
-    postgresql-client-$PG_MAJOR \
+    postgresql-client \
     nodejs \
     yarn=$YARN_VERSION-1 \
     $(cat /tmp/Aptfile | xargs) && \
