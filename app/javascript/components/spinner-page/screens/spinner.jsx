@@ -24,8 +24,9 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
   const [zoomOutSpinner, setZoomOutSpinner] = useState(false);
   const [storedAngle, setStoredAngle] = useState(0);
   const [isFinalAnimationStarted, setIsFinalAnimationStarted] = useState(false);
-
+  
   const startAnimation = () => {
+    console.log('tymkiv');
     if (spinnerAnimation && spinnerAnimation.paused()) {
       spinnerAnimation.invalidate();
     }
