@@ -29,7 +29,12 @@
 .ruby-version.09.01.2021-15:19:03
 .ruby-gemset.09.01.2021-15:19:03
 .ruby-version
+<<<<<<< HEAD
 >>>>>>> deleted files
+=======
+.ruby-gemset
+.rvmrc
+>>>>>>> fix
 
 # Ignore master key for decrypting credentials and more.
 /config/master.key
