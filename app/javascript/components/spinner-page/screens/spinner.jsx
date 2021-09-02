@@ -135,8 +135,8 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
       <div className="spinner__image">
         <SpinnerPointer
           className={`spinner__pointer 
-          ${isAnimationPlay && "spinner__pointer-animation"} 
-          ${slowDownStopper && "spinner__pointer-animation-slow"}
+          ${isAnimationPlay && false && "spinner__pointer-animation"} 
+          ${slowDownStopper && false && "spinner__pointer-animation-slow"}
           `}
         />
         <div className="parent_spinner-container">
