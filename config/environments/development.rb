@@ -80,4 +80,5 @@ Rails.application.configure do
   # config.action_cable.disable_request_forgery_protection = true
   config.hosts << 'melobeem.ngrok.io'
   config.hosts << "melobeemv.ngrok.io"
+  config.hosts << "melobeemdev.ngrok.io"
 end

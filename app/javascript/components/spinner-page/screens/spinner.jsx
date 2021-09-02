@@ -26,7 +26,7 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
   const [isFinalAnimationStarted, setIsFinalAnimationStarted] = useState(false);
 
   const startAnimation = () => {
-    console.log("tymkiv");
+    console.log("tymkiv_2");
     if (spinnerAnimation && spinnerAnimation.paused()) {
       spinnerAnimation.invalidate();
     }
@@ -134,8 +134,8 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
 
       <div className="spinner__image">
         <SpinnerPointer
-          className={`spinner__pointer 
-          ${isAnimationPlay && false && "spinner__pointer-animation"} 
+          className={`spinner__pointer
+          ${isAnimationPlay && false && "spinner__pointer-animation"}
           ${slowDownStopper && false && "spinner__pointer-animation-slow"}
           `}
         />
