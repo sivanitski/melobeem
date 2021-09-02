@@ -24,9 +24,9 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
   const [zoomOutSpinner, setZoomOutSpinner] = useState(false);
   const [storedAngle, setStoredAngle] = useState(0);
   const [isFinalAnimationStarted, setIsFinalAnimationStarted] = useState(false);
-  
+
   const startAnimation = () => {
-    console.log('tymkiv');
+    console.log("tymkiv");
     if (spinnerAnimation && spinnerAnimation.paused()) {
       spinnerAnimation.invalidate();
     }
@@ -134,9 +134,10 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
 
       <div className="spinner__image">
         <SpinnerPointer
-          className={`spinner__pointer ${
-            isAnimationPlay && "spinner__pointer-animation"
-          } ${slowDownStopper && "spinner__pointer-animation-slow"}`}
+          className={`spinner__pointer 
+          ${isAnimationPlay && "spinner__pointer-animation"} 
+          ${slowDownStopper && "spinner__pointer-animation-slow"}
+          `}
         />
         <div className="parent_spinner-container">
           <div ref={spinnerElement} className="spinner__svg">
