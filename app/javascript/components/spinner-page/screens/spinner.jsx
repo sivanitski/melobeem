@@ -112,20 +112,10 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
       <SpinnerTitle spinnerType={spinnerData.type} spinnerAmount={amount} />
 
       <div className="spinner__image">
-<<<<<<< HEAD
         <div ref={spinnerPointer} className={`spinner__pointer`}>
           <SpinnerPointer />
         </div>
 
-=======
-        <div
-          ref={spinnerPointer}
-          className={`spinner__pointer`}
-        >
-          <SpinnerPointer />
-        </div>
-        
->>>>>>> refactored spinner animation
         <div className="parent_spinner-container">
           <div ref={spinnerElement} className="spinner__svg">
             <SpinnerImageColor
@@ -133,35 +123,20 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
               spinnerAmount={spinnerData.count}
             />
           </div>
-<<<<<<< HEAD
 
-=======
-          
->>>>>>> refactored spinner animation
           {isSpinnerDone ? (
             <div className="spinner-done-animation" ref={lottieAnim}>
               <SpinnerPrizeAnimation />
               {/* {(winningAmount || winningAmount === 0) ?  ( */}
-<<<<<<< HEAD
               <p ref={winningAmountRef} className="spinner-winning-amount">
                 +{winningAmount}
               </p>
-=======
-                <p ref={winningAmountRef} className="spinner-winning-amount">+{winningAmount}</p>
->>>>>>> refactored spinner animation
               {/* ) : null} */}
             </div>
           ) : null}
         </div>
 
-<<<<<<< HEAD
         <div ref={btn} className={`spinner__button`}>
-=======
-        <div 
-          ref={btn}
-          className={`spinner__button`}
-        >
->>>>>>> refactored spinner animation
           <SpinnerStopImage onClick={stopAnimation} />
         </div>
       </div>
