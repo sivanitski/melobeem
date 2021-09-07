@@ -17,6 +17,7 @@ const CountAnimation = ({
     [numberStart, numberEnd] = [numberEnd, numberStart];
   }
   const range = numberEnd - numberStart;
+  // const duration = 100000;
   const duration = range > 5 ? 3000 : 1000;
 
   useEffect(() => {
