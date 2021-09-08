@@ -130,9 +130,12 @@ export const LEVEL_INTERVALS = {
 export const getVoteValueFromLevel = (level) => LEVEL_INTERVALS[level];
 
 export const getVoteIntervalFromLevel = (level) => {
-  return `(From ${getVoteValueFromLevel(level)} to ${getVoteValueFromLevel(
-    level + 1
-  )} votes)`;
+  let levelFrom = level === 1 ? 0 : getVoteValueFromLevel(level);
+  let levelTo =
+    level === 1
+      ? getVoteValueFromLevel(level)
+      : getVoteValueFromLevel(level + 1);
+  return `(From ${levelFrom} to ${levelTo} votes)`;
 };
 
 export const getAnimationLevel = (totalVotes, level) =>

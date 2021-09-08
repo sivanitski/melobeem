@@ -25,11 +25,12 @@ const HeaderUserLevel = ({
   const animationLevelEnd = getAnimationLevel(totalVotesEnd, levelEnd);
   let normalHeartLevel =
     animationStep === 1 ? animationLevelStart : animationLevelEnd;
+  let levelTo = levelEnd === 1 ? 1 : levelEnd + 1;
 
   return (
     <div className="half-circle header-user__level">
       <div className="header-user__text text-grey text-tiny">
-        Level {levelEnd} ({totalVotesEnd}/{getVoteValueFromLevel(levelEnd + 1)})
+        Level {levelEnd} ({totalVotesEnd}/{getVoteValueFromLevel(levelTo)})
       </div>
 
       {isAnimation ? (
