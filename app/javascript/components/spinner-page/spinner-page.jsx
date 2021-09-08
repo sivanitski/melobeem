@@ -80,9 +80,8 @@ const SpinnerPage = () => {
       levelEnd: currentChild.level,
       totalVotesEnd: currentChild.totalVotes,
     }));
-    const {
-      data: { entry },
-    } = await api.get("/entries/current");
+
+    const { data: { entry },} = await api.get("/entries/current");
 
     setAnimationParams((animationParams) => ({
       ...animationParams,

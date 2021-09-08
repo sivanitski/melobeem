@@ -100,7 +100,7 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
       );
 
       setTimeout(() => {
-        if (amount) updateCurrentChild(amount - 1); // start header animation
+        updateCurrentChild(amount - 1); // start header animation
       }, 1450); // we are waiting this time when lottie animation starting
 
       setTimeout(restartAnimation, 7450); // this time should depend on the script
