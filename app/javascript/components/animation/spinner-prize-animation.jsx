@@ -7,7 +7,7 @@ import spinnerPrizeAnimationJson1 from "../../images/spinner_prize_animation-1.j
 // import spinnerPrizeAnimationJson3 from "../../images/spinner_prize_animation-3.json";
 // import spinnerPrizeAnimationJson4 from "../../images/spinner_prize_animation-4.json";
 
-export default function SpinnerPrizeAnimation({scenario}) {
+export default function SpinnerPrizeAnimation({ scenario }) {
   // let animation = spinnerPrizeAnimationJson1;
 
   // switch (scenario) {
@@ -32,14 +32,14 @@ export default function SpinnerPrizeAnimation({scenario}) {
   // }, [isLvlUp])
   // React.useEffect(() => {
   //   console.log('animationParams2', animationParams);
-    // if (animationParams) {
-      
-    //   if (animationParams.levelStart !== animationParams.levelEnd && !isLvlUp) {
-    //     setIsLvlUp(true)
-    //   }
-    //   else setIsLvlUp(false)
-    // }
-    
+  // if (animationParams) {
+
+  //   if (animationParams.levelStart !== animationParams.levelEnd && !isLvlUp) {
+  //     setIsLvlUp(true)
+  //   }
+  //   else setIsLvlUp(false)
+  // }
+
   // }, [animationParams])
 
   return (
