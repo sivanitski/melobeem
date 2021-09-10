@@ -40,6 +40,10 @@ const SpinnerPage = () => {
     loadCurrentChild();
   }, []);
 
+  // useEffect(() => {
+  //   console.log('currentChild', currentChild)
+  // }, [currentChild])
+
   const getSpinnersInfo = () => {
     return api.get(`/spins/check_presence`);
   };
@@ -69,28 +73,50 @@ const SpinnerPage = () => {
     updateUser();
   };
 
-  const updateCurrentChild = async (spinsAmount) => {
-    setAnimationParams((animationParams) => ({
-      ...animationParams,
-      votesStart: currentChild.totalVotes,
-      rankStart: currentChild.rank,
-      levelStart: currentChild.level,
-      level: currentChild.level,
-      rankEnd: currentChild.rank,
-      levelEnd: currentChild.level,
-      totalVotesEnd: currentChild.totalVotes,
-    }));
-
+  const getUserParams = async () => {
     const {
       data: { entry },
     } = await api.get("/entries/current");
 
+    return {
+      entry: entry,
+      votesStart: currentChild.totalVotes,
+      rankStart: currentChild.rank,
+      levelStart: currentChild.level,
+      votesEnd: entry.totalVotes,
+      levelEnd: entry.level,
+      rankEnd: entry.rank,
+    };
+  };
+
+  const updateCurrentChild = (spinsAmount, entry) => {
+    // setAnimationParams((animationParams) => ({
+    //   ...animationParams,
+    //   votesStart: currentChild.totalVotes,
+    //   rankStart: currentChild.rank,
+    //   levelStart: currentChild.level,
+    //   level: currentChild.level,
+    //   rankEnd: currentChild.rank,
+    //   levelEnd: currentChild.level,
+    //   totalVotesEnd: currentChild.totalVotes,
+    // }));
+
+    // const {
+    //   data: { entry },
+    // } = await api.get("/entries/current");
+
     setAnimationParams((animationParams) => ({
       ...animationParams,
       isAnimationPlay: true,
+
+      votesStart: currentChild.totalVotes,
+      rankStart: currentChild.rank,
+      levelStart: currentChild.level,
+
       votesEnd: entry.totalVotes,
       level: entry.level,
       levelEnd: entry.level,
+      rankEnd: currentChild.rank,
       totalVotesEnd: entry.totalVotes,
       handleAnimationEnd: handleAnimationEnd(spinsAmount, entry),
     }));
@@ -128,7 +154,12 @@ const SpinnerPage = () => {
 
     if (data.type) {
       return (
-        <Spinner spinnerData={data} updateCurrentChild={updateCurrentChild} />
+        <Spinner
+          spinnerData={data}
+          animationParams={animationParams}
+          getUserParams={getUserParams}
+          updateCurrentChild={updateCurrentChild}
+        />
       );
     }
 
