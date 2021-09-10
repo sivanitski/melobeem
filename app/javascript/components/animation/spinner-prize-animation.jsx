@@ -7,7 +7,7 @@ import spinnerPrizeAnimationJson1 from "../../images/spinner_prize_animation-1.j
 // import spinnerPrizeAnimationJson3 from "../../images/spinner_prize_animation-3.json";
 // import spinnerPrizeAnimationJson4 from "../../images/spinner_prize_animation-4.json";
 
-export default function SpinnerPrizeAnimation({ scenario }) {
+export default function SpinnerPrizeAnimation() {
   // let animation = spinnerPrizeAnimationJson1;
 
   // switch (scenario) {

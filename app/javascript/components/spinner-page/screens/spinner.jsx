@@ -16,7 +16,7 @@ import CoderiverSpinner from "./CoderiverSpinner";
 const Spinner = ({
   spinnerData,
   updateCurrentChild,
-  animationParams,
+  // animationParams,
   getUserParams,
 }) => {
   const spinnerElement = useRef(null);
@@ -206,6 +206,7 @@ Spinner.propTypes = {
     count: propTypes.number,
   }),
   updateCurrentChild: propTypes.func,
+  getUserParams: propTypes.func,
 };
 
 export default Spinner;
