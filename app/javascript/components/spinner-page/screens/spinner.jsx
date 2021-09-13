@@ -13,7 +13,12 @@ import SpinnerImageColor from "../blocks/spinner-image";
 import SpinnerTitle from "../blocks/spinner-title";
 import CoderiverSpinner from "./CoderiverSpinner";
 
-const Spinner = ({ spinnerData, updateCurrentChild }) => {
+const Spinner = ({
+  spinnerData,
+  updateCurrentChild,
+  // animationParams,
+  getUserParams,
+}) => {
   const spinnerElement = useRef(null);
   const spinnerPointer = useRef(null);
   const btn = useRef(null);
@@ -26,6 +31,8 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
   const [winningAmount, setWinningAmount] = useState(false);
   const [zoomOutSpinner, setZoomOutSpinner] = useState(false);
   const [coderiverSpinner, setCoderiverSpinner] = useState(null);
+  const [blinkingInterval, setBlinkingInterval] = useState(null);
+  const [scenario, setScenario] = useState(null);
 
   useEffect(() => {
     setCoderiverSpinner(
@@ -37,11 +44,21 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
     playAnimation();
   }, [coderiverSpinner]);
 
+  const setBlinking = () => {
+    setBlinkingInterval(
+      setInterval(() => {
+        btn.current.classList.toggle("blinking");
+      }, 1500)
+    );
+  };
+
   const playAnimation = () => {
     if (!coderiverSpinner) return;
 
     coderiverSpinner.play();
     setIsSpinnerDone(false);
+
+    setBlinking();
   };
 
   const restartAnimation = () => {
@@ -58,9 +75,15 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
           setIsFinalAnimStarted(false);
           setWinningAmount(false);
           coderiverSpinner.play();
+
+          setBlinking();
         },
       })
-      .to(lottieAnim.current, { scale: 0, duration: 0.5 }) // zoom out lottie animation
+      .to(lottieAnim.current, {
+        scale: 0,
+        duration: 0.5,
+        transformOrigin: "center 51.5%",
+      }) // zoom out lottie animation
       .to(btn.current, { scale: 1, duration: 0.3, ease: "easeOut" });
   };
 
@@ -68,6 +91,8 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
     if (isFinalAnimStarted) return;
 
     setIsFinalAnimStarted(true);
+    if (blinkingInterval) clearInterval(blinkingInterval);
+
     gsap
       .timeline()
       .to(btn.current, { scale: 0.8, duration: 0.15, ease: "easeOut" })
@@ -84,6 +109,36 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
 
     const stopAnimationDuration = coderiverSpinner.stop(stopAngle);
 
+    const userParams = await getUserParams();
+
+    // if (userParams.levelStart !== userParams.levelEnd) setIsLvlUp(true);
+    const isLvlUp = userParams.levelStart !== userParams.levelEnd;
+    const isRankUp = userParams.rankStart !== userParams.rankEnd;
+
+    let lottieDuration = 8150;
+    let scnr = 1;
+
+    if (isLvlUp && isRankUp) {
+      scnr = 1;
+      lottieDuration = 8250;
+    } else if (isLvlUp && !isRankUp) {
+      scnr = 2;
+      lottieDuration = 7350;
+    } else if (!isLvlUp && isRankUp) {
+      scnr = 3;
+      lottieDuration = 4450;
+    } else if (!isLvlUp && !isRankUp) {
+      scnr = 4;
+      lottieDuration = 4050;
+    }
+
+    setScenario(scnr);
+    // console.log('isLvlUp', isLvlUp);
+    // console.log('isRankUp', isRankUp);
+    // console.log('scnr', scnr);
+    // console.log('lottieDuration', lottieDuration);
+    // else setIsLvlUp(false);
+
     if (amount) setAmount(amount - 1);
 
     setTimeout(() => {
@@ -95,15 +150,15 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
 
       gsap.fromTo(
         winningAmountRef.current,
-        { scale: 0.3 },
-        { scale: 1, duration: 1.5, delay: 0.5 }
+        { scale: 0.3, opacity: 0 },
+        { scale: 1, opacity: 1, duration: 1.45 }
       );
 
       setTimeout(() => {
-        updateCurrentChild(amount - 1); // start header animation
+        updateCurrentChild(amount - 1, userParams.entry); // start header animation
       }, 1450); // we are waiting this time when lottie animation starting
 
-      setTimeout(restartAnimation, 7450); // this time should depend on the script
+      setTimeout(restartAnimation, lottieDuration); // this time should depend on the script
     }, stopAnimationDuration);
   };
 
@@ -126,12 +181,13 @@ const Spinner = ({ spinnerData, updateCurrentChild }) => {
 
           {isSpinnerDone ? (
             <div className="spinner-done-animation" ref={lottieAnim}>
-              <SpinnerPrizeAnimation />
-              {/* {(winningAmount || winningAmount === 0) ?  ( */}
-              <p ref={winningAmountRef} className="spinner-winning-amount">
-                +{winningAmount}
-              </p>
-              {/* ) : null} */}
+              <SpinnerPrizeAnimation scenario={scenario} />
+              {winningAmount || winningAmount === 0 ? (
+                <p ref={winningAmountRef} className="spinner-winning-amount">
+                  <span className="spinner-winning-amount__prefix">+</span>
+                  {winningAmount}
+                </p>
+              ) : null}
             </div>
           ) : null}
         </div>
@@ -150,6 +206,7 @@ Spinner.propTypes = {
     count: propTypes.number,
   }),
   updateCurrentChild: propTypes.func,
+  getUserParams: propTypes.func,
 };
 
 export default Spinner;

@@ -50,25 +50,53 @@
   left: calc(50% - 33px);
   top: 131px;
   outline: none;
+  width: 67px;
+  height: 68px;
   // -webkit-transition-duration: 0.4s; /* Safari */
   // transition-duration: 0.4s;
   -webkit-tap-highlight-color: transparent;
   user-select: none;
   will-change: transform;
+  border-radius: 50%;
+  overflow: hidden;
+
 
   svg {
     outline: none;
     -webkit-tap-highlight-color: transparent;
   }
 
-  &--pressed {
-    // -webkit-transition-duration: 0.2s; /* Safari */
-    // transition-duration: 0.2s;
-    transform: scale(0.8);
+  // &--pressed {
+  //   // -webkit-transition-duration: 0.2s; /* Safari */
+  //   // transition-duration: 0.2s;
+  //   transform: scale(0.8);
+  // }
+
+  // &--active {
+  //   transform: translateY(5px);
+  // }
+
+  &.blinking::before {
+    content: '';
+    position: absolute;
+    width: 200%;
+    height: 50px;
+    background-color: rgba(255, 255, 255, 0.5);
+    transform: translate(-50%, -100%) rotate(-45deg);
+    top: 0;
+    left: 0;
+    animation: blinking 0.3s linear;
+    animation-fill-mode: forwards;
+  }
+}
+
+@keyframes blinking {
+  from {
+    transform: translate(-50%, -100%) rotate(-45deg);
   }
 
-  &--active {
-    transform: translateY(5px);
+  to {
+    transform: translate(15%, 100%) rotate(-45deg);
   }
 }
 
@@ -156,9 +184,11 @@
 
 .spinner-done-animation {
   position: absolute;
+  top: 0;
   z-index: 9;
   height: 100%;
   width: 100%;
+  margin-top: -10px;
 
   svg {
     height: unset !important;
@@ -174,6 +204,11 @@
     width: 40px;
     text-align: center;
     will-change: transform;
+
+    &__prefix {
+      font-size: 0.7em;
+      vertical-align: middle;
+    }
   }
 }
 
@@ -207,6 +242,22 @@
 
 .spinner-zoom-in-product-0 {
   animation: spinner-zoom-in-product 2s linear;
+}
+
+.prize-animation {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-top: 13px;
+  margin-left: 11px;
+
+  & > div {
+    width: 100% !important;
+    height: 100% !important;
+  }
 }
 
 .spinner-zoom-in-product-1 {
