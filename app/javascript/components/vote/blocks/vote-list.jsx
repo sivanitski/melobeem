@@ -65,7 +65,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
       userId: user.id,
       "g-recaptcha-response-data": token,
     });
-    updateData();
+    updateData(true);
   };
 
   const handlePaidClick = (clickedVoteOption) => {

@@ -24,6 +24,7 @@ module Entries
             LEAD(id) OVER (ORDER BY total_votes DESC) AS next_id
           FROM entries
           WHERE entries.competition_id = #{competition_id}
+          AND entries.user_id IS NOT NULL
         ) AS ranked_entries ON entries.id = ranked_entries.id
       SQL
     end

@@ -112,7 +112,7 @@ const Vote = ({
     setIsPopupShown(false);
   };
 
-  const handleVoteSucceed = async () => {
+  const handleVoteSucceed = async (is_free = false) => {
     setAnimationParams((animationParams) => ({
       ...animationParams,
       votesStart: child.totalVotes,
@@ -148,7 +148,7 @@ const Vote = ({
 
       updateTime();
 
-      if (isShowShareModal && !activeOption.value) {
+      if (isShowShareModal && !activeOption.value && is_free) {
         setTimeout(() => setIsPopupShown(true), 5000);
         setIsShowShareModal(false);
       }

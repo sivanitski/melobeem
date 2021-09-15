@@ -70,3 +70,8 @@ end
 
 # make different date for notifications
 Notification.find_each { |notification| notification.update!(created_at: rand(0..2).days.ago) }
+
+Product.create( tier_id: 5, title: "4 spins", description: "", value: 4, product_type: "spinner")
+Product.create( tier_id: 15, title: "10 spins", description: "", value: 10, product_type: "spinner")
+Product.create(tier_id: 10, title: "100 votes", description: "", value: 100, product_type: "vote")
+Product.create(tier_id: 20, title: "1000 votes", description: "", value: 1000, product_type: "vote")

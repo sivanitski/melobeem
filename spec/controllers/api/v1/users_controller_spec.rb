@@ -72,7 +72,7 @@ RSpec.describe API::V1::UsersController do
 
     context 'when user has votes for today' do
       before do
-        create :vote, user: user
+        create :vote, user: user, source_type: 'user'
         get :show_share_modal, format: :json
       end
 

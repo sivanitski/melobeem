@@ -25,7 +25,7 @@ module API
       end
 
       def show_share_modal
-        render json: current_user.votes.where(created_at: Date.current.all_day).empty?, adapter: nil, status: :ok
+        render json: current_user.votes.where(created_at: Date.current.all_day, source_type: 'user').empty?, adapter: nil, status: :ok
       end
 
       def take_additional_prize

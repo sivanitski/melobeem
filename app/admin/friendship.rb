@@ -16,7 +16,7 @@ ActiveAdmin.register Friendship do # rubocop:disable Metrics/BlockLength
 
   filter :user, as: :searchable_select
   filter :friend, as: :searchable_select
-  filter :source_type, as: :select, collection: Friendship.source_types.keys
+  filter :source_type, as: :select, collection: Friendship.source_types.to_a
   filter :invitation_prize
   filter :created_at
   filter :updated_at

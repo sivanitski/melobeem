@@ -17,7 +17,7 @@ ActiveAdmin.register Vote do # rubocop:disable Metrics/BlockLength
   filter :value
   filter :user, as: :searchable_select
   filter :entry, as: :searchable_select
-  filter :source_type, as: :select, collection: Vote.source_types.keys
+  filter :source_type, as: :select, collection: Vote.source_types.to_a
   filter :created_at
   filter :updated_at
 
