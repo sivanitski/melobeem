@@ -34,6 +34,10 @@ const Spinner = ({
   const [blinkingInterval, setBlinkingInterval] = useState(null);
   const [scenario, setScenario] = useState(null);
 
+  const [timerId1, setTimerId1] = useState(null);
+  const [timerId2, setTimerId2] = useState(null);
+  const [timerId3, setTimerId3] = useState(null);
+
   useEffect(() => {
     setCoderiverSpinner(
       new CoderiverSpinner(spinnerElement.current, spinnerPointer.current)
@@ -41,10 +45,34 @@ const Spinner = ({
   }, []);
 
   useEffect(() => {
+    return () => {
+      clearTimeout(timerId1);
+    };
+  }, [timerId1]);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerId2);
+    };
+  }, [timerId2]);
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerId3);
+    };
+  }, [timerId3]);
+
+  useEffect(() => {
     playAnimation();
   }, [coderiverSpinner]);
 
-  const setBlinking = () => {
+  useEffect(() => {
+    return () => {
+      stopBlinking();
+    };
+  }, [blinkingInterval]);
+
+  const startBlinking = () => {
     setBlinkingInterval(
       setInterval(() => {
         btn.current.classList.toggle("blinking");
@@ -52,13 +80,16 @@ const Spinner = ({
     );
   };
 
+  const stopBlinking = () => {
+    if (blinkingInterval) clearInterval(blinkingInterval);
+  };
+
   const playAnimation = () => {
     if (!coderiverSpinner) return;
 
     coderiverSpinner.play();
     setIsSpinnerDone(false);
-
-    setBlinking();
+    startBlinking();
   };
 
   const restartAnimation = () => {
@@ -76,7 +107,7 @@ const Spinner = ({
           setWinningAmount(false);
           coderiverSpinner.play();
 
-          setBlinking();
+          startBlinking();
         },
       })
       .to(lottieAnim.current, {
@@ -91,7 +122,7 @@ const Spinner = ({
     if (isFinalAnimStarted) return;
 
     setIsFinalAnimStarted(true);
-    if (blinkingInterval) clearInterval(blinkingInterval);
+    stopBlinking();
 
     gsap
       .timeline()
@@ -133,33 +164,34 @@ const Spinner = ({
     }
 
     setScenario(scnr);
-    // console.log('isLvlUp', isLvlUp);
-    // console.log('isRankUp', isRankUp);
-    // console.log('scnr', scnr);
-    // console.log('lottieDuration', lottieDuration);
-    // else setIsLvlUp(false);
 
     if (amount) setAmount(amount - 1);
 
-    setTimeout(() => {
-      setWinningAmount(res.data.value);
-
-      gsap.to(btn.current, { scale: 0.8, duration: 0.5, ease: "easeOut" });
-
-      setIsSpinnerDone(true); // start lottie animation
-
-      gsap.fromTo(
-        winningAmountRef.current,
-        { scale: 0.3, opacity: 0 },
-        { scale: 1, opacity: 1, duration: 1.45 }
-      );
-
+    setTimerId1(
       setTimeout(() => {
-        updateCurrentChild(amount - 1, userParams.entry); // start header animation
-      }, 1450); // we are waiting this time when lottie animation starting
+        setWinningAmount(res.data.value);
 
-      setTimeout(restartAnimation, lottieDuration); // this time should depend on the script
-    }, stopAnimationDuration);
+        gsap.to(btn.current, { scale: 0.8, duration: 0.5, ease: "easeOut" });
+
+        setIsSpinnerDone(true); // start lottie animation
+
+        gsap.fromTo(
+          winningAmountRef.current,
+          { scale: 0.3, opacity: 0 },
+          { scale: 1, opacity: 1, duration: 1.45 }
+        );
+
+        setTimerId2(
+          setTimeout(() => {
+            updateCurrentChild(amount - 1, userParams.entry); // start header animation
+          }, 1450)
+        ); // we are waiting this time when lottie animation starting)
+
+        setTimerId3(
+          setTimeout(restartAnimation, lottieDuration) // this time should depend on the script
+        );
+      }, stopAnimationDuration)
+    );
   };
 
   return (

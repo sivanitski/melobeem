@@ -1,7 +1,8 @@
 import "./style.less";
+import gsap from "gsap";
 
 import propTypes from "prop-types";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const CountAnimation = ({
   numberStart,
@@ -10,72 +11,93 @@ const CountAnimation = ({
   animationStep,
   setAnimationStep,
   handleAnimationEnd,
+  value,
+  title,
+  animationParams,
+  typeOfPage,
 }) => {
   const listElement = useRef(null);
 
-  if (isDecrease) {
-    [numberStart, numberEnd] = [numberEnd, numberStart];
-  }
-  const range = numberEnd - numberStart;
-  // const duration = 100000;
-  const duration = range > 5 ? 3000 : 1000;
+  const [number, setNumber] = useState(numberStart);
+  const [timerId1, setTimerId1] = useState(null);
+  const [timerId2, setTimerId2] = useState(null);
 
-  useEffect(() => {
-    playAnimation();
-  }, []);
+  let delay = 6000;
+  let duration = title === "vote" ? 1000 : 200;
 
-  const TRANSFORM_QUANTITY = isDecrease ? `0px` : `calc(-100% + 30px)`;
-  const playAnimation = () => {
-    listElement.current.animate(
-      [{ transform: `translateY(${TRANSFORM_QUANTITY})` }],
-      {
-        duration,
-        fill: "forwards",
-      }
-    );
-
-    setTimeout(() => {
-      if (animationStep) {
-        if (animationStep === 3) {
-          setAnimationStep(0);
-
-          if (handleAnimationEnd) {
-            handleAnimationEnd();
-          }
-        } else {
-          setAnimationStep(animationStep + 1);
-        }
-      }
-    }, duration);
+  const delaysData = {
+    spinner: {
+      vote: [1450, 1450],
+      rank: [3150, 6450],
+    },
+    level: {
+      vote: [2000, 2000],
+      rank: [6000, 9300],
+    },
   };
 
-  const renderNumber = () => {
-    let allNumbers = [];
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerId1);
+    };
+  }, [timerId1]);
 
-    if (numberEnd === numberStart) {
-      return <span className="count__item">{numberEnd}</span>;
+  useEffect(() => {
+    return () => {
+      clearTimeout(timerId2);
+    };
+  }, [timerId2]);
+
+  useEffect(() => {
+    const isLvlUp = animationParams.levelStart !== animationParams.levelEnd;
+    delay = delaysData?.[typeOfPage]?.[title]?.[Number(isLvlUp)] || 0;
+  }, [animationParams]);
+
+  useEffect(() => {
+    if (title === "vote" && typeOfPage === "level") {
+      duration = 2300;
     }
+  }, [value]);
 
-    let i = numberStart;
-    const increasingNumber =
-      range > 10 ? Math.trunc((numberEnd - numberStart) / 10) : 1;
-
-    while (i < numberEnd) {
-      allNumbers.push(
-        <span className="count__item" key={`count-item-${i}`}>
-          {i}
-        </span>
+  useEffect(() => {
+    if (animationParams?.isAnimationPlay) {
+      setTimerId1(
+        setTimeout(() => {
+          playAnimation();
+        }, delay)
       );
-      i += increasingNumber;
+
+      console.log(`delay of ${title}: ${delay}`);
+      console.log(`duration of ${title}: ${duration}`);
     }
+  }, [animationParams?.isAnimationPlay, animationParams?.votesEnd]);
 
-    allNumbers.push(
-      <span className="count__item" key={`count-item-${i}`}>
-        {numberEnd}
-      </span>
-    );
+  const range = numberEnd - numberStart;
 
-    return <>{allNumbers}</>;
+  const playAnimation = () => {
+    const cont = { val: numberStart };
+    gsap.to(cont, {
+      val: numberEnd,
+      duration: duration / 1000,
+      roundProps: "val",
+      onUpdate: function () {
+        setNumber(cont.val);
+      },
+    });
+
+    // setTimerId2(
+    //   setTimeout(() => {
+    //     if (animationStep) {
+    //       if (animationStep === 3) {
+
+    //         if (handleAnimationEnd) {
+    //           console.log('end from CountAnimation');
+    //           handleAnimationEnd();
+    //         }
+    //       }
+    //     }
+    //   }, duration)
+    // );
   };
 
   return (
@@ -86,7 +108,7 @@ const CountAnimation = ({
           isDecrease && "count__list--decrease"
         }`}
       >
-        {renderNumber()}
+        {number}
       </div>
     </div>
   );
@@ -95,10 +117,17 @@ const CountAnimation = ({
 CountAnimation.propTypes = {
   numberEnd: propTypes.number,
   numberStart: propTypes.number,
+  delay: propTypes.number,
+  duration: propTypes.number,
   isDecrease: propTypes.bool,
   animationStep: propTypes.number,
   setAnimationStep: propTypes.func,
   handleAnimationEnd: propTypes.func,
+};
+
+CountAnimation.defaultProps = {
+  delay: 0,
+  duration: 1000,
 };
 
 export default CountAnimation;
