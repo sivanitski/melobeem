@@ -109,7 +109,7 @@ LevelWithPrize.propTypes = {
   prize: propTypes.shape({
     sourceType: propTypes.string.isRequired,
     spent: propTypes.bool.isRequired,
-    value: propTypes.number.isRequired,
+    // value: propTypes.number.isRequired,
     level: propTypes.number.isRequired,
   }),
   setAnimationParams: propTypes.func,
