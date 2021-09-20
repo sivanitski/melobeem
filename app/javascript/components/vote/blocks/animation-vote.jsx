@@ -1,6 +1,6 @@
 import propTypes from "prop-types";
 import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import { useState } from "react/cjs/react.development";
 
 import defaultProptypes from "../../../default-proptypes";
 import VotePrizeAnimation from "../../animation/vote-prize-level";

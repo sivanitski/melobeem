@@ -1,7 +1,7 @@
 import "./style.less";
 
 import propTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import defaultProptypes from "../../default-proptypes";
 import { HeaderUserItem } from "../header-user-item";
@@ -10,9 +10,7 @@ import { HeaderUserLevel } from "../header-user-level";
 const HeaderUser = ({
   child,
   animationParams,
-  handleAnimationEnd,
   isLvlUp,
-  isRankUp,
 }) => {
   const [animationStep, setAnimationStep] = useState(0);
 

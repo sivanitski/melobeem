@@ -1,6 +1,5 @@
 import propTypes from "prop-types";
 import React from "react";
-import { useEffect } from "react/cjs/react.development";
 
 import { CountAnimation } from "../count-animation";
 

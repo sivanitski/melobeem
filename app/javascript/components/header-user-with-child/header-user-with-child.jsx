@@ -19,7 +19,7 @@ const HeaderUserWithChild = ({
   setAnimationStep,
   levelUpWrapperClass,
 }) => {
-  const [isLvlUp, setIsLvlUp] = useState(false);
+  const [, setIsLvlUp] = useState(false);
   const [isAnimPlay, setIsAnimPlay] = useState(false);
 
   const history = useHistory();

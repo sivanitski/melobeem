@@ -4,15 +4,11 @@ import gsap from "gsap";
 import propTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 
-import VoteSalut from "../animation/vote-salut";
 
 const CountAnimation = ({
   numberStart,
   numberEnd,
   isDecrease,
-  animationStep,
-  setAnimationStep,
-  handleAnimationEnd,
   value,
   title,
   animationParams,
@@ -21,7 +17,7 @@ const CountAnimation = ({
   const listElement = useRef(null);
 
   const [number, setNumber] = useState(numberStart);
-  const [isVoteSulutVisible, setIsVoteSulutVisible] = useState(false);
+  const [, setIsVoteSulutVisible] = useState(false);
   const [timerId1, setTimerId1] = useState(null);
   const [timerId2, setTimerId2] = useState(null);
 
@@ -31,11 +27,11 @@ const CountAnimation = ({
   const delaysData = {
     spinner: {
       vote: [1450, 1450],
-      rank: [4150, 7450],
+      rank: [3150, 6450],
     },
     level: {
       vote: [2000, 2000],
-      rank: [7000, 10300],
+      rank: [6000, 9300],
     },
   };
 
@@ -72,7 +68,6 @@ const CountAnimation = ({
     }
   }, [animationParams?.isAnimationPlay, animationParams?.votesEnd]);
 
-  const range = numberEnd - numberStart;
 
   const playAnimation = () => {
     const cont = { val: numberStart };
