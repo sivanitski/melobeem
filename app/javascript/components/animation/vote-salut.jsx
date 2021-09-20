@@ -1,6 +1,6 @@
 import React from "react";
 import Lottie from "react-lottie-player";
-import { useEffect, useState, useRef } from "react/cjs/react.development";
+import { useRef } from "react/cjs/react.development";
 
 import lottieVoteSalut from "../../images/spark-for-vote.json";
 // import lottieVoteSalut from "../../images/vote-salut.json";

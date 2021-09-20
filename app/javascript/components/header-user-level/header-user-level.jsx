@@ -4,8 +4,6 @@ import { useEffect, useState } from "react/cjs/react.development";
 import gsap from "gsap";
 
 import { getAnimationLevel, getVoteValueFromLevel } from "../../helpers/level";
-import { HeartAnimationSmall } from "../heart-animation";
-import HeartAnimationLevelUpdated from "../heart-animation/heart-animation-level-updated";
 import HeartLevel from "../heart-animation/heart-level";
 import LevelUpAnimation from "../heart-animation/level-up-animation";
 
@@ -14,9 +12,6 @@ const HeaderUserLevel = ({
   levelEnd,
   totalVotesEnd,
   totalVotesStart,
-  isAnimation,
-  animationStep,
-  setAnimationStep,
   levelUpWrapperClass,
   animationParams,
   delayOfHeartAnim,
@@ -208,7 +203,7 @@ HeaderUserLevel.propTypes = {
 };
 
 HeaderUserLevel.defaultProps = {
-  delayOfHeartAnim: 3400,
+  delayOfHeartAnim: 2650,
 };
 
 export default HeaderUserLevel;
