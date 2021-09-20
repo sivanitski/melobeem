@@ -14,7 +14,7 @@ ActiveAdmin.register Product do # rubocop:disable Metrics/BlockLength
     actions
   end
 
-  filter :product_type, as: :select, collection: Product.product_types.keys
+  filter :product_type, as: :select, collection: Product.product_types.to_a
   filter :tier_id
   filter :title
   filter :value

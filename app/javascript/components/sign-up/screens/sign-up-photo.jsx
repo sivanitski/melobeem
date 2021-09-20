@@ -47,7 +47,7 @@ const SignUpPhoto = ({
               image={photo.imagePreviewUrl}
               crop={crop}
               zoom={zoom}
-              showGrid={false}
+              showGrid={true}
               objectFit={"horizontal-cover"}
               aspect={4 / 3}
               onCropChange={setCrop}
@@ -64,7 +64,7 @@ const SignUpPhoto = ({
               htmlFor="form-img__file"
               className="button form-img__file-button"
             >
-              Continue
+              Crop photo
             </label>
           </div>
         </div>

@@ -13,12 +13,7 @@ import SpinnerImageColor from "../blocks/spinner-image";
 import SpinnerTitle from "../blocks/spinner-title";
 import CoderiverSpinner from "./CoderiverSpinner";
 
-const Spinner = ({
-  spinnerData,
-  updateCurrentChild,
-  // animationParams,
-  getUserParams,
-}) => {
+const Spinner = ({ spinnerData, updateCurrentChild, getUserParams }) => {
   const spinnerElement = useRef(null);
   const spinnerPointer = useRef(null);
   const btn = useRef(null);
@@ -114,7 +109,7 @@ const Spinner = ({
         scale: 0,
         duration: 0.5,
         transformOrigin: "center 51.5%",
-      }) // zoom out lottie animation
+      })
       .to(btn.current, { scale: 1, duration: 0.3, ease: "easeOut" });
   };
 
@@ -128,7 +123,6 @@ const Spinner = ({
       .timeline()
       .to(btn.current, { scale: 0.8, duration: 0.15, ease: "easeOut" })
       .to(btn.current, { scale: 1, duration: 0.15, ease: "easeOut" });
-    // .to(btn.current, {scale: 0.6, duration: 0.5, ease: 'easeOut'});
 
     beginToStopAnimation();
   };
@@ -142,7 +136,6 @@ const Spinner = ({
 
     const userParams = await getUserParams();
 
-    // if (userParams.levelStart !== userParams.levelEnd) setIsLvlUp(true);
     const isLvlUp = userParams.levelStart !== userParams.levelEnd;
     const isRankUp = userParams.rankStart !== userParams.rankEnd;
 
@@ -173,7 +166,7 @@ const Spinner = ({
 
         gsap.to(btn.current, { scale: 0.8, duration: 0.5, ease: "easeOut" });
 
-        setIsSpinnerDone(true); // start lottie animation
+        setIsSpinnerDone(true);
 
         gsap.fromTo(
           winningAmountRef.current,
@@ -183,13 +176,11 @@ const Spinner = ({
 
         setTimerId2(
           setTimeout(() => {
-            updateCurrentChild(amount - 1, userParams.entry); // start header animation
+            updateCurrentChild(amount - 1, userParams.entry);
           }, 1450)
-        ); // we are waiting this time when lottie animation starting)
-
-        setTimerId3(
-          setTimeout(restartAnimation, lottieDuration) // this time should depend on the script
         );
+
+        setTimerId3(setTimeout(restartAnimation, lottieDuration));
       }, stopAnimationDuration)
     );
   };

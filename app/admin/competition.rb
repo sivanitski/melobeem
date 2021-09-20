@@ -20,7 +20,7 @@ ActiveAdmin.register Competition do # rubocop:disable Metrics/BlockLength
   filter :prize_cents
   filter :starts_at
   filter :ends_at
-  filter :status, as: :select, collection: Competition.statuses.keys
+  filter :status, as: :select, collection: Competition.statuses.to_a
   filter :revenue
   filter :created_at
   filter :updated_at

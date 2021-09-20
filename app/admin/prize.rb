@@ -19,7 +19,7 @@ ActiveAdmin.register Prize do # rubocop:disable Metrics/BlockLength
   filter :spent
   filter :entry, as: :searchable_select
   filter :value, as: :select, collection: %w[1 5 10 20 30]
-  filter :source_type, as: :select, collection: Prize.source_types.keys
+  filter :source_type, as: :select, collection: Prize.source_types.to_a
   filter :created_at
   filter :updated_at
 

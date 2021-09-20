@@ -16,7 +16,6 @@ import votePrize9 from "../../images/level-prize-animation-9.json";
 import votePrize10 from "../../images/level-prize-animation-10.json";
 
 export default function VotePrizeAnimation({ number }) {
-  console.log("prize: ", number);
   const votePrize = {
     1: votePrize1,
     2: votePrize2,

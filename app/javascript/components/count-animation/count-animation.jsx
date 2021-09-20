@@ -31,11 +31,11 @@ const CountAnimation = ({
   const delaysData = {
     spinner: {
       vote: [1450, 1450],
-      rank: [3150, 6450],
+      rank: [4150, 7450],
     },
     level: {
       vote: [2000, 2000],
-      rank: [6000, 9300],
+      rank: [7000, 10300],
     },
   };
 
@@ -69,9 +69,6 @@ const CountAnimation = ({
           playAnimation();
         }, delay)
       );
-
-      console.log(`delay of ${title}: ${delay}`);
-      console.log(`duration of ${title}: ${duration}`);
     }
   }, [animationParams?.isAnimationPlay, animationParams?.votesEnd]);
 
@@ -95,20 +92,6 @@ const CountAnimation = ({
         );
       },
     });
-
-    // setTimerId2(
-    //   setTimeout(() => {
-    //     if (animationStep) {
-    //       if (animationStep === 3) {
-
-    //         if (handleAnimationEnd) {
-    //           console.log('end from CountAnimation');
-    //           handleAnimationEnd();
-    //         }
-    //       }
-    //     }
-    //   }, duration)
-    // );
   };
 
   return (
@@ -121,7 +104,10 @@ const CountAnimation = ({
       >
         {number}
       </div>
-      {title === "vote" && isVoteSulutVisible ? <VoteSalut /> : null}
+      {/* {title === "vote" ? <VoteSalut isPlay={isVoteSulutVisible} /> : null} */}
+      {/* <VoteSalut isPlay={isVoteSulutVisible} />  */}
+      {/* {title === "vote" && isVoteSulutVisible ? <VoteSalut /> : null} */}
+      {/* <VoteSalut /> */}
     </div>
   );
 };

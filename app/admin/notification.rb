@@ -15,7 +15,7 @@ ActiveAdmin.register Notification do # rubocop:disable Metrics/BlockLength
 
   filter :user, as: :searchable_select
   filter :entry, as: :searchable_select
-  filter :source_type, as: :select, collection: Notification.source_types.keys
+  filter :source_type, as: :select, collection: Notification.source_types.to_a
   filter :read
   filter :created_at
   filter :updated_at

@@ -81,7 +81,7 @@ RSpec.describe API::V1::EntriesController do
 
     it { expect(response.status).to eq 200 }
 
-    it { expect(response).to match_response_schema('entries/ranked') }
+    it { expect(response).to match_response_schema('entries/show') }
 
     it { expect(Entry.count).to be 1 }
   end

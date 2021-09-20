@@ -20,11 +20,11 @@ ActiveAdmin.register PurchaseTransaction do # rubocop:disable Metrics/BlockLengt
   filter :amount
   filter :amount_received
   filter :value
-  filter :status, as: :select, collection: PurchaseTransaction.statuses.keys
+  filter :status, as: :select, collection: PurchaseTransaction.statuses.to_a
   filter :user, as: :searchable_select
   filter :entry, as: :searchable_select
   filter :competition, as: :searchable_select
-  filter :product_type, as: :select, collection: PurchaseTransaction.product_types.keys
+  filter :product_type, as: :select, collection: PurchaseTransaction.product_types.to_a
   filter :created_at
   filter :updated_at
 
