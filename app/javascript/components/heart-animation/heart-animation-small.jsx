@@ -2,8 +2,6 @@ import propTypes from "prop-types";
 import React from "react";
 
 const HeartAnimationSmall = ({ animationLevelStart, animationLevelEnd }) => {
-  console.log('animationLevelStart from heart', animationLevelStart);
-  console.log('animationLevelEnd from heart', animationLevelEnd);
   return (
     <svg
       width="68"

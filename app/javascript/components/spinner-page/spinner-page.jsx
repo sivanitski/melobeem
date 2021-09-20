@@ -42,6 +42,10 @@ const SpinnerPage = () => {
     loadCurrentChild();
   }, []);
 
+  // useEffect(() => {
+  //   console.log('currentChild', currentChild)
+  // }, [currentChild])
+
   const getSpinnersInfo = () => {
     return api.get(`/spins/check_presence`);
   };

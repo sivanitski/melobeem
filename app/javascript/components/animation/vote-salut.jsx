@@ -1,15 +1,36 @@
 import React from "react";
 import Lottie from "react-lottie-player";
+import { useEffect, useState, useRef } from "react/cjs/react.development";
 
-import lottieVoteSalut from "../../images/vote-salut.json";
+import lottieVoteSalut from "../../images/spark-for-vote.json";
+// import lottieVoteSalut from "../../images/vote-salut.json";
 
 export default function VoteSalut() {
+  const voteSalutRef = useRef(null);
+
+  // useEffect(() => {
+  //   let counter = 0;
+  //   [...voteSalutRef.current.querySelectorAll("svg path")].forEach((path) => {
+  //     const gOriginal = path.parentElement;
+  //     const gParent = gOriginal.parentElement;
+  //     const gsInParent = [...gParent.childNodes];
+
+  //     gsInParent.forEach((g) => {
+  //       if (g !== gOriginal) g.remove();
+  //     });
+
+  //     counter += gsInParent.length - 1;
+  //   });
+  //   console.log("counter", counter);
+  // }, []);
+
   return (
-    <div className="vote-salut-animation">
+    <div className="vote-salut-animation" ref={voteSalutRef}>
       <Lottie
         animationData={lottieVoteSalut}
-        play
         speed={1}
+        // play={isPlay}
+        play
         style={{
           display: "flex",
           placeContent: "center",
