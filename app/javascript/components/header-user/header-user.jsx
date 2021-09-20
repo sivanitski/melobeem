@@ -104,9 +104,9 @@ const HeaderUser = ({ child, animationParams, isLvlUp }) => {
 
 HeaderUser.propTypes = {
   child: defaultProptypes.CHILD,
+  isLvlUp: propTypes.bool,
   animationParams: propTypes.shape({
     isAnimationPlay: propTypes.bool,
-    isLvlUp: propTypes.bool,
     votesStart: propTypes.number,
     votesEnd: propTypes.number,
     rankStart: propTypes.number,
