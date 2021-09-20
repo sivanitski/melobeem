@@ -1,6 +1,6 @@
 import "./style.less";
-import gsap from "gsap";
 
+import gsap from "gsap";
 import propTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 
