@@ -7,11 +7,7 @@ import defaultProptypes from "../../default-proptypes";
 import { HeaderUserItem } from "../header-user-item";
 import { HeaderUserLevel } from "../header-user-level";
 
-const HeaderUser = ({
-  child,
-  animationParams,
-  isLvlUp,
-}) => {
+const HeaderUser = ({ child, animationParams, isLvlUp }) => {
   const [animationStep, setAnimationStep] = useState(0);
 
   // useEffect(() => {
@@ -110,6 +106,7 @@ HeaderUser.propTypes = {
   child: defaultProptypes.CHILD,
   animationParams: propTypes.shape({
     isAnimationPlay: propTypes.bool,
+    isLvlUp: propTypes.bool,
     votesStart: propTypes.number,
     votesEnd: propTypes.number,
     rankStart: propTypes.number,
