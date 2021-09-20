@@ -196,6 +196,7 @@ HeaderUserLevel.propTypes = {
   totalVotesStart: propTypes.number,
   isAnimation: propTypes.bool,
   setAnimationStep: propTypes.func,
+  animationParams: propTypes.object,
   animationStep: propTypes.number,
   levelUpWrapperClass: propTypes.string,
 

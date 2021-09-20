@@ -4,7 +4,6 @@ import gsap from "gsap";
 import propTypes from "prop-types";
 import React, { useEffect, useRef, useState } from "react";
 
-
 const CountAnimation = ({
   numberStart,
   numberEnd,
@@ -68,7 +67,6 @@ const CountAnimation = ({
     }
   }, [animationParams?.isAnimationPlay, animationParams?.votesEnd]);
 
-
   const playAnimation = () => {
     const cont = { val: numberStart };
     gsap.to(cont, {
@@ -112,6 +110,11 @@ CountAnimation.propTypes = {
   numberStart: propTypes.number,
   delay: propTypes.number,
   duration: propTypes.number,
+  value: propTypes.number,
+  title: propTypes.string,
+  typeOfPage: propTypes.string,
+  animationParams: propTypes.object,
+  animationParams: propTypes.object,
   isDecrease: propTypes.bool,
   animationStep: propTypes.number,
   setAnimationStep: propTypes.func,

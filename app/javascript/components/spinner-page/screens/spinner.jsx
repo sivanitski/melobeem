@@ -139,21 +139,21 @@ const Spinner = ({ spinnerData, updateCurrentChild, getUserParams }) => {
     const isLvlUp = userParams.levelStart !== userParams.levelEnd;
     const isRankUp = userParams.rankStart !== userParams.rankEnd;
 
-    let lottieDuration = 8150;
+    let lottieDuration = 8350;
     let scnr = 1;
 
     if (isLvlUp && isRankUp) {
       scnr = 1;
-      lottieDuration = 8250;
+      lottieDuration = 8450;
     } else if (isLvlUp && !isRankUp) {
       scnr = 2;
-      lottieDuration = 7350;
+      lottieDuration = 7550;
     } else if (!isLvlUp && isRankUp) {
       scnr = 3;
-      lottieDuration = 4450;
+      lottieDuration = 4650;
     } else if (!isLvlUp && !isRankUp) {
       scnr = 4;
-      lottieDuration = 4050;
+      lottieDuration = 4250;
     }
 
     setScenario(scnr);

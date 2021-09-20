@@ -55,6 +55,8 @@ HeaderUserItem.propTypes = {
   numberEnd: propTypes.number,
   delay: propTypes.number,
   duration: propTypes.number,
+  animationParams: propTypes.object,
+  typeOfPage: propTypes.string,
   isDecrease: propTypes.bool,
   animationStep: propTypes.number,
   setAnimationStep: propTypes.func,
