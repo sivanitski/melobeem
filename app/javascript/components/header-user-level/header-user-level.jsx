@@ -203,7 +203,7 @@ HeaderUserLevel.propTypes = {
 };
 
 HeaderUserLevel.defaultProps = {
-  delayOfHeartAnim: 2650,
+  delayOfHeartAnim: 3400,
 };
 
 export default HeaderUserLevel;
