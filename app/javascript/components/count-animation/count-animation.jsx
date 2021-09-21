@@ -47,7 +47,7 @@ const CountAnimation = ({
   }, [timerId2]);
 
   useEffect(() => {
-    const isLvlUp = animationParams.levelStart !== animationParams.levelEnd;
+    const isLvlUp = animationParams?.levelStart !== animationParams?.levelEnd;
     delay = delaysData?.[typeOfPage]?.[title]?.[Number(isLvlUp)] || 0;
   }, [animationParams]);
 
