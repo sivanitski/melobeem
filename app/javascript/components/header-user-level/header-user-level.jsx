@@ -1,7 +1,6 @@
 import gsap from "gsap";
 import propTypes from "prop-types";
-import React from "react";
-import { useEffect, useState } from "react/cjs/react.development";
+import React, { useEffect, useState } from "react";
 
 import { getAnimationLevel, getVoteValueFromLevel } from "../../helpers/level";
 import HeartLevel from "../heart-animation/heart-level";

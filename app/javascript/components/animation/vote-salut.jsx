@@ -1,5 +1,4 @@
-import React from "react";
-import { useRef } from "react/cjs/react.development";
+import React, { useRef } from "react";
 import Lottie from "react-lottie-player";
 
 import lottieVoteSalut from "../../images/spark-for-vote.json";
