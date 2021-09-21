@@ -1,20 +1,23 @@
 import "./style.less";
 
 import propTypes from "prop-types";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import defaultProptypes from "../../default-proptypes";
 import { HeaderUserItem } from "../header-user-item";
 import { HeaderUserLevel } from "../header-user-level";
 
-const HeaderUser = ({ child, animationParams, handleAnimationEnd }) => {
+const HeaderUser = ({ child, animationParams, isLvlUp }) => {
   const [animationStep, setAnimationStep] = useState(0);
 
-  useEffect(() => {
-    if (animationParams?.isAnimationPlay) {
-      setAnimationStep(1);
-    }
-  }, [animationParams?.isAnimationPlay, animationParams?.votesEnd]);
+  // useEffect(() => {
+  //   if (animationParams?.isAnimationPlay) {
+
+  //     // console.log('PLAY callbacks from header');
+
+  //     // setAnimationStep(1);
+  //   }
+  // }, [animationParams?.isAnimationPlay, animationParams?.votesEnd]);
 
   const calculateChildTotalVotes = () => {
     if (!animationParams?.isAnimationPlay) {
@@ -52,13 +55,16 @@ const HeaderUser = ({ child, animationParams, handleAnimationEnd }) => {
     <div className="header-user">
       <div className="header-user__list">
         <HeaderUserItem
-          title="Votes"
+          title="vote"
           value={calculateChildTotalVotes()}
-          isAnimationPlay={animationStep === 1}
+          isAnimationPlay={animationParams?.isAnimationPlay}
           numberStart={animationParams?.votesStart}
           numberEnd={animationParams?.votesEnd}
           animationStep={animationStep}
           setAnimationStep={setAnimationStep}
+          typeOfPage={"spinner"}
+          duration={1000}
+          animationParams={animationParams}
         />
         <HeaderUserLevel
           levelStart={calculateLevelStart()}
@@ -73,20 +79,23 @@ const HeaderUser = ({ child, animationParams, handleAnimationEnd }) => {
               : child.totalVotes
           }
           totalVotesStart={calculateTotalVotesStart()}
-          isAnimation={animationStep === 2}
+          isAnimation={animationParams?.isAnimationPlay}
           animationStep={animationStep}
           setAnimationStep={setAnimationStep}
+          animationParams={animationParams}
+          isLvlUp={isLvlUp}
         />
         <HeaderUserItem
-          title="Rank"
-          isAnimationPlay={animationStep === 3}
+          title="rank"
+          isAnimationPlay={animationParams?.isAnimationPlay}
           value={calculateChildRank()}
           numberStart={animationParams?.rankStart}
           numberEnd={animationParams?.rankEnd}
-          isDecrease
           animationStep={animationStep}
           setAnimationStep={setAnimationStep}
-          handleAnimationEnd={handleAnimationEnd}
+          animationParams={animationParams}
+          typeOfPage={"spinner"}
+          duration={200}
         />
       </div>
     </div>
@@ -95,6 +104,7 @@ const HeaderUser = ({ child, animationParams, handleAnimationEnd }) => {
 
 HeaderUser.propTypes = {
   child: defaultProptypes.CHILD,
+  isLvlUp: propTypes.bool,
   animationParams: propTypes.shape({
     isAnimationPlay: propTypes.bool,
     votesStart: propTypes.number,

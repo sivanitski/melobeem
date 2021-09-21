@@ -16,6 +16,8 @@ import Spinner from "./screens/spinner";
 const SpinnerPage = () => {
   const { user, setUser } = useContext(UserContext);
   const [isPopupShown, setIsPopupShown] = useState(false);
+  const [isLvlUp, setIsLvlUp] = useState(false);
+  const [isRankUp, setIsRankUp] = useState(false);
 
   const history = useHistory();
   const { currentChild, setCurrentChild } = useContext(ChildContext);
@@ -78,6 +80,9 @@ const SpinnerPage = () => {
       data: { entry },
     } = await api.get("/entries/current");
 
+    setIsLvlUp(currentChild.level !== entry.level);
+    setIsRankUp(currentChild.rank !== entry.rank);
+
     return {
       entry: entry,
       votesStart: currentChild.totalVotes,
@@ -90,21 +95,6 @@ const SpinnerPage = () => {
   };
 
   const updateCurrentChild = (spinsAmount, entry) => {
-    // setAnimationParams((animationParams) => ({
-    //   ...animationParams,
-    //   votesStart: currentChild.totalVotes,
-    //   rankStart: currentChild.rank,
-    //   levelStart: currentChild.level,
-    //   level: currentChild.level,
-    //   rankEnd: currentChild.rank,
-    //   levelEnd: currentChild.level,
-    //   totalVotesEnd: currentChild.totalVotes,
-    // }));
-
-    // const {
-    //   data: { entry },
-    // } = await api.get("/entries/current");
-
     setAnimationParams((animationParams) => ({
       ...animationParams,
       isAnimationPlay: true,
@@ -116,17 +106,18 @@ const SpinnerPage = () => {
       votesEnd: entry.totalVotes,
       level: entry.level,
       levelEnd: entry.level,
-      rankEnd: currentChild.rank,
+      // rankEnd: currentChild.rank,
+      rankEnd: entry.rank,
       totalVotesEnd: entry.totalVotes,
       handleAnimationEnd: handleAnimationEnd(spinsAmount, entry),
     }));
 
-    setTimeout(() => {
-      setAnimationParams((animationParams) => ({
-        ...animationParams,
-        rankEnd: entry.rank,
-      }));
-    }, 7000);
+    // setTimeout(() => {
+    //   setAnimationParams((animationParams) => ({
+    //     ...animationParams,
+    //     rankEnd: entry.rank,
+    //   }));
+    // }, 7000);
   };
 
   const popupType = !user ? "spinner-not-login" : "spinner-not-entered";
@@ -178,6 +169,8 @@ const SpinnerPage = () => {
         child={currentChild}
         animationParams={animationParams}
         handleAnimationEnd={animationParams?.handleAnimationEnd}
+        isLvlUp={isLvlUp}
+        isRankUp={isRankUp}
       />
 
       {renderSpinnerScreen()}

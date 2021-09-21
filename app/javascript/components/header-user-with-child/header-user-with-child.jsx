@@ -1,7 +1,7 @@
 import "./style.less";
 
 import propTypes from "prop-types";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 
 import defaultProptypes from "../../default-proptypes";
@@ -19,12 +19,22 @@ const HeaderUserWithChild = ({
   setAnimationStep,
   levelUpWrapperClass,
 }) => {
+  const [isAnimPlay, setIsAnimPlay] = useState(false);
+
   const history = useHistory();
   useEffect(() => {
     if (animationParams?.isAnimationPlay) {
+      // setTimeout(() => {
       setAnimationStep(1);
+      // }, 1000)
     }
   }, [animationParams?.isAnimationPlay]);
+
+  useEffect(() => {
+    if (animationParams?.isAnimationPlay) {
+      setIsAnimPlay(true);
+    }
+  }, [animationParams?.isAnimationPlay, animationParams?.votesEnd]);
 
   const calculateChildTotalVotes = () => {
     if (!animationParams?.isAnimationPlay) {
@@ -65,13 +75,16 @@ const HeaderUserWithChild = ({
       </div>
       <div className="header-user__list header-user__list--shadow">
         <HeaderUserItem
-          title="Votes"
+          title="vote"
           value={calculateChildTotalVotes()}
           isAnimationPlay={animationStep === 1}
           numberStart={animationParams?.votesStart}
           numberEnd={animationParams?.votesEnd}
           animationStep={animationStep}
           setAnimationStep={setAnimationStep}
+          animationParams={animationParams}
+          isAnimPlay={isAnimPlay}
+          typeOfPage={"level"}
         />
         <div className="header-user__item header-user__item--user">
           <div
@@ -83,15 +96,17 @@ const HeaderUserWithChild = ({
           <div className="header-user__name">{child.name}</div>
         </div>
         <HeaderUserItem
-          title="Rank"
+          title="rank"
           value={calculateChildRank()}
           isAnimationPlay={animationStep === 3}
           numberStart={animationParams?.rankStart}
           numberEnd={animationParams?.rankEnd}
-          isDecrease
           animationStep={animationStep}
           setAnimationStep={setAnimationStep}
           handleAnimationEnd={handleAnimationEnd}
+          animationParams={animationParams}
+          isAnimPlay={isAnimPlay}
+          typeOfPage={"level"}
         />
       </div>
       <HeaderUserLevel
@@ -111,6 +126,8 @@ const HeaderUserWithChild = ({
         animationStep={animationStep}
         setAnimationStep={setAnimationStep}
         levelUpWrapperClass={levelUpWrapperClass}
+        animationParams={animationParams}
+        delayOfHeartAnim={4500}
       />
     </div>
   );

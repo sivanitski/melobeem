@@ -4,16 +4,16 @@ import propTypes from "prop-types";
 import React from "react";
 import Lottie from "react-lottie-player";
 
-import votePrize1 from "../../images/level-vote-prize-animation-1.json";
-import votePrize2 from "../../images/level-vote-prize-animation-2.json";
-import votePrize3 from "../../images/level-vote-prize-animation-3.json";
-import votePrize4 from "../../images/level-vote-prize-animation-4.json";
-import votePrize5 from "../../images/level-vote-prize-animation-5.json";
-import votePrize6 from "../../images/level-vote-prize-animation-6.json";
-import votePrize7 from "../../images/level-vote-prize-animation-7.json";
-import votePrize8 from "../../images/level-vote-prize-animation-8.json";
-import votePrize9 from "../../images/level-vote-prize-animation-9.json";
-import votePrize10 from "../../images/level-vote-prize-animation-10.json";
+import votePrize1 from "../../images/level-prize-animation-1.json";
+import votePrize2 from "../../images/level-prize-animation-2.json";
+import votePrize3 from "../../images/level-prize-animation-3.json";
+import votePrize4 from "../../images/level-prize-animation-4.json";
+import votePrize5 from "../../images/level-prize-animation-5.json";
+import votePrize6 from "../../images/level-prize-animation-6.json";
+import votePrize7 from "../../images/level-prize-animation-7.json";
+import votePrize8 from "../../images/level-prize-animation-8.json";
+import votePrize9 from "../../images/level-prize-animation-9.json";
+import votePrize10 from "../../images/level-prize-animation-10.json";
 
 export default function VotePrizeAnimation({ number }) {
   const votePrize = {
