@@ -1,5 +1,5 @@
 ActiveAdmin.register User do # rubocop:disable Metrics/BlockLength
-  permit_params :name, :provider, :uid, :email, :password, :deactivated, :premium_spins, :admin
+  permit_params :name, :provider, :uid, :email, :deactivated, :premium_spins, :admin
 
   index do
     selectable_column
@@ -37,7 +37,6 @@ ActiveAdmin.register User do # rubocop:disable Metrics/BlockLength
       f.input :provider
       f.input :uid
       f.input :email
-      f.input :password
       f.input :deactivated
       f.input :premium_spins
       f.input :admin
@@ -50,7 +49,7 @@ ActiveAdmin.register User do # rubocop:disable Metrics/BlockLength
     f.actions
   end
 
-  show do
+  show do # rubocop:disable Metrics/BlockLength
     attributes_table do
       row :name
       row :provider
@@ -67,6 +66,16 @@ ActiveAdmin.register User do # rubocop:disable Metrics/BlockLength
       row :updated_at
       row :avatar do |img|
         image_tag(img.avatar.url, height: '200')
+      end
+    end
+    panel 'Purchases' do
+      table_for user.purchase_transactions do
+        column :entry
+        column :status
+        column :value
+        column :amount
+        column :product_type
+        column :created_at
       end
     end
     active_admin_comments
