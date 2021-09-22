@@ -1,6 +1,7 @@
 import { useRequest } from "ahooks";
+import { Elastic, gsap } from "gsap";
 import propTypes from "prop-types";
-import React from "react";
+import React, { useCallback } from "react";
 
 import { api } from "../../../api";
 import SpinnerOrange from "../../../images/spinner-orange-small.svg";
@@ -17,6 +18,22 @@ const SpinnerList = ({ handlePriceClick }) => {
     formatResult: (res) => res.data.products,
   });
 
+  const spinnerListRef = useCallback((node) => {
+    if (node) {
+      const paymentCards = node.querySelectorAll(".spinner-item");
+      gsap.fromTo(
+        paymentCards,
+        { scale: 0 },
+        {
+          scale: 1,
+          duration: 1,
+          stagger: 0.5,
+          ease: Elastic.easeOut.config(1, 0.6),
+        }
+      );
+    }
+  }, []);
+
   if (loading) {
     return <Loader />;
   }
@@ -24,7 +41,7 @@ const SpinnerList = ({ handlePriceClick }) => {
   return (
     <div className="spinner">
       <SpinnerTitle />
-      <div className="spinner-list">
+      <div className="spinner-list" ref={spinnerListRef}>
         {spinOptions.map((spinOption, index) => (
           <div
             className={`spinner-item spinner-zoom-in-product-${index}`}
