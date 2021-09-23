@@ -13,7 +13,12 @@ import SpinnerImageColor from "../blocks/spinner-image";
 import SpinnerTitle from "../blocks/spinner-title";
 import CoderiverSpinner from "./CoderiverSpinner";
 
-const Spinner = ({ spinnerData, updateCurrentChild, getUserParams }) => {
+const Spinner = ({
+  spinnerData,
+  updateCurrentChild,
+  getUserParams,
+  handleAnimationEnd,
+}) => {
   const spinnerElement = useRef(null);
   const spinnerPointer = useRef(null);
   const btn = useRef(null);
@@ -87,9 +92,12 @@ const Spinner = ({ spinnerData, updateCurrentChild, getUserParams }) => {
     startBlinking();
   };
 
-  const restartAnimation = () => {
-    if (amount === 0 || !amount) {
+  const restartAnimation = (spinsAmount, entry) => {
+    if (amount - 1 === 0 || !amount) {
       setZoomOutSpinner(true);
+      setTimeout(() => {
+        handleAnimationEnd(spinsAmount, entry);
+      }, 500);
       return;
     }
 
@@ -180,7 +188,11 @@ const Spinner = ({ spinnerData, updateCurrentChild, getUserParams }) => {
           }, 1450)
         );
 
-        setTimerId3(setTimeout(restartAnimation, lottieDuration));
+        setTimerId3(
+          setTimeout(() => {
+            restartAnimation(amount - 1, userParams.entry);
+          }, lottieDuration)
+        );
       }, stopAnimationDuration)
     );
   };
@@ -229,6 +241,7 @@ Spinner.propTypes = {
     count: propTypes.number,
   }),
   updateCurrentChild: propTypes.func,
+  handleAnimationEnd: propTypes.func,
   getUserParams: propTypes.func,
 };
 

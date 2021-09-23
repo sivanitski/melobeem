@@ -109,7 +109,7 @@ const SpinnerPage = () => {
       // rankEnd: currentChild.rank,
       rankEnd: entry.rank,
       totalVotesEnd: entry.totalVotes,
-      handleAnimationEnd: handleAnimationEnd(spinsAmount, entry),
+      // handleAnimationEnd: handleAnimationEnd(spinsAmount, entry),
     }));
 
     // setTimeout(() => {
@@ -146,6 +146,7 @@ const SpinnerPage = () => {
     if (data.type) {
       return (
         <Spinner
+          handleAnimationEnd={handleAnimationEnd}
           spinnerData={data}
           animationParams={animationParams}
           getUserParams={getUserParams}
@@ -168,7 +169,8 @@ const SpinnerPage = () => {
       <HeaderUser
         child={currentChild}
         animationParams={animationParams}
-        handleAnimationEnd={animationParams?.handleAnimationEnd}
+        // handleAnimationEnd={() => {console.log('handle end');}}
+        // handleAnimationEnd={animationParams?.handleAnimationEnd}
         isLvlUp={isLvlUp}
         isRankUp={isRankUp}
       />
