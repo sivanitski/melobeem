@@ -18,6 +18,7 @@ const HeaderUserWithChild = ({
   animationStep,
   setAnimationStep,
   levelUpWrapperClass,
+  afterEndHandler,
 }) => {
   const [isAnimPlay, setIsAnimPlay] = useState(false);
 
@@ -67,7 +68,6 @@ const HeaderUserWithChild = ({
       history.push(`/entry/${child.id}`);
     }
   };
-
   return (
     <div className="header-user header-user--with-info">
       <div onClick={handleGoBackClick} className="go-back">
@@ -107,6 +107,7 @@ const HeaderUserWithChild = ({
           animationParams={animationParams}
           isAnimPlay={isAnimPlay}
           typeOfPage={"level"}
+          afterEndHandler={afterEndHandler}
         />
       </div>
       <HeaderUserLevel
@@ -147,6 +148,7 @@ HeaderUserWithChild.propTypes = {
   }),
 
   handleAnimationEnd: propTypes.func,
+  afterEndHandler: propTypes.func,
   isGoToVoteList: propTypes.bool,
   handleGoToVoteOptions: propTypes.func,
   animationStep: propTypes.number,

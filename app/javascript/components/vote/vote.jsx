@@ -38,15 +38,7 @@ const Vote = ({
   });
   const [currentPage, setCurrentPage] = useState("vote");
 
-  const [animationParams, setAnimationParams] = useState({
-    isAnimationPlay: false,
-    votesStart: 0,
-    votesEnd: 0,
-    rankStart: 0,
-    rankEnd: 0,
-    levelStart: 0,
-    levelEnd: 0,
-  });
+  const [animationParams, setAnimationParams] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -69,6 +61,19 @@ const Vote = ({
   const { data: child, error, loading } = useRequest(getCurrentCompetitor, {
     formatResult: (res) => res.data.entry,
   });
+
+  if (child && !animationParams) {
+    setAnimationParams((animationParams) => ({
+      ...animationParams,
+      votesStart: child.totalVotes,
+      rankStart: child.rank,
+      levelStart: child.level,
+      level: child.level,
+      rankEnd: child.rank,
+      levelEnd: child.level,
+      totalVotesEnd: child.totalVotes,
+    }));
+  }
 
   const {
     data: timeFreeVote,
@@ -201,7 +206,12 @@ const Vote = ({
     }
 
     if (currentPage === "animation") {
-      return <AnimationAfterPurchase value={activeOption.value} />;
+      return (
+        <AnimationAfterPurchase
+          value={activeOption.value}
+          animationParams={animationParams}
+        />
+      );
     }
 
     return null;
@@ -218,6 +228,9 @@ const Vote = ({
         animationStep={animationStep}
         setAnimationStep={setAnimationStep}
         levelUpWrapperClass={"vote-level-up"}
+        afterEndHandler={() => {
+          setCurrentPage("vote");
+        }}
       />
 
       {renderVoteScreen()}

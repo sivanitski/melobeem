@@ -1,7 +1,8 @@
 import React from "react";
 import Lottie from "react-lottie-player";
 
-import levelUpAnimationJson from "../../images/level-up-animation.json";
+import levelUpAnimationJson from "../../images/level-up-anim.json";
+// import levelUpAnimationJson from "../../images/level-up-animation.json";
 
 export default function LevelUpAnimation() {
   return (

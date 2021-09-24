@@ -14,6 +14,7 @@ const CountAnimation = ({
   title,
   animationParams,
   typeOfPage,
+  afterEndHandler,
 }) => {
   const listElement = useRef(null);
 
@@ -80,6 +81,7 @@ const CountAnimation = ({
       },
       onComplete: () => {
         setIsVoteSulutVisible(true);
+        if (afterEndHandler) afterEndHandler();
         setTimerId2(
           setTimeout(() => {
             setIsVoteSulutVisible(false);
@@ -116,11 +118,11 @@ CountAnimation.propTypes = {
   title: propTypes.string,
   typeOfPage: propTypes.string,
   animationParams: propTypes.object,
-  animationParams: propTypes.object,
   isDecrease: propTypes.bool,
   animationStep: propTypes.number,
   setAnimationStep: propTypes.func,
   handleAnimationEnd: propTypes.func,
+  afterEndHandler: propTypes.func,
 };
 
 CountAnimation.defaultProps = {

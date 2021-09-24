@@ -14,6 +14,7 @@ const HeaderUserItem = ({
   handleAnimationEnd,
   animationParams,
   typeOfPage,
+  afterEndHandler,
   ...countProps
 }) => {
   if (isAnimationPlay && numberStart === numberEnd && title === "Rank") {
@@ -37,6 +38,7 @@ const HeaderUserItem = ({
           typeOfPage={typeOfPage}
           title={title}
           animationParams={animationParams}
+          afterEndHandler={afterEndHandler}
           {...{ ...countProps }}
         />
         {/* ) : (
@@ -61,6 +63,7 @@ HeaderUserItem.propTypes = {
   animationStep: propTypes.number,
   setAnimationStep: propTypes.func,
   handleAnimationEnd: propTypes.func,
+  afterEndHandler: propTypes.func,
 };
 CountAnimation.defaultProps = {
   delay: 0,
