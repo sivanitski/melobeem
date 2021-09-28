@@ -62,6 +62,8 @@ const LevelSwiperMenu = ({
       spaceBetween={1}
       slidesPerView="auto"
       initialSlide={initialSlide}
+      resistanceRatio="0.85"
+      freeMode={true}
     >
       {renderSlides()}
     </Swiper>
