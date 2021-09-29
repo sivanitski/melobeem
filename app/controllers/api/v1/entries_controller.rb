@@ -159,8 +159,8 @@ module API
       end
 
       def setup_meta_tags(entry)
-        @page_title = "Please support #{entry.name} in the #{Time.current.strftime('%B')} Competition! 😍️"
-        @page_description = 'Click here to go to melobeem.com and vote now! ❤'
+        @page_title = "Check out #{entry.user.name.split(' ').first}'s entry on Melobeem.com"
+        @page_description = "Help them win a cash prize and certificate for their baby #{entry.name}."
         @page_url = "https://melobeem.com/entry/#{entry.id}"
         @page_image = entry.image.variant(format: :jpg, resize_to_limit: [1200, 628]).processed.service_url if entry.image.attached?
       end
