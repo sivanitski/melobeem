@@ -15,10 +15,12 @@ const CountAnimation = ({
   animationParams,
   typeOfPage,
   afterEndHandler,
+  isGrey,
 }) => {
   const listElement = useRef(null);
 
   const [number, setNumber] = useState(numberStart);
+  const [grey, setGrey] = useState(false);
   const [isVoteSulutVisible, setIsVoteSulutVisible] = useState(false);
   const [timerId1, setTimerId1] = useState(null);
   const [timerId2, setTimerId2] = useState(null);
@@ -82,6 +84,9 @@ const CountAnimation = ({
       onComplete: () => {
         setIsVoteSulutVisible(true);
         if (afterEndHandler) afterEndHandler();
+
+        if (isGrey) setGrey(true);
+
         setTimerId2(
           setTimeout(() => {
             setIsVoteSulutVisible(false);
@@ -97,13 +102,15 @@ const CountAnimation = ({
         ref={listElement}
         className={`header-user__item__number headline--medium text-pink count__list ${
           isDecrease && "count__list--decrease"
-        }`}
+        }
+        ${grey && "text-grey background-light"}
+        `}
       >
-        {number}
+        {grey ? numberStart : number}
       </div>
       {/* {title === "vote" ? <VoteSalut isPlay={isVoteSulutVisible} /> : null} */}
       {/* <VoteSalut isPlay={isVoteSulutVisible} />  */}
-      {title === "vote" && isVoteSulutVisible ? <VoteSalut /> : null}
+      {title === "vote" && !grey && isVoteSulutVisible ? <VoteSalut /> : null}
       {/* <VoteSalut /> */}
     </div>
   );
@@ -119,6 +126,7 @@ CountAnimation.propTypes = {
   typeOfPage: propTypes.string,
   animationParams: propTypes.object,
   isDecrease: propTypes.bool,
+  isGrey: propTypes.bool,
   animationStep: propTypes.number,
   setAnimationStep: propTypes.func,
   handleAnimationEnd: propTypes.func,

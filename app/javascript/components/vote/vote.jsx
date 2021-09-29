@@ -229,7 +229,7 @@ const Vote = ({
         setAnimationStep={setAnimationStep}
         levelUpWrapperClass={"vote-level-up"}
         afterEndHandler={() => {
-          setCurrentPage("vote");
+          // setCurrentPage("vote");
         }}
       />
 

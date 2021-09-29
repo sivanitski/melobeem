@@ -16,6 +16,7 @@ const AnimationAfterPurchase = ({ value, animationParams }) => {
             animationParams={animationParams}
             typeOfPage={"level"}
             title={"vote"}
+            isGrey={true}
           />
         </div>
         <div className="vote-animation__subtitle text-grey">votes</div>
