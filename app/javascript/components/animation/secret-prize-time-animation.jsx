@@ -5,7 +5,7 @@ import secretPrizeTimeAnim from "../../images/secret-prize-time-anim.json";
 
 export default function SecretPrizeTimeAnimation() {
   return (
-    <div className="animation animation--loader">
+    <div className="animation animation--loader award-animation--loader">
       <Lottie loop={false} animationData={secretPrizeTimeAnim} play />
     </div>
   );
