@@ -7,6 +7,9 @@ import { api } from "../../../api";
 import ChildContext from "../../../helpers/child-context";
 import { calcDaysLeft } from "../../../helpers/date";
 import { makePluralForm } from "../../../helpers/utils";
+import AwardSpinner from "../../../images/award-spinner.svg";
+import AwardTimer from "../../../images/award-timer.svg";
+import AwardVote from "../../../images/award-vote.svg";
 import GoBack from "../../../images/go-back.svg";
 import LockerImg from "../../../images/locker.svg";
 import LockerUnlockedImg from "../../../images/locker-unlocked.svg";
@@ -27,6 +30,14 @@ const NextCompetition = () => {
     formatResult: (res) => res.data.competition,
   });
 
+  const getAwards = () => {
+    return api.get(`/awards`);
+  };
+
+  const awardsResponse = useRequest(getAwards, {
+    formatResult: (res) => res.data.awards,
+  });
+
   const handleSignUp = () => {
     if (isClosed) return;
 
@@ -42,9 +53,15 @@ const NextCompetition = () => {
   if (error) {
     return <Error />;
   }
-  if (loading) {
+  if (loading || (awardsResponse && awardsResponse.loading)) {
     return <Loader />;
   }
+
+  const awardImagePath = {
+    spinner: <AwardSpinner />,
+    vote: <AwardVote />,
+    time: <AwardTimer />,
+  };
 
   return (
     <>
@@ -52,6 +69,22 @@ const NextCompetition = () => {
         <div onClick={() => history.goBack()} className="go-back">
           <GoBack />
         </div>
+
+        {awardsResponse.data.length > 0 && (
+          <div className="next-competition-prizes">
+            <p className="next-competition-prize-description">
+              You have prize to use in new competition
+            </p>
+
+            <div className="next-competition-awards-container">
+              {awardsResponse.data.map((award) => (
+                <div className="award-block__img" key={award.id}>
+                  {awardImagePath[award.awardType]}
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
 
         <div className="entry-prize__img">
           <div className="next-competition__img">

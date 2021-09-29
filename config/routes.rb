@@ -94,6 +94,10 @@ Rails.application.routes.draw do
       end
 
       resources :products, only: :index
+
+      resources :awards, only: %i[index show] do
+        post :take_prize, on: :member
+      end
     end
   end
 

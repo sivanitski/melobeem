@@ -8,6 +8,10 @@ import { api } from "../../../api";
 import defaultProptypes from "../../../default-proptypes";
 import ChildContext from "../../../helpers/child-context";
 import UserContext from "../../../helpers/user-context";
+import AwardSecret from "../../../images/award-secret.svg";
+import AwardSpinner from "../../../images/award-spinner.svg";
+import AwardTimer from "../../../images/award-timer.svg";
+import AwardVote from "../../../images/award-vote.svg";
 import CertificateIcon from "../../../images/icon-certificate.svg";
 import ShareImage from "../../../images/share.svg";
 import { FacebookShare } from "../../facebook-share";
@@ -37,12 +41,24 @@ const EntryContent = ({ child, voters }) => {
     }
   }, []);
 
+  function handleAwardClick(awardId) {
+    history.push(`/awards/${awardId}`);
+  }
+
   const getFreeVoteTimer = () => {
     return api.get(`/entries/${child.id}/votes/expiration_time_for_free`);
   };
 
   const { data: timeFreeVote, loading } = useRequest(getFreeVoteTimer, {
     formatResult: (res) => res.data.ttlInSeconds,
+  });
+
+  const getAwards = () => {
+    return api.get(`/awards?all=true`);
+  };
+
+  const awardsResponse = useRequest(getAwards, {
+    formatResult: (res) => res.data.awards,
   });
 
   const toggleSettingOpen = () => {
@@ -58,6 +74,12 @@ const EntryContent = ({ child, voters }) => {
   };
 
   const isUsersChild = child.userId === user?.id;
+
+  const awardImagePath = {
+    spinner: <AwardSpinner />,
+    vote: <AwardVote />,
+    time: <AwardTimer />,
+  };
 
   return (
     <div className="entry">
@@ -101,12 +123,33 @@ const EntryContent = ({ child, voters }) => {
         <>
           {prizeTime && <TimeMessage value={prizeTime} />}
 
-          {loading ? null : (
-            <Timer
-              type="entry"
-              timeLeftInSeconds={timeFreeVote}
-              handleFieldClick={handleVotersClick}
-            />
+          {loading || (awardsResponse && awardsResponse.loading) ? null : (
+            <>
+              {isUsersChild && awardsResponse.data.length > 0 && (
+                <div className="entry-competition-awards">
+                  <div className="entry-competition-awards-container">
+                    {awardsResponse.data.map((award) => (
+                      <div
+                        className="entry-award-block__img"
+                        key={award.id}
+                        onClick={() => handleAwardClick(award.id)}
+                      >
+                        {award.isSecret ? (
+                          <AwardSecret />
+                        ) : (
+                          awardImagePath[award.awardType]
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+              <Timer
+                type="entry"
+                timeLeftInSeconds={timeFreeVote}
+                handleFieldClick={handleVotersClick}
+              />
+            </>
           )}
         </>
       ) : (

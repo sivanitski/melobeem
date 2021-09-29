@@ -5,7 +5,6 @@ import React from "react";
 import { useHistory, withRouter } from "react-router";
 import { Link } from "react-router-dom";
 
-import { api } from "../../api";
 import GiftImg from "../../images/gift-icon.svg";
 import GoBack from "../../images/go-back.svg";
 import PrizeText from "../entry/blocks/prize-text";
@@ -24,10 +23,7 @@ const EntryTakePrize = ({
   }
 
   const handlePrizeTake = async () => {
-    const res = await api.put(`/users/${id}/take_additional_prize`);
-    if (res) {
-      history.push(`/entry/${id}`);
-    }
+    history.push(`/next-competition`);
   };
 
   return (

@@ -35,10 +35,14 @@ module API
         end
       end
 
-      def create
+      def create  # rubocop:disable Metrics/AbcSize
         entry = competition.entries.new(entries_params)
 
+        previous_entry = current_user.entries.order(created_at: :desc).first if current_user.present?
+
         if entry.save
+          ::Prizes::AwardEntryWithSecretPrize.new(previous_entry).call if current_user.present? && previous_entry.present?
+
           entry = competition.entries.find_by!(id: entry.id)
           render json: entry, serializer: ::Entries::ShowSerializer
         else

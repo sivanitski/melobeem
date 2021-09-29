@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import UserContext from "../../helpers/user-context";
+import { Award } from "../award";
 import { CompetitorsSearch } from "../competitors-search";
 import { Delete } from "../delete";
 import DeleteConfirm from "../delete/screens/delete-confirm";
@@ -53,6 +54,9 @@ const Routes = () => {
         </Route>
         <Route exact path={"/entry/:id"}>
           <Entry />
+        </Route>
+        <Route exact path={"/awards/:id"}>
+          <Award />
         </Route>
         <Route exact path={"/entry/:id/vote"}>
           <Vote />

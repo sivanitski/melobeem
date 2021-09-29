@@ -10,6 +10,7 @@ class User < ApplicationRecord
   has_many :purchase_transactions, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :spins, dependent: :destroy
+  has_many :awards, through: :entries
 
   has_one_attached :avatar, dependent: :destroy
 
