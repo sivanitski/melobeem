@@ -47,13 +47,13 @@ const HeaderUserLevel = ({
 
   const heartAnimationSimple = (from, to, totalVotesStart, totalVotesEnd) => {
     const cont = { heart: from, votes: totalVotesStart };
+    setCurrentHeartLvl(to);
     gsap.to(cont, {
       heart: to,
       votes: totalVotesEnd,
       duration: 0.3,
       roundProps: "votes",
       onUpdate: function () {
-        setCurrentHeartLvl(cont.heart);
         setCurrentVotes(cont.votes);
       },
     });
@@ -67,6 +67,10 @@ const HeaderUserLevel = ({
     voteValueFromLevelStart,
     voteValueFromLevelEnd
   ) => {
+    setCurrentHeartLvl(0);
+    setTimeout(() => {
+      setCurrentHeartLvl(to);
+    }, 3300);
     const cont = {
       heart: from,
       votes: totalVotesStart,
@@ -75,7 +79,7 @@ const HeaderUserLevel = ({
     gsap
       .timeline({
         onUpdate: () => {
-          setCurrentHeartLvl(cont.heart);
+          // setCurrentHeartLvl(cont.heart);
           setCurrentVotes(cont.votes);
           setCurrentVotesOfLvl(cont.lvlVotes);
         },
