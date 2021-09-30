@@ -58,7 +58,7 @@ const LevelContent = ({ activeLevel, setAnimationParams }) => {
         <div className="level__interval text-grey">
           {getVoteIntervalFromLevel(activeLevel)}
         </div>
-        <HeartAnimationBig animationLevel={animationLevel} />
+        <HeartAnimationBig animationLevel={animationLevel} isQuick={true} />
         <div className="level__child-votes text-pink">
           {currentChild.totalVotes}
         </div>

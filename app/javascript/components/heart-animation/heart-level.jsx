@@ -11,26 +11,47 @@ const HeartLevel = ({ animationLevel }) => {
   const levelRefPink = useRef(null);
 
   const [currentLvl, setCurrentLvl] = useState(animationLevel);
+  const [timelineAnim, setTimelineAnim] = useState(null);
 
-  const playAnim = (lvl) => {
+  const playAnim = (lvl, quick) => {
     const px = lerp(-56, 0, lvl);
-    gsap
-      .timeline()
+
+    const timeline = gsap
+      .timeline({ paused: true })
       .to(levelRef.current, { y: px, duration: 0.3 }, 0)
       .fromTo(levelRef.current, { x: 0 }, { x: 158, duration: 2 }, 0)
       .to(levelRefPink.current, { y: px + 1, duration: 0.3 }, 0)
       .fromTo(levelRefPink.current, { x: 0 }, { x: 158, duration: 3 }, 0);
+
+    if (quick) {
+      timeline.progress(1);
+    } else {
+      timeline.play();
+    }
+
+    setTimelineAnim(timeline);
   };
+
+  useEffect(() => {
+    return () => {
+      if (timelineAnim) {
+        timelineAnim.pause();
+        timelineAnim.kill();
+      }
+    };
+  }, [timelineAnim]);
 
   useEffect(() => {
     if (currentLvl !== animationLevel) {
       setCurrentLvl(animationLevel);
+      playAnim(animationLevel, currentLvl === -1);
     }
   }, [animationLevel]);
 
-  useEffect(() => {
-    playAnim(currentLvl);
-  }, [currentLvl]);
+  // useEffect(() => {
+  //   console.log("currentLvl", currentLvl);
+
+  // }, [currentLvl]);
 
   return (
     <svg

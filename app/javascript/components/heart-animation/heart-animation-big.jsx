@@ -1,7 +1,7 @@
 import propTypes from "prop-types";
 import React from "react";
 
-const HeartAnimationBig = ({ animationLevel }) => {
+const HeartAnimationBig = ({ animationLevel, isQuick }) => {
   return (
     <svg
       width="260"
@@ -14,7 +14,7 @@ const HeartAnimationBig = ({ animationLevel }) => {
         <linearGradient id="bottom-to-top" x2="0%" y2="100%">
           <stop offset="0" stopColor="#fff">
             <animate
-              dur="2s"
+              dur={isQuick ? "0.001s" : "2s"}
               attributeName="offset"
               fill="freeze"
               from="1"
@@ -23,7 +23,7 @@ const HeartAnimationBig = ({ animationLevel }) => {
           </stop>
           <stop offset="0" stopColor="#FF7098">
             <animate
-              dur="2s"
+              dur={isQuick ? "0.001s" : "2s"}
               attributeName="offset"
               fill="freeze"
               from="0"
@@ -44,6 +44,7 @@ const HeartAnimationBig = ({ animationLevel }) => {
 
 HeartAnimationBig.propTypes = {
   animationLevel: propTypes.number.isRequired,
+  isQuick: propTypes.bool,
 };
 
 export default HeartAnimationBig;
