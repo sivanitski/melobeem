@@ -3,6 +3,7 @@ import propTypes from "prop-types";
 import React, { useContext, useEffect, useState } from "react";
 import { Helmet } from "react-helmet";
 import { useHistory } from "react-router";
+import { Link } from "react-router-dom";
 
 import { api } from "../../../api";
 import defaultProptypes from "../../../default-proptypes";
@@ -112,9 +113,14 @@ const EntryContent = ({ child, voters }) => {
             <ShareImage />
           </FacebookShare>
         ) : (
-          <div className="entry__share">
+          <Link
+            target="_blank"
+            rel="noopener noreferrer"
+            className="entry__share"
+            to={`/api/v1/entries/${child.id}/certificate`}
+          >
             <CertificateIcon />
-          </div>
+          </Link>
         )}
       </div>
       <div className="entry__name headline--medium">{child.name}</div>

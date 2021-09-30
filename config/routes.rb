@@ -46,6 +46,7 @@ Rails.application.routes.draw do
           get :prize_by_level
           get :prizes
           get :prize_time
+          get :certificate
           put :take_prize
         end
 

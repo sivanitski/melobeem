@@ -1,0 +1,53 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset='utf-8' />
+  <%= wicked_pdf_stylesheet_link_tag 'pdf' %>
+</head>
+<body style="max-width:100%">
+<div id="content" style="position: relative;width: 100%;height: 100%;display: block;max-height: 550px;">
+  <div class="image-left">
+    <%= wicked_pdf_image_tag('https://melobeem.ngrok.io/certificate/left.png') %>
+  </div>
+  <div class="image-right">
+    <%= wicked_pdf_image_tag('https://melobeem.ngrok.io/certificate/right.png') %>
+  </div>
+
+  <div class="container-middle">
+    <div class="main-text">
+      <p>Certificate</p>
+    </div>
+
+    <div class="main-text-greatings">
+      <p>proudly presented to</p>
+    </div>
+
+    <div class="entry-name">
+      <p><%= entry.name %></p>
+    </div>
+
+    <div class="entry-description">
+      <% case entry.final_rank %>
+      <% when 1 %>
+        <p>came 1st in the Melobeem competition in <%= entry.competition.starts_at.strftime('%B')%> <%= entry.competition.starts_at.strftime('%Y')%></p>
+      <% when 2 %>
+        <p>came 2nd in the Melobeem competition in <%= entry.competition.starts_at.strftime('%B')%> <%= entry.competition.starts_at.strftime('%Y')%></p>
+      <% when 3 %>
+        <p>came 3rd in the Melobeem competition in <%= entry.competition.starts_at.strftime('%B')%> <%= entry.competition.starts_at.strftime('%Y')%></p>
+      <% else %>
+        <p>came <%= entry.final_rank %> in the Melobeem competition in <%= entry.competition.starts_at.strftime('%B')%> <%= entry.competition.starts_at.strftime('%Y')%></p>
+      <% end %>
+    </div>
+
+    <div class="footer-container">
+      <div class="footer-date">
+        <p><%= entry.competition.ends_at.strftime('%m.%d.%Y')%> </p>
+      </div>
+      <div class="footer-label">
+        <%= wicked_pdf_image_tag('https://melobeem.ngrok.io/certificate/melobeem.png') %>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

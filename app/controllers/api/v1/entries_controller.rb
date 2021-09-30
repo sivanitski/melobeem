@@ -35,7 +35,7 @@ module API
         end
       end
 
-      def create  # rubocop:disable Metrics/AbcSize
+      def create # rubocop:disable Metrics/AbcSize
         entry = competition.entries.new(entries_params)
 
         previous_entry = current_user.entries.order(created_at: :desc).first if current_user.present?
@@ -134,6 +134,24 @@ module API
         render json: competition.entries.maximum('level'), adapter: nil, status: :ok
       end
 
+      def certificate # rubocop:disable Metrics/MethodLength
+        entry = current_user.entries.find(params[:id])
+
+        if entry.in?(current_user.entries)
+          pdf = WickedPdf.new.pdf_from_string(
+            render_template(entry),
+            encoding: 'utf-8',
+            lowquality: false,
+            orientation: 'Landscape',
+            margin: { top: 0, bottom: 0, left: 0, right: 0 }
+          )
+
+          send_data(pdf, filename: "#{entry.name}.pdf", type: 'application/pdf')
+        else
+          render_fail_response('Certificate was not found')
+        end
+      end
+
       private
 
       def entries_params
@@ -152,6 +170,14 @@ module API
 
       def entry
         @entry ||= competition.entries.find(params[:id])
+      end
+
+      def render_template(entry)
+        ActionController::Base.new.render_to_string(
+          'certificate/winner',
+          layout: false,
+          locals: { entry: entry }
+        )
       end
 
       def prize
