@@ -1,7 +1,21 @@
-import { differenceInDays, differenceInMilliseconds, format } from "date-fns";
+import {
+  differenceInDays,
+  differenceInHours,
+  differenceInMilliseconds,
+  differenceInMinutes,
+  format,
+} from "date-fns";
 
 export const calcDaysLeft = (date) => {
   return differenceInDays(new Date(date), Date.now());
+};
+
+export const calcHoursLeft = (date) => {
+  return differenceInHours(new Date(date), Date.now());
+};
+
+export const calcMinutesLeft = (date) => {
+  return differenceInMinutes(new Date(date), Date.now());
 };
 
 export const calcTimeDuration = (latestDate) => {
