@@ -35,7 +35,17 @@
 
 .animation.animation--level-up {
   position: absolute;
-  width: 300px;
+  width: 100vw;
   height: 150px;
   top: 0;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.animation.animation--level-up > div {
+  width: 500px;
+  height: 300px;
+  // transform: translate(-50%, -50%);
 }
