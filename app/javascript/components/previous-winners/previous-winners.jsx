@@ -108,7 +108,7 @@ const PreviousWinners = ({
           >
             {winnerList.map((winner) => (
               <div className="competitors-item" key={winner.id}>
-                <Link to={`/previous-winners/${winner.id}`}>
+                <Link to="/">
                   <div className="competitors__wrapper">
                     <div className="competitors-item__img">
                       <img src={winner.imageUrl} />
