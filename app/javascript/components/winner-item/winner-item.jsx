@@ -10,7 +10,7 @@ import IconGift from "../../images/icon-gift.svg";
 const WinnerItem = ({ winner }) => {
   return (
     <div className="competitors-item" key={winner.id}>
-      <Link to="/">
+      <Link to={`/previous-winners/${winner.id}`}>
         <div className="competitors__wrapper">
           <div className="competitors-item__img">
             <img src={winner.winnerImageUrl} />

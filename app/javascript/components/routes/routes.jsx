@@ -18,6 +18,7 @@ import { Leaderboard } from "../leaderboard";
 import { LeaderboardInfo } from "../leaderboard-info";
 import { LeaderboardWinners } from "../leaderboard-winners";
 import { Level } from "../level";
+import { PreviousWinners } from "../previous-winners";
 import { Prizes } from "../prizes";
 import { Profile } from "../profile";
 import NextCompetition from "../profile/blocks/profile-next-competition";
@@ -45,6 +46,9 @@ const Routes = () => {
         </Route>
         <Route exact path="/competition-info/winners">
           <LeaderboardWinners />
+        </Route>
+        <Route exact path="/previous-winners/:id">
+          <PreviousWinners />
         </Route>
         <Route exact path="/competition-info/prizes">
           <Prizes />

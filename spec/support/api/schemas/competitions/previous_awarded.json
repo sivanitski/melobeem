@@ -6,7 +6,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "required": ["id", "name", "total_votes", "final_rank", "competition_money_prize_cents", "competition_additional_prize",
+        "required": ["id", "awards", "competition_money_prize_converted", "name", "total_votes", "final_rank", "competition_money_prize_cents", "competition_additional_prize",
           "user_name", "image_url", "competition_starts_at", "competition_prize_sum", "competition_money_currency"],
         "properties": {
           "id": {"type": "integer"},
@@ -19,7 +19,16 @@
           "image_url": {"type": "string"},
           "competition_starts_at": {"type": "timestamp"},
           "competition_prize_sum": {"type": "integer"},
-          "competition_money_currency": {"type": "string"}
+          "competition_money_currency": {"type": "string"},
+          "competition_money_prize_converted": {"type": "integer"},
+          "awards": {
+            "type": "array",
+            "required": ["type", "value"],
+            "properties": {
+              "type": {"type": "string"},
+              "value": {"type": "integer"}
+            }
+          }
         }
       }
     },
