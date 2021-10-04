@@ -3,6 +3,7 @@ import { loadStripe } from "@stripe/stripe-js";
 import { useRequest } from "ahooks";
 import React, { useEffect, useState } from "react";
 import ReactPixel from "react-facebook-pixel";
+import { hotjar } from "react-hotjar";
 
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
@@ -43,6 +44,8 @@ const App = () => {
       if (!currentChildData) {
         requestCurrentChild();
       }
+
+      hotjar.identify(userData.id, { userData });
     }
 
     if (currentChildData) {
@@ -70,6 +73,8 @@ const App = () => {
     // advancedMatching,
     options
   );
+
+  hotjar.initialize(2628633, 6);
 
   return (
     <UserContext.Provider value={valueUser}>
