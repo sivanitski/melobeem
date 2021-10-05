@@ -34,7 +34,7 @@ const HeaderNotLogin = () => {
           <LogoText />
         </div>
         <div className="header-not-login__text text-grey">
-          Melobeem is a free photo contest for Babies up to 4 years!
+          Melobeem is a free photo contest for Babies up to 4 years.
           <br /> Enter and vote to win prizes each month!
         </div>
       </div>

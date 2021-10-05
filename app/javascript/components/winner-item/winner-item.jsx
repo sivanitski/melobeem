@@ -20,7 +20,7 @@ const WinnerItem = ({ winner }) => {
               {winner.title}
             </div>
             <div className="competitors-item__parent text-smaller text-grey">
-              {winner.entriesCount} Babie’s
+              {winner.entriesCount} entrants
             </div>
           </div>
           <div className="competitors-item__info">

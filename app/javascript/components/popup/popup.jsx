@@ -9,7 +9,7 @@ import PopupImage from "./blocks/popup-image";
 import PopupText from "./blocks/popup-text";
 import PopupTitle from "./blocks/popup-title";
 
-const Popup = ({ handlePopupClose, linkId, name, image, type }) => {
+const Popup = ({ handlePopupClose, linkId, name, image, type, parentName }) => {
   return (
     <div className="popup">
       <div className="popup__inner">
@@ -20,7 +20,7 @@ const Popup = ({ handlePopupClose, linkId, name, image, type }) => {
           <PopupImage type={type} image={image} />
         </div>
         <PopupTitle type={type} />
-        <PopupText type={type} name={name} />
+        <PopupText type={type} name={name} parentName={parentName} />
         <PopupButton type={type} linkId={linkId} />
       </div>
     </div>
@@ -33,6 +33,7 @@ Popup.propTypes = {
   name: propTypes.string,
   image: propTypes.string,
   type: propTypes.string.isRequired,
+  parentName: propTypes.string,
 };
 
 export default Popup;

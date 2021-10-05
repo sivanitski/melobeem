@@ -241,6 +241,7 @@ const Vote = ({
           linkId={child.id}
           name={child.name}
           image={child.imageUrl}
+          parentName={child.username.split(" ")[0]}
           type="vote"
         />
       )}

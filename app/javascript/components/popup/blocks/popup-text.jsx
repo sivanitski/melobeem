@@ -1,10 +1,10 @@
 import propTypes from "prop-types";
 import React from "react";
 
-const PopupText = ({ type, name }) => {
+const PopupText = ({ type, name, parentName }) => {
   const renderText = () => {
     if (type === "vote") {
-      return `Every Facebook post may make ${name} closer to the wining point!`;
+      return `Let ${parentName} know you voted and help ${name} get more votes.`;
     }
 
     if (type === "login-to-vote") {
@@ -28,6 +28,7 @@ const PopupText = ({ type, name }) => {
 PopupText.propTypes = {
   type: propTypes.string.isRequired,
   name: propTypes.string,
+  parentName: propTypes.string,
 };
 
 export default PopupText;
