@@ -22,7 +22,7 @@ const recaptchaKey = process.env.RECAPTCHA_PUBLIC_KEY;
 
 document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <FacebookProvider appId={appId} version="v9.0" cookie={true}>
+    <FacebookProvider appId={appId} version="v10.0" xfbml={true} cookie={true}>
       <GoogleReCaptchaProvider reCaptchaKey={recaptchaKey}>
         <Helmet>
           <meta name="title" content="Melobeem" data-react-helmet="true" />
