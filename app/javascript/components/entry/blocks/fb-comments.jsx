@@ -1,20 +1,17 @@
 import propTypes from "prop-types";
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import { Comments, FacebookProvider } from "react-facebook";
 
 const FbComment = ({ childId }) => {
-  const fbRef = useRef(null);
-  useEffect(() => {
-    if (window.FB) {
-      window.FB.XFBML.parse(fbRef.current);
-    }
-  }, []);
   return (
-    <div ref={fbRef} className="facebook__comments">
-      <div
-        className="fb-comments"
-        data-href={`${global.window.location.origin}/entries/${childId}`}
-        data-width="100%"
-      />
+    <div className="facebook__comments">
+      <FacebookProvider appId={process.env.FACEBOOK_APP_ID}>
+        <Comments
+          href={`${global.window.location.origin}/entries/${childId}`}
+          numPosts="15"
+          width="100%"
+        />
+      </FacebookProvider>
     </div>
   );
 };
