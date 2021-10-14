@@ -1,5 +1,5 @@
-FROM ruby:2.7.2-alpine as Builder
 FROM surnet/alpine-wkhtmltopdf:3.9-0.12.5-full as wkhtmltopdf
+FROM ruby:2.7.2-alpine as Builder
 
 ARG RAILS_ENV
 ARG DB_USER_PASSWORD
