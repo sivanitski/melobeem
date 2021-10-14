@@ -52,6 +52,7 @@ RUN apk add --update --no-cache \
     imagemagick \
     imagemagick-dev \
     libmagic \
+    wkhtmltopdf \
     file
 
 WORKDIR /app
@@ -88,7 +89,10 @@ RUN apk add --update --no-cache \
     file \
     imagemagick \
     imagemagick-dev \
-    libmagic
+    libmagic \
+    xvfb \
+    libfontconfig \
+    wkhtmltopdf
 
 # Add user
 RUN addgroup -g 1000 -S app \
