@@ -1,4 +1,5 @@
 FROM ruby:2.7.2-alpine as Builder
+FROM surnet/alpine-wkhtmltopdf:3.9-0.12.5-full as wkhtmltopdf
 
 ARG RAILS_ENV
 ARG DB_USER_PASSWORD
@@ -52,6 +53,7 @@ RUN apk add --update --no-cache \
     imagemagick \
     imagemagick-dev \
     libmagic \
+    ttf-ubuntu-font-family \
     wkhtmltopdf \
     file
 
@@ -102,6 +104,9 @@ USER app
 # Copy app with gems from former build stage
 COPY --from=Builder /usr/local/bundle/ /usr/local/bundle/
 COPY --from=Builder --chown=app:app /app /app
+COPY --from=wkhtmltopdf /bin/wkhtmltopdf /bin/wkhtmltopdf
+COPY --from=wkhtmltopdf /bin/wkhtmltoimage /bin/wkhtmltoimage
+COPY --from=wkhtmltopdf /bin/libwkhtmltox* /bin/
 
 # Set Rails env
 ENV RAILS_LOG_TO_STDOUT true
