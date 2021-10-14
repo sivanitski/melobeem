@@ -20,6 +20,8 @@ module Melobeem
     # config.eager_load_paths << Rails.root.join("extras")
     config.assets.paths << Rails.root.join('app/assets/fonts')
 
+    config.assets.precompile += %w[pdf.css]
+
     ActiveStorage::Engine.config
                          .active_storage
                          .content_types_to_serve_as_binary
