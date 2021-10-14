@@ -91,6 +91,7 @@ RUN apk add --update --no-cache \
     imagemagick-dev \
     libmagic \
     xvfb \
+    ttf-ubuntu-font-family \
     wkhtmltopdf
 
 # Add user
