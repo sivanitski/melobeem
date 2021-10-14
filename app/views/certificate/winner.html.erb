@@ -2,15 +2,15 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <%= wicked_pdf_stylesheet_link_tag 'pdf' %>
+  <%= wicked_pdf_stylesheet_pack_tag 'pdf' %>
 </head>
 <body style="max-width:100%">
 <div id="content" style="position: relative;width: 100%;height: 100%;display: block;max-height: 550px;">
   <div class="image-left">
-    <%= wicked_pdf_image_tag('https://melobeem.ngrok.io/certificate/left.png') %>
+    <%= wicked_pdf_image_tag('https://melobeem.com/certificate/left.png') %>
   </div>
   <div class="image-right">
-    <%= wicked_pdf_image_tag('https://melobeem.ngrok.io/certificate/right.png') %>
+    <%= wicked_pdf_image_tag('https://melobeem.com/certificate/right.png') %>
   </div>
 
   <div class="container-middle">
@@ -44,7 +44,7 @@
         <p><%= entry.competition.ends_at.strftime('%m.%d.%Y')%> </p>
       </div>
       <div class="footer-label">
-        <%= wicked_pdf_image_tag('https://melobeem.ngrok.io/certificate/melobeem.png') %>
+        <%= wicked_pdf_image_tag('https://melobeem.com/certificate/melobeem.png') %>
       </div>
     </div>
   </div>
