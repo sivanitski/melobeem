@@ -4,8 +4,8 @@ import React, { useContext } from "react";
 
 import { api } from "../../../api";
 import UserContext from "../../../helpers/user-context";
-import Loader from "../../animation/loader";
 import { Error } from "../../error";
+import ProfileBabyLoader from "../../loaders/profile/profile-baby-loader";
 import ProfileChildrenItem from "./profile-children-item";
 import ProfileLocker from "./profile-locker";
 
@@ -23,7 +23,7 @@ const ProfileChildren = ({ userId }) => {
     return <Error />;
   }
   if (loading) {
-    return <Loader />;
+    return <ProfileBabyLoader />;
   }
 
   return (

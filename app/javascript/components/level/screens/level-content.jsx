@@ -9,6 +9,7 @@ import {
   getVoteIntervalFromLevel,
 } from "../../../helpers/level";
 import { HeartAnimationBig } from "../../heart-animation";
+import LevelLoader from "../../loaders/level-loader";
 import LevelWithPrize from "./level-with-prize";
 
 const LevelContent = ({ activeLevel, setAnimationParams }) => {
@@ -67,7 +68,7 @@ const LevelContent = ({ activeLevel, setAnimationParams }) => {
   }
 
   if (loading) {
-    return null;
+    return <LevelLoader />;
   }
   return renderPrizeByLevel();
 };

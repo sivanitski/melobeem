@@ -6,10 +6,10 @@ import React, { useEffect } from "react";
 import { useHistory, withRouter } from "react-router";
 
 import { api } from "../../api";
-import Loader from "../animation/loader";
 import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderUser } from "../header-user";
+import EntryShowLoader from "../loaders/entry/entry-show-loader";
 import EntryContent from "./blocks/entry-content";
 
 const Entry = ({
@@ -60,7 +60,7 @@ const Entry = ({
     return <Error />;
   }
   if (childLoading || votersLoading) {
-    return <Loader />;
+    return <EntryShowLoader />;
   }
 
   return (

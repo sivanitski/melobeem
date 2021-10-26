@@ -5,10 +5,10 @@ import { useHistory } from "react-router";
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
-import Loader from "../animation/loader";
 import { Error } from "../error";
 import { Footer } from "../footer";
 import { HeaderUser } from "../header-user";
+import SpinnerLoader from "../loaders/spinner-loader";
 import { Popup } from "../popup";
 import NoSpinner from "./screens/no-spinner";
 import Spinner from "./screens/spinner";
@@ -140,7 +140,7 @@ const SpinnerPage = () => {
     }
 
     if (loading) {
-      return <Loader />;
+      return <SpinnerLoader />;
     }
 
     if (data.type) {

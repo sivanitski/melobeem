@@ -12,8 +12,8 @@ import { api } from "../../../api";
 import ImageAvatar from "../../../images/avatar.svg";
 import IconHeart from "../../../images/icon-heart.svg";
 import InfoImage from "../../../images/info-sign.svg";
-import Loader from "../../animation/loader";
 import { InfoBlock } from "../../info-block";
+import ProfileBabyLoader from "../../loaders/profile/profile-baby-loader";
 
 const PROFILE_TITLE_INFO = "Better together!";
 const PROFILE_TEXT_INFO =
@@ -32,7 +32,7 @@ const ProfileFriends = ({ userId }) => {
   });
 
   if (loading) {
-    return <Loader />;
+    return <ProfileBabyLoader />;
   }
 
   let { internal: friendsMelobeem = [], external: friendsFb = [] } = groupBy(

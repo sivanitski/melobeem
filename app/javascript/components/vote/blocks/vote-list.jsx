@@ -9,9 +9,9 @@ import ChildContext from "../../../helpers/child-context";
 import UserContext from "../../../helpers/user-context";
 import HeartVoteFly from "../../../images/heart-free-vote-animation.svg";
 import HeartVote from "../../../images/heart-vote.svg";
-import Loader from "../../animation/loader";
 import TimeMessage from "../../entry/blocks/time-fast-message";
 import { InfoBlock } from "../../info-block";
+import VoteListLoader from "../../loaders/payment/vote-list-loader";
 import { Timer } from "../../timer";
 import TimeMenu from "./time-menu";
 
@@ -73,7 +73,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
   };
 
   if (loading) {
-    return <Loader />;
+    return <VoteListLoader />;
   }
 
   return (

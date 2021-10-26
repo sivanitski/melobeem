@@ -9,14 +9,15 @@ import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import InfoIcon from "../../images/info-sign.svg";
 import SearchIcon from "../../images/search-icon.svg";
-import Loader from "../animation/loader";
 import { CompetitorsList } from "../competitors-list";
 import { CompetitorsSwiperMenu } from "../competitors-swiper-menu";
+import CompetitorsLoading from "../loaders/competitors-loading";
 
 const Competitors = ({}) => {
   const { currentChild } = useContext(ChildContext);
   const [children, setChildren] = useState([]);
   const [page, setPage] = useState(1);
+  const [pageLoading, setPageLoading] = useState(false);
   const [isMoreChildren, setIsMoreChildren] = useState(true);
   const [level, setLevel] = useState(
     currentChild?.level ? currentChild.level : 1
@@ -44,6 +45,7 @@ const Competitors = ({}) => {
     if (entries.length === 0) {
       setIsMoreChildren(false);
     }
+    setPageLoading(false);
     return children.concat(entries);
   };
 
@@ -57,11 +59,8 @@ const Competitors = ({}) => {
     formatResult: (res) => res.data,
   });
 
-  if (loading || childrenLoading) {
-    return <Loader />;
-  }
-
   const onSliderClick = (index) => {
+    setPageLoading(true);
     setLevel(index);
     setPage(1);
     getEntries(1, index, true);
@@ -97,13 +96,18 @@ const Competitors = ({}) => {
         minLevel={level}
       />
 
-      <CompetitorsList
-        childrenAtLevel={children}
-        fetchData={fetchData}
-        isMoreChildren={isMoreChildren}
-        messageNoChildren="There’s no one on this level right now."
-        messageSeenAllChildren="Yay! You've seen all children on this level!"
-      />
+      {loading || childrenLoading || pageLoading ? (
+        <CompetitorsLoading />
+      ) : (
+        <CompetitorsList
+          childrenAtLevel={children}
+          fetchData={fetchData}
+          isMoreChildren={isMoreChildren}
+          messageNoChildren="There’s no one on this level right now."
+          pageLoading={pageLoading}
+          messageSeenAllChildren="Yay! You've seen all children on this level!"
+        />
+      )}
     </div>
   );
 };

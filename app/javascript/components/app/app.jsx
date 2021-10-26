@@ -8,7 +8,6 @@ import { hotjar } from "react-hotjar";
 import { api } from "../../api";
 import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
-import Loader from "../animation/loader";
 import { Routes } from "../routes";
 
 const stripePromise = loadStripe(process.env.STRIPE_PUBLISHABLE_KEY);
@@ -25,15 +24,14 @@ const App = () => {
     return api.get("/entries/current");
   };
 
-  const {
-    data: currentChildData,
-    run: requestCurrentChild,
-    loading: childLoading,
-  } = useRequest(getCurrentChildren, {
-    formatResult: (res) => res.data.entry,
-  });
+  const { data: currentChildData, run: requestCurrentChild } = useRequest(
+    getCurrentChildren,
+    {
+      formatResult: (res) => res.data.entry,
+    }
+  );
 
-  const { data: userData, loading: userLoading } = useRequest(getCurrentUser, {
+  const { data: userData } = useRequest(getCurrentUser, {
     formatResult: (res) => res.data.user,
   });
 
@@ -59,9 +57,9 @@ const App = () => {
     setCurrentChild,
   };
 
-  if (userLoading || childLoading) {
-    return <Loader />;
-  }
+  // if (userLoading || childLoading) {
+  //   return <Loader />;
+  // }
 
   // const advancedMatching = { em: 'some@email.com' }; // optional, more info: https://developers.facebook.com/docs/facebook-pixel/advanced/advanced-matching
   const options = {
