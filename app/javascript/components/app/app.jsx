@@ -51,6 +51,18 @@ const App = () => {
     }
   }, [userData, currentChildData]);
 
+  useEffect(() => {
+    const options = {
+      autoConfig: true, // set pixel's autoConfig. More info: https://developers.facebook.com/docs/facebook-pixel/advanced/
+      debug: false, // enable logs
+    };
+    ReactPixel.init(
+      201545765230454, //add  pizel perfect ID
+      // advancedMatching,
+      options
+    );
+  }, []);
+
   const valueUser = { user, setUser };
   const valueCurrentChild = {
     currentChild,
@@ -62,15 +74,6 @@ const App = () => {
   // }
 
   // const advancedMatching = { em: 'some@email.com' }; // optional, more info: https://developers.facebook.com/docs/facebook-pixel/advanced/advanced-matching
-  const options = {
-    autoConfig: true, // set pixel's autoConfig. More info: https://developers.facebook.com/docs/facebook-pixel/advanced/
-    debug: false, // enable logs
-  };
-  ReactPixel.init(
-    201545765230454, //add  pizel perfect ID
-    // advancedMatching,
-    options
-  );
 
   hotjar.initialize(2628633, 6);
 

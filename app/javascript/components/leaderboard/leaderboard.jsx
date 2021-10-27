@@ -22,9 +22,6 @@ const Leaderboard = () => {
     return api.get(`/competitions/current`);
   };
 
-  dataLayer.push({ event: "leaderboard view" });
-  ReactPixel.trackCustom("leaderboard-view");
-
   const {
     data: competitionData,
     error: competitionError,
@@ -41,6 +38,13 @@ const Leaderboard = () => {
       document.cookie = `ref=${referralId}; max-age=86400`;
     }
   }, [location.search]);
+
+  useEffect(() => {
+    if (!competitionLoading) {
+      dataLayer.push({ event: "leaderboard view" });
+      ReactPixel.trackCustom("leaderboard-view");
+    }
+  }, [competitionLoading]);
 
   if (competitionError) {
     return <Error />;
