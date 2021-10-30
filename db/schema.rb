@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_09_27_091853) do
+ActiveRecord::Schema.define(version: 2021_10_30_094600) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -145,6 +145,13 @@ ActiveRecord::Schema.define(version: 2021_09_27_091853) do
     t.index ["user_id"], name: "index_entries_on_user_id"
   end
 
+  create_table "events", force: :cascade do |t|
+    t.date "event_date"
+    t.integer "event_type", default: 0, null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "friendships", force: :cascade do |t|
     t.integer "user_id"
     t.integer "friend_id"
@@ -244,6 +251,7 @@ ActiveRecord::Schema.define(version: 2021_09_27_091853) do
     t.boolean "admin", default: false
     t.string "country"
     t.boolean "captcha_verified", default: false
+    t.datetime "last_time_see_sales_at"
     t.index ["email"], name: "index_users_on_email"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, where: "(deactivated IS FALSE)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

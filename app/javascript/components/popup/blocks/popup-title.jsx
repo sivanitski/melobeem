@@ -17,6 +17,10 @@ const PopupTitle = ({ type }) => {
       return "Welcome!";
     }
 
+    if (type === "regular_sale") {
+      return "Sale!";
+    }
+
     if (type.includes("spinner")) {
       return "Enter to spin";
     }

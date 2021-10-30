@@ -131,6 +131,11 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
           >
             {voteOption.price}
           </div>
+          {voteOption.previousPrice && (
+            <div className={"vote-item__previous_price"}>
+              {voteOption.previousPrice}
+            </div>
+          )}
         </div>
       ))}
     </div>

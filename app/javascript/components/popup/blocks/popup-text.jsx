@@ -1,6 +1,8 @@
 import propTypes from "prop-types";
 import React from "react";
 
+import HalloweenBackground from "../../../images/halloween_text_background.svg";
+
 const PopupText = ({ type, name, parentName }) => {
   const renderText = () => {
     if (type === "vote") {
@@ -9,6 +11,10 @@ const PopupText = ({ type, name, parentName }) => {
 
     if (type === "login-to-vote") {
       return "Please Login with Facebook to Vote for this Baby";
+    }
+
+    if (type.includes("sale")) {
+      return "50% off for all Votes packages";
     }
 
     if (type.includes("spinner")) {
@@ -22,7 +28,18 @@ const PopupText = ({ type, name, parentName }) => {
     return null;
   };
 
-  return <div className="popup__text text-grey">{renderText()}</div>;
+  if (type === "halloween_sale") {
+    return (
+      <div className="popup__text_container">
+        <HalloweenBackground />
+        <div className="popup__text text-grey">
+          50% off for all Votes packages
+        </div>
+      </div>
+    );
+  } else {
+    return <div className="popup__text text-grey">{renderText()}</div>;
+  }
 };
 
 PopupText.propTypes = {

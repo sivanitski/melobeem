@@ -6,7 +6,7 @@ module Spins
     end
 
     def create_intent(entry:, product:, user:) # rubocop:disable Metrics/AbcSize
-      intent = Stripe::PaymentIntent.create(amount: product.price_cents,
+      intent = Stripe::PaymentIntent.create(amount: product_price(product),
                                             currency: product.price_currency,
                                             payment_method_types: ['card'],
                                             description: "Buying #{product.value} spins",
@@ -34,11 +34,21 @@ module Spins
         client_secret: intent.client_secret,
         id: intent['id'],
         purchase_transaction_id: transaction.id,
-        price_cents: product.price_cents,
+        price_cents: product_price(product),
         price_currency: product.price_currency.downcase,
         product_title: product.title,
         country: product.country
       }.to_json
+    end
+
+    def product_price(product)
+      return product.price_cents if event.blank?
+
+      product.discounted_price_cents
+    end
+
+    def event
+      @event ||= Event.today
     end
   end
 end

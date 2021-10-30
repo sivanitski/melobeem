@@ -25,6 +25,7 @@ const Vote = ({
   const [timeVote, setTimeVote] = useState(null);
   const [isShowShareModal, setIsShowShareModal] = useState(false);
   const [animationStep, setAnimationStep] = useState(0);
+  const [isHalloween, setIsHalloween] = useState(false);
 
   if (!user) {
     return <Redirect to={`/entry/${id}`} />;
@@ -47,6 +48,12 @@ const Vote = ({
   useEffect(() => {
     api.get("/users/show_share_modal").then((res) => {
       setIsShowShareModal(res?.data);
+    });
+
+    api.get("/events/current").then((res) => {
+      if (res?.data && res?.data?.event?.eventType === "halloween") {
+        setIsHalloween(true);
+      }
     });
   }, []);
 
@@ -232,6 +239,16 @@ const Vote = ({
           // setCurrentPage("vote");
         }}
       />
+
+      {isHalloween && currentPage === "vote" && (
+        <div className="halloween_container"></div>
+      )}
+
+      {isHalloween && currentPage === "vote" && (
+        <div className="halloween_sale_info_container">
+          <div className="halloween_sale_info"></div>
+        </div>
+      )}
 
       {renderVoteScreen()}
 

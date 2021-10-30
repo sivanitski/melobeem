@@ -89,6 +89,11 @@ Rails.application.routes.draw do
         get :unread_present, on: :collection
       end
 
+      resources :events, only: [] do
+        get :current, on: :collection
+        get :show_event_modal, on: :collection
+      end
+
       resources :spins, only: :create do
         get :check_presence, on: :collection
         get :time_to_free_spin, on: :collection

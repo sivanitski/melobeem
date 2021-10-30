@@ -34,6 +34,25 @@ const PopupButton = ({ type, linkId }) => {
     );
   }
 
+  if (type === "halloween_sale") {
+    return (
+      <Link
+        className="button popup__button halloween__button"
+        to={`/entry/${linkId}/vote`}
+      >
+        go to shop
+      </Link>
+    );
+  }
+
+  if (type.includes("sale")) {
+    return (
+      <Link className="button popup__button" to={`/entry/${linkId}/vote`}>
+        go to shop
+      </Link>
+    );
+  }
+
   if (type.includes("enter")) {
     return (
       <Link className="button popup__button" to="/sign-up">
