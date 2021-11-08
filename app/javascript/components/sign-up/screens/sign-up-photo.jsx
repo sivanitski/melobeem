@@ -10,6 +10,7 @@ const SignUpPhoto = ({
   handleChange,
   name,
   photo,
+  errorMessage,
   setImageTransformations,
 }) => {
   const [crop, setCrop] = useState({ x: 0, y: 0 });
@@ -30,6 +31,8 @@ const SignUpPhoto = ({
       setIsPhotoUploaded(true);
       dataLayer.push({ event: "add-photo" });
       ReactPixel.trackCustom("add-photo");
+    } else {
+      setIsPhotoUploaded(false);
     }
   }, [photo]);
 
@@ -40,6 +43,11 @@ const SignUpPhoto = ({
         <div className="progress__line progress__line--bright" />
         <div className="progress__line" />
       </div>
+      {errorMessage && (
+        <div className="error-message-container">
+          <p>{errorMessage}</p>
+        </div>
+      )}
       {isPhotoUploaded ? (
         <div className="cropper-container-main">
           <div className="crop-container">
@@ -109,6 +117,7 @@ SignUpPhoto.propTypes = {
   handleChange: propTypes.func.isRequired,
   name: propTypes.string.isRequired,
   photo: propTypes.object.isRequired,
+  errorMessage: propTypes.string,
   setImageTransformations: propTypes.func.isRequired,
 };
 

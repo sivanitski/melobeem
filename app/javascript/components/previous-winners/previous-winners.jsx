@@ -58,21 +58,18 @@ const PreviousWinners = ({
   }
 
   const wonItem = (winner) => {
+    let awards = [];
+    let prize = `Prize ${winner.competitionMoneyCurrency}${winner.competitionMoneyPrizeConverted}`;
     switch (winner.finalRank) {
       case 1:
-        return [
-          `Prize ${winner.competitionMoneyCurrency}${winner.competitionMoneyPrizeConverted}`,
-        ];
-      case "vote":
-        return [
-          `Prize ${winner.competitionMoneyCurrency}${winner.competitionMoneyPrizeConverted}`,
-        ];
-      case "time":
-        return [
-          `Prize ${winner.competitionMoneyCurrency}${winner.competitionMoneyPrizeConverted}`,
-        ];
+        return [prize];
+      case 2:
+        winner.awards.map((award) => awards.push(wonAward(award)));
+        return [prize, awards].flat();
+      case 3:
+        winner.awards.map((award) => awards.push(wonAward(award)));
+        return [prize, awards].flat();
       default:
-        let awards = [];
         winner.awards.map((award) => awards.push(wonAward(award)));
         return awards;
     }

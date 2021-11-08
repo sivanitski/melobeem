@@ -23,6 +23,7 @@ const SignUp = ({ location: { state } }) => {
   const [step, setStep] = useState(state?.step || 1);
   const [name, setName] = useState(state?.name || "");
   const [imageTransformations, setImageTransformations] = useState();
+  const [errorMessage, setErrorMessage] = useState();
   const [photo, setPhoto] = useState({ file: "", imagePreviewUrl: "" });
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const [isFormNotEmpty, setIsFormNotEmpty] = useState(false);
@@ -130,16 +131,21 @@ const SignUp = ({ location: { state } }) => {
       setIsLoading(false);
       setStep(user ? 4 : step + 1);
     } catch (e) {
-      setIsLoading(false);
-      if (e.response.status === 422) {
-        const {
-          data: { entry },
-        } = await api.get("/entries/current");
-        setCurrentChild(entry);
-        setStep(5);
+      if (e.response.data.message === "Image must be less than 10mb") {
+        setPhoto({ file: "", imagePreviewUrl: "" });
+        setErrorMessage(e.response.data.message);
+        setIsLoading(false);
       } else {
-        console.error("error");
-        alert("Something went wrong, please try again");
+        if (e.response.status === 422) {
+          const {
+            data: { entry },
+          } = await api.get("/entries/current");
+          setCurrentChild(entry);
+          setStep(5);
+        } else {
+          console.error("error");
+          alert("Something went wrong, please try again");
+        }
       }
     }
   };
@@ -175,6 +181,7 @@ const SignUp = ({ location: { state } }) => {
             name={name}
             photo={photo}
             user={user}
+            errorMessage={errorMessage}
             setImageTransformations={setImageTransformations}
           />
         );

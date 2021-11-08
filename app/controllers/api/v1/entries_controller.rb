@@ -46,7 +46,7 @@ module API
           entry = competition.entries.find_by!(id: entry.id)
           render json: entry, serializer: ::Entries::ShowSerializer
         else
-          render_fail_response(entry.errors)
+          render_fail_response(entry.errors.full_messages.first)
         end
       end
 
@@ -57,7 +57,7 @@ module API
           entry = ::Entries::WithRankQuery.new.call(competition.id).find_by!(user: current_user)
           render json: entry, serializer: ::Entries::RankedSerializer
         else
-          render_fail_response(entry.errors)
+          render_fail_response(entry.errors.full_messages.first)
         end
       end
 

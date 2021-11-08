@@ -18,6 +18,7 @@ import { Leaderboard } from "../leaderboard";
 import { LeaderboardInfo } from "../leaderboard-info";
 import { LeaderboardWinners } from "../leaderboard-winners";
 import { Level } from "../level";
+import { LoginPage } from "../login-page";
 import { PreviousWinners } from "../previous-winners";
 import { Prizes } from "../prizes";
 import { Profile } from "../profile";
@@ -79,6 +80,9 @@ const Routes = () => {
         </Route>
         <Route exact path={"/profile"}>
           <ProfileRoute />
+        </Route>
+        <Route exact path={"/login"}>
+          <LoginPage />
         </Route>
         <Route exact path={"/profile/notifications"}>
           <ProfileNotification />

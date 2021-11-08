@@ -7,7 +7,7 @@ const ProfileRoute = () => {
   const { user } = useContext(UserContext);
 
   if (!user) {
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
 
   return <Redirect to={`/profile/${user.id}`} />;

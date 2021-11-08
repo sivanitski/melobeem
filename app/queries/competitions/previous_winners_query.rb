@@ -16,7 +16,7 @@ module Competitions
       [
         'competitions.id AS competition_id',
         'competitions.title AS competition_title',
-        'competitions.prize_cents AS competition_prize_cents',
+        'competitions.money_prizes_final_sum AS competition_prize_cents',
         'competitions.starts_at AS competition_starts_at',
         'winners.entries_count',
         'winners.id',
