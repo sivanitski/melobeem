@@ -10,6 +10,7 @@ import ChildContext from "../../helpers/child-context";
 import UserContext from "../../helpers/user-context";
 import Loader from "../animation/loader";
 import { Footer } from "../footer";
+import SignUpDescription from "./screens/sign-up-description";
 import SignUpDouble from "./screens/sign-up-double";
 import SignUpLogin from "./screens/sign-up-login";
 import SignUpName from "./screens/sign-up-name";
@@ -20,7 +21,7 @@ const SignUp = ({ location: { state } }) => {
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
-  const [step, setStep] = useState(state?.step || 1);
+  const [step, setStep] = useState(state?.step || 0);
   const [name, setName] = useState(state?.name || "");
   const [imageTransformations, setImageTransformations] = useState();
   const [errorMessage, setErrorMessage] = useState();
@@ -163,6 +164,8 @@ const SignUp = ({ location: { state } }) => {
 
   const renderSignScreen = (idStep) => {
     switch (idStep) {
+      case 0:
+        return <SignUpDescription goNext={goNext} />;
       case 1:
         return (
           <SignUpName
