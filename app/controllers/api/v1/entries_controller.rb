@@ -5,6 +5,8 @@ module API
 
       skip_before_action :authenticate_user!, only: NO_LOGIN_ACTIONS
 
+      protect_from_forgery with: :null_session
+
       def index
         respond_with_item_list(
           ::Entries::WithRankQuery.new.call(competition.id, params[:level]),
