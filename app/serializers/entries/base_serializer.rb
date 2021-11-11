@@ -20,10 +20,9 @@ module Entries
       return {} if transform.blank?
 
       {
-        resizing_type: :crop,
-        width: transform['width'],
-        height: transform['height'],
-        gravity: "nowe:#{transform['x']}:#{transform['y']}"
+        crop_width: transform['width'],
+        crop_height: transform['height'],
+        crop_gravity: "nowe:#{transform['x']}:#{transform['y']}"
       }
     end
   end
