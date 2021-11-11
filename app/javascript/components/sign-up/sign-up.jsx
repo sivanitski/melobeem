@@ -18,10 +18,13 @@ import SignUpPhoto from "./screens/sign-up-photo";
 import SignUpShare from "./screens/sign-up-share";
 
 const SignUp = ({ location: { state } }) => {
+  const locationParams = new URLSearchParams(location.search);
+  const regCampaign = locationParams.get("regCampaign");
+
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useContext(UserContext);
-  const [step, setStep] = useState(state?.step || 0);
+  const [step, setStep] = useState(state?.step || regCampaign ? 0 : 1);
   const [name, setName] = useState(state?.name || "");
   const [imageTransformations, setImageTransformations] = useState();
   const [errorMessage, setErrorMessage] = useState();
