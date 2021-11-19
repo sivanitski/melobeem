@@ -1,5 +1,6 @@
 class Entry < ApplicationRecord
   has_many :votes, dependent: :destroy
+  has_many :comments, dependent: :destroy
   has_many :purchase_transactions, dependent: :destroy
   has_many :notifications, dependent: :destroy
   has_many :prizes, dependent: :destroy

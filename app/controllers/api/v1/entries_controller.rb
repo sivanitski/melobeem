@@ -1,7 +1,7 @@
 module API
   module V1
     class EntriesController < API::V1::ApplicationController # rubocop:disable Metrics/ClassLength
-      NO_LOGIN_ACTIONS = %i[index create show new latest_voters total_votes_by_date search voters_by_day ranking_details max_level_entry].freeze
+      NO_LOGIN_ACTIONS = %i[comments index create show new latest_voters total_votes_by_date search voters_by_day ranking_details max_level_entry].freeze
 
       skip_before_action :authenticate_user!, only: NO_LOGIN_ACTIONS
 
@@ -130,6 +130,17 @@ module API
 
         render json: { message: (prize_time.take.created_at + 24.hours).to_i, value: prize_time.take.value },
                adapter: nil, status: :ok
+      end
+
+      def comments
+        entry = Entry.find_by_id(params[:id])
+        render json: {comments: entry.comments.as_json, status: :ok}
+      end
+
+      def create_comment
+        entry = Entry.find_by_id(params[:id])
+        comment = entry.comments.new(description: params[:comment], user_id: current_user.id)
+        render json: {comment_saved: comment.save! ,status: :ok}
       end
 
       def max_level_entry

@@ -1,15 +1,11 @@
 import propTypes from "prop-types";
 import React from "react";
-import { Comments } from "react-facebook";
+import EntryComment from "./entry-comments";
 
 const FbComment = ({ childId }) => {
   return (
     <div className="facebook__comments">
-      <Comments
-        href={`${global.window.location.origin}/entries/${childId}`}
-        numPosts="15"
-        width="100%"
-      />
+      <EntryComment childId={childId} numPosts="15" width="100%" />
     </div>
   );
 };

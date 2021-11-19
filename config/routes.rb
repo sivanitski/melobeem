@@ -46,6 +46,7 @@ Rails.application.routes.draw do
           get :prize_by_level
           get :prizes
           get :prize_time
+          get :comments
           get :certificate
           put :take_prize
         end
@@ -104,6 +105,8 @@ Rails.application.routes.draw do
       resources :awards, only: %i[index show] do
         post :take_prize, on: :member
       end
+
+      get "entries/:id/create_comment/:comment", to: "entries#create_comment"
     end
   end
 
