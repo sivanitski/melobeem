@@ -45,6 +45,17 @@ const PopupButton = ({ type, linkId }) => {
     );
   }
 
+  if (type === "black_friday_sale") {
+    return (
+      <Link
+        className="button popup__button black_friday__button"
+        to={`/entry/${linkId}/vote`}
+      >
+        go to shop
+      </Link>
+    );
+  }
+
   if (type.includes("sale")) {
     return (
       <Link className="button popup__button" to={`/entry/${linkId}/vote`}>

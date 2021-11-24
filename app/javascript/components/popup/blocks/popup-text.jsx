@@ -1,6 +1,7 @@
 import propTypes from "prop-types";
 import React from "react";
 
+import BlackFridayBackground from "../../../images/black_friday_background.svg";
 import HalloweenBackground from "../../../images/halloween_text_background.svg";
 
 const PopupText = ({ type, name, parentName }) => {
@@ -37,9 +38,20 @@ const PopupText = ({ type, name, parentName }) => {
         </div>
       </div>
     );
-  } else {
-    return <div className="popup__text text-grey">{renderText()}</div>;
   }
+
+  if (type === "black_friday_sale") {
+    return (
+      <div className="popup__text_container blf__text_container">
+        <BlackFridayBackground />
+        <div className="popup__text text-grey">
+          50% off for all Votes packages
+        </div>
+      </div>
+    );
+  }
+
+  return <div className="popup__text text-grey">{renderText()}</div>;
 };
 
 PopupText.propTypes = {

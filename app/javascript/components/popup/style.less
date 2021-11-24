@@ -34,6 +34,7 @@
   justify-content: center;
   background: url("../../images/decorations.png") no-repeat;
   background-position: center;
+  z-index: 5;
 
   @media (min-resolution: 144dpi), (min-resolution: 1.5dppx) {
     background: url("../../images/decorations@2x.png") no-repeat;
@@ -48,6 +49,11 @@
   }
 }
 
+.popup__avatar.black_friday_sale {
+  background: none !important;
+  width: auto !important;
+}
+
 .popup__close {
   width: 30px;
   height: 30px;
@@ -60,10 +66,12 @@
   background: rgba(227, 190, 201, 0.12);
   border-radius: 50%;
   cursor: pointer;
+  z-index: 5;
 }
 
 .popup__title {
   margin-bottom: 15px;
+  z-index: 5;
 }
 
 .popup__text {
@@ -90,6 +98,11 @@
   z-index: 10;
 }
 
+.black_friday__button {
+  background: linear-gradient(30deg, #2c2c2c -12428.11%, #424242 8310.72%) !important;
+  z-index: 10;
+}
+
 .popup__text_container {
   position: relative;
 
@@ -98,5 +111,21 @@
     left: -12px;
     top: -40px;
     z-index: 1;
+  }
+}
+
+.blf__text_container {
+  position: relative;
+
+  svg {
+    position: absolute;
+    left: -24px;
+    top: -109px;
+    z-index: 1;
+  }
+
+  .popup__text {
+    z-index: 5;
+    position: relative;
   }
 }

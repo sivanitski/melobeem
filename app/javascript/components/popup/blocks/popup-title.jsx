@@ -21,6 +21,10 @@ const PopupTitle = ({ type }) => {
       return "Sale!";
     }
 
+    if (type === "black_friday_sale") {
+      return "Sales";
+    }
+
     if (type.includes("spinner")) {
       return "Enter to spin";
     }
@@ -29,6 +33,12 @@ const PopupTitle = ({ type }) => {
       return "Enter to use Levels";
     }
   };
+
+  if (type === "black_friday_sale") {
+    return (
+      <div className="popup__title headline text-black">{renderTitle()}</div>
+    );
+  }
 
   return <div className={titleClasses}>{renderTitle()}</div>;
 };

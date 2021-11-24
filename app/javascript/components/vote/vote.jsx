@@ -26,6 +26,7 @@ const Vote = ({
   const [isShowShareModal, setIsShowShareModal] = useState(false);
   const [animationStep, setAnimationStep] = useState(0);
   const [isHalloween, setIsHalloween] = useState(false);
+  const [isBlackFriday, setIsBlackFriday] = useState(false);
 
   if (!user) {
     return <Redirect to={`/entry/${id}`} />;
@@ -53,6 +54,8 @@ const Vote = ({
     api.get("/events/current").then((res) => {
       if (res?.data && res?.data?.event?.eventType === "halloween") {
         setIsHalloween(true);
+      } else if (res?.data && res?.data?.event?.eventType === "black_friday") {
+        setIsBlackFriday(true);
       }
     });
   }, []);
@@ -247,6 +250,12 @@ const Vote = ({
       {isHalloween && currentPage === "vote" && (
         <div className="halloween_sale_info_container">
           <div className="halloween_sale_info"></div>
+        </div>
+      )}
+
+      {isBlackFriday && currentPage === "vote" && (
+        <div className="black_friday_sale_info_container">
+          <div className="black_friday_sale_info"></div>
         </div>
       )}
 

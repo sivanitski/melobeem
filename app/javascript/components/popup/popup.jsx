@@ -16,7 +16,7 @@ const Popup = ({ handlePopupClose, linkId, name, image, type, parentName }) => {
         <div className="popup__close" onClick={handlePopupClose}>
           <ButtonClose />
         </div>
-        <div className="popup__avatar">
+        <div className={`popup__avatar ${type}`}>
           <PopupImage type={type} image={image} />
         </div>
         <PopupTitle type={type} />
