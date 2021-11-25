@@ -20,6 +20,7 @@ const Entry = ({
 }) => {
   const history = useHistory();
   const [isPopupShown, setIsPopupShown] = useState(false);
+  const [saleEvent, setSaleEvent] = useState(null);
 
   const getChild = () => {
     return api
@@ -41,18 +42,6 @@ const Entry = ({
     formatResult: (res) => res.data.entry,
   });
 
-  const getEventData = () => {
-    return api.get(`/events/show_event_modal`);
-  };
-
-  const {
-    data: saleEvent,
-    loading: saleEventLoading,
-    run: requestEventModal,
-  } = useRequest(getEventData, {
-    formatResult: (res) => res.data.event,
-  });
-
   const getMainVoters = () => {
     return api.get(`/entries/${id}/latest_voters`);
   };
@@ -72,7 +61,11 @@ const Entry = ({
   useEffect(() => {
     requestChild();
     requestVoters();
-    requestEventModal();
+    api.get("/events/show_event_modal").then((res) => {
+      if (res?.data.event) {
+        setSaleEvent(res?.data.event);
+      }
+    });
   }, [id]);
 
   useEffect(() => {
@@ -84,7 +77,7 @@ const Entry = ({
   if (childError) {
     return <Error />;
   }
-  if (childLoading || votersLoading || saleEventLoading) {
+  if (childLoading || votersLoading) {
     return <EntryShowLoader />;
   }
 
@@ -94,7 +87,7 @@ const Entry = ({
       <EntryContent child={child} voters={voters} />
       <Footer />
 
-      {isPopupShown && (
+      {isPopupShown && saleEvent && (
         <Popup
           handlePopupClose={handlePopupClose}
           linkId={child.id}
