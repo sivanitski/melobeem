@@ -101,7 +101,11 @@ const PreviousWinners = ({
             next={fetchData}
             hasMore={isMoreWinners}
             loader={<h4>Loading...</h4>}
-            endMessage={<p className="scroll-message">There’s no winners</p>}
+            endMessage={
+              <p className="scroll-message">
+                Yay! You&apos;ve seen all winners!
+              </p>
+            }
           >
             {winnerList.map((winner) => (
               <div className="competitors-item" key={winner.id}>

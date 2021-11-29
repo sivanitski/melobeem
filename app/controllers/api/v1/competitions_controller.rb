@@ -27,7 +27,10 @@ module API
 
       def previous_awarded
         respond_with_item_list(
-          Entry.where(competition_id: params[:id]).where('final_rank <= ?', 100).order(final_rank: :asc),
+          Entry.where(competition_id: params[:id])
+               .where('final_rank <= ?', 100)
+               .where(deactivated: false)
+               .order(final_rank: :asc),
           ::Competitions::PreviousAwardedSerializer
         )
       end
