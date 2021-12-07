@@ -50,6 +50,13 @@ Rails.application.routes.draw do
           put :take_prize
         end
 
+        resources :comments, module: :entries, except: %i[update edit] do
+          member do
+            get :load_child_comments
+            post :report_comment
+          end
+        end
+
         resources :votes, module: :entries, only: [] do
           get 'expiration_time_for_free', on: :collection
           post 'create_free', on: :collection

@@ -5,6 +5,7 @@ class Entry < ApplicationRecord
   has_many :prizes, dependent: :destroy
   has_many :prize_times, dependent: :destroy
   has_many :awards, dependent: :destroy
+  has_many :comments, dependent: :destroy
   belongs_to :competition
   belongs_to :user, optional: true
   has_one_attached :image, dependent: :destroy

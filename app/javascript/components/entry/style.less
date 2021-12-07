@@ -156,8 +156,369 @@
   text-align: center;
 }
 
-.facebook__comments {
+.custom__comments {
+  position: relative;
   width: 100%;
+  margin: 20px 16px;
+}
+
+.comments_setion {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  flex-flow: wrap;
+}
+
+.input_section {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 16px;
+}
+
+.image_comments {
+  width: 40px;
+  height: 40px;
+  margin-right: 16px;
+  border-radius: 29px;
+}
+
+.input_comments {
+  width: calc(100% - 56px);
+  margin: 0;
+  padding: 16px 60px 16px 16px;
+  border: 1px solid #a3a3a3;
+  box-sizing: border-box;
+  border-radius: 50px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 15px;
+  line-height: 18px;
+  letter-spacing: -0.24px;
+  caret-color: #e20c74;
+}
+
+.button_comment {
+  display: none;
+  position: absolute;
+  margin: 0;
+  right: 32px;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: -0.41px;
+  color: #ff7098;
+  cursor: pointer;
+}
+
+.post_active {
+  display: block;
+}
+
+.comments_section {
+  width: calc(100% - 32px);
+  position: relative;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  padding: 16px;
+}
+
+.comments_info {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 20px;
+  letter-spacing: 0.0041em;
+  color: #000;
+  margin-right: 24px;
+}
+
+.comments_user_name {
+  opacity: 1;
+}
+
+.comments_content {
+  opacity: 0.5;
+}
+
+.reply_button {
+  position: absolute;
+  left: 72px;
+  bottom: -4px;
+  cursor: pointer;
+}
+
+.reply_section {
+  width: calc(100% - 56px);
+  float: right;
+}
+
+.load_more {
+  opacity: 0.7;
+  padding-right: 16px;
+  color: #ff7098;
+  cursor: pointer;
+}
+
+.load_more:disabled {
+  color: #000;
+  opacity: 0.5;
+}
+
+.d-none {
+  display: none;
+}
+
+.comment_date {
+  position: absolute;
+  right: 16px;
+  bottom: 0;
+  opacity: 0.5;
+  letter-spacing: -0.5px;
+}
+
+.ellipses_menu {
+  position: absolute;
+  right: 16px;
+  cursor: pointer;
+}
+
+[type="checkbox"]:checked,
+[type="checkbox"]:not(:checked) {
+  position: absolute;
+  left: -9999px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.ellipses_dropdown:checked + label,
+.ellipses_dropdown:not(:checked) + label {
+  position: relative;
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 2;
+  transition: all 200ms linear;
+  border-radius: 4px;
+  letter-spacing: 1px;
+  width: 16px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  color: #102770;
+  box-shadow: 0 12px 35px 0 rgba(255, 235, 167, 0.15);
+}
+
+.ellipses_dropdown:checked + label::before,
+.ellipses_dropdown:not(:checked) + label::before {
+  position: fixed;
+  top: 0;
+  left: 0;
+  content: '';
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  cursor: auto;
+  pointer-events: none;
+}
+
+.ellipses_dropdown:checked + label::before {
+  pointer-events: auto;
+}
+
+.section-dropdown {
+  position: absolute;
+  background: rgba(249, 249, 249, 0.78);
+  backdrop-filter: blur(54.3656px);
+  border-radius: 12px;
+  width: 250px;
+  height: 45px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0;
+  top: -10px;
+  left: -250px;
+  z-index: 2;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(20px);
+  transition: all 200ms linear;
+}
+
+.menu_active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+.section-dropdown span {
+  font-style: normal;
+  font-weight: normal;
+  font-size: 17px;
+  line-height: 22px;
+  letter-spacing: -0.41px;
+}
+
+span.delete_menu {
+  color: #ff3b30;
+}
+
+.menu-item {
+  position: relative;
+  padding: 0 16px;
+  width: -webkit-fill-available;
+  height: inherit;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.sub_comment {
+  float: right;
+}
+
+.pagination-container {
+  display: flex;
+  list-style-type: none;
+
+  .pagination-item {
+    padding: 0 12px;
+    height: 32px;
+    text-align: center;
+    margin: auto 4px;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    box-sizing: border-box;
+    align-items: center;
+    letter-spacing: 0.01071em;
+    border-radius: 16px;
+    line-height: 1.43;
+    font-size: 13px;
+    min-width: 32px;
+
+    &.dots:hover {
+      background-color: transparent;
+      cursor: default;
+    }
+
+    &:hover {
+      background-color: rgba(0, 0, 0, 0.04);
+      cursor: pointer;
+    }
+
+    &.selected {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    .arrow {
+      &::before {
+        position: relative;
+        content: '';
+        display: inline-block;
+        width: 0.4em;
+        height: 0.4em;
+        border-right: 0.12em solid rgba(0, 0, 0, 0.87);
+        border-top: 0.12em solid rgba(0, 0, 0, 0.87);
+      }
+
+      &.left {
+        transform: rotate(-135deg) translate(-50%);
+      }
+
+      &.right {
+        transform: rotate(45deg);
+      }
+    }
+
+    &.disabled {
+      pointer-events: none;
+
+      .arrow::before {
+        border-right: 0.12em solid rgba(0, 0, 0, 0.43);
+        border-top: 0.12em solid rgba(0, 0, 0, 0.43);
+      }
+
+      &:hover {
+        background-color: transparent;
+        cursor: default;
+      }
+    }
+  }
+}
+
+.pagination-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 0;
+}
+
+.modal__wrap {
+  position: fixed;
+  display: block;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 0 auto;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  overflow-x: hidden;
+  background-color: rgba(31, 32, 41, 0.75);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 250ms 700ms ease;
+}
+
+.visible {
+  pointer-events: auto;
+  opacity: 1;
+  transition: all 300ms ease-in-out;
+}
+
+.modal {
+  overflow-y: hidden;
+  overflow-x: hidden;
+  position: relative;
+  display: block;
+  width: 60vw;
+  height: auto;
+  max-width: 400px;
+  min-width: 280px;
+  margin: 0 auto;
+  padding: 16px;
+  border-radius: 4px;
+  background-color: #fff;
+  align-self: center;
+  box-shadow: 0 12px 25px 0 rgba(199, 175, 189, 0.25);
+  opacity: 0;
+  transition: opacity 250ms 250ms ease, transform 300ms 250ms ease;
+  transform: scale(0);
+}
+
+.visible .modal {
+  opacity: 1;
+  transform: scale(1);
+  transition: opacity 250ms 500ms ease, transform 350ms 500ms ease;
+}
+
+.close_icon {
+  position: absolute;
+  right: 0;
+  top: 8px;
+  cursor: pointer;
+}
+
+.alarm_content {
+  margin: 16px 0;
+  padding: 8px;
 }
 
 .fb_iframe_widget,
