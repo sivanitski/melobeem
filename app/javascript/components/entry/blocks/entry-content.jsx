@@ -109,7 +109,10 @@ const EntryContent = ({ child, voters }) => {
         <img src={child.imageUrl} />
 
         {child.currentCompetition ? (
-          <FacebookShare childId={child.id} classes="entry__share">
+          <FacebookShare
+            childId={child.id}
+            classes="entry__share entry_ready_share"
+          >
             <ShareImage />
           </FacebookShare>
         ) : (

@@ -39,7 +39,11 @@ const HeaderNotLogin = () => {
         </div>
       </div>
       <div className="header-not-login__buttons">
-        <Link to="/sign-up" className="button header-not-login__button">
+        <Link
+          to="/sign-up"
+          id="enter_competition_from_leaderboard"
+          className="button header-not-login__button"
+        >
           Enter competition
         </Link>
 

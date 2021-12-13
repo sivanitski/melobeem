@@ -60,6 +60,7 @@ const SignUpName = ({
         type="text"
       />
       <button
+        id="entering_name_step"
         className={formButtonClasses}
         disabled={isButtonDisabled}
         onClick={handleClick}

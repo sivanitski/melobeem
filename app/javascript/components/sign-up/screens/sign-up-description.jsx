@@ -31,7 +31,11 @@ const SignUpDescription = ({ goNext }) => {
       </div>
 
       <div className="button-container">
-        <button className="button form__button" onClick={handleClick}>
+        <button
+          className="button form__button"
+          id="entering_from_ads"
+          onClick={handleClick}
+        >
           Get started
         </button>
       </div>

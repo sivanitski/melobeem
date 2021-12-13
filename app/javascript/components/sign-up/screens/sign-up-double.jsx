@@ -16,7 +16,11 @@ const SignUpDouble = ({ imagePreviewUrl, childId }) => {
         current entry to be able to enter a new one.
       </div>
 
-      <Link to={`/entry/${childId}`} className="button form__button">
+      <Link
+        to={`/entry/${childId}`}
+        className="button form__button"
+        id="entering_already_have_entry"
+      >
         Go to my Entry
       </Link>
     </div>

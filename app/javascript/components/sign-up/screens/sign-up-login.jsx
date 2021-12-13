@@ -28,7 +28,7 @@ const SignUpLogin = ({ imagePreviewUrl, childId, handlePhotoSave }) => {
           </div>
           <FacebookLoginComponent
             title="Continue via Facebook"
-            classes="form__button form-preview__button"
+            classes="form__button form-preview__button entering_signup_with_fb"
             state={"entry_create"}
           />
         </>

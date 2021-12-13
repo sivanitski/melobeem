@@ -592,6 +592,7 @@ const Payment = ({
               <button
                 type="submit"
                 disabled={paymentButtonDisabled}
+                id={`click_on_pay_button_${activeType}`}
                 className={
                   paymentButtonDisabled
                     ? "button vote-payment__button vote-payment__button-disabled"

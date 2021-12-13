@@ -28,6 +28,7 @@ const Footer = ({ isEnterButtonSmall, active }) => {
     return (
       <Link
         to="/sign-up"
+        id="enter_competition_from_footer"
         className={`footer__button ${
           isEnterButtonSmall && "footer__button--small"
         }`}

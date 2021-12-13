@@ -43,6 +43,7 @@ const Timer = ({ timeLeftInSeconds, handleFieldClick, type }) => {
     return (
       <div className={buttonClasses} onClick={handleFieldClick}>
         <TimerField
+          id="vote_from_entry_page"
           text={
             timeLeft > 0
               ? `Free vote in ${formatTimeInMinutesAndSeconds(timeLeft)}`
@@ -57,6 +58,7 @@ const Timer = ({ timeLeftInSeconds, handleFieldClick, type }) => {
     return (
       <TimerField
         classes={buttonClasses}
+        id="free_spinner_for_user"
         text={
           timeLeft > 0
             ? `Free spin in ${formatTimeInHoursMinutesAndSeconds(timeLeft)}`
@@ -70,6 +72,7 @@ const Timer = ({ timeLeftInSeconds, handleFieldClick, type }) => {
     return (
       <TimerField
         classes={buttonClasses}
+        id="free_vote_for_entry"
         text={
           timeLeftInMiliseconds > 0
             ? `${formatTimeInMinutesAndSeconds(timeLeft)}`

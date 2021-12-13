@@ -69,6 +69,7 @@ const SignUpPhoto = ({
             onClick={SetupTransformations}
           >
             <label
+              id="entering_crop_photo_step"
               htmlFor="form-img__file"
               className="button form-img__file-button"
             >
@@ -101,6 +102,7 @@ const SignUpPhoto = ({
               className="input form-img__file"
             />
             <label
+              id="entering_add_photo_step"
               htmlFor="form-img__file"
               className="button form-img__file-button"
             >

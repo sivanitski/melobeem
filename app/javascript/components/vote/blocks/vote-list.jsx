@@ -126,6 +126,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
           </div>
           <div className="vote-item__text">{voteOption.title}</div>
           <div
+            id={`paid_vote_click_${voteOption.value}`}
             className="vote-item__button"
             onClick={() => handlePaidClick(voteOption)}
           >

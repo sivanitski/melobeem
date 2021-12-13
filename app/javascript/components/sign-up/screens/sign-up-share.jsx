@@ -18,13 +18,14 @@ const SignUpShare = ({ imagePreviewUrl, childId }) => {
 
       <FacebookShare
         childId={childId}
-        classes="button button--facebook form-share__button"
+        classes="button button--facebook form-share__button entering_share"
       >
         Share on Facebook
       </FacebookShare>
 
       <Link
         to={`/entry/${childId}`}
+        id="entering_without_share"
         className="text-grey text-small form-share__text-enter"
       >
         Enter without sharing
