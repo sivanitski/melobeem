@@ -4,6 +4,7 @@ class Comment < ApplicationRecord
   belongs_to :parent, class_name: 'Comment', optional: true
 
   has_many :replies, class_name: 'Comment', foreign_key: :parent_id, dependent: :destroy # rubocop:disable Rails/InverseOf
+  has_many :users_reports, dependent: :destroy, foreign_key: :target_id # rubocop:disable Rails/InverseOf
 
   validates :body, presence: true, length: { maximum: 1000 }
   validate :bad_words

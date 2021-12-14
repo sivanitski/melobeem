@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_11_26_123540) do
+ActiveRecord::Schema.define(version: 2021_12_10_064520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -268,6 +268,20 @@ ActiveRecord::Schema.define(version: 2021_11_26_123540) do
     t.index ["email"], name: "index_users_on_email"
     t.index ["provider", "uid"], name: "index_users_on_provider_and_uid", unique: true, where: "(deactivated IS FALSE)"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  end
+
+  create_table "users_reports", force: :cascade do |t|
+    t.string "target_type", null: false
+    t.bigint "target_id", null: false
+    t.bigint "user_id"
+    t.integer "report_type", default: 0, null: false
+    t.integer "status", default: 0, null: false
+    t.text "details"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["target_type", "target_id", "user_id"], name: "index_user_reports_uniqueness", unique: true
+    t.index ["target_type", "target_id"], name: "index_users_reports_on_target"
+    t.index ["user_id"], name: "index_users_reports_on_user_id"
   end
 
   create_table "votes", force: :cascade do |t|

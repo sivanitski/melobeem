@@ -6,6 +6,7 @@ class Entry < ApplicationRecord
   has_many :prize_times, dependent: :destroy
   has_many :awards, dependent: :destroy
   has_many :comments, dependent: :destroy
+  has_many :users_reports, dependent: :destroy, foreign_key: :target_id # rubocop:disable Rails/InverseOf
   belongs_to :competition
   belongs_to :user, optional: true
   has_one_attached :image, dependent: :destroy

@@ -12,6 +12,7 @@ class User < ApplicationRecord
   has_many :spins, dependent: :destroy
   has_many :awards, through: :entries
   has_many :comments, dependent: :destroy
+  has_many :users_reports, dependent: :destroy
 
   has_one_attached :avatar, dependent: :destroy
 

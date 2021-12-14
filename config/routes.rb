@@ -111,6 +111,12 @@ Rails.application.routes.draw do
       resources :awards, only: %i[index show] do
         post :take_prize, on: :member
       end
+
+      resources :users_reports, only: :create do
+        collection do
+          get :list_of_types
+        end
+      end
     end
   end
 

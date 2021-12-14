@@ -2,6 +2,7 @@ import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 import propTypes from "prop-types";
 import React, { useContext, useEffect, useMemo, useState } from "react";
+import { useHistory } from "react-router";
 
 import { api } from "../../../api";
 import UserContext from "../../../helpers/user-context";
@@ -16,6 +17,7 @@ dayjs.extend(relativeTime);
 
 const FbComment = ({ childId }) => {
   const { user } = useContext(UserContext);
+  const history = useHistory();
   const [comment, setComment] = useState("");
   const [isPost, setIsPost] = useState(false);
   const [comments, setComments] = useState(null);
@@ -122,19 +124,7 @@ const FbComment = ({ childId }) => {
   };
 
   const handleReport = (id) => {
-    api
-      .post(`/entries/${childId}/comments/${id}/report_comment`)
-      .then((res) => {
-        if (res.status === 200) {
-          async function getComments() {
-            const { data: comments } = await api.get(
-              `/entries/${childId}/comments`
-            );
-            setComments(comments.comments);
-          }
-          getComments();
-        }
-      });
+    history.push(`/comment-report/${id}`);
   };
 
   const getSubComments = async (id, page, count) => {
