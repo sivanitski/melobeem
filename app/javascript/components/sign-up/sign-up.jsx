@@ -135,7 +135,10 @@ const SignUp = ({ location: { state } }) => {
       setIsLoading(false);
       setStep(user ? 4 : step + 1);
     } catch (e) {
-      if (e.response.data.message === "Image must be less than 10mb") {
+      if (
+        e.response.data.message === "Image must be less than 10mb" ||
+        e.response.data.message === "Image is not given between dimension"
+      ) {
         setPhoto({ file: "", imagePreviewUrl: "" });
         setErrorMessage(e.response.data.message);
         setIsLoading(false);
