@@ -20,6 +20,7 @@ import SignUpShare from "./screens/sign-up-share";
 const SignUp = ({ location: { state } }) => {
   const locationParams = new URLSearchParams(location.search);
   const regCampaign = locationParams.get("regCampaign");
+  const clickIdentify = locationParams.get("c_id");
 
   const history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
@@ -36,6 +37,10 @@ const SignUp = ({ location: { state } }) => {
   const goNext = () => {
     setStep(step + 1);
   };
+
+  if (clickIdentify) {
+    localStorage.setItem("c_id", clickIdentify);
+  }
 
   const handlePutData = async () => {
     setIsLoading(true);
@@ -130,6 +135,10 @@ const SignUp = ({ location: { state } }) => {
         setCurrentChild(entry);
         dataLayer.push({ event: "CompleteRegistration" });
         ReactPixel.track("CompleteRegistration");
+        let c_id = localStorage.getItem("c_id");
+        if (c_id) {
+          await fetch(`https://www.veneficus.co.uk/tp/?vtcid=${c_id}`);
+        }
       }
 
       setIsLoading(false);
