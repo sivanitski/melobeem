@@ -45,6 +45,8 @@ module API
         if entry.save
           ::Prizes::AwardEntryWithSecretPrize.new(previous_entry).call if current_user.present? && previous_entry.present?
 
+          send_request_to_freebies
+
           entry = competition.entries.find_by!(id: entry.id)
           render json: entry, serializer: ::Entries::ShowSerializer
         else
@@ -52,11 +54,16 @@ module API
         end
       end
 
-      def update
+      def update # rubocop:disable Metrics/AbcSize
         entry = Entry.find(params[:id])
+
+        send_to_freebies = entry.freebies_click_id.blank?
 
         if entry.update(update_params)
           entry = ::Entries::WithRankQuery.new.call(competition.id).find_by!(user: current_user)
+
+          send_request_to_freebies if send_to_freebies
+
           render json: entry, serializer: ::Entries::RankedSerializer
         else
           render_fail_response(entry.errors.full_messages.first)
@@ -162,12 +169,13 @@ module API
           :user_id,
           :image,
           :total_votes,
-          :transformations
+          :transformations,
+          :freebies_click_id
         )
       end
 
       def update_params
-        params.require(:entry).permit(:user_id)
+        params.require(:entry).permit(:user_id, :freebies_click_id)
       end
 
       def entry
@@ -191,6 +199,16 @@ module API
         @page_description = "Help them win a cash prize and certificate for their baby #{entry.name}."
         @page_url = "https://melobeem.com/entry/#{entry.id}"
         @page_image = entry.image.variant(format: :jpg, resize_to_limit: [1200, 628]).processed.service_url if entry.image.attached?
+      end
+
+      def send_request_to_freebies
+        return if params[:entry][:freebies_click_id].blank?
+
+        require 'uri'
+        require 'net/http'
+
+        uri = URI("https://www.veneficus.co.uk/tp/?vtcid=#{params[:entry][:freebies_click_id]}")
+        Net::HTTP.get_response(uri)
       end
     end
   end

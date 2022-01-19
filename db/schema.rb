@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_12_10_064520) do
+ActiveRecord::Schema.define(version: 2022_01_19_061401) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 2021_12_10_064520) do
     t.integer "competition_additional_prize", default: 0, null: false
     t.boolean "spent_competition_additional_prize", default: false, null: false
     t.json "transformations", default: {}
+    t.string "freebies_click_id"
     t.index ["competition_id"], name: "index_entries_on_competition_id"
     t.index ["total_votes"], name: "index_entries_on_total_votes"
     t.index ["user_id", "competition_id"], name: "index_entries_on_user_id_and_competition_id", unique: true
