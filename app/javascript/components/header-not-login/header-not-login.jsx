@@ -1,5 +1,6 @@
 import "./style.less";
 
+import axios from "axios";
 import React from "react";
 import { Link } from "react-router-dom";
 
@@ -12,6 +13,28 @@ import LogoText from "../../images/logo-text.svg";
 import { FacebookLoginComponent } from "../facebook-login";
 
 const HeaderNotLogin = () => {
+  const trackEvent = (event, eventName) => {
+    let json = JSON.stringify({
+      tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
+      event: {
+        site: "melobeem",
+        event: event,
+        event_name: eventName,
+        user_token: localStorage.getItem("tk"),
+      },
+    });
+
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json,
+    };
+
+    fetch("http://localhost:3031/events", requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState({ postId: data.id }));
+  };
+
   return (
     <div className="header-not-login">
       <div className="header-not-login__pictures">
@@ -38,7 +61,10 @@ const HeaderNotLogin = () => {
           <br /> Enter and vote to win prizes each month!
         </div>
       </div>
-      <div className="header-not-login__buttons">
+      <div
+        className="header-not-login__buttons"
+        onClick={() => trackEvent("click", "enter-competition")}
+      >
         <Link
           to="/sign-up"
           id="enter_competition_from_leaderboard"

@@ -20,6 +20,21 @@ const App = () => {
     return api.get("/users/current");
   };
 
+  const generateToken = () => {
+    let result = "";
+    let characters =
+      "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    let charactersLength = characters.length;
+    for (let i = 0; i < 20; i++) {
+      result += characters.charAt(Math.floor(Math.random() * charactersLength));
+    }
+    return result;
+  };
+
+  if (!localStorage.getItem("tk")) {
+    localStorage.setItem("tk", generateToken());
+  }
+
   const getCurrentChildren = () => {
     return api.get("/entries/current");
   };
