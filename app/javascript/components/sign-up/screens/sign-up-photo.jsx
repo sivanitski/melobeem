@@ -19,11 +19,34 @@ const SignUpPhoto = ({
   const [isPhotoUploaded, setIsPhotoUploaded] = useState(false);
 
   const SetupTransformations = () => {
+    trackEvent("click", "enter-crop");
     setImageTransformations(croppedAreaSaved);
   };
 
   const OnCropComplete = (croppedArea, croppedAreaPixels) => {
     setCroppedAreaSaved(croppedAreaPixels);
+  };
+
+  const trackEvent = (event, eventName) => {
+    let json = JSON.stringify({
+      tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
+      event: {
+        site: "melobeem",
+        event: event,
+        event_name: eventName,
+        user_token: localStorage.getItem("tk"),
+      },
+    });
+
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json,
+    };
+
+    fetch("http://localhost:3031/events", requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState({ postId: data.id }));
   };
 
   useEffect(() => {
@@ -94,6 +117,7 @@ const SignUpPhoto = ({
           <div
             className="form-img__wrapper form__button"
             onChange={handleChange}
+            onClick={() => trackEvent("click", "enter-add-photo")}
           >
             <input
               name="file"

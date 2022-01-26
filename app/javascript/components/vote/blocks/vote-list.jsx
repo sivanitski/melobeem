@@ -54,6 +54,28 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
     formatResult: (res) => res.data.products,
   });
 
+  const trackEvent = (event, eventName) => {
+    let json = JSON.stringify({
+      tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
+      event: {
+        site: "melobeem",
+        event: event,
+        event_name: eventName,
+        user_token: localStorage.getItem("tk"),
+      },
+    });
+
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json,
+    };
+
+    fetch("http://localhost:3031/events", requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState({ postId: data.id }));
+  };
+
   const handleFreeVoteClick = async () => {
     if (timeFreeVote === 0) {
       setIsVoteItemAnimation(true);
@@ -65,6 +87,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
       userId: user.id,
       "g-recaptcha-response-data": token,
     });
+    trackEvent("vote", "free-vote");
     updateData(true);
   };
 

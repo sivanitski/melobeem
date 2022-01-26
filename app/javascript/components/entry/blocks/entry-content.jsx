@@ -50,6 +50,28 @@ const EntryContent = ({ child, voters }) => {
     return api.get(`/entries/${child.id}/votes/expiration_time_for_free`);
   };
 
+  const trackEvent = (event, eventName) => {
+    let json = JSON.stringify({
+      tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
+      event: {
+        site: "melobeem",
+        event: event,
+        event_name: eventName,
+        user_token: localStorage.getItem("tk"),
+      },
+    });
+
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json,
+    };
+
+    fetch("http://localhost:3031/events", requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState({ postId: data.id }));
+  };
+
   const { data: timeFreeVote, loading } = useRequest(getFreeVoteTimer, {
     formatResult: (res) => res.data.ttlInSeconds,
   });
@@ -70,6 +92,7 @@ const EntryContent = ({ child, voters }) => {
     if (!user) {
       setIsPopupShown(true);
     } else {
+      trackEvent("click", "entry-vote-button");
       history.push(`/entry/${child.id}/vote`);
     }
   };

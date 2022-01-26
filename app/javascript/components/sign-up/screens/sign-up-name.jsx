@@ -31,8 +31,31 @@ const SignUpName = ({
     }
 
     if (!isButtonDisabled) {
+      trackEvent("click", "enter-name");
       goNext();
     }
+  };
+
+  const trackEvent = (event, eventName) => {
+    let json = JSON.stringify({
+      tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
+      event: {
+        site: "melobeem",
+        event: event,
+        event_name: eventName,
+        user_token: localStorage.getItem("tk"),
+      },
+    });
+
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json,
+    };
+
+    fetch("http://localhost:3031/events", requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState({ postId: data.id }));
   };
 
   const formButtonClasses = classNames("button form__button", {

@@ -61,23 +61,24 @@ const HeaderNotLogin = () => {
           <br /> Enter and vote to win prizes each month!
         </div>
       </div>
-      <div
-        className="header-not-login__buttons"
-        onClick={() => trackEvent("click", "enter-competition")}
-      >
-        <Link
-          to="/sign-up"
-          id="enter_competition_from_leaderboard"
-          className="button header-not-login__button"
-        >
-          Enter competition
-        </Link>
+      <div className="header-not-login__buttons">
+        <div onClick={() => trackEvent("click", "enter-competition")}>
+          <Link
+            to="/sign-up"
+            id="enter_competition_from_leaderboard"
+            className="button header-not-login__button"
+          >
+            Enter competition
+          </Link>
+        </div>
 
-        <FacebookLoginComponent
-          title="Login with Facebook"
-          state={"login"}
-          classes="header-not-login__button"
-        />
+        <div onClick={() => trackEvent("click", "login-with-facebook")}>
+          <FacebookLoginComponent
+            title="Login with Facebook"
+            state={"login"}
+            classes="header-not-login__button"
+          />
+        </div>
       </div>
     </div>
   );

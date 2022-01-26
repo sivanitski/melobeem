@@ -5,6 +5,28 @@ import { Link } from "react-router-dom";
 import { FacebookShare } from "../../facebook-share";
 
 const SignUpShare = ({ imagePreviewUrl, childId }) => {
+  const trackEvent = (event, eventName) => {
+    let json = JSON.stringify({
+      tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
+      event: {
+        site: "melobeem",
+        event: event,
+        event_name: eventName,
+        user_token: localStorage.getItem("tk"),
+      },
+    });
+
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json,
+    };
+
+    fetch("http://localhost:3031/events", requestOptions)
+      .then(response => response.json())
+      .then(data => this.setState({ postId: data.id }));
+  };
+
   return (
     <div className="form-share">
       <div className="form-share__img">
@@ -16,20 +38,24 @@ const SignUpShare = ({ imagePreviewUrl, childId }) => {
         more chance to win.
       </div>
 
-      <FacebookShare
-        childId={childId}
-        classes="button button--facebook form-share__button entering_share"
-      >
-        Share on Facebook
-      </FacebookShare>
+      <div onClick={() => trackEvent("click", "enter-share-on-fb")}>
+        <FacebookShare
+          childId={childId}
+          classes="button button--facebook form-share__button entering_share"
+        >
+          Share on Facebook
+        </FacebookShare>
+      </div>
 
-      <Link
-        to={`/entry/${childId}`}
-        id="entering_without_share"
-        className="text-grey text-small form-share__text-enter"
-      >
-        Enter without sharing
-      </Link>
+      <div onClick={() => trackEvent("click", "enter-without-sharing")}>
+        <Link
+          to={`/entry/${childId}`}
+          id="entering_without_share"
+          className="text-grey text-small form-share__text-enter"
+        >
+          Enter without sharing
+        </Link>
+      </div>
     </div>
   );
 };
