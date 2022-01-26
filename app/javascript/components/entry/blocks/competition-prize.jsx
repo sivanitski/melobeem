@@ -11,10 +11,33 @@ const CompetitionPrize = ({
   spinPrize,
   isSpinPrizeSpent,
   childId,
+  user,
 }) => {
   const { currentChild } = useContext(ChildContext);
   const moneyCondition = moneyPrize > 0;
   const spinCondition = spinPrize > 0 && !isSpinPrizeSpent;
+
+  const trackEvent = (user, event, eventName, eventDetails) => {
+    let json = JSON.stringify({
+      tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
+      event: {
+        site: "melobeem",
+        event: event,
+        user_id: user ? user.id : "",
+        event_name: eventName,
+        event_description: eventDetails,
+        user_token: localStorage.getItem("tk"),
+      },
+    });
+
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json,
+    };
+
+    fetch("http://localhost:3031/events", requestOptions);
+  };
 
   if (moneyCondition || spinCondition) {
     return (
@@ -46,9 +69,13 @@ const CompetitionPrize = ({
 
   if (!currentChild?.currentCompetition) {
     return (
-      <Link className="entry-previous__enter" to="/next-competition">
-        Enter again
-      </Link>
+      <div
+        onClick={() => trackEvent(user, "click", "enter-again", currentChild)}
+      >
+        <Link className="entry-previous__enter" to="/next-competition">
+          Enter again
+        </Link>
+      </div>
     );
   }
 
@@ -60,6 +87,7 @@ CompetitionPrize.propTypes = {
   spinPrize: propTypes.number.isRequired,
   isSpinPrizeSpent: propTypes.bool.isRequired,
   childId: propTypes.number.isRequired,
+  user: propTypes.object,
 };
 
 export default CompetitionPrize;

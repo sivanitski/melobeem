@@ -16,8 +16,10 @@ import LockerUnlockedImg from "../../../images/locker-unlocked.svg";
 import Loader from "../../animation/loader";
 import { Error } from "../../error";
 import { Footer } from "../../footer";
+import UserContext from "../../../helpers/user-context";
 
 const NextCompetition = () => {
+  const { user } = useContext(UserContext);
   const { currentChild } = useContext(ChildContext);
   const history = useHistory();
   const isClosed = currentChild?.currentCompetition;
@@ -30,6 +32,27 @@ const NextCompetition = () => {
     formatResult: (res) => res.data.competition,
   });
 
+  const trackEvent = (user, event, eventName) => {
+    let json = JSON.stringify({
+      tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
+      event: {
+        site: "melobeem",
+        event: event,
+        user_id: user ? user.id : "",
+        event_name: eventName,
+        user_token: localStorage.getItem("tk"),
+      },
+    });
+
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json,
+    };
+
+    fetch("http://localhost:3031/events", requestOptions);
+  };
+
   const getAwards = () => {
     return api.get(`/awards`);
   };
@@ -40,6 +63,8 @@ const NextCompetition = () => {
 
   const handleSignUp = () => {
     if (isClosed) return;
+
+    trackEvent(user, "click", "enter-with-another-baby");
 
     history.push("/sign-up");
   };

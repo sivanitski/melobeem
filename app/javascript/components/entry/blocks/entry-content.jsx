@@ -199,6 +199,7 @@ const EntryContent = ({ child, voters }) => {
               spinPrize={child.competitionAdditionalPrize}
               isSpinPrizeSpent={child.spentCompetitionAdditionalPrize}
               childId={child.id}
+              user={user}
             />
           )}
         </>
