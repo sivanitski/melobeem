@@ -65,6 +65,28 @@ const Payment = ({
   const [cardHolder, setCardHolder] = useState("");
   const [email, setEmail] = useState("");
 
+  const trackEvent = (userId, event, eventName, event_details) => {
+    let json = JSON.stringify({
+      tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
+      event: {
+        site: "melobeem",
+        event: event,
+        event_name: eventName,
+        user_id: userId,
+        user_token: localStorage.getItem("tk"),
+        event_description: event_details,
+      },
+    });
+
+    let requestOptions = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: json,
+    };
+
+    fetch("http://localhost:3031/events", requestOptions);
+  };
+
   useEffect(() => {
     async function makeChargeIntent() {
       let res;
@@ -137,6 +159,13 @@ const Payment = ({
           { handleActions: false }
         );
 
+        trackEvent(
+          userId,
+          "click",
+          "payment-details-entered-pay-button",
+          stripeVariables
+        );
+
         if (confirmError) {
           console.error("[error]", confirmError);
           setMessage(confirmError.message);
@@ -163,6 +192,8 @@ const Payment = ({
   }, [stripeVariables]);
 
   const paymentSucceeded = async () => {
+    trackEvent(userId, "click", "payment-confirmed", stripeVariables);
+
     try {
       await api.post("/charges/payment_success", {
         purchaseTransactionId: stripeVariables.purchaseTransactionId,
@@ -294,6 +325,8 @@ const Payment = ({
       setPaymentButtonDisabled(false);
       return;
     }
+
+    trackEvent(userId, "click", "payment-details-entered", stripeVariables);
 
     const cardElement = elements.getElement(CardNumberElement);
 

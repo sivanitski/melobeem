@@ -54,7 +54,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
     formatResult: (res) => res.data.products,
   });
 
-  const trackEvent = (event, eventName) => {
+  const trackEvent = (event, eventName, event_description) => {
     let json = JSON.stringify({
       tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
       event: {
@@ -62,6 +62,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
         event: event,
         event_name: eventName,
         user_token: localStorage.getItem("tk"),
+        event_description: event_description,
       },
     });
 
@@ -92,6 +93,7 @@ const VoteList = ({ childId, timeFreeVote, handlePriceClick, updateData }) => {
   };
 
   const handlePaidClick = (clickedVoteOption) => {
+    trackEvent("click", "paid_vote", clickedVoteOption);
     handlePriceClick(clickedVoteOption);
   };
 

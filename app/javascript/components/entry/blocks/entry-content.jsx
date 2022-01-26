@@ -50,12 +50,13 @@ const EntryContent = ({ child, voters }) => {
     return api.get(`/entries/${child.id}/votes/expiration_time_for_free`);
   };
 
-  const trackEvent = (event, eventName) => {
+  const trackEvent = (user, event, eventName) => {
     let json = JSON.stringify({
       tk: "riuerunb3UIBBINIn2in23ibbYB@UYBBoi4oon12b124",
       event: {
         site: "melobeem",
         event: event,
+        user_id: user ? user.id : "",
         event_name: eventName,
         user_token: localStorage.getItem("tk"),
       },
@@ -92,7 +93,7 @@ const EntryContent = ({ child, voters }) => {
     if (!user) {
       setIsPopupShown(true);
     } else {
-      trackEvent("click", "entry-vote-button");
+      trackEvent(user, "click", "entry-vote-button");
       history.push(`/entry/${child.id}/vote`);
     }
   };
@@ -132,12 +133,14 @@ const EntryContent = ({ child, voters }) => {
         <img src={child.imageUrl} />
 
         {child.currentCompetition ? (
-          <FacebookShare
-            childId={child.id}
-            classes="entry__share entry_ready_share"
-          >
-            <ShareImage />
-          </FacebookShare>
+          <div onClick={() => trackEvent(user, "click", "share-on-facebook")}>
+            <FacebookShare
+              childId={child.id}
+              classes="entry__share entry_ready_share"
+            >
+              <ShareImage />
+            </FacebookShare>
+          </div>
         ) : (
           <Link
             target="_blank"
