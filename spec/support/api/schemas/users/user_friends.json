@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "required": ["users", "meta"],
+  "properties": {
+    "users": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "avatar_url"],
+        "properties": {
+          "id": {"type": "integer"},
+          "name": {"type": "string"},
+          "avatar_url": {"type": "string"}
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": ["total_count", "per", "page"],
+      "properties": {
+        "total_count": {"type": "integer"},
+        "per": {"type": "integer"},
+        "page": {"type": "integer"}
+      }
+    }
+  }
+}

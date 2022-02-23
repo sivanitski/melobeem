@@ -81,6 +81,4 @@ test:
 #
 production:
   <<: *default
-  database: melobeem_production
-  username: melobeem
-  password: <%= ENV['MELOBEEM_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>

@@ -16,19 +16,29 @@ gem 'webpacker', '~> 5.0'
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.7'
 # Use Redis adapter to run Action Cable in production
-# gem 'redis', '~> 4.0'
+gem 'redis', '~> 4.0'
 # Use Active Model has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 
+# serializer
+gem 'active_model_serializers', '~> 0.10.0'
+
+# pagination
+gem 'kaminari-activerecord'
+
+# active record PG extension
+gem 'activerecord-postgres_enum'
+
 # Use Active Storage variant
 # gem 'image_processing', '~> 1.2'
-# gem 'aws-sdk-s3', require: false
+gem 'aws-sdk-s3', require: false
 # Reduces boot times through caching; required in config/boot.rb
 gem 'bootsnap', '>= 1.4.4', require: false
+# imgproxy
+gem 'imgproxy'
 
 # environment variables
 gem 'dotenv-rails'
-
 # enforcing Rails best practices and coding conventions
 gem 'rubocop-performance', require: false
 gem 'rubocop-rails', require: false
@@ -36,17 +46,18 @@ gem 'rubocop-rspec', require: false
 
 # authentication
 gem 'devise'
-gem 'devise_token_auth', git: 'https://github.com/lynndylanhurley/devise_token_auth.git', branch: 'master'
+gem 'omniauth', '~> 1.9.1' # TODO: update to v2, resolve issue with devise
 gem 'omniauth-facebook'
-
-# accept authorisation headers
-gem 'rack-cors', require: 'rack/cors'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: %i[mri mingw x64_mingw]
+  gem 'pry', require: true
   gem 'rspec-rails', '~> 4.0.2'
 end
+
+# payments
+gem 'stripe'
 
 group :development do
   # Access an interactive console on exception pages or by calling 'console' anywhere in the code.
@@ -74,6 +85,11 @@ group :test do
   # gem 'factory_girl_rails'
   gem 'factory_bot_rails'
   gem 'ffaker'
+
+  gem 'json-schema'
+
+  # testing Stripe
+  gem 'stripe-ruby-mock', '~> 3.0.1', require: 'stripe_mock'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem

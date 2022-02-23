@@ -7,6 +7,7 @@ default: &default
   public_output_path: packs
   cache_path: tmp/cache/webpacker
   webpack_compile_output: true
+  resolved_paths: []
 
   # Additional paths webpack should lookup modules
   # ['app/assets', 'engine/foo/app/assets']
@@ -22,10 +23,10 @@ default: &default
     - .jpg
     - .jpeg
     - .png
+    - .webp
     - .gif
     - .tiff
     - .ico
-    - .svg
     - .eot
     - .otf
     - .ttf
@@ -49,6 +50,7 @@ default: &default
     - .gif
     - .jpeg
     - .jpg
+    - .webp
 
 development:
   <<: *default
@@ -57,7 +59,7 @@ development:
   # Reference: https://webpack.js.org/configuration/dev-server/
   dev_server:
     https: false
-    host: webpacker
+    host: localhost
     port: 3035
     public: localhost:3035
     hmr: true
@@ -68,7 +70,6 @@ development:
     disable_host_check: true
     use_local_ip: false
     quiet: false
-    pretty: false
     headers:
       'Access-Control-Allow-Origin': '*'
     watch_options:

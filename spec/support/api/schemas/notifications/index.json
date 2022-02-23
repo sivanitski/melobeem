@@ -1,0 +1,30 @@
+{
+  "type": "object",
+  "required": ["notifications", "meta"],
+  "properties": {
+    "notifications": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "user_id", "title", "text", "status", "created_at_date"],
+        "properties": {
+          "id": {"type": "integer"},
+          "user_id": {"type": "integer"},
+          "title": {"type": "string"},
+          "text": {"type": "string"},
+          "status": {"type": "string"},
+          "created_at_date": {"type": "timestamp"}
+        }
+      }
+    },
+    "meta": {
+      "type": "object",
+      "required": ["total_count", "per", "page"],
+      "properties": {
+        "total_count": {"type": "integer"},
+        "per": {"type": "integer"},
+        "page": {"type": "integer"}
+      }
+    }
+  }
+}

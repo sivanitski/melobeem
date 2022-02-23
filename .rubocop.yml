@@ -23,13 +23,22 @@ Style/Documentation:
   Enabled: false
 
 Metrics/BlockLength:
-  Enabled: true
-  Max: 50
-
-Layout/SpaceInsideArrayLiteralBrackets:
-  Enabled: true
-  EnforcedStyle: space
+  Exclude:
+    - 'config/**/*.rb'
+    - 'spec/**/*.rb'
 
 Layout/LineLength:
   Enabled: true
   Max: 160
+
+RSpec/NamedSubject:
+  Enabled: false
+
+RSpec/MultipleMemoizedHelpers:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Max: 5

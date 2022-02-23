@@ -1,0 +1,21 @@
+{
+  "type": "object",
+  "required": ["entries"],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "image_url", "competition_month", "entries_quantity", "prize"],
+        "properties": {
+          "id": {"type": "integer"},
+          "name": {"type": "string"},
+          "image_url": {"type": "string"},
+          "competition_month": {"type": "string"},
+          "entries_quantity": {"type": "integer"},
+          "prize": {"type": "integer"}
+        }
+      }
+    }
+  }
+}

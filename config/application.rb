@@ -1,5 +1,5 @@
 require_relative 'boot'
-
+require_relative '../lib/middleware/fingerprint_middleware'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
@@ -19,14 +19,6 @@ module Melobeem
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
 
-    config.middleware.use Rack::Cors do
-      allow do
-        origins '*'
-        resource '*',
-                 headers: :any,
-                 expose: %w[access-token expiry token-type uid client],
-                 methods: %i[get post options delete put]
-      end
-    end
+    config.middleware.use FingerprintMiddleware
   end
 end

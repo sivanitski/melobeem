@@ -11,7 +11,7 @@ services:
         NODE_MAJOR: '14'
         YARN_VERSION: '1.22.5'
         BUNDLER_VERSION: '2.1.4'
-    image: example-dev:1.0.0
+    image: example-dev:1.0.1
     tmpfs:
       - /tmp
 
@@ -29,6 +29,7 @@ services:
     environment:
       - NODE_ENV=development
       - RAILS_ENV=${RAILS_ENV:-development}
+      - REDIS_URL=redis://redis:6379/
       - DATABASE_URL=postgres://postgres:postgres@postgres:5432
       - POSTGRESQL_HOST=postgres
       - POSTGRESQL_PORT=5432
@@ -39,6 +40,8 @@ services:
       - EDITOR=vi
     depends_on:
       - postgres
+      - redis
+      - imgproxy
 
   runner:
     <<: *backend
@@ -62,6 +65,32 @@ services:
     environment:
       - PSQL_HISTFILE=/root/log/.psql_history
 
+  redis:
+    image: redis:3.2-alpine
+    volumes:
+      - redis:/data
+    ports:
+      - '6379:6379'
+
+  imgproxy:
+    image: darthsim/imgproxy:latest
+    restart: always
+    environment:
+      - IMGPROXY_KEY=${IMGPROXY_KEY}
+      - IMGPROXY_SALT=${IMGPROXY_SALT}
+      - IMGPROXY_ENDPOINT=${IMGPROXY_ENDPOINT}
+      - AWS_ACCESS_KEY_ID=${AWS_ACCESS_KEY_ID}
+      - AWS_SECRET_ACCESS_KEY=${AWS_SECRET_ACCESS_KEY}
+      - AWS_REGION=${AWS_REGION}
+      - IMGPROXY_USE_S3=${IMGPROXY_USE_S3}
+    ports:
+      - '8080:8080'
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "1m"
+        max-file: "10"
+
   webpacker:
     <<: *app
     command: ./bin/webpack-dev-server
@@ -79,6 +108,7 @@ services:
 
 volumes:
   postgres:
+  redis:
   node_modules:
   rails_cache:
   packs:

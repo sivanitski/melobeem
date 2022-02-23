@@ -1,30 +1,27 @@
-import Rails from "@rails/ujs"
-import * as ActiveStorage from "@rails/activestorage"
-import "channels"
+import "../less/main.less";
 
-Rails.start()
-ActiveStorage.start()
+import * as ActiveStorage from "@rails/activestorage";
+import Rails from "@rails/ujs";
+import { FacebookProvider } from "react-facebook";
 
+import { App } from "../components/app";
 
-import React from 'react'
-import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+Rails.start();
+ActiveStorage.start();
 
-const Hello = props => (
-  <div>Hello {props.name}!</div>
-)
+import React from "react";
+import ReactDOM from "react-dom";
 
-Hello.defaultProps = {
-  name: 'David'
-}
+const root = document.createElement("div");
+root.classList.add("root");
 
-Hello.propTypes = {
-  name: PropTypes.string
-}
+const appId = "2495138454127282";
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(
-    <Hello name="React" />,
-    document.body.appendChild(document.createElement('div')),
-  )
-})
+    <FacebookProvider appId={appId} version="v9.0" cookie={true}>
+      <App />
+    </FacebookProvider>,
+    document.body.appendChild(root)
+  );
+});

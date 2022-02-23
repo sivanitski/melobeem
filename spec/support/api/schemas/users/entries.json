@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "required": ["entries"],
+  "properties": {
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "image_url", "level"],
+        "properties": {
+          "id": {"type": "integer"},
+          "name": {"type": "string"},
+          "image_url": {"type": "string"},
+          "level": {"type": "integer"}
+        }
+      }
+    }
+  }
+}

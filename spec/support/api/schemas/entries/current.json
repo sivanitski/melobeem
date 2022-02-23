@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "required": ["entry"],
+  "properties": {
+    "entry": {
+      "type": "object",
+      "required": ["id", "image_url", "name", "level"],
+      "properties": {
+        "id": {"type": "integer"},
+        "image_url": {"type": "string"},
+        "name": {"type": "string"},
+        "level": {"type": "integer"}
+      }
+    }
+  }
+}
